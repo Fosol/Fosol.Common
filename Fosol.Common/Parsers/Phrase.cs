@@ -8,6 +8,7 @@ namespace Fosol.Common.Parsers
 {
     /// <summary>
     /// A Phrase is a part of a parsed syntax.
+    /// A phrase is used within the SimpleParser.
     /// </summary>
     public class Phrase : Fosol.Common.Parsers.IPhrase
     {
@@ -26,10 +27,7 @@ namespace Fosol.Common.Parsers
         /// Creates a new instance of a Phrase object.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameter "text" cannot be null.</exception>
-        /// <param name="keywordType">The type of keyword.</param>
         /// <param name="text">The full text value of the keyword.</param>
-        /// <param name="startBoundary">Keyword start boundary syntax.</param>
-        /// <param name="endBoundary">Keyword end boundary syntax.</param>
         public Phrase(string text)
         {
             Validation.Parameter.AssertNotNull(text, "text");

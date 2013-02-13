@@ -7,6 +7,15 @@ using System.Threading.Tasks;
 
 namespace Fosol.Common.Parsers
 {
+    /// <summary>
+    /// A keyword is a special phrase found within a parsed text value.
+    /// The Keywords is used by the SimpleParser to represent a special phrase within the text.
+    /// A keyword can be used to dynamically replace values within text.
+    /// 
+    /// A keyword can be expressed within text with special start and end boundaries (i.e. ${keyword}).
+    /// A keyword can contain parameters to help define its dynamic behaviour (i.e. ${keyword?parm1=value&param2=value}).
+    /// Start and end boundaries are defined within the SimpleParser.
+    /// </summary>
     public class Keyword : Phrase, IPhrase
     {
         #region Variables
@@ -19,6 +28,9 @@ namespace Fosol.Common.Parsers
         /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// get - A collection of parameters included in the keyword.
+        /// </summary>
         public NameValueCollection Params { get; private set; }
         #endregion
 

@@ -8,10 +8,12 @@ namespace Fosol.Common.Parsers
 {
     /// <summary>
     /// Provides a simple and efficient way to parse a string into a collection of Phrases.
+    /// Generally speaking this class is more efficient than a regular expression.
+    /// 
     /// Any string values that are defined with a start and end boundary (i.e. ${keyword}) are captured as Keywords.
     /// Any string values outside of keyword boundaries are captured as a simple Phrase.
     /// 
-    /// The Parser(string text) method returns a collection of Phrases, which can be aggregated to recreate the original text.
+    /// The Parser() method returns a collection of Phrases, which can be aggregated to recreate the original text.
     /// </summary>
     public class SimpleParser
     {
@@ -44,7 +46,7 @@ namespace Fosol.Common.Parsers
 
         /// <summary>
         /// Creates a new KeywordParser object.
-        /// Initializes with specified parameter values.
+        /// Initializes with specified keyword boundary values.
         /// </summary>
         /// <param name="startBoundary">Keyword start boundary syntax.</param>
         /// <param name="endBoundary">Keyword end boundary syntax.</param>
@@ -67,17 +69,17 @@ namespace Fosol.Common.Parsers
         /// String values outside keyword boundaries are considered keywords of KeywordType = Literal.
         /// </summary>
         /// <example>
-        /// ${datetime?format={{0:u}}&utc=true}${literal?text=some ${ text} - ${message} - ${newline}
-        /// keyword1 = ${datetime?format={{0:u}}&utc=true}
+        /// text = "${datetime?format={0:u}}&utc=true}${literal?text=some ${ text} - ${message} - ${newline}"
+        /// keyword1 = ${datetime?format={0:u}&utc=true}
         /// keyword2 = ${literal?text=some ${ text}
-        /// keyword3 = " - "
+        /// phrase_3 = " - "
         /// keyword4 = ${message}
-        /// keyword5 = " - "
+        /// phrase_5 = " - "
         /// keyword6 = ${newline}
         /// </example>
-        /// <param name="text">Text value you want to parse into a collection of keywords.</param>
+        /// <param name="text">Text value you want to parse into a collection of phrases.</param>
         /// <param name="startIndex">Index position to start parsing the text at.</param>
-        /// <returns>Collection of keywords that make up this text.</returns>
+        /// <returns>Collection of phrases that make up this text.</returns>
         public List<IPhrase> Parse(string text, int startIndex = 0)
         {
             var keywords = new List<IPhrase>();
@@ -92,8 +94,9 @@ namespace Fosol.Common.Parsers
         }
 
         /// <summary>
-        /// Find the first keyword(s) within the text starting at the startIndex position.
-        /// If the keyword is not at the first position it will return a Literal keyword and the Dynamic one.
+        /// Find the first phrase within the text starting at the startIndex position.
+        /// If a keyword isn't found it will return a single phrase containing the whole text.
+        /// If a keywords is found but does not being at the startIndex position it will return a phrase and the keyword.
         /// </summary>
         /// <example>
         /// var format = "some text ${datetime}";
@@ -106,8 +109,8 @@ namespace Fosol.Common.Parsers
         /// <exception cref="System.ArgumentOutOfRangeException">Parameter "startIndex" must be within a valid range.</exception>
         /// <param name="text">Text to search for keywords.</param>
         /// <param name="startIndex">Index position to start search at within the text.</param>
-        /// <param name="endIndex">The next position after the keywords.</param>
-        /// <returns>One or two keywords (depending on text).</returns>
+        /// <param name="endIndex">The next position after the discovered phrase/keyword.</param>
+        /// <returns>One or two phrases (depending on text).</returns>
         protected List<IPhrase> ParseFirst(string text, int startIndex, out int endIndex)
         {
             Validation.Parameter.AssertNotNull(text, "text");
@@ -146,6 +149,22 @@ namespace Fosol.Common.Parsers
         }
 
         /// <summary>
+        /// Search for the index of a start boundary of a keyword.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "text" cannot be null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "startIndex" must be within a valid range.</exception>
+        /// <param name="text">Text to search through for the start boundary.</param>
+        /// <param name="startIndex">Index position to start searching at.</param>
+        /// <returns>Index position of the start boundary, or -1 if not found.</returns>
+        protected int ParseStart(string text, int startIndex = 0)
+        {
+            Validation.Parameter.AssertNotNull(text, "text");
+            Validation.Parameter.AssertMinMaxRange(startIndex, 0, text.Length - 1, "startIndex");
+
+            return text.IndexOf(this.StartBoundary, startIndex);
+        }
+
+        /// <summary>
         /// Search for the index of an end boundary of a keyword.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameter "text" cannot be null.</exception>
@@ -174,23 +193,8 @@ namespace Fosol.Common.Parsers
         }
 
         /// <summary>
-        /// Search for the index of a start boundary of a keyword.
-        /// </summary>
-        /// <exception cref="System.ArgumentNullException">Parameter "text" cannot be null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "startIndex" must be within a valid range.</exception>
-        /// <param name="text">Text to search through for the start boundary.</param>
-        /// <param name="startIndex">Index position to start searching at.</param>
-        /// <returns>Index position of the start boundary, or -1 if not found.</returns>
-        protected int ParseStart(string text, int startIndex = 0)
-        {
-            Validation.Parameter.AssertNotNull(text, "text");
-            Validation.Parameter.AssertMinMaxRange(startIndex, 0, text.Length - 1, "startIndex");
-
-            return text.IndexOf(this.StartBoundary, startIndex);
-        }
-
-        /// <summary>
         /// Creates a new Keyword and initializes it.
+        /// Correct escaped boundary values.
         /// </summary>
         /// <param name="text">Keyword text value.</param>
         /// <returns>A new Keyword object.</returns>
@@ -224,7 +228,7 @@ namespace Fosol.Common.Parsers
                 .Select(p => 
                     (p is Keyword) ? 
                     string.Format("{0}{1}{2}", this.StartBoundary, p.Text, this.EndBoundary) : 
-                    p.Text)
+                    p.Text.Replace(this.EndBoundary, _EndBoundaryEscape))
                 .Aggregate((a, b) => a + b);
         }
         #endregion

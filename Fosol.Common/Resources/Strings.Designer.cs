@@ -61,6 +61,15 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attribute &quot;{0}&quot; is required but missing..
+        /// </summary>
+        internal static string Exception_AttributeMissing {
+            get {
+                return ResourceManager.GetString("Exception_AttributeMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parameter value must end with &quot;{0}&quot;..
         /// </summary>
         internal static string Exception_EndsWith {
@@ -84,6 +93,24 @@ namespace Fosol.Common.Resources {
         internal static string Exception_StartsWith {
             get {
                 return ResourceManager.GetString("Exception_StartsWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Too many occurances of attribute &quot;{0}&quot;..
+        /// </summary>
+        internal static string Exception_TooManyOfAttribute {
+            get {
+                return ResourceManager.GetString("Exception_TooManyOfAttribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property type must be of type String..
+        /// </summary>
+        internal static string Exception_TypeMustBeString {
+            get {
+                return ResourceManager.GetString("Exception_TypeMustBeString", resourceCulture);
             }
         }
         
