@@ -44,6 +44,7 @@
     <Compile Include="Configuration\CDataConfigurationElement.cs" />
     <Compile Include="Configuration\CDataConfigurationPropertyAttribute.cs" />
     <Compile Include="Configuration\ConfigurationElementCollection.cs" />
+    <Compile Include="Cryptography\CryptographyFactory.cs" />
     <Compile Include="FastDateTime.cs" />
     <Compile Include="Parsers\IPhrase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
