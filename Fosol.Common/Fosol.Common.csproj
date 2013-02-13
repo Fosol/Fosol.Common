@@ -46,7 +46,7 @@
     <Compile Include="Configuration\ConfigurationElementCollection.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
     <Compile Include="Extensions\ByteExtensions\ByteExtensions.cs" />
-    <Compile Include="FastDateTime.cs" />
+    <Compile Include="Optimization\FastDateTime.cs" />
     <Compile Include="Parsers\IPhrase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
@@ -60,15 +60,17 @@
       <DependentUpon>Strings.fr.resx</DependentUpon>
     </Compile>
     <Compile Include="Parsers\Phrase.cs" />
-    <Compile Include="Utilities\IdentityInt.cs" />
-    <Compile Include="Utilities\IdentityLong.cs" />
+    <Compile Include="Helpers\IdentityInt.cs" />
+    <Compile Include="Helpers\IdentityLong.cs" />
     <Compile Include="Parsers\Keyword.cs" />
     <Compile Include="Parsers\SimpleParser.cs" />
-    <Compile Include="Utilities\Diagnostics.cs" />
+    <Compile Include="Helpers\Diagnostics.cs" />
     <Compile Include="Validation\Parameter.cs" />
     <Compile Include="Validation\Strings.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Utilities\" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>

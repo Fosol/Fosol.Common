@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common
+namespace Fosol.Common.Optimization
 {
     /// <summary>
     /// Provides an optimized way to retrieve the current DateTime value.
     /// </summary>
-    public class FastDateTime
+    public sealed class FastDateTime
     {
         #region Variables
         private static int _LastTicks = -1;

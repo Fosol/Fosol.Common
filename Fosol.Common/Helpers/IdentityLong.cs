@@ -5,22 +5,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Utilities
+namespace Fosol.Common.Helpers
 {
     /// <summary>
-    /// An atomic threadsafe way to have a global identity of type int.
+    /// An atomic threadsafe way to have a global identity of type long.
     /// </summary>
-    public class IdentityInt
+    public sealed class IdentityLong
     {
         #region Variables
-        private static int _Id;
+        private static long _Id;
         #endregion
 
         #region Properties
         /// <summary>
         /// get - The current identity value.
         /// </summary>
-        public int Id
+        public long Id
         {
             get { return _Id; }
         }
@@ -34,7 +34,7 @@ namespace Fosol.Common.Utilities
         /// Increment the Id.
         /// </summary>
         /// <returns></returns>
-        public int Increment()
+        public long Increment()
         {
             return Interlocked.Increment(ref _Id);
         }
@@ -43,7 +43,7 @@ namespace Fosol.Common.Utilities
         /// Decrement the Id.
         /// </summary>
         /// <returns></returns>
-        public int Decrement()
+        public long Decrement()
         {
             return Interlocked.Decrement(ref _Id);
         }
@@ -53,7 +53,7 @@ namespace Fosol.Common.Utilities
         /// </summary>
         /// <param name="value"></param>
         /// <returns>Id property value.</returns>
-        public static implicit operator int(IdentityInt value)
+        public static implicit operator long(IdentityLong value)
         {
             return value.Id;
         }
@@ -71,10 +71,10 @@ namespace Fosol.Common.Utilities
             if (object.ReferenceEquals(this, obj))
                 return true;
 
-            if (obj.GetType() != typeof(IdentityInt))
+            if (obj.GetType() != typeof(IdentityLong))
                 return false;
 
-            return this.Id == ((IdentityInt)obj).Id;
+            return this.Id == ((IdentityLong)obj).Id;
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Fosol.Common.Utilities
         /// </summary>
         /// <param name="obj">Object to compare.</param>
         /// <returns>True if the Id property values are equal.</returns>
-        public bool Equals(IdentityInt obj)
+        public bool Equals(IdentityLong obj)
         {
             if (obj == null)
                 return false;
@@ -91,6 +91,15 @@ namespace Fosol.Common.Utilities
                 return true;
 
             return this.Id == obj.Id;
+        }
+
+        /// <summary>
+        /// Returns the hash code for the Id.
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return this.Id.GetHashCode();
         }
         #endregion
 

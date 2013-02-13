@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Utilities
+namespace Fosol.Common.Helpers
 {
     /// <summary>
     /// Diagnostic utility methods.

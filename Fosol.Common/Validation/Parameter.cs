@@ -765,6 +765,83 @@ namespace Fosol.Common.Validation
                 throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_EndsWith, endsWithValue), innerException);
         }
         #endregion
+
+        #region AssertValue
+        /// <summary>
+        /// If the value does not exist in the valid values array it will throw System.ArgumentOutOfRangeException.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <param name="value">The value to check.</param>
+        /// <param name="validValues">An array of valid values to compare against.</param>
+        /// <param name="comparisonType">StringComparison type rule.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message describing the exception.</param>
+        public static void AssertValue(string value, string[] validValues, StringComparison comparisonType, string paramName, string message = null)
+        {
+            if (validValues.Where(v => string.Compare(v, value, comparisonType) == 0).Count() != 1)
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_ValueInvalid, paramName), paramName);
+        }
+
+        /// <summary>
+        /// If the value does not exist in the valid values array it will throw System.ArgumentOutOfRangeException.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <param name="value">The value to check.</param>
+        /// <param name="validValues">An array of valid values to compare against.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message describing the exception.</param>
+        public static void AssertValue(object value, object[] validValues, string paramName, string message = null)
+        {
+            if (!validValues.Contains(value))
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_ValueInvalid, paramName), paramName);
+        }
+
+        /// <summary>
+        /// If the value does not exist in the valid values array it will throw System.ArgumentOutOfRangeException.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <param name="value">The value to check.</param>
+        /// <param name="validValues">An array of valid values to compare against.</param>
+        /// <param name="comparer">Method to determine if the value is valid.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message describing the exception.</param>
+        public static void AssertValue(object value, object[] validValues, IEqualityComparer<object> comparer, string paramName, string message = null)
+        {
+            if (!validValues.Contains(value, comparer))
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_ValueInvalid, paramName), paramName);
+        }
+
+        /// <summary>
+        /// If the value does not exist in the valid values array it will throw System.ArgumentOutOfRangeException.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <param name="value">The value to check.</param>
+        /// <param name="validValues">An array of valid values to compare against.</param>
+        /// <param name="comparer">Method to determine if the value is valid. Func<validValue, value, result>.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message describing the exception.</param>
+        public static void AssertValue(object value, object[] validValues, Func<object, object, bool> comparer, string paramName, string message = null)
+        {
+            if (validValues.Where(v => comparer(v, value)).Count() != 1)
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_ValueInvalid, paramName), paramName);
+        }
+
+        /// <summary>
+        /// If the value does not exist in the valid values array it will throw System.ArgumentOutOfRangeException.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <typeparam name="T">Type of object to compare.</typeparam>
+        /// <param name="value">The value to check.</param>
+        /// <param name="validValues">An array of valid values to compare against.</param>
+        /// <param name="comparer">Method to determine if the value is valid. Func<validValue, value, result>.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message describing the exception.</param>
+        public static void AssertValue<T>(T value, T[] validValues, Func<T, T, bool> comparer, string paramName, string message = null)
+        {
+            if (validValues.Where(v => comparer(v, value)).Count() != 1)
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_ValueInvalid, paramName), paramName);
+        }
+        #endregion
         #endregion
 
         #region Events
