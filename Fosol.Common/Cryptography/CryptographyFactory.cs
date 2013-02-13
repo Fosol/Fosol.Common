@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fosol.Common.Extensions.ByteExtensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,19 +14,18 @@ namespace Fosol.Common.Cryptography
     /// </summary>
     public static class CryptographyFactory
     {
-        #region Variables
-        #endregion
-
-        #region Properties
-        #endregion
-
-        #region Constructors
-        #endregion
-
         #region Methods
         /// <summary>
         /// Encrypt a string with AesManaged algorithm.
         /// </summary>
+        /// <exception cref="System.ArgumentException"></exception>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        /// <exception cref="System.ArgumentOutOfRangeException"></exception>
+        /// <exception cref="System.InvalidOperationException"></exception>
+        /// <exception cref="System.FormatException"></exception>
+        /// <exception cref="System.NotSupportedException"></exception>
+        /// <exception cref="System.Security.Cryptography.CryptographicException"></exception>
+        /// <exception cref="System.Text.DecoderFallbackException"></exception>
         /// <param name="text">String value to encrypt.</param>
         /// <param name="password">Password to encrypt with.</param>
         /// <param name="salt">Salt must be at least 8 bytes long.</param>
@@ -40,7 +40,7 @@ namespace Fosol.Common.Cryptography
             {
                 var rfc2898 = new Rfc2898DeriveBytes(password, Encoding.UTF8.GetBytes(salt), 10000);
                 aes = new AesManaged();
-                aes.Key = rfc2898.GetBytes(2);
+                aes.Key = rfc2898.GetBytes(32);
                 aes.IV = rfc2898.GetBytes(16);
 
                 stream = new MemoryStream();
@@ -70,12 +70,20 @@ namespace Fosol.Common.Cryptography
         }
 
         /// <summary>
-        /// 
+        /// Decrypt a string with AesManaged algorithm.
         /// </summary>
-        /// <param name="encryptedText"></param>
-        /// <param name="password"></param>
+        /// <exception cref="System.ArgumentException"></exception>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        /// <exception cref="System.ArgumentOutOfRangeException"></exception>
+        /// <exception cref="System.InvalidOperationException"></exception>
+        /// <exception cref="System.FormatException"></exception>
+        /// <exception cref="System.NotSupportedException"></exception>
+        /// <exception cref="System.Security.Cryptography.CryptographicException"></exception>
+        /// <exception cref="System.Text.DecoderFallbackException"></exception>
+        /// <param name="encryptedText">Decrypted string value to decrypt.</param>
+        /// <param name="password">Password to decrypt with.</param>
         /// <param name="salt">Salt must be at least 8 bytes long.</param>
-        /// <returns></returns>
+        /// <returns>Decrypted string value.</returns>
         public static string Decrypt(string encryptedText, string password, string salt)
         {
             AesManaged aes = null;
@@ -88,7 +96,7 @@ namespace Fosol.Common.Cryptography
                 var rfc2898 = new Rfc2898DeriveBytes(password, Encoding.UTF8.GetBytes(salt), 10000);
 
                 aes = new AesManaged();
-                aes.Key = rfc2898.GetBytes(2);
+                aes.Key = rfc2898.GetBytes(32);
                 aes.IV = rfc2898.GetBytes(16);
 
                 stream = new MemoryStream();
@@ -118,12 +126,31 @@ namespace Fosol.Common.Cryptography
                     aes.Clear();
             }
         }
-        #endregion
 
-        #region Operators
-        #endregion
+        /// <summary>
+        /// Creates a hash based on the text and salt value.
+        /// Uses SHA1 encryption formula.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        /// <exception cref="System.InvalidOperationException"></exception>
+        /// <exception cref="System.ObjectDisposedException"></exception>
+        /// <exception cref="System.Text.EncoderFallbackException"></exception>
+        /// <param name="text">Text value to hash.</param>
+        /// <param name="salt">Salt value to use in creating a secure hash.</param>
+        /// <returns>Hashed text value.</returns>
+        public static string ComputeHash(string text, string salt)
+        {
+            var text_data = System.Text.Encoding.UTF8.GetBytes(text);
+            var salt_data = System.Text.Encoding.UTF8.GetBytes(salt);
 
-        #region Events
+            var data = new byte[text_data.Length + salt_data.Length];
+            var offset = data.Append(text_data);
+
+            var formula = new SHA1Managed();
+            formula.ComputeHash(data);
+
+            return Convert.ToBase64String(formula.Hash);
+        }
         #endregion
     }
 }

@@ -115,6 +115,24 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; has an invalid value..
+        /// </summary>
+        internal static string Exception_ValueInvalid {
+            get {
+                return ResourceManager.GetString("Exception_ValueInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; is too small to accept value..
+        /// </summary>
+        internal static string Exception_ValueToSmall {
+            get {
+                return ResourceManager.GetString("Exception_ValueToSmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exiting.
         /// </summary>
         internal static string Exit {

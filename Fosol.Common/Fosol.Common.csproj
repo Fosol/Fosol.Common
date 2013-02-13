@@ -45,6 +45,7 @@
     <Compile Include="Configuration\CDataConfigurationPropertyAttribute.cs" />
     <Compile Include="Configuration\ConfigurationElementCollection.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
+    <Compile Include="Extensions\ByteExtensions\ByteExtensions.cs" />
     <Compile Include="FastDateTime.cs" />
     <Compile Include="Parsers\IPhrase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,9 +68,7 @@
     <Compile Include="Validation\Parameter.cs" />
     <Compile Include="Validation\Strings.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>

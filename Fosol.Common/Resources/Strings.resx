@@ -135,6 +135,12 @@
   <data name="Exception_TypeMustBeString" xml:space="preserve">
     <value>Property type must be of type String.</value>
   </data>
+  <data name="Exception_ValueInvalid" xml:space="preserve">
+    <value>Parameter "{0}" has an invalid value.</value>
+  </data>
+  <data name="Exception_ValueToSmall" xml:space="preserve">
+    <value>Parameter "{0}" is too small to accept value.</value>
+  </data>
   <data name="Exit" xml:space="preserve">
     <value>Exiting</value>
   </data>

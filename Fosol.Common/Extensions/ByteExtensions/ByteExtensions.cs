@@ -1,0 +1,254 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Fosol.Common.Extensions.ByteExtensions
+{
+    /// <summary>
+    /// Extentions methods for bytes.
+    /// </summary>
+    public static class ByteExtensions
+    {
+        #region Methods
+        /// <summary>
+        /// Copies the data into the destination array starting at the startIndex position.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameters "destination", and "value" cannot be null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "startIndex" must be a valid index position within the destination.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "destination" must be large enough to accept the value.</exception>
+        /// <param name="destination">Destination byte array object.</param>
+        /// <param name="value">Byte array to be copied into destination.</param>
+        /// <param name="startIndex">Index position to start copying into destination array.</param>
+        /// <returns>Position within the destination array after the data has been copied.</returns>
+        public static int Append(this byte[] destination, byte[] value, int startIndex = 0)
+        {
+            Validation.Parameter.AssertNotNull(destination, "destination");
+            Validation.Parameter.AssertNotNull(value, "value");
+            Validation.Parameter.AssertMinMaxRange(startIndex, 0, destination.Length - value.Length - 1, "startIndex");
+
+            if (destination.Length < value.Length + startIndex)
+                throw new ArgumentOutOfRangeException("destination", String.Format(Resources.Strings.Exception_ValueToSmall, "destination"));
+
+            int i;
+            for (i = 0; i < value.Length; i++)
+                destination[i + startIndex] = value[i];
+            return i + startIndex;
+        }
+
+        /// <summary>
+        /// Returns a hex value for the specified byte.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="value">Byte value to convert to a hex value.</param>
+        /// <returns>Hex value that represents the byte.</returns>
+        public static string ToHex(this byte value)
+        {
+            Validation.Parameter.AssertNotNull(value, "value");
+
+            return value.ToString("{0:x2}");
+        }
+
+        /// <summary>
+        /// Returns a hex value for the specified byte array.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="value">Byte array to convert to a hex value.</param>
+        /// <returns>Hex value represents the byte array.</returns>
+        public static string ToHex(this byte[] value)
+        {
+            Validation.Parameter.AssertNotNull(value, "value");
+
+            return BitConverter.ToString(value).Replace("-", "");
+        }
+
+        /// <summary>
+        /// Returns a byte from a Hex value.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="value">Hex value.</param>
+        /// <returns>Byte which is from the hex value.</returns>
+        public static byte HexToByte(this string value)
+        {
+            Validation.Parameter.AssertNotNull(value, "value");
+
+            return Byte.Parse(value, System.Globalization.NumberStyles.HexNumber);
+        }
+
+        /// <summary>
+        /// Look for the first index position of the search value.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameters "data", and "value" cannot be null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "startIndex" must be a valid index position within the data.</exception>
+        /// <param name="data">Byte array to search through.</param>
+        /// <param name="value">Byte array value to search for.</param>
+        /// <param name="startIndex">Index position to start searching at within the data.</param>
+        /// <returns>Index position of value within data, or -1 if not found.</returns>
+        public static int IndexOf(this byte[] data, byte[] value, int startIndex = 0)
+        {
+            Validation.Parameter.AssertNotNull(data, "data");
+            Validation.Parameter.AssertNotNull(value, "value");
+            Validation.Parameter.AssertMinMaxRange(startIndex, 0, data.Length, "startIndex");
+
+            if (data.Length == 0 || value.Length == 0)
+                return -1;
+
+            for (int i = startIndex; i < data.Length; i++)
+                if (IsMatch(data, value, i))
+                    return i;
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Confirm whether the value is found within the data at the index position.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameters "data", and "value" cannot be null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "index" must be a valid index position within the data.</exception>
+        /// <param name="data">Data to confirm against.</param>
+        /// <param name="value">Value to confirm that it is a match.</param>
+        /// <param name="startIndex">Index position within the data that the value should be found at.</param>
+        /// <returns>True if the value is at the index position within the data.</returns>
+        public static bool IsMatch(this byte[] data, byte[] value, int startIndex = 0)
+        {
+            Validation.Parameter.AssertNotNull(data, "data");
+            Validation.Parameter.AssertNotNull(value, "value");
+            Validation.Parameter.AssertMinMaxRange(startIndex, 0, data.Length, "startIndex");
+
+            if (value.Length > (data.Length - startIndex))
+                return false;
+
+            for (int i = 0; i < value.Length; i++)
+                if (data[startIndex + i] != value[i])
+                    return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Confirm whether the value is found within the data at the index position.
+        /// Also provides a reference to the index position if the value is a match.
+        /// This provides a way to avoid retracing the same positions within the data.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameters "data", and "value" cannot be null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "index" must be a valid index position within the data.</exception>
+        /// <param name="data">Data to confirm against.</param>
+        /// <param name="value">Value to confirm that it is a match.</param>
+        /// <param name="index">Index position within the data that the value should be found at.</param>
+        /// <returns>True if the value is at the index position within the data.</returns>
+        public static bool IsMatch(this byte[] data, byte[] value, ref int index)
+        {
+            Validation.Parameter.AssertNotNull(data, "data");
+            Validation.Parameter.AssertNotNull(value, "value");
+            Validation.Parameter.AssertMinMaxRange(index, 0, data.Length, "index");
+
+            if (value.Length > (data.Length - index))
+                return false;
+
+            for (int i = 0; i < value.Length; i++)
+                if (data[index + i] != value[i])
+                    return false;
+
+            // Update the index value to the end of the found search value.
+            index += value.Length;
+            return true;
+        }
+
+        /// <summary>
+        /// Search for the value within the data and return all the index positions it was found.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameters "data", and "value" cannot be null.</exception>
+        /// <param name="data">Data to search through for value.</param>
+        /// <param name="value">Pattern to look for.</param>
+        /// <returns>An array of index positions that the value was found.</returns>
+        public static int[] IndexOfAll(this byte[] data, byte[] value)
+        {
+            Validation.Parameter.AssertNotNull(data, "data");
+            Validation.Parameter.AssertNotNull(value, "value");
+
+            if (data.Length == 0 || value.Length == 0)
+                return new int[0];
+
+            var result = new List<int>();
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (!IsMatch(data, value, ref i))
+                    continue;
+                result.Add(i);
+            }
+
+            return result.ToArray();
+        }
+
+        /// <summary>
+        /// Deserialize a byte array into the original object that it was serialized from.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
+        /// <param name="data">Byte array to deserialize.</param>
+        /// <returns>A new instance of an object.</returns>
+        public static object Deserialize(this byte[] data)
+        {
+            Validation.Parameter.AssertNotNull(data, "data");
+
+            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            using (var stream = new System.IO.MemoryStream(data))
+            {
+                return formatter.Deserialize(stream);
+            }
+        }
+
+        /// <summary>
+        /// Deserialize a byte array into the specified type.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
+        /// <typeparam name="T">Type of object to create.</typeparam>
+        /// <param name="data">Byte array to deserialize.</param>
+        /// <returns>A new instance of the specified type.</returns>
+        public static T Deserialize<T>(this byte[] data)
+        {
+            return (T)Deserialize(data);
+        }
+
+        /// <summary>
+        /// Writes the data into the specified stream.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "stream" cannot be readonly.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameters "data", and "stream" cannot be null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "bufferSize" cannot be less than -1 or greater than the size of the data.</exception>
+        /// <param name="data">Array of byte to write into stream.</param>
+        /// <param name="stream">Stream object that will receive the data.</param>
+        /// <param name="bufferSize">Size of buffer to write into the stream at one time.  By default -1 means write the whole data amount at one time.</param>
+        public static void ToStream(this byte[] data, System.IO.Stream stream, int bufferSize = -1)
+        {
+            Validation.Parameter.AssertNotNull(data, "data");
+            Validation.Parameter.AssertNotNull(stream, "stream");
+            Validation.Parameter.AssertMinMaxRange(bufferSize, -1, data.Length, "bufferSize");
+
+            if (!stream.CanWrite)
+                throw new System.ArgumentException(string.Format(Resources.Strings.Exception_ValueInvalid, "stream.CanWrite"), "stream");
+            
+            // Default the bufferSize to the size of the data.
+            if (bufferSize < 0)
+                bufferSize = data.Length;
+
+            var buffer = new byte[data.Length];
+            int read = 0;
+            while (true)
+            {
+                // Calculate what remains to be streamed into the buffer.
+                if (read + bufferSize > data.Length)
+                    bufferSize = data.Length - read;
+
+                stream.Write(buffer, read, bufferSize);
+                read += bufferSize;
+
+                // The data has been fully written into the stream.
+                if (read == data.Length)
+                    break;
+            }
+        }
+        #endregion
+    }
+}
