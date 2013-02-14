@@ -61,11 +61,20 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Attribute &quot;{0}&quot; is required but missing..
+        ///   Looks up a localized string similar to Attribute &quot;{0}&quot; is required..
         /// </summary>
         internal static string Exception_AttributeMissing {
             get {
                 return ResourceManager.GetString("Exception_AttributeMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuration does not contain key &quot;{0}&quot;..
+        /// </summary>
+        internal static string Exception_ConfigDoesNotContainKey {
+            get {
+                return ResourceManager.GetString("Exception_ConfigDoesNotContainKey", resourceCulture);
             }
         }
         
@@ -129,24 +138,6 @@ namespace Fosol.Common.Resources {
         internal static string Exception_ValueToSmall {
             get {
                 return ResourceManager.GetString("Exception_ValueToSmall", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exiting.
-        /// </summary>
-        internal static string Exit {
-            get {
-                return ResourceManager.GetString("Exit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Starting.
-        /// </summary>
-        internal static string Start {
-            get {
-                return ResourceManager.GetString("Start", resourceCulture);
             }
         }
     }

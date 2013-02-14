@@ -10,7 +10,7 @@ namespace Fosol.Common.Helpers
     /// <summary>
     /// Diagnostic utility methods.
     /// </summary>
-    public class Diagnostics
+    public class DiagnosticsHelper
     {
         #region Variables
         #endregion

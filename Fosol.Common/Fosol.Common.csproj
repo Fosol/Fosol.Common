@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,7 +46,12 @@
     <Compile Include="Configuration\CDataConfigurationPropertyAttribute.cs" />
     <Compile Include="Configuration\ConfigurationElementCollection.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
+    <Compile Include="Extensions\AttributeExtensions\AttributeExtensions.cs" />
     <Compile Include="Extensions\ByteExtensions\ByteExtensions.cs" />
+    <Compile Include="Extensions\StreamExtensions\StreamExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions\StringExtensions.cs" />
+    <Compile Include="Helpers\ConfigurationHelper.cs" />
+    <Compile Include="Serialization\BinaryHelper.cs" />
     <Compile Include="Optimization\FastDateTime.cs" />
     <Compile Include="Parsers\IPhrase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,7 +70,10 @@
     <Compile Include="Helpers\IdentityLong.cs" />
     <Compile Include="Parsers\Keyword.cs" />
     <Compile Include="Parsers\SimpleParser.cs" />
-    <Compile Include="Helpers\Diagnostics.cs" />
+    <Compile Include="Helpers\DiagnosticsHelper.cs" />
+    <Compile Include="Serialization\DataContractJsonHelper.cs" />
+    <Compile Include="Serialization\DataContractHelper.cs" />
+    <Compile Include="Serialization\XmlHelper.cs" />
     <Compile Include="Validation\Parameter.cs" />
     <Compile Include="Validation\Strings.cs" />
   </ItemGroup>

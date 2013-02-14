@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Exception_AttributeMissing" xml:space="preserve">
-    <value>Attribute "{0}" is required but missing.</value>
+    <value>Attribute "{0}" is required.</value>
+  </data>
+  <data name="Exception_ConfigDoesNotContainKey" xml:space="preserve">
+    <value>Configuration does not contain key "{0}".</value>
   </data>
   <data name="Exception_EndsWith" xml:space="preserve">
     <value>Parameter value must end with "{0}".</value>
@@ -140,11 +143,5 @@
   </data>
   <data name="Exception_ValueToSmall" xml:space="preserve">
     <value>Parameter "{0}" is too small to accept value.</value>
-  </data>
-  <data name="Exit" xml:space="preserve">
-    <value>Exiting</value>
-  </data>
-  <data name="Start" xml:space="preserve">
-    <value>Starting</value>
   </data>
 </root>

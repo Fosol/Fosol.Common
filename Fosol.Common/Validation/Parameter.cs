@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fosol.Common.Extensions.AttributeExtensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,6 +69,8 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not null or empty.
         /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -82,6 +85,8 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not null or empty.
         /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -766,7 +771,7 @@ namespace Fosol.Common.Validation
         }
         #endregion
 
-        #region AssertValue
+        #region AssertIsValue
         /// <summary>
         /// If the value does not exist in the valid values array it will throw System.ArgumentOutOfRangeException.
         /// </summary>
@@ -776,7 +781,7 @@ namespace Fosol.Common.Validation
         /// <param name="comparisonType">StringComparison type rule.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertValue(string value, string[] validValues, StringComparison comparisonType, string paramName, string message = null)
+        public static void AssertIsValue(string value, string[] validValues, StringComparison comparisonType, string paramName, string message = null)
         {
             if (validValues.Where(v => string.Compare(v, value, comparisonType) == 0).Count() != 1)
                 throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_ValueInvalid, paramName), paramName);
@@ -790,10 +795,25 @@ namespace Fosol.Common.Validation
         /// <param name="validValues">An array of valid values to compare against.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertValue(object value, object[] validValues, string paramName, string message = null)
+        public static void AssertIsValue(object value, object[] validValues, string paramName, string message = null)
         {
             if (!validValues.Contains(value))
                 throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_ValueInvalid, paramName), paramName);
+        }
+
+        /// <summary>
+        /// If the value does not equal the valid value it will throw System.ArgumentException.
+        /// This method is most effective when ensuring a parameter property is appropriate.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" is must be a valid value.</exception>
+        /// <param name="value">The value to check.</param>
+        /// <param name="validValue">The only valid value.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message describing the exception.</param>
+        public static void AssertIsValue(object value, object validValue, string paramName, string message = null)
+        {
+            if (!value.Equals(validValue))
+                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_ValueInvalid, paramName), paramName);
         }
 
         /// <summary>
@@ -805,7 +825,7 @@ namespace Fosol.Common.Validation
         /// <param name="comparer">Method to determine if the value is valid.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertValue(object value, object[] validValues, IEqualityComparer<object> comparer, string paramName, string message = null)
+        public static void AssertIsValue(object value, object[] validValues, IEqualityComparer<object> comparer, string paramName, string message = null)
         {
             if (!validValues.Contains(value, comparer))
                 throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_ValueInvalid, paramName), paramName);
@@ -820,10 +840,26 @@ namespace Fosol.Common.Validation
         /// <param name="comparer">Method to determine if the value is valid. Func<validValue, value, result>.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertValue(object value, object[] validValues, Func<object, object, bool> comparer, string paramName, string message = null)
+        public static void AssertIsValue(object value, object[] validValues, Func<object, object, bool> comparer, string paramName, string message = null)
         {
             if (validValues.Where(v => comparer(v, value)).Count() != 1)
                 throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_ValueInvalid, paramName), paramName);
+        }
+
+        /// <summary>
+        /// If the value does not equal the valid value it will throw System.ArgumentException.
+        /// This method is most effective when ensuring a parameter property is appropriate.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" is must be a valid value.</exception>
+        /// <typeparam name="T">Type of object to compare.</typeparam>
+        /// <param name="value">The value to check.</param>
+        /// <param name="validValue">The only valid value.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message describing the exception.</param>
+        public static void AssertIsValue<T>(T value, T validValue, string paramName, string message = null)
+        {
+            if (!value.Equals(validValue))
+                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_ValueInvalid, paramName), paramName);
         }
 
         /// <summary>
@@ -836,10 +872,74 @@ namespace Fosol.Common.Validation
         /// <param name="comparer">Method to determine if the value is valid. Func<validValue, value, result>.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertValue<T>(T value, T[] validValues, Func<T, T, bool> comparer, string paramName, string message = null)
+        public static void AssertIsValue<T>(T value, T[] validValues, Func<T, T, bool> comparer, string paramName, string message = null)
         {
             if (validValues.Where(v => comparer(v, value)).Count() != 1)
                 throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_ValueInvalid, paramName), paramName);
+        }
+        #endregion
+
+        #region AssertNotValue
+        /// <summary>
+        /// Asserts that the parameter value is equal to the invalid value.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <param name="value">The value to check.</param>
+        /// <param name="invalidValue">Invalid value that the value cannot be equal to.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        public static void AssertNotValue(object value, object invalidValue, string paramName, string message = null)
+        {
+            if (value.Equals(invalidValue))
+                throw new ArgumentException(message ?? Resources.Strings.Exception_ValueInvalid, paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is equal to the invalid value.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <typeparam name="T">Type of parameter being compared.</typeparam>
+        /// <param name="value">The value to check.</param>
+        /// <param name="invalidValue">Invalid value that the value cannot be equal to.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        public static void AssertNotValue<T>(T value, T invalidValue, string paramName, string message = null)
+        {
+            if (value.Equals(invalidValue))
+                throw new ArgumentException(message ?? Resources.Strings.Exception_ValueInvalid, paramName);
+        }
+        #endregion
+
+        #region AssertAttribute
+        /// <summary>
+        /// Assert that the parameter has an attribute of the specified type defined.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <param name="element">Element to check for the specified attribute.</param>
+        /// <param name="attributeType">Type of attribute to look for.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message to describe the exception.</param>
+        public static void AssertAttribute(object element, Type attributeType, string paramName, string message = null)
+        {
+            if (!element.HasAttribute(typeof(System.Runtime.Serialization.DataContractAttribute)))
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeMissing, attributeType.Name), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the parameter has an attribute of the specified type defined.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <param name="element">Element to check for the specified attribute.</param>
+        /// <param name="attributeType">Type of attribute to look for.</param>
+        /// <param name="inherit">If true it will also look in the ancestor objects for the attribute type.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message to describe the exception.</param>
+        public static void AssertAttribute(object element, Type attributeType, bool inherit, string paramName, string message = null)
+        {
+            if (!element.HasAttribute(typeof(System.Runtime.Serialization.DataContractAttribute), inherit))
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeMissing, attributeType.Name), paramName);
         }
         #endregion
         #endregion

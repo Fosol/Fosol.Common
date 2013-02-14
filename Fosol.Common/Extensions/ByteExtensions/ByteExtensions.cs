@@ -13,6 +13,18 @@ namespace Fosol.Common.Extensions.ByteExtensions
     {
         #region Methods
         /// <summary>
+        /// Converts a byte array into a string value.
+        /// </summary>
+        /// <param name="value">Byte array to convert into a string.</param>
+        /// <returns>String value.</returns>
+        public static string ConvertToString(this byte[] value)
+        {
+            var data = new char[value.Length / sizeof(char)];
+            System.Buffer.BlockCopy(value, 0, data, 0, value.Length);
+            return new string(data);
+        }
+
+        /// <summary>
         /// Copies the data into the destination array starting at the startIndex position.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameters "destination", and "value" cannot be null.</exception>
@@ -209,45 +221,6 @@ namespace Fosol.Common.Extensions.ByteExtensions
         public static T Deserialize<T>(this byte[] data)
         {
             return (T)Deserialize(data);
-        }
-
-        /// <summary>
-        /// Writes the data into the specified stream.
-        /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "stream" cannot be readonly.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameters "data", and "stream" cannot be null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "bufferSize" cannot be less than -1 or greater than the size of the data.</exception>
-        /// <param name="data">Array of byte to write into stream.</param>
-        /// <param name="stream">Stream object that will receive the data.</param>
-        /// <param name="bufferSize">Size of buffer to write into the stream at one time.  By default -1 means write the whole data amount at one time.</param>
-        public static void ToStream(this byte[] data, System.IO.Stream stream, int bufferSize = -1)
-        {
-            Validation.Parameter.AssertNotNull(data, "data");
-            Validation.Parameter.AssertNotNull(stream, "stream");
-            Validation.Parameter.AssertMinMaxRange(bufferSize, -1, data.Length, "bufferSize");
-
-            if (!stream.CanWrite)
-                throw new System.ArgumentException(string.Format(Resources.Strings.Exception_ValueInvalid, "stream.CanWrite"), "stream");
-            
-            // Default the bufferSize to the size of the data.
-            if (bufferSize < 0)
-                bufferSize = data.Length;
-
-            var buffer = new byte[data.Length];
-            int read = 0;
-            while (true)
-            {
-                // Calculate what remains to be streamed into the buffer.
-                if (read + bufferSize > data.Length)
-                    bufferSize = data.Length - read;
-
-                stream.Write(buffer, read, bufferSize);
-                read += bufferSize;
-
-                // The data has been fully written into the stream.
-                if (read == data.Length)
-                    break;
-            }
         }
         #endregion
     }
