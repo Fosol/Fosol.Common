@@ -33,7 +33,10 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -50,7 +53,11 @@
     <Compile Include="Extensions\ByteExtensions\ByteExtensions.cs" />
     <Compile Include="Extensions\StreamExtensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StringExtensions\StringExtensions.cs" />
+    <Compile Include="Helpers\Autocrop.cs" />
+    <Compile Include="Helpers\AutocropMode.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Helpers\WebServiceHelper.cs" />
     <Compile Include="Serialization\BinaryHelper.cs" />
     <Compile Include="Optimization\FastDateTime.cs" />
     <Compile Include="Parsers\IPhrase.cs" />
