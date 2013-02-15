@@ -120,6 +120,9 @@
   <data name="Exception_AttributeMissing" xml:space="preserve">
     <value>Attribute "{0}" is required.</value>
   </data>
+  <data name="Exception_AutocropScale" xml:space="preserve">
+    <value>Autocrop height or width must be greater than zero.</value>
+  </data>
   <data name="Exception_ConfigDoesNotContainKey" xml:space="preserve">
     <value>Configuration does not contain key "{0}".</value>
   </data>

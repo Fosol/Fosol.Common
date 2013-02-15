@@ -514,14 +514,15 @@ namespace Fosol.Common.Validation
         }
         #endregion
 
-        #region AssertMinMaxRange
+        #region AssertRange
+        #region decimal
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinMaxRange(int value, int minimum, int maximum, string paramName)
+        public static void AssertRange(decimal value, decimal minimum, decimal maximum, string paramName)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -534,7 +535,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinMaxRange(int value, int minimum, int maximum, string paramName, string message)
+        public static void AssertRange(decimal value, decimal minimum, decimal maximum, string paramName, string message)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, message);
@@ -547,19 +548,22 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinMaxRange(int value, int minimum, int maximum, string message, Exception innerException)
+        public static void AssertRange(decimal value, decimal minimum, decimal maximum, string message, Exception innerException)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
+        #endregion
 
+        #region double
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinMaxRange(long value, long minimum, long maximum, string paramName)
+        /// <param name="message">A message to describe the exception</param>
+        public static void AssertRange(double value, double minimum, double maximum, string paramName)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -572,7 +576,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinMaxRange(long value, long minimum, long maximum, string paramName, string message)
+        public static void AssertRange(double value, double minimum, double maximum, string paramName, string message)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, message);
@@ -585,19 +589,21 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinMaxRange(long value, long minimum, long maximum, string message, Exception innerException)
+        public static void AssertRange(double value, double minimum, double maximum, string message, Exception innerException)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
+        #endregion
 
+        #region float
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinMaxRange(Single value, Single minimum, Single maximum, string paramName)
+        public static void AssertRange(float value, float minimum, float maximum, string paramName)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -610,7 +616,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinMaxRange(Single value, Single minimum, Single maximum, string paramName, string message)
+        public static void AssertRange(float value, float minimum, float maximum, string paramName, string message)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, message);
@@ -623,20 +629,21 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinMaxRange(Single value, Single minimum, Single maximum, string message, Exception innerException)
+        public static void AssertRange(float value, float minimum, float maximum, string message, Exception innerException)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
+        #endregion
 
+        #region int
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinMaxRange(double value, double minimum, double maximum, string paramName)
+        public static void AssertRange(int value, int minimum, int maximum, string paramName)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -649,7 +656,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinMaxRange(double value, double minimum, double maximum, string paramName, string message)
+        public static void AssertRange(int value, int minimum, int maximum, string paramName, string message)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, message);
@@ -662,19 +669,21 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinMaxRange(double value, double minimum, double maximum, string message, Exception innerException)
+        public static void AssertRange(int value, int minimum, int maximum, string message, Exception innerException)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
+        #endregion
 
+        #region long
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinMaxRange(Int16 value, Int16 minimum, Int16 maximum, string paramName)
+        public static void AssertRange(long value, long minimum, long maximum, string paramName)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -687,7 +696,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinMaxRange(Int16 value, Int16 minimum, Int16 maximum, string paramName, string message)
+        public static void AssertRange(long value, long minimum, long maximum, string paramName, string message)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, message);
@@ -700,11 +709,52 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinMaxRange(Int16 value, Int16 minimum, Int16 maximum, string message, Exception innerException)
+        public static void AssertRange(long value, long minimum, long maximum, string message, Exception innerException)
         {
             if (value < minimum && value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
+        #endregion
+
+        #region short
+        /// <summary>
+        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// </summary>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        public static void AssertRange(short value, short minimum, short maximum, string paramName)
+        {
+            if (value < minimum && value > maximum)
+                throw new ArgumentOutOfRangeException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// </summary>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void AssertRange(short value, short minimum, short maximum, string paramName, string message)
+        {
+            if (value < minimum && value > maximum)
+                throw new ArgumentOutOfRangeException(paramName, message);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// </summary>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        /// <param name="innerException">The exception that is the cause of this exception.</param>
+        public static void AssertRange(short value, short minimum, short maximum, string message, Exception innerException)
+        {
+            if (value < minimum && value > maximum)
+                throw new ArgumentOutOfRangeException(message, innerException);
+        }
+        #endregion
         #endregion
 
         #region AssertStartsWith

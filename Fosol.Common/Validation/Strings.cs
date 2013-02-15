@@ -12,15 +12,6 @@ namespace Fosol.Common.Validation
     /// </summary>
     public static class Strings
     {
-        #region Variables
-        #endregion
-
-        #region Properties
-        #endregion
-
-        #region Constructors
-        #endregion
-
         #region Methods
         /// <summary>
         /// Determines if the value is an email address.
@@ -87,9 +78,6 @@ namespace Fosol.Common.Validation
             var reg = new Regex(@"^[0-9][A-Z][0-9]$", RegexOptions.IgnoreCase);
             return reg.IsMatch(value);
         }
-        #endregion
-
-        #region Events
         #endregion
     }
 }

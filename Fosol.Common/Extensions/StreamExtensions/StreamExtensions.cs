@@ -91,7 +91,7 @@ namespace Fosol.Common.Extensions.StreamExtensions
         {
             Validation.Parameter.AssertNotNull(value, "value");
             Validation.Parameter.AssertNotNull(stream, "stream");
-            Validation.Parameter.AssertMinMaxRange(bufferSize, -1, value.Length, "bufferSize");
+            Validation.Parameter.AssertRange(bufferSize, -1, value.Length, "bufferSize");
             Validation.Parameter.AssertNotValue(bufferSize, 0, "bufferSize");
             Validation.Parameter.AssertNotValue(stream.CanWrite, false, "stream.CanWrite");
 

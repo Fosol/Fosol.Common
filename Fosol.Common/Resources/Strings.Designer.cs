@@ -70,6 +70,15 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Autocrop height or width must be greater than zero..
+        /// </summary>
+        internal static string Exception_AutocropScale {
+            get {
+                return ResourceManager.GetString("Exception_AutocropScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration does not contain key &quot;{0}&quot;..
         /// </summary>
         internal static string Exception_ConfigDoesNotContainKey {

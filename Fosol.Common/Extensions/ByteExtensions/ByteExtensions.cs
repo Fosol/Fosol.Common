@@ -38,7 +38,7 @@ namespace Fosol.Common.Extensions.ByteExtensions
         {
             Validation.Parameter.AssertNotNull(destination, "destination");
             Validation.Parameter.AssertNotNull(value, "value");
-            Validation.Parameter.AssertMinMaxRange(startIndex, 0, destination.Length - value.Length - 1, "startIndex");
+            Validation.Parameter.AssertRange(startIndex, 0, destination.Length - value.Length - 1, "startIndex");
 
             if (destination.Length < value.Length + startIndex)
                 throw new ArgumentOutOfRangeException("destination", String.Format(Resources.Strings.Exception_ValueToSmall, "destination"));
@@ -101,7 +101,7 @@ namespace Fosol.Common.Extensions.ByteExtensions
         {
             Validation.Parameter.AssertNotNull(data, "data");
             Validation.Parameter.AssertNotNull(value, "value");
-            Validation.Parameter.AssertMinMaxRange(startIndex, 0, data.Length, "startIndex");
+            Validation.Parameter.AssertRange(startIndex, 0, data.Length, "startIndex");
 
             if (data.Length == 0 || value.Length == 0)
                 return -1;
@@ -126,7 +126,7 @@ namespace Fosol.Common.Extensions.ByteExtensions
         {
             Validation.Parameter.AssertNotNull(data, "data");
             Validation.Parameter.AssertNotNull(value, "value");
-            Validation.Parameter.AssertMinMaxRange(startIndex, 0, data.Length, "startIndex");
+            Validation.Parameter.AssertRange(startIndex, 0, data.Length, "startIndex");
 
             if (value.Length > (data.Length - startIndex))
                 return false;
@@ -153,7 +153,7 @@ namespace Fosol.Common.Extensions.ByteExtensions
         {
             Validation.Parameter.AssertNotNull(data, "data");
             Validation.Parameter.AssertNotNull(value, "value");
-            Validation.Parameter.AssertMinMaxRange(index, 0, data.Length, "index");
+            Validation.Parameter.AssertRange(index, 0, data.Length, "index");
 
             if (value.Length > (data.Length - index))
                 return false;

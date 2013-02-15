@@ -114,7 +114,7 @@ namespace Fosol.Common.Parsers
         protected List<IPhrase> ParseFirst(string text, int startIndex, out int endIndex)
         {
             Validation.Parameter.AssertNotNull(text, "text");
-            Validation.Parameter.AssertMinMaxRange(startIndex, 0, text.Length - 1, "startIndex");
+            Validation.Parameter.AssertRange(startIndex, 0, text.Length - 1, "startIndex");
 
             var keywords = new List<IPhrase>();
             var start = ParseStart(text, startIndex);
@@ -159,7 +159,7 @@ namespace Fosol.Common.Parsers
         protected int ParseStart(string text, int startIndex = 0)
         {
             Validation.Parameter.AssertNotNull(text, "text");
-            Validation.Parameter.AssertMinMaxRange(startIndex, 0, text.Length - 1, "startIndex");
+            Validation.Parameter.AssertRange(startIndex, 0, text.Length - 1, "startIndex");
 
             return text.IndexOf(this.StartBoundary, startIndex);
         }
@@ -175,7 +175,7 @@ namespace Fosol.Common.Parsers
         protected int ParseEnd(string text, int startIndex = 0)
         {
             Validation.Parameter.AssertNotNull(text, "text");
-            Validation.Parameter.AssertMinMaxRange(startIndex, 0, text.Length - 1, "startIndex");
+            Validation.Parameter.AssertRange(startIndex, 0, text.Length - 1, "startIndex");
 
             var end = text.IndexOf(this.EndBoundary, startIndex);
 
