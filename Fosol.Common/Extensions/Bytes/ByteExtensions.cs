@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Extensions.ByteExtensions
+namespace Fosol.Common.Extensions.Bytes
 {
     /// <summary>
     /// Extentions methods for bytes.

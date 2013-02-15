@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Extensions.StreamExtensions
+namespace Fosol.Common.Extensions.Streams
 {
     /// <summary>
     /// Utility extensions to help convert from and to streams.

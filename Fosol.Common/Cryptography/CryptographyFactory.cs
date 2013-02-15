@@ -1,4 +1,4 @@
-﻿using Fosol.Common.Extensions.ByteExtensions;
+﻿using Fosol.Common.Extensions.Bytes;
 using System;
 using System.Collections.Generic;
 using System.IO;

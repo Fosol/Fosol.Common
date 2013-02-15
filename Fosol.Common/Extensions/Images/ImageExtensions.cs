@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Extensions.ImageExtensions
+namespace Fosol.Common.Extensions.Images
 {
     /// <summary>
     /// Extension methods for image objects.
@@ -28,6 +28,21 @@ namespace Fosol.Common.Extensions.ImageExtensions
             {
                 image.Save(stream, format);
                 return stream.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Converts a byte array into an image.
+        /// </summary>
+        /// <param name="image">Byte array of data.</param>
+        /// <param name="useEmbeddedColorManagement">Use embedded color management information in stream for colouring.</param>
+        /// <param name="validateImageData">True to validate image data, otherwise false.</param>
+        /// <returns>Image object.</returns>
+        public static Image ToImage(this byte[] image, bool useEmbeddedColorManagement = false, bool validateImageData = false)
+        {
+            using (var stream = new MemoryStream(image))
+            {
+                return Image.FromStream(stream, useEmbeddedColorManagement, validateImageData);
             }
         }
         #endregion

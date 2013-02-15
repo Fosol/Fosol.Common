@@ -1,4 +1,5 @@
-﻿using Fosol.Common.Extensions.StreamExtensions;
+﻿using Fosol.Common.Extensions.Images;
+using Fosol.Common.Extensions.Streams;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -80,23 +81,47 @@ namespace Fosol.Common.Helpers
         /// <summary>
         /// Creates a new instace of an Autocrop object.
         /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "imageStream" must be readable.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "imageStream" cannot be null.</exception>
         /// <param name="imageStream">Source stream with image that will be autocropped.</param>
-        public Autocrop(Stream imageStream)
+        /// <param name="useEmbeddedColorManagement">Determines whether it should use the embedded color management information in the stream.</param>
+        /// <param name="validateImageData">Determines whether it should validate the image data after converting.</param>
+        public Autocrop(Stream imageStream, bool useEmbeddedColorManagement = false, bool validateImageData = false)
             : this()
         {
             Validation.Parameter.AssertNotNull(imageStream, "imageStream");
+            Validation.Parameter.AssertIsValue(imageStream.CanRead, true, "imageStream.CanRead");
 
-            this.Photo = Image.FromStream(imageStream);
+            this.Photo = Image.FromStream(imageStream, useEmbeddedColorManagement, validateImageData);
         }
 
         /// <summary>
         /// Creates a new instance of an Autocrop object.
         /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "image" cannot be null.</exception>
         /// <param name="image">Source image that will be autocropped.</param>
         public Autocrop(Image image)
             : this()
         {
+            Validation.Parameter.AssertNotNull(image, "image");
+
             this.Photo = image;
+        }
+
+        /// <summary>
+        /// Creates a new instance of an Autocrop object.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "image" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "image" cannot be null.</exception>
+        /// <param name="image">Source image that will be autocropped.</param>
+        /// <param name="useEmbeddedColorManagement">Determines whether it should use the embedded color management information in the stream.</param>
+        /// <param name="validateImageData">Determines whether it should validate the image data after converting.</param>
+        public Autocrop(byte[] image, bool useEmbeddedColorManagement = false, bool validateImageData = false)
+            : this()
+        {
+            Validation.Parameter.AssertNotNullOrEmpty(image, "image");
+
+            this.Photo = image.ToImage(useEmbeddedColorManagement, validateImageData);
         }
         #endregion
 

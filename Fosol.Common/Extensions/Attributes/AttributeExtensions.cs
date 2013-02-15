@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Extensions.AttributeExtensions
+namespace Fosol.Common.Extensions.Attributes
 {
     /// <summary>
     /// Extension methods for attributes.

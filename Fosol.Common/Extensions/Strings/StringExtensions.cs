@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Extensions.StringExtensions
+namespace Fosol.Common.Extensions.Strings
 {
     /// <summary>
     /// Extension methods for strings.

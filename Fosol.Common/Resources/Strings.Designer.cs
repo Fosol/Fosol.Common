@@ -97,6 +97,15 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Xml NodeType is not valid for CDATA.  Expecting text or cdata..
+        /// </summary>
+        internal static string Exception_InvalidCData {
+            get {
+                return ResourceManager.GetString("Exception_InvalidCData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parameter cannot be null or empty..
         /// </summary>
         internal static string Exception_NotNullOrEmpty {

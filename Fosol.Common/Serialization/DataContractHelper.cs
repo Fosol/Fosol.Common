@@ -1,4 +1,4 @@
-﻿using Fosol.Common.Extensions.StreamExtensions;
+﻿using Fosol.Common.Extensions.Streams;
 using System;
 using System.Collections.Generic;
 using System.IO;

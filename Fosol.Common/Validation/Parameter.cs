@@ -1,4 +1,4 @@
-﻿using Fosol.Common.Extensions.AttributeExtensions;
+﻿using Fosol.Common.Extensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +12,6 @@ namespace Fosol.Common.Validation
     /// </summary>
     public static class Parameter
     {
-        #region Variables
-        #endregion
-
-        #region Properties
-        #endregion
-
-        #region Constructors
-        #endregion
-
         #region Methods
         #region AssertNotNull
         /// <summary>
@@ -98,9 +89,109 @@ namespace Fosol.Common.Validation
             if (value == String.Empty)
                 throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName, innerException);
         }
+
+        /// <summary>
+        /// Asserts that the parameter collection is not null and not empty.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="collection">Parameter of type enumerable.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Message to describe the error.</param>
+        public static void AssertNotNullOrEmpty(IEnumerable<object> collection, string paramName, string message = null)
+        {
+            AssertNotNull(collection, paramName);
+
+            if (collection.Count() == 0)
+                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter collection is not null and not empty.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="collection">Parameter of type enumerable.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Message to describe the error.</param>
+        /// <param name="innerException">The exception that caused this exception</param>
+        public static void AssertNotNullOrEmpty(IEnumerable<object> collection, string paramName, string message, Exception innerException)
+        {
+            AssertNotNull(collection, paramName);
+
+            if (collection.Count() == 0)
+                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName, innerException);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter array is not null and not empty.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="collection">Parameter of type array.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Message to describe the error.</param>
+        public static void AssertNotNullOrEmpty(object[] array, string paramName, string message = null)
+        {
+            AssertNotNull(array, paramName);
+
+            if (array.Length == 0)
+                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter array is not null and not empty.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="collection">Parameter of type array.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Message to describe the error.</param>
+        /// <param name="innerException">The exception that caused this exception</param>
+        public static void AssertNotNullOrEmpty(object[] array, string paramName, string message, Exception innerException)
+        {
+            AssertNotNull(array, paramName);
+
+            if (array.Length == 0)
+                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName, innerException);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter array is not null and not empty.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="collection">Parameter of type array.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Message to describe the error.</param>
+        public static void AssertNotNullOrEmpty(byte[] array, string paramName, string message = null)
+        {
+            AssertNotNull(array, paramName);
+
+            if (array.Length == 0)
+                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter array is not null and not empty.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="collection">Parameter of type array.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Message to describe the error.</param>
+        /// <param name="innerException">The exception that caused this exception</param>
+        public static void AssertNotNullOrEmpty(byte[] array, string paramName, string message, Exception innerException)
+        {
+            AssertNotNull(array, paramName);
+
+            if (array.Length == 0)
+                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName, innerException);
+        }
         #endregion
 
         #region AssertMinRange
+        #region decimal
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
@@ -108,7 +199,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(int value, int minimum, string paramName)
+        public static void AssertMinRange(decimal value, decimal minimum, string paramName)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -122,7 +213,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(int value, int minimum, string paramName, string message)
+        public static void AssertMinRange(decimal value, decimal minimum, string paramName, string message)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName, message);
@@ -136,94 +227,14 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(int value, int minimum, string message, Exception innerException)
+        public static void AssertMinRange(decimal value, decimal minimum, string message, Exception innerException)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
+        #endregion
 
-        /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
-        /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
-        /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(long value, long minimum, string paramName)
-        {
-            if (value < minimum)
-                throw new ArgumentOutOfRangeException(paramName);
-        }
-
-        /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
-        /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
-        /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
-        /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(long value, long minimum, string paramName, string message)
-        {
-            if (value < minimum)
-                throw new ArgumentOutOfRangeException(paramName, message);
-        }
-
-        /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
-        /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
-        /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="message">A message to describe the exception</param>
-        /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(long value, long minimum, string message, Exception innerException)
-        {
-            if (value < minimum)
-                throw new ArgumentOutOfRangeException(message, innerException);
-        }
-
-        /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
-        /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
-        /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(Single value, Single minimum, string paramName)
-        {
-            if (value < minimum)
-                throw new ArgumentOutOfRangeException(paramName);
-        }
-
-        /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
-        /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
-        /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
-        /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(Single value, Single minimum, string paramName, string message)
-        {
-            if (value < minimum)
-                throw new ArgumentOutOfRangeException(paramName, message);
-        }
-
-        /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
-        /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
-        /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="message">A message to describe the exception</param>
-        /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(Single value, Single minimum, string message, Exception innerException)
-        {
-            if (value < minimum)
-                throw new ArgumentOutOfRangeException(message, innerException);
-        }
-
+        #region double
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
@@ -264,7 +275,9 @@ namespace Fosol.Common.Validation
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
+        #endregion
 
+        #region float
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
@@ -272,7 +285,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(Int16 value, Int16 minimum, string paramName)
+        public static void AssertMinRange(float value, float minimum, string paramName)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -286,7 +299,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(Int16 value, Int16 minimum, string paramName, string message)
+        public static void AssertMinRange(float value, float minimum, string paramName, string message)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName, message);
@@ -300,14 +313,145 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(Int16 value, Int16 minimum, string message, Exception innerException)
+        public static void AssertMinRange(float value, float minimum, string message, Exception innerException)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
         #endregion
 
+        #region int
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        public static void AssertMinRange(int value, int minimum, string paramName)
+        {
+            if (value < minimum)
+                throw new ArgumentOutOfRangeException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void AssertMinRange(int value, int minimum, string paramName, string message)
+        {
+            if (value < minimum)
+                throw new ArgumentOutOfRangeException(paramName, message);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        /// <param name="innerException">The exception that is the cause of this exception.</param>
+        public static void AssertMinRange(int value, int minimum, string message, Exception innerException)
+        {
+            if (value < minimum)
+                throw new ArgumentOutOfRangeException(message, innerException);
+        }
+        #endregion
+
+        #region long
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        public static void AssertMinRange(long value, long minimum, string paramName)
+        {
+            if (value < minimum)
+                throw new ArgumentOutOfRangeException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void AssertMinRange(long value, long minimum, string paramName, string message)
+        {
+            if (value < minimum)
+                throw new ArgumentOutOfRangeException(paramName, message);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        /// <param name="innerException">The exception that is the cause of this exception.</param>
+        public static void AssertMinRange(long value, long minimum, string message, Exception innerException)
+        {
+            if (value < minimum)
+                throw new ArgumentOutOfRangeException(message, innerException);
+        }
+        #endregion
+
+        #region short
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        public static void AssertMinRange(short value, short minimum, string paramName)
+        {
+            if (value < minimum)
+                throw new ArgumentOutOfRangeException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void AssertMinRange(short value, short minimum, string paramName, string message)
+        {
+            if (value < minimum)
+                throw new ArgumentOutOfRangeException(paramName, message);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        /// <param name="innerException">The exception that is the cause of this exception.</param>
+        public static void AssertMinRange(short value, short minimum, string message, Exception innerException)
+        {
+            if (value < minimum)
+                throw new ArgumentOutOfRangeException(message, innerException);
+        }
+        #endregion
+        #endregion
+
         #region AssertMaxRange
+        #region decimal
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
@@ -315,7 +459,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMaxRange(int value, int maximum, string paramName)
+        public static void AssertMaxRange(decimal value, decimal maximum, string paramName)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -329,7 +473,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(int value, int maximum, string paramName, string message)
+        public static void AssertMaxRange(decimal value, decimal maximum, string paramName, string message)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, message);
@@ -343,94 +487,14 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(int value, int maximum, string message, Exception innerException)
+        public static void AssertMaxRange(decimal value, decimal maximum, string message, Exception innerException)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
+        #endregion
 
-        /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
-        /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
-        /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(long value, long maximum, string paramName)
-        {
-            if (value > maximum)
-                throw new ArgumentOutOfRangeException(paramName);
-        }
-
-        /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
-        /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
-        /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
-        /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(long value, long maximum, string paramName, string message)
-        {
-            if (value > maximum)
-                throw new ArgumentOutOfRangeException(paramName, message);
-        }
-
-        /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
-        /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
-        /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="message">A message to describe the exception</param>
-        /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(long value, long maximum, string message, Exception innerException)
-        {
-            if (value > maximum)
-                throw new ArgumentOutOfRangeException(message, innerException);
-        }
-
-        /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
-        /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
-        /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMaxRange(Single value, Single maximum, string paramName)
-        {
-            if (value > maximum)
-                throw new ArgumentOutOfRangeException(paramName);
-        }
-
-        /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
-        /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
-        /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
-        /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(Single value, Single maximum, string paramName, string message)
-        {
-            if (value > maximum)
-                throw new ArgumentOutOfRangeException(paramName, message);
-        }
-
-        /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
-        /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
-        /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="message">A message to describe the exception</param>
-        /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(Single value, Single maximum, string message, Exception innerException)
-        {
-            if (value > maximum)
-                throw new ArgumentOutOfRangeException(message, innerException);
-        }
-
+        #region double
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
@@ -471,7 +535,9 @@ namespace Fosol.Common.Validation
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
+        #endregion
 
+        #region float
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
@@ -479,7 +545,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMaxRange(Int16 value, Int16 maximum, string paramName)
+        public static void AssertMaxRange(float value, float maximum, string paramName)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -493,7 +559,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(Int16 value, Int16 maximum, string paramName, string message)
+        public static void AssertMaxRange(float value, float maximum, string paramName, string message)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, message);
@@ -507,11 +573,141 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(Int16 value, Int16 maximum, string message, Exception innerException)
+        public static void AssertMaxRange(float value, float maximum, string message, Exception innerException)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
+        #endregion
+
+        #region int
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        public static void AssertMaxRange(int value, int maximum, string paramName)
+        {
+            if (value > maximum)
+                throw new ArgumentOutOfRangeException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void AssertMaxRange(int value, int maximum, string paramName, string message)
+        {
+            if (value > maximum)
+                throw new ArgumentOutOfRangeException(paramName, message);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        /// <param name="innerException">The exception that is the cause of this exception.</param>
+        public static void AssertMaxRange(int value, int maximum, string message, Exception innerException)
+        {
+            if (value > maximum)
+                throw new ArgumentOutOfRangeException(message, innerException);
+        }
+        #endregion
+
+        #region long
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void AssertMaxRange(long value, long maximum, string paramName)
+        {
+            if (value > maximum)
+                throw new ArgumentOutOfRangeException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void AssertMaxRange(long value, long maximum, string paramName, string message)
+        {
+            if (value > maximum)
+                throw new ArgumentOutOfRangeException(paramName, message);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        /// <param name="innerException">The exception that is the cause of this exception.</param>
+        public static void AssertMaxRange(long value, long maximum, string message, Exception innerException)
+        {
+            if (value > maximum)
+                throw new ArgumentOutOfRangeException(message, innerException);
+        }
+        #endregion
+
+        #region short
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        public static void AssertMaxRange(short value, short maximum, string paramName)
+        {
+            if (value > maximum)
+                throw new ArgumentOutOfRangeException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void AssertMaxRange(short value, short maximum, string paramName, string message)
+        {
+            if (value > maximum)
+                throw new ArgumentOutOfRangeException(paramName, message);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        /// <param name="innerException">The exception that is the cause of this exception.</param>
+        public static void AssertMaxRange(short value, short maximum, string message, Exception innerException)
+        {
+            if (value > maximum)
+                throw new ArgumentOutOfRangeException(message, innerException);
+        }
+        #endregion
         #endregion
 
         #region AssertRange
@@ -992,9 +1188,6 @@ namespace Fosol.Common.Validation
                 throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeMissing, attributeType.Name), paramName);
         }
         #endregion
-        #endregion
-
-        #region Events
         #endregion
     }
 }
