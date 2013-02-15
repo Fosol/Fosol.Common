@@ -123,6 +123,20 @@ namespace Fosol.Common.Helpers
 
             this.Photo = image.ToImage(useEmbeddedColorManagement, validateImageData);
         }
+
+        /// <summary>
+        /// Creates a new instacne of an Autocrop object.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "filename" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "filename" cannot be null.</exception>
+        /// <param name="filename">Name and path to the file of the image.</param>
+        /// <param name="useEmbeddedColorManagement">Set to true to use color management information set in the file.</param>
+        public Autocrop(string filename, bool useEmbeddedColorManagement = false)
+        {
+            Validation.Parameter.AssertNotNullOrEmpty(filename, "filename");
+
+            this.Photo = Image.FromFile(filename, useEmbeddedColorManagement);
+        }
         #endregion
 
         #region Methods

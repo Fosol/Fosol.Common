@@ -115,6 +115,15 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A service error occured.  Please inspect the Fault property for details..
+        /// </summary>
+        internal static string Exception_ServiceFault {
+            get {
+                return ResourceManager.GetString("Exception_ServiceFault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parameter value must start with &quot;{0}&quot;..
         /// </summary>
         internal static string Exception_StartsWith {
@@ -129,6 +138,15 @@ namespace Fosol.Common.Resources {
         internal static string Exception_TooManyOfAttribute {
             get {
                 return ResourceManager.GetString("Exception_TooManyOfAttribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; contains more than one key value pair..
+        /// </summary>
+        internal static string Exception_TooManyPairs {
+            get {
+                return ResourceManager.GetString("Exception_TooManyPairs", resourceCulture);
             }
         }
         
@@ -156,6 +174,15 @@ namespace Fosol.Common.Resources {
         internal static string Exception_ValueToSmall {
             get {
                 return ResourceManager.GetString("Exception_ValueToSmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}   --- End of inner exception stack trace ---{0}.
+        /// </summary>
+        internal static string ExceptionExtensions_ExceptionToString {
+            get {
+                return ResourceManager.GetString("ExceptionExtensions_ExceptionToString", resourceCulture);
             }
         }
     }

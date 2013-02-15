@@ -16,6 +16,55 @@ namespace Fosol.Common.Serialization
     {
         #region Methods
         /// <summary>
+        /// Serialize the object into a byte array with the BinaryFormatter.
+        /// </summary>
+        /// <param name="data">Object to serialize.</param>
+        /// <returns>Byte array.</returns>
+        public static byte[] Serialize(object data)
+        {
+            Validation.Parameter.AssertNotNull(data, "data");
+
+            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            using (var stream = new MemoryStream())
+            {
+                formatter.Serialize(stream, data);
+                stream.Seek(0, SeekOrigin.Begin);
+                return stream.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Deserialize a byte array into the original object that it was serialized from.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "data" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
+        /// <param name="data">Byte array to deserialize.</param>
+        /// <returns>A new instance of an object.</returns>
+        public static object Deserialize(byte[] data)
+        {
+            Validation.Parameter.AssertNotNullOrEmpty(data, "data");
+
+            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            using (var stream = new System.IO.MemoryStream(data))
+            {
+                return formatter.Deserialize(stream);
+            }
+        }
+
+        /// <summary>
+        /// Deserialize a byte array into the specified type.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "data" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
+        /// <typeparam name="T">Type of object to create.</typeparam>
+        /// <param name="data">Byte array to deserialize.</param>
+        /// <returns>A new instance of the specified type.</returns>
+        public static T Deserialize<T>(byte[] data)
+        {
+            return (T)Deserialize(data);
+        }
+
+        /// <summary>
         /// Serialize the data as a binary file.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>

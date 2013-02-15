@@ -243,6 +243,7 @@ namespace Fosol.Common.Extensions.Streams
         /// <summary>
         /// Writes the stream to a string with the specified encoding.
         /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "stream" must be readable.</exception>
         /// <exception cref="System.ArgumentNullException">Parameters "stream", and "encoding" cannot be null.</exception>
         /// <exception cref="System.ArgumentOutOfRangeException">Parameter "bufferSize" must be greater than 0.</exception>
         /// <param name="stream">Stream object to read from.</param>
@@ -255,6 +256,7 @@ namespace Fosol.Common.Extensions.Streams
         public static string WriteToString(this Stream stream, Encoding encoding, bool detectEncodingFromByteOrderMarks = false, int bufferSize = DefaultBufferSize, StreamReadProgressCallback statusCallback = null, params Object[] args)
         {
             Validation.Parameter.AssertNotNull(stream, "stream");
+            Validation.Parameter.AssertIsValue(stream.CanRead, true, "stream");
             Validation.Parameter.AssertNotNull(encoding, "encoding");
             Validation.Parameter.AssertMinRange(bufferSize, 1, "bufferSize");
 

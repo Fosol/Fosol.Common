@@ -30,9 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -51,14 +53,26 @@
     <Compile Include="Cryptography\CryptographyFactory.cs" />
     <Compile Include="Extensions\Attributes\AttributeExtensions.cs" />
     <Compile Include="Extensions\Bytes\ByteExtensions.cs" />
+    <Compile Include="Extensions\Colors\Drawings\ColorExtensions.cs" />
+    <Compile Include="Extensions\Colors\Media\ColorExtensions.cs" />
+    <Compile Include="Extensions\Enums\EnumExtensions.cs" />
+    <Compile Include="Extensions\Events\EventExtensions.cs" />
+    <Compile Include="Extensions\Exceptions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\Files\FileExtensions.cs" />
     <Compile Include="Extensions\Images\ImageExtensions.cs" />
+    <Compile Include="Extensions\Numbers\NumberExtensions.cs" />
+    <Compile Include="Extensions\Objects\ObjectExtensions.cs" />
+    <Compile Include="Extensions\Queryables\QueryableExtensions.cs" />
     <Compile Include="Extensions\Streams\StreamExtensions.cs" />
     <Compile Include="Extensions\Strings\StringExtensions.cs" />
+    <Compile Include="Extensions\UriBuilders\UriBuilderExtensions.cs" />
+    <Compile Include="Extensions\Uris\UriExtensions.cs" />
     <Compile Include="Helpers\AssemblyResourceHelper.cs" />
     <Compile Include="Helpers\Autocrop.cs" />
     <Compile Include="Helpers\AutocropMode.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Serialization\CData.cs" />
+    <Compile Include="ServiceModel\ServiceException`.cs" />
     <Compile Include="Web\DomainComparer.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />

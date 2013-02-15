@@ -14,7 +14,38 @@ namespace Fosol.Common.Serialization
     /// </summary>
     public static class DataContractHelper
     {
+        #region Variables
+        private static IDictionary<Type, DataContractSerializer> _CachedSerializers = new Dictionary<Type, DataContractSerializer>();
+        #endregion
+
         #region Methods
+        /// <summary>
+        /// From MSDN:
+        /// To increase performance, the XML serialization infrastructure dynamically generates assemblies to serialize and 
+        /// deserialize specified types. The infrastructure finds and reuses those assemblies. This behavior occurs only when 
+        /// using the following constructors:
+        /// 
+        /// XmlSerializer.XmlSerializer(Type)
+        /// XmlSerializer.XmlSerializer(Type, String)
+        /// 
+        /// If you use any of the other constructors, multiple versions of the same assembly are generated and never unloaded, 
+        /// which results in a memory leak and poor performance. The easiest solution is to use one of the previously mentioned 
+        /// two constructors. Otherwise, you must cache the assemblies.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "classType" cannot be null.</exception>
+        /// <param name="classType">Type of class being serialized.</param>
+        /// <returns>DataContractSerializer object.</returns>
+        public static DataContractSerializer GetSerializer(Type classType)
+        {
+            Validation.Parameter.AssertNotNull(classType, "classType");
+
+            if (!_CachedSerializers.ContainsKey(classType))
+            {
+                _CachedSerializers.Add(classType, new DataContractSerializer(classType));
+            }
+            return _CachedSerializers[classType];
+        }
+
         /// <summary>
         /// Serialize the DataContract object into a string using the DataContractSerializer.
         /// </summary>
@@ -48,7 +79,7 @@ namespace Fosol.Common.Serialization
             Validation.Parameter.AssertAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
             Validation.Parameter.AssertNotNull(stream, "stream");
 
-            var serializer = new System.Runtime.Serialization.DataContractSerializer(data.GetType());
+            var serializer = GetSerializer(data.GetType());
             serializer.WriteObject(stream, data);
             stream.Position = 0;
         }
@@ -64,7 +95,7 @@ namespace Fosol.Common.Serialization
         {
             Validation.Parameter.AssertNotNull(stream, "stream");
 
-            var serializer = new DataContractSerializer(typeof(T));
+            var serializer = GetSerializer(typeof(T));
             return (T)serializer.ReadObject(stream);
         }
 
@@ -81,7 +112,7 @@ namespace Fosol.Common.Serialization
         {
             Validation.Parameter.AssertNotNullOrEmpty(data, "data");
 
-            var deserializer = new DataContractSerializer(typeof(T));
+            var deserializer = GetSerializer(typeof(T));
 
             using (var stream = data.ToMemoryStream())
             {
@@ -126,7 +157,7 @@ namespace Fosol.Common.Serialization
 
             using (var stream = File.OpenRead(path))
             {
-                var reader = new DataContractSerializer(typeof(T));
+                var reader = GetSerializer(typeof(T));
                 return (T)reader.ReadObject(stream);
             }
         }
@@ -141,7 +172,7 @@ namespace Fosol.Common.Serialization
         {
             Validation.Parameter.AssertNotNull(stream, "stream");
 
-            var deserializer = new DataContractSerializer(typeof(T));
+            var deserializer = GetSerializer(typeof(T));
             return (T)deserializer.ReadObject(stream);
         }
         #endregion

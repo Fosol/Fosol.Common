@@ -57,9 +57,7 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>Hex value that represents the byte.</returns>
         public static string ToHex(this byte value)
         {
-            Validation.Parameter.AssertNotNull(value, "value");
-
-            return value.ToString("{0:x2}");
+            return Extensions.Numbers.NumberExtensions.ToHex(value);
         }
 
         /// <summary>
@@ -73,19 +71,6 @@ namespace Fosol.Common.Extensions.Bytes
             Validation.Parameter.AssertNotNull(value, "value");
 
             return BitConverter.ToString(value).Replace("-", "");
-        }
-
-        /// <summary>
-        /// Returns a byte from a Hex value.
-        /// </summary>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
-        /// <param name="value">Hex value.</param>
-        /// <returns>Byte which is from the hex value.</returns>
-        public static byte HexToByte(this string value)
-        {
-            Validation.Parameter.AssertNotNull(value, "value");
-
-            return Byte.Parse(value, System.Globalization.NumberStyles.HexNumber);
         }
 
         /// <summary>
@@ -192,35 +177,6 @@ namespace Fosol.Common.Extensions.Bytes
             }
 
             return result.ToArray();
-        }
-
-        /// <summary>
-        /// Deserialize a byte array into the original object that it was serialized from.
-        /// </summary>
-        /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
-        /// <param name="data">Byte array to deserialize.</param>
-        /// <returns>A new instance of an object.</returns>
-        public static object Deserialize(this byte[] data)
-        {
-            Validation.Parameter.AssertNotNull(data, "data");
-
-            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            using (var stream = new System.IO.MemoryStream(data))
-            {
-                return formatter.Deserialize(stream);
-            }
-        }
-
-        /// <summary>
-        /// Deserialize a byte array into the specified type.
-        /// </summary>
-        /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
-        /// <typeparam name="T">Type of object to create.</typeparam>
-        /// <param name="data">Byte array to deserialize.</param>
-        /// <returns>A new instance of the specified type.</returns>
-        public static T Deserialize<T>(this byte[] data)
-        {
-            return (T)Deserialize(data);
         }
         #endregion
     }
