@@ -208,8 +208,8 @@ namespace Fosol.Common.Helpers
                     break;
                 case (AutocropMode.Scale):
                     CalculateScaleRectangles(ref source_rect, ref dest_rect, fillColor.HasValue);
-                    Initialization.Parameter.AssertDefault(ref width, source_rect.Width);
-                    Initialization.Parameter.AssertDefault(ref height, source_rect.Height);
+                    Initialization.Parameter.AssertDefault(ref width, dest_rect.Width);
+                    Initialization.Parameter.AssertDefault(ref height, dest_rect.Height);
                     break;
             }
 
@@ -292,8 +292,10 @@ namespace Fosol.Common.Helpers
                 else
                 {
                     var scale = (source.Width * dest.Height) / dest.Width;
+                    source.X = (int)((source.Width - scale) * this.HorizontalCrop);
                     source.Y = (int)((source.Height - scale) * this.VerticalCrop);
-                    source.Height = scale;
+                    source.Width = dest.Width;
+                    source.Height = dest.Height;
                 }
             }
         }

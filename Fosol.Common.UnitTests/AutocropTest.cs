@@ -9,11 +9,11 @@ namespace Fosol.Common.UnitTests
     public class AutocropTest
     {
         [TestMethod]
-        public void CropImageLarger()
+        public void CropImageLarge()
         {
             var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
             var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
-            var image_path = string.Format("{0}{1}.jpg", path, "crop_larger");
+            var image_path = string.Format("{0}{1}.jpg", path, "CropImageLarge");
 
             var autocrop = new Helpers.Autocrop(filename);
             var width = 800;
@@ -34,11 +34,11 @@ namespace Fosol.Common.UnitTests
         }
 
         [TestMethod]
-        public void CropImageSmaller()
+        public void CropImageSmall()
         {
             var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
             var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
-            var image_path = string.Format("{0}{1}.jpg", path, "crop_smaller");
+            var image_path = string.Format("{0}{1}.jpg", path, "CropImageSmall");
 
             var autocrop = new Helpers.Autocrop(filename);
             var width = 200;
@@ -59,11 +59,11 @@ namespace Fosol.Common.UnitTests
         }
 
         [TestMethod]
-        public void CropImageWider()
+        public void CropImageWide()
         {
             var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
             var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
-            var image_path = string.Format("{0}{1}.jpg", path, "crop_wider");
+            var image_path = string.Format("{0}{1}.jpg", path, "CropImageWide");
 
             var autocrop = new Helpers.Autocrop(filename);
             var width = 800;
@@ -84,11 +84,11 @@ namespace Fosol.Common.UnitTests
         }
 
         [TestMethod]
-        public void CropImageTaller()
+        public void CropImageTall()
         {
             var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
             var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
-            var image_path = string.Format("{0}{1}.jpg", path, "crop_taller");
+            var image_path = string.Format("{0}{1}.jpg", path, "CropImageTall");
 
             var autocrop = new Helpers.Autocrop(filename);
             var width = autocrop.Photo.Width;
@@ -109,11 +109,61 @@ namespace Fosol.Common.UnitTests
         }
 
         [TestMethod]
+        public void CropImageThin()
+        {
+            var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
+            var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
+            var image_path = string.Format("{0}{1}.jpg", path, "CropImageThin");
+
+            var autocrop = new Helpers.Autocrop(filename);
+            var width = 200;
+            var height = autocrop.Photo.Height;
+
+            using (var stream = new MemoryStream())
+            {
+                var size = autocrop.Generate(stream, width, height, 75, Helpers.AutocropMode.Crop, Color.Black);
+
+                var image = Image.FromStream(stream);
+                image.Save(image_path);
+
+                Assert.IsTrue(image.Width == width);
+                Assert.IsTrue(image.Height == height);
+            }
+
+            Assert.IsTrue(File.Exists(image_path));
+        }
+
+        [TestMethod]
+        public void CropImageShort()
+        {
+            var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
+            var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
+            var image_path = string.Format("{0}{1}.jpg", path, "CropImageShort");
+
+            var autocrop = new Helpers.Autocrop(filename);
+            var width = autocrop.Photo.Width;
+            var height = 200;
+
+            using (var stream = new MemoryStream())
+            {
+                var size = autocrop.Generate(stream, width, height, 75, Helpers.AutocropMode.Crop, Color.Black);
+
+                var image = Image.FromStream(stream);
+                image.Save(image_path);
+
+                Assert.IsTrue(image.Width == width);
+                Assert.IsTrue(image.Height == height);
+            }
+
+            Assert.IsTrue(File.Exists(image_path));
+        }
+
+        [TestMethod]
         public void ScaleImageLarge()
         {
             var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
             var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
-            var image_path = string.Format("{0}{1}.jpg", path, "scale_larger");
+            var image_path = string.Format("{0}{1}.jpg", path, "ScaleImageLarge");
 
             var autocrop = new Helpers.Autocrop(filename);
             var width = 800;
@@ -134,11 +184,11 @@ namespace Fosol.Common.UnitTests
         }
 
         [TestMethod]
-        public void ScaleImageSmaller()
+        public void ScaleImageSmall()
         {
             var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
             var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
-            var image_path = string.Format("{0}{1}.jpg", path, "scale_smaller");
+            var image_path = string.Format("{0}{1}.jpg", path, "ScaleImageSmall");
 
             var autocrop = new Helpers.Autocrop(filename);
             var width = 300;
@@ -159,11 +209,11 @@ namespace Fosol.Common.UnitTests
         }
 
         [TestMethod]
-        public void ScaleImageWider()
+        public void ScaleImageWide()
         {
             var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
             var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
-            var image_path = string.Format("{0}{1}.jpg", path, "scale_wider");
+            var image_path = string.Format("{0}{1}.jpg", path, "ScaleImageWide");
 
             var autocrop = new Helpers.Autocrop(filename);
             var width = 800;
@@ -183,11 +233,11 @@ namespace Fosol.Common.UnitTests
         }
 
         [TestMethod]
-        public void ScaleImageTaller()
+        public void ScaleImageTall()
         {
             var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
             var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
-            var image_path = string.Format("{0}{1}.jpg", path, "scale_taller");
+            var image_path = string.Format("{0}{1}.jpg", path, "ScaleImageTall");
 
             var autocrop = new Helpers.Autocrop(filename);
             var width = 0;
@@ -207,7 +257,55 @@ namespace Fosol.Common.UnitTests
         }
 
         [TestMethod]
-        public void StretchImageWider()
+        public void ScaleImageThin()
+        {
+            var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
+            var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
+            var image_path = string.Format("{0}{1}.jpg", path, "ScaleImageThin");
+
+            var autocrop = new Helpers.Autocrop(filename);
+            var width = 200;
+            var height = 0;
+
+            using (var stream = new MemoryStream())
+            {
+                var size = autocrop.Generate(stream, width, height, 75, Helpers.AutocropMode.Scale, Color.Black);
+
+                var image = Image.FromStream(stream);
+                image.Save(image_path);
+
+                Assert.IsTrue(image.Width == width);
+            }
+
+            Assert.IsTrue(File.Exists(image_path));
+        }
+
+        [TestMethod]
+        public void ScaleImageShort()
+        {
+            var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
+            var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
+            var image_path = string.Format("{0}{1}.jpg", path, "ScaleImageShort");
+
+            var autocrop = new Helpers.Autocrop(filename);
+            var width = 0;
+            var height = 200;
+
+            using (var stream = new MemoryStream())
+            {
+                var size = autocrop.Generate(stream, width, height, 75, Helpers.AutocropMode.Scale, Color.Black);
+
+                var image = Image.FromStream(stream);
+                image.Save(image_path);
+
+                Assert.IsTrue(image.Height == height);
+            }
+
+            Assert.IsTrue(File.Exists(image_path));
+        }
+
+        [TestMethod]
+        public void StretchImageWide()
         {
             var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
             var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
@@ -232,7 +330,7 @@ namespace Fosol.Common.UnitTests
         }
 
         [TestMethod]
-        public void StretchImageTaller()
+        public void StretchImageTall()
         {
             var path = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
             var filename = string.Format(@"{0}{1}", path, "Jeremy Foster 2008.jpg");
