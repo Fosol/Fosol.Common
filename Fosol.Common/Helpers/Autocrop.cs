@@ -132,6 +132,7 @@ namespace Fosol.Common.Helpers
         /// <param name="filename">Name and path to the file of the image.</param>
         /// <param name="useEmbeddedColorManagement">Set to true to use color management information set in the file.</param>
         public Autocrop(string filename, bool useEmbeddedColorManagement = false)
+            : this()
         {
             Validation.Parameter.AssertNotNullOrEmpty(filename, "filename");
 
@@ -140,33 +141,6 @@ namespace Fosol.Common.Helpers
         #endregion
 
         #region Methods
-        /// <summary>
-        /// Autocrop the image with the specified settings.
-        /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "destination" must allow write.</exception>
-        /// <exception cref="System.ArgumentNullException">Paramter "destination" cannot be null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "width" must be greater than or equal to '0'.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "height" must be greater than or equal to '0'.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "quality" must be between '0' and '100'.</exception>
-        /// <param name="width">Desired width of the autocropped image.</param>
-        /// <param name="height">Desired height of the autocropped image.</param>
-        /// <param name="quality">Quality of the image.  If set to '0' it will use the DefaultImageQuality.</param>
-        /// <param name="mode">AutocropMode option.</param>
-        /// <param name="fillColor">
-        /// Background fill color if the image crop size is larger than the original dimensions.  
-        /// If set to null it will use the default FillColor.  
-        /// If the default is null it will not allow white space.
-        /// </param>
-        /// <returns>An Image object.</returns>
-        public Image Generate(int width, int height, long quality = 0, AutocropMode mode = AutocropMode.Crop, Color? fillColor = null)
-        {
-            using (var stream = new MemoryStream())
-            {
-                ToStream(stream, width, height, quality, mode, fillColor);
-                return Image.FromStream(stream);
-            }
-        }
-
         /// <summary>
         /// Autocrop the image and place it in the destination stream.
         /// If the mode is set to AutocropMode.Scale width or height must be greater than '0'.
@@ -187,7 +161,7 @@ namespace Fosol.Common.Helpers
         /// If the default is null it will not allow white space.
         /// </param>
         /// <returns>Byte size of image.</returns>
-        public long ToStream(Stream destination, int width, int height, long quality = 0, AutocropMode mode = AutocropMode.Crop, Color? fillColor = null)
+        public long Generate(Stream destination, int width, int height, long quality = 0, AutocropMode mode = AutocropMode.Crop, Color? fillColor = null)
         {
             Validation.Parameter.AssertNotNull(destination, "destination");
             Validation.Parameter.AssertIsValue(destination.CanWrite, true, "destination.CanWrite");
@@ -202,6 +176,12 @@ namespace Fosol.Common.Helpers
             // When scaling an image at least one size needs to be set.
             if (mode == AutocropMode.Scale && width == 0 && height == 0)
                 throw new ArgumentException(Resources.Strings.Exception_AutocropScale, "mode");
+            // When croping an image ensure that by default the width and hieght are the same as the original (if they are set to 0).
+            else if (mode == AutocropMode.Crop)
+            {
+                Initialization.Parameter.AssertDefault(ref width, this.Photo.Width);
+                Initialization.Parameter.AssertDefault(ref height, this.Photo.Height);
+            }
 
             // If a height and width hasn't been set return original image.
             // If height and width are the same as the image, return the original image.
@@ -228,12 +208,14 @@ namespace Fosol.Common.Helpers
                     break;
                 case (AutocropMode.Scale):
                     CalculateScaleRectangles(ref source_rect, ref dest_rect, fillColor.HasValue);
+                    Initialization.Parameter.AssertDefault(ref width, source_rect.Width);
+                    Initialization.Parameter.AssertDefault(ref height, source_rect.Height);
                     break;
             }
 
-            using (var graphics = Graphics.FromImage(this.Photo))
+            using (var bitmap = new Bitmap(width, height))
             {
-                using (var bitmap = new Bitmap(width, height))
+                using (var graphics = Graphics.FromImage(bitmap))
                 {
                     graphics.InterpolationMode = this.InterpolationMode;
 
@@ -271,11 +253,13 @@ namespace Fosol.Common.Helpers
             {
                 dest.X = (int)((dest.Width - source.Width) / 2);
                 dest.Y = (int)((dest.Height - source.Height) / 2);
+                dest.Width = source.Width;
+                dest.Height = source.Height;
             }
             // Crop size width is greater than the height.
             else if (ratio_width > ratio_height)
             {
-                // Width is greater, but height is smaller or equal to.
+                // Width ratio is greater, but height ratio is smaller or equal to.
                 if (ratio_width > 1 && ratio_height <= 1)
                 {
                     source.X = (int)((source.Width - dest.Width) * this.HorizontalCrop);
@@ -287,15 +271,15 @@ namespace Fosol.Common.Helpers
                 // Width and height are greater than original.
                 else
                 {
-                    var scale = (source.Height & dest.Width) / dest.Width;
+                    var scale = (source.Height * dest.Width) / dest.Height;
                     source.X = (int)((source.Width - scale) * this.HorizontalCrop);
                     source.Width = scale;
                 }
             }
-            // Crop size height is greater than the width.
+            // Crop size height change is greater than the width change.
             else if (ratio_height > ratio_width)
             {
-                // Height is greater than width.
+                // Height ratio is greater than width.
                 if (ratio_height > 1 && ratio_width <= 1)
                 {
                     source.Y = (int)((source.Height - dest.Height) * this.VerticalCrop);
@@ -304,7 +288,7 @@ namespace Fosol.Common.Helpers
                     dest.X = (int)((dest.Width - source.Width) / 2);
                     dest.Width = source.Width;
                 }
-                // Height and width greater than final - scale height to match width.
+                // Height and width are smaller than original
                 else
                 {
                     var scale = (source.Width * dest.Height) / dest.Width;
@@ -319,6 +303,7 @@ namespace Fosol.Common.Helpers
         /// </summary>
         /// <param name="source">Rectangle for source image.</param>
         /// <param name="dest">Rectangle for destination image.</param>
+        /// <param name="allowWhitespace">Allow the destination rectangle to be larger than the source rectangle.</param>
         protected void CalculateScaleRectangles(ref Rectangle source, ref Rectangle dest, bool allowWhitespace)
         {
             // Calculate the width based on the height.
@@ -326,11 +311,14 @@ namespace Fosol.Common.Helpers
             {
                 var scale = (float)dest.Height / (float)source.Height;
 
+                // The destination height is smaller.
                 if (scale < 1)
                     dest.Width = (int)(source.Width * scale);
+                // The destination height is larger.
                 else
                 {
-                    dest.Width = source.Width;
+                    dest.Width = (int)(source.Width * scale);
+
                     if (!allowWhitespace)
                         dest.Height = source.Height;
                 }
@@ -344,37 +332,12 @@ namespace Fosol.Common.Helpers
                     dest.Height = (int)(source.Height * scale);
                 else
                 {
-                    dest.Height = source.Height;
+                    dest.Height = (int)(source.Height * scale);
 
                     if (!allowWhitespace)
                         dest.Width = source.Width;
                 }
             }
-            // Both dimensions have been set.
-            else
-            {
-                // Use the smaller scale factor in the vertical and horizontal dimensions.
-                var scale = Math.Min((float)dest.Width / (float)source.Width, (float)dest.Height / (float)source.Height);
-
-                if (scale < 1)
-                {
-                    dest.Width = (int)(source.Width * scale);
-                    dest.Height = (int)(source.Height * scale);
-                }
-                else
-                {
-                    dest.Width = source.Width;
-                    dest.Height = source.Height;
-                }
-            }
-
-            // If the destination is smaller center it on the source.
-            if (dest.Width < source.Width)
-                dest.X = (int)((source.Width - dest.Width) / 2);
-
-            // If the destination is smaller center it on the source.
-            if (dest.Height < source.Height)
-                dest.Y = (int)((source.Height - dest.Height) / 2);
         }
         #endregion
 
