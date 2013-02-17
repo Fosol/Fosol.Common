@@ -8,50 +8,50 @@ namespace Fosol.Common.Mathematics
 {
     /// <summary>
     /// A CenterPoint is a reference to the center of an object.
-    /// The Horizontal and Vertical locations are ratios from the true center of the object.
+    /// The X and Y locations are ratios from the true center of the object.
     /// Therefore a (0,0) means the center of an object.
-    /// Negative horizontal value move left.
-    /// Negative vertical values move up.
+    /// Negative X value move left.
+    /// Negative Y values move up.
     /// </summary>
     public class CenterPoint
     {
         #region Variables
-        private float _HorizontalOffset = 0;
-        private float _VerticalOffset = 0;
+        private float _X = 0;
+        private float _Y = 0;
         #endregion
 
         #region Properties
         /// <summary>
-        /// get/set - Horizontal offset value from center.
+        /// get/set - X offset value from center.
         /// This is the x-axis point.  
         /// Negative numbers are left of center.
         /// Positive numbers are right of center.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be between -1 and 1.</exception>
-        public float HorizontalOffset
+        public float X
         {
-            get { return _HorizontalOffset; }
+            get { return _X; }
             set
             {
-                Validation.Parameter.AssertRange(value, -1, 1, "HorizontalOffset");
-                _HorizontalOffset = value;
+                Validation.Parameter.AssertRange(value, -1, 1, "X");
+                _X = value;
             }
         }
 
         /// <summary>
-        /// get/set - Vertical offset value from center.
+        /// get/set - Y offset value from center.
         /// This is the y-axis point.
         /// Negative numbers are above center.
         /// Positive numbers are below center.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be between -1 and 1.</exception>
-        public float VerticalOffset
+        public float Y
         {
-            get { return _VerticalOffset; }
+            get { return _Y; }
             set
             {
-                Validation.Parameter.AssertRange(value, -1, 1, "VerticalOffset");
-                _VerticalOffset = value;
+                Validation.Parameter.AssertRange(value, -1, 1, "Y");
+                _Y = value;
             }
         }
         #endregion
@@ -67,18 +67,18 @@ namespace Fosol.Common.Mathematics
         /// <summary>
         /// Creates a new instance of a CenterPoint object.
         /// </summary>
-        /// <param name="horizontal">Horizontal offset position in the object [-1 to 1].</param>
-        /// <param name="vertical">Vertical offset position in the object [-1 to 1].</param>
-        public CenterPoint(float horizontal, float vertical)
+        /// <param name="X">X offset position in the object [-1 to 1].</param>
+        /// <param name="Y">Y offset position in the object [-1 to 1].</param>
+        public CenterPoint(float X, float Y)
         {
-            this.HorizontalOffset = horizontal;
-            this.VerticalOffset = vertical;
+            this.X = X;
+            this.Y = Y;
         }
         #endregion
 
         #region Methods
         /// <summary>
-        /// If the CropPoint objects have the same Horizontal and Vertical value they are equal.
+        /// If the CropPoint objects have the same X and Y value they are equal.
         /// </summary>
         /// <param name="obj">Object to compare.</param>
         /// <returns>True if they are equal.</returns>
@@ -89,8 +89,8 @@ namespace Fosol.Common.Mathematics
             if (value == null)
                 return false;
 
-            if (value.HorizontalOffset == this.HorizontalOffset
-                && value.VerticalOffset == this.VerticalOffset)
+            if (value.X == this.X
+                && value.Y == this.Y)
                 return true;
 
             return false;
@@ -107,7 +107,7 @@ namespace Fosol.Common.Mathematics
 
         public override string ToString()
         {
-            return string.Format("({0}, {1})", this.HorizontalOffset, this.VerticalOffset);
+            return string.Format("({0}, {1})", this.X, this.Y);
         }
         #endregion
 

@@ -68,7 +68,6 @@
     <Compile Include="Extensions\UriBuilders\UriBuilderExtensions.cs" />
     <Compile Include="Extensions\Uris\UriExtensions.cs" />
     <Compile Include="Helpers\AssemblyResourceHelper.cs" />
-    <Compile Include="Helpers\ImageScaleDirection.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Mathematics\CenterOption.cs" />
