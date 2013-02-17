@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Helpers
 {
     /// <summary>
-    /// Valid autocrop mode options.
+    /// Scale direction options
     /// </summary>
-    public enum AutocropMode
+    public enum ImageScaleDirection
     {
         /// <summary>
-        /// Crop the image.
+        /// Width dimension.
         /// </summary>
-        Crop = 0,
+        Width = 0,
         /// <summary>
-        /// Scale the image.
+        /// Height dimension
         /// </summary>
-        Scale = 1
+        Height = 1
     }
 }

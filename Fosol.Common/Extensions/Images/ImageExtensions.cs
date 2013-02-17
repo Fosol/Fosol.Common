@@ -22,7 +22,7 @@ namespace Fosol.Common.Extensions.Images
         /// <returns>Byte array.</returns>
         public static byte[] ToByteArray(this Image image, ImageFormat format = null)
         {
-            Initialization.Parameter.AssertDefault(format, image.RawFormat);
+            Initialization.Parameter.AssertIsNotDefault(format, image.RawFormat);
 
             using (var stream = new MemoryStream())
             {

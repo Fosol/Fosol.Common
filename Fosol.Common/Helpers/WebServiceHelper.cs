@@ -34,7 +34,7 @@ namespace Fosol.Common.Helpers
                 defaultFormat = query_format;
 
             // If no format has been set, throw exception.
-            Validation.Parameter.AssertNotNullOrEmpty(defaultFormat, "defaultFormat");
+            Validation.Parameter.AssertIsNotNullOrEmpty(defaultFormat, "defaultFormat");
 
             WebMessageFormat format = WebMessageFormat.Xml;
 

@@ -132,8 +132,44 @@
   <data name="Exception_EndsWith" xml:space="preserve">
     <value>Parameter value must end with "{0}".</value>
   </data>
+  <data name="Exception_ImageHelper_InvalidHeight" xml:space="preserve">
+    <value>Parameter "{0}" must be less than or equal to the original image height.</value>
+  </data>
+  <data name="Exception_ImageHelper_InvalidPlot" xml:space="preserve">
+    <value>Parameter "{0}" must have at least one property value set greater than '0'.</value>
+  </data>
+  <data name="Exception_ImageHelper_InvalidQuality" xml:space="preserve">
+    <value>Parameter "{0}" must be between '0' and '100'.</value>
+  </data>
+  <data name="Exception_ImageHelper_InvalidResizeHeight" xml:space="preserve">
+    <value>Parameter "{0}" must be greater than or equal to '0'.</value>
+  </data>
+  <data name="Exception_ImageHelper_InvalidResizeWidth" xml:space="preserve">
+    <value>Parameter "{0}" must be greater than or equal to '0'.</value>
+  </data>
+  <data name="Exception_ImageHelper_InvalidWidth" xml:space="preserve">
+    <value>Parameter "{0}" must be less than or equal to the original image width.</value>
+  </data>
+  <data name="Exception_ImageHelper_InvalidX" xml:space="preserve">
+    <value>Parameter "{0}" must be greater than or equal to '0' and less than the original image width.</value>
+  </data>
+  <data name="Exception_ImageHelper_InvalidXWidth" xml:space="preserve">
+    <value>Parameters "{0}" must plot within the original image width.</value>
+  </data>
+  <data name="Exception_ImageHelper_InvalidY" xml:space="preserve">
+    <value>Parameter "{0}" must be greater than or equal to '0' and less than the original image height.</value>
+  </data>
+  <data name="Exception_ImageHelper_InvalidYHeight" xml:space="preserve">
+    <value>Parameters "{0}" must plot within the original image height.</value>
+  </data>
   <data name="Exception_InvalidCData" xml:space="preserve">
     <value>Xml NodeType is not valid for CDATA.  Expecting text or cdata.</value>
+  </data>
+  <data name="Exception_InvalidSize" xml:space="preserve">
+    <value>Parameter "{0}" must have width or height set to greater than '0'.</value>
+  </data>
+  <data name="Exception_InvalidValue" xml:space="preserve">
+    <value>Parameter "{0}" has an invalid value.</value>
   </data>
   <data name="Exception_NotNullOrEmpty" xml:space="preserve">
     <value>Parameter cannot be null or empty.</value>
@@ -144,6 +180,15 @@
   <data name="Exception_StartsWith" xml:space="preserve">
     <value>Parameter value must start with "{0}".</value>
   </data>
+  <data name="Exception_Stream_IsCanRead" xml:space="preserve">
+    <value>Parameter "{0}" must be readable (CanRead=true).</value>
+  </data>
+  <data name="Exception_Stream_IsCanSeek" xml:space="preserve">
+    <value>Parameter "{0}" must be seekable (CanSeek=true).</value>
+  </data>
+  <data name="Exception_Stream_IsCanWrite" xml:space="preserve">
+    <value>Parameter "{0}" must be writable (CanWrite=true).</value>
+  </data>
   <data name="Exception_TooManyOfAttribute" xml:space="preserve">
     <value>Too many occurances of attribute "{0}".</value>
   </data>
@@ -152,9 +197,6 @@
   </data>
   <data name="Exception_TypeMustBeString" xml:space="preserve">
     <value>Property type must be of type String.</value>
-  </data>
-  <data name="Exception_ValueInvalid" xml:space="preserve">
-    <value>Parameter "{0}" has an invalid value.</value>
   </data>
   <data name="Exception_ValueToSmall" xml:space="preserve">
     <value>Parameter "{0}" is too small to accept value.</value>

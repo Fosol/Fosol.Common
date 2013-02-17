@@ -21,7 +21,7 @@ namespace Fosol.Common.Extensions.Numbers
         /// <returns>Hex value that represents the number.</returns>
         public static string ToHex(this byte value)
         {
-            Validation.Parameter.AssertNotNull(value, "value");
+            Validation.Parameter.AssertIsNotNull(value, "value");
             return Convert.ToString(value, 16);
         }
 
@@ -33,7 +33,7 @@ namespace Fosol.Common.Extensions.Numbers
         /// <returns>The number from the hex.</returns>
         public static byte HexToByte(this string value)
         {
-            Validation.Parameter.AssertNotNull(value, "value");
+            Validation.Parameter.AssertIsNotNull(value, "value");
             return byte.Parse(value, System.Globalization.NumberStyles.HexNumber);
         }
         #endregion
@@ -47,7 +47,7 @@ namespace Fosol.Common.Extensions.Numbers
         /// <returns>Hex value that represents the number.</returns>
         public static string ToHex(this int value)
         {
-            Validation.Parameter.AssertNotNull(value, "value");
+            Validation.Parameter.AssertIsNotNull(value, "value");
             return Convert.ToString(value, 16);
         }
 
@@ -59,7 +59,7 @@ namespace Fosol.Common.Extensions.Numbers
         /// <returns>The number from the hex.</returns>
         public static int HexToInt(this string value)
         {
-            Validation.Parameter.AssertNotNull(value, "value");
+            Validation.Parameter.AssertIsNotNull(value, "value");
             return int.Parse(value, System.Globalization.NumberStyles.HexNumber);
         }
         #endregion
@@ -73,7 +73,7 @@ namespace Fosol.Common.Extensions.Numbers
         /// <returns>Hex value that represents the number.</returns>
         public static string ToHex(this long value)
         {
-            Validation.Parameter.AssertNotNull(value, "value");
+            Validation.Parameter.AssertIsNotNull(value, "value");
             return Convert.ToString(value, 16);
         }
 
@@ -85,7 +85,7 @@ namespace Fosol.Common.Extensions.Numbers
         /// <returns>The number from the hex.</returns>
         public static long HexToLong(this string value)
         {
-            Validation.Parameter.AssertNotNull(value, "value");
+            Validation.Parameter.AssertIsNotNull(value, "value");
             return long.Parse(value, System.Globalization.NumberStyles.HexNumber);
         }
         #endregion
@@ -100,7 +100,7 @@ namespace Fosol.Common.Extensions.Numbers
         /// <returns>Hex value that represents the number.</returns>
         public static string ToHex(this short value)
         {
-            Validation.Parameter.AssertNotNull(value, "value");
+            Validation.Parameter.AssertIsNotNull(value, "value");
             return Convert.ToString(value, 16);
         }
 
@@ -112,7 +112,7 @@ namespace Fosol.Common.Extensions.Numbers
         /// <returns>The number from the hex.</returns>
         public static short HexToShort(this string value)
         {
-            Validation.Parameter.AssertNotNull(value, "value");
+            Validation.Parameter.AssertIsNotNull(value, "value");
             return short.Parse(value, System.Globalization.NumberStyles.HexNumber);
         }
         #endregion

@@ -38,7 +38,7 @@ namespace Fosol.Common.Extensions.Enums
         /// <returns>Dictionary with each enum value and description.</returns>
         public static IDictionary<object, string> ToDictionary(this Type enumType, bool includeDescription = true)
         {
-            Validation.Parameter.AssertNotNull(enumType, "enumType");
+            Validation.Parameter.AssertIsNotNull(enumType, "enumType");
             Validation.Parameter.AssertIsValue(enumType.IsEnum, true, "enumType");
 
             var type_list = new Dictionary<object, string>();
@@ -71,7 +71,7 @@ namespace Fosol.Common.Extensions.Enums
         /// <returns>Collection of string values.</returns>
         public static IEnumerable<string> GetNames(this Type enumType)
         {
-            Validation.Parameter.AssertNotNull(enumType, "enumType");
+            Validation.Parameter.AssertIsNotNull(enumType, "enumType");
             Validation.Parameter.AssertIsValue(enumType.IsEnum, true, "enumType");
             
             return (

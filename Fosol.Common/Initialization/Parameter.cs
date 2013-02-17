@@ -12,14 +12,14 @@ namespace Fosol.Common.Initialization
     public static class Parameter
     {
         #region Methods
-        #region AssertDefault
+        #region AssertIsNotDefault
         /// <summary>
         /// Assert that if the value is null that it is instead the defaultValue.
         /// Use this method if the object is automatically passed by reference.
         /// </summary>
         /// <param name="value">The parameter value to set to the default value if it's null.</param>
         /// <param name="defaultValue">Default value to use if the original value is null.</param>
-        public static void AssertDefault(object value, object defaultValue)
+        public static void AssertIsNotDefault(object value, object defaultValue)
         {
             if (value == null)
                 value = defaultValue;
@@ -30,7 +30,7 @@ namespace Fosol.Common.Initialization
         /// </summary>
         /// <param name="value">The parameter value.</param>
         /// <param name="defaultValue">Default value to use if the original value is 0.</param>
-        public static void AssertDefault(ref decimal value, decimal defaultValue)
+        public static void AssertIsNotDefault(ref decimal value, decimal defaultValue)
         {
             if (value == default(decimal))
                 value = defaultValue;
@@ -41,7 +41,7 @@ namespace Fosol.Common.Initialization
         /// </summary>
         /// <param name="value">The parameter value.</param>
         /// <param name="defaultValue">Default value to use if the original value is 0.</param>
-        public static void AssertDefault(ref double value, double defaultValue)
+        public static void AssertIsNotDefault(ref double value, double defaultValue)
         {
             if (value == default(double))
                 value = defaultValue;
@@ -52,7 +52,7 @@ namespace Fosol.Common.Initialization
         /// </summary>
         /// <param name="value">The parameter value.</param>
         /// <param name="defaultValue">Default value to use if the original value is 0.</param>
-        public static void AssertDefault(ref float value, float defaultValue)
+        public static void AssertIsNotDefault(ref float value, float defaultValue)
         {
             if (value == default(float))
                 value = defaultValue;
@@ -63,7 +63,7 @@ namespace Fosol.Common.Initialization
         /// </summary>
         /// <param name="value">The parameter value.</param>
         /// <param name="defaultValue">Default value to use if the original value is 0.</param>
-        public static void AssertDefault(ref int value, int defaultValue)
+        public static void AssertIsNotDefault(ref int value, int defaultValue)
         {
             if (value == default(int))
                 value = defaultValue;
@@ -74,7 +74,7 @@ namespace Fosol.Common.Initialization
         /// </summary>
         /// <param name="value">The parameter value.</param>
         /// <param name="defaultValue">Default value to use if the original value is 0.</param>
-        public static void AssertDefault(ref uint value, uint defaultValue)
+        public static void AssertIsNotDefault(ref uint value, uint defaultValue)
         {
             if (value == default(uint))
                 value = defaultValue;
@@ -85,7 +85,7 @@ namespace Fosol.Common.Initialization
         /// </summary>
         /// <param name="value">The parameter value.</param>
         /// <param name="defaultValue">Default value to use if the original value is 0.</param>
-        public static void AssertDefault(ref long value, long defaultValue)
+        public static void AssertIsNotDefault(ref long value, long defaultValue)
         {
             if (value == default(long))
                 value = defaultValue;
@@ -96,7 +96,7 @@ namespace Fosol.Common.Initialization
         /// </summary>
         /// <param name="value">The parameter value.</param>
         /// <param name="defaultValue">Default value to use if the original value is 0.</param>
-        public static void AssertDefault(ref ulong value, ulong defaultValue)
+        public static void AssertIsNotDefault(ref ulong value, ulong defaultValue)
         {
             if (value == default(ulong))
                 value = defaultValue;
@@ -107,7 +107,7 @@ namespace Fosol.Common.Initialization
         /// </summary>
         /// <param name="value">The parameter value.</param>
         /// <param name="defaultValue">Default value to use if the original value is 0.</param>
-        public static void AssertDefault(ref short value, short defaultValue)
+        public static void AssertIsNotDefault(ref short value, short defaultValue)
         {
             if (value == default(short))
                 value = defaultValue;
@@ -118,7 +118,7 @@ namespace Fosol.Common.Initialization
         /// </summary>
         /// <param name="value">The parameter value.</param>
         /// <param name="defaultValue">Default value to use if the original value is 0.</param>
-        public static void AssertDefault(ref ushort value, ushort defaultValue)
+        public static void AssertIsNotDefault(ref ushort value, ushort defaultValue)
         {
             if (value == default(ushort))
                 value = defaultValue;

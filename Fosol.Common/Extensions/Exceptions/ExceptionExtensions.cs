@@ -64,7 +64,7 @@ namespace Fosol.Common.Extensions.Exceptions
         public static void HandleWCFException<TServiceFault>(this Exception exception)
             where TServiceFault : class
         {
-            Validation.Parameter.AssertNotNull(exception, "exception");
+            Validation.Parameter.AssertIsNotNull(exception, "exception");
 
             TServiceFault fault;
             HttpStatusCode status = HttpStatusCode.InternalServerError;
@@ -134,8 +134,8 @@ namespace Fosol.Common.Extensions.Exceptions
         {
             var serviceResultOrServiceFaultHandled = false;
 
-            Validation.Parameter.AssertNotNull(exception, "exception");
-            Validation.Parameter.AssertNotNull(serviceResultHandler, "serviceResultHandler");
+            Validation.Parameter.AssertIsNotNull(exception, "exception");
+            Validation.Parameter.AssertIsNotNull(serviceResultHandler, "serviceResultHandler");
 
             // REST uses the HTTP procol status codes to communicate errors that happens on the service side. 
             // This means if we have a teller service and you need to supply username and password to login 
