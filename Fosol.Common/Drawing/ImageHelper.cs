@@ -7,7 +7,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common.Drawing
 {
     /// <summary>
     /// Utility methods to modify image sizes.
@@ -22,10 +22,12 @@ namespace Fosol.Common.Helpers
     /// 
     /// Resize:
     /// This will allow you to stretch or shrink an image to the desired size.
+    /// You may provide only one of the dimensions (width, height) to resize that particlar dimension only.
     /// 
     /// Scale:
     /// This will allow you enlarge or shrink an image but always keep the original scale ratio.
-    /// If you provide a fill color it will
+    /// If you provide a fill color it will maintain scale and will not crop.
+    /// If you do not provide a fill color it will maintain scale and will crop.
     /// 
     /// Optimize:
     /// This will degrade the quality of the image and make it a smaller file size in bytes.
@@ -33,7 +35,7 @@ namespace Fosol.Common.Helpers
     public class ImageHelper
     {
         #region Constants
-        private static readonly Mathematics.CenterPoint _DefaultCropOffset = Mathematics.CenterOption.Center;
+        private static readonly CenterPoint _DefaultOffset = OffsetRule.Center;
         private static readonly long _DefaultImageQuality = 100;
         #endregion
 
@@ -49,7 +51,7 @@ namespace Fosol.Common.Helpers
         /// get/set - The default cropping offset option.
         /// This provides a way to specify the center of the image to enforce a desired cropping behaviour.
         /// </summary>
-        public Mathematics.CenterPoint CropOffset { get; set; }
+        public CenterPoint Offset { get; set; }
 
         /// <summary>
         /// get/set - The default background color to use for autocropped images which do not fill the requested image size.
@@ -81,7 +83,7 @@ namespace Fosol.Common.Helpers
         /// </summary>
         private ImageHelper()
         {
-            this.CropOffset = _DefaultCropOffset;
+            this.Offset = _DefaultOffset;
             this.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
         }
 
@@ -182,7 +184,7 @@ namespace Fosol.Common.Helpers
         /// <param name="quality">Quality of the image.</param>
         /// <param name="graphicsUnit">GraphicsUnit option.</param>
         /// <returns>Size of the new image in bytes</returns>
-        public long Canvas(Stream destination, Size size, Color fill, Mathematics.CenterPoint offset = null, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
+        public long Canvas(Stream destination, Size size, Color fill, CenterPoint offset = null, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
             Validation.Parameter.AssertIsNotNull(size, "size");
             Validation.Parameter.AssertMinRange(size.Width, 0, "size.Width", Resources.Strings.Exception_ImageHelper_InvalidResizeWidth);
@@ -206,7 +208,7 @@ namespace Fosol.Common.Helpers
         /// <param name="quality">Quality of the image.</param>
         /// <param name="graphicsUnit">GraphicsUnit option.</param>
         /// <returns>Size of the new image in bytes</returns>
-        public long Canvas(Stream destination, int width, int height, Color fill, Mathematics.CenterPoint offset = null, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
+        public long Canvas(Stream destination, int width, int height, Color fill, CenterPoint offset = null, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
             Validation.Parameter.AssertIsNotNull(destination, "destination");
             Validation.Parameter.AssertIsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
@@ -220,7 +222,7 @@ namespace Fosol.Common.Helpers
             // Initialize default values.
             Initialization.Parameter.AssertIsNotDefault(ref width, this.Photo.Width);
             Initialization.Parameter.AssertIsNotDefault(ref height, this.Photo.Height);
-            Initialization.Parameter.AssertIsNotDefault(offset, this.CropOffset);
+            Initialization.Parameter.AssertIsNotDefault(ref offset, this.Offset);
 
             // If height and width are the same as the image, return the original image.
             if (width == this.Photo.Width && height == this.Photo.Height)
@@ -329,12 +331,14 @@ namespace Fosol.Common.Helpers
         /// <summary>
         /// Resizing an image.
         /// You must specify at least one dimension (width or height).
-        /// If you do not specify one dimension (width or height) that dimension will default to the original image dimension.
-        /// Resizing an image will distort an image if a fill is not specified.  If you need to maintain scale, use the Sale method instead.
-        /// Specify a fill if you want the image to allow for whitespace.
+        /// If you do not specify one dimension (width or height) it will automatically keep the scale of the original image.
         /// </summary>
         /// <param name="destination">Stream to place the new image.</param>
-        /// <param name="size">Size of the new image.</param>
+        /// <param name="size">
+        ///     Size of the new image.
+        ///     When one of the dimensions (width, height) is not provided it will automatically keep the scale of the original image.
+        /// </param>
+        /// <param name="
         /// <param name="quality">Quality of the image.</param>
         /// <param name="graphicsUnit">GraphicsUnit option.</param>
         /// <returns>Size of the new image in bytes</returns>
@@ -351,9 +355,7 @@ namespace Fosol.Common.Helpers
         /// <summary>
         /// Resizing an image.
         /// You must specify at least one dimension (width or height).
-        /// If you do not specify one dimension (width or height) that dimension will default to the original image dimension.
-        /// Resizing an image will distort an image if a fill is not specified.  If you need to maintain scale, use the Sale method instead.
-        /// Specify a fill if you want the image to allow for whitespace.
+        /// If you do not specify one dimension (width or height) it will use the original corresponding dimension.
         /// </summary>
         /// <param name="destination">Stream to place the new image.</param>
         /// <param name="width">Width of the new image.</param>
@@ -371,7 +373,7 @@ namespace Fosol.Common.Helpers
             Validation.Parameter.AssertIsNotValue(width + height, 0, "width,height", Resources.Strings.Exception_InvalidSize);
             Validation.Parameter.AssertRange(quality, 0, 100, "quality", Resources.Strings.Exception_ImageHelper_InvalidQuality);
 
-            // Initialize default values.
+            // Intialize default values.
             Initialization.Parameter.AssertIsNotDefault(ref width, this.Photo.Width);
             Initialization.Parameter.AssertIsNotDefault(ref height, this.Photo.Height);
 
@@ -406,7 +408,7 @@ namespace Fosol.Common.Helpers
         /// <param name="quality">Quality of the image.</param>
         /// <param name="graphicsUnit">GraphicsUnit option.</param>
         /// <returns>Size of the new image in bytes</returns>
-        public long Scale(Stream destination, int width, int height, Color? fill = null, Mathematics.CenterPoint offset = null, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
+        public long Scale(Stream destination, int width, int height, Color? fill = null, CenterPoint offset = null, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
             Validation.Parameter.AssertIsNotNull(destination, "destination");
             Validation.Parameter.AssertIsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
@@ -417,9 +419,7 @@ namespace Fosol.Common.Helpers
             Validation.Parameter.AssertRange(quality, 0, 100, "quality", Resources.Strings.Exception_ImageHelper_InvalidQuality);
 
             // Initialize default values.
-            Initialization.Parameter.AssertIsNotDefault(width, this.Photo.Width);
-            Initialization.Parameter.AssertIsNotDefault(height, this.Photo.Height);
-            Initialization.Parameter.AssertIsNotDefault(offset, this.CropOffset);
+            Initialization.Parameter.AssertIsNotDefault(ref offset, this.Offset);
 
             // If height and width are the same as the image, return the original image.
             if (width == this.Photo.Width && height == this.Photo.Height)
@@ -436,7 +436,7 @@ namespace Fosol.Common.Helpers
 
             CalculateScale(ref image_size, ref dest_rect, ref source_rect, fill.HasValue, offset);
 
-            return Generate(destination, image_size, dest_rect, source_rect, null, quality, graphicsUnit);
+            return Generate(destination, image_size, dest_rect, source_rect, fill, quality, graphicsUnit);
         }
 
         /// <summary>
@@ -480,8 +480,7 @@ namespace Fosol.Common.Helpers
                     graphics.InterpolationMode = this.InterpolationMode;
 
                     // Fill graphics with a background color.
-                    if (fill.HasValue
-                        && (this.Photo.Width < imageSize.Width || this.Photo.Height < imageSize.Height))
+                    if (fill.HasValue)
                         graphics.Clear(fill.Value);
 
                     graphics.DrawImage(this.Photo, destRect, sourceRect, graphicsUnit);
@@ -528,7 +527,7 @@ namespace Fosol.Common.Helpers
         /// <param name="dest">Rectangle for destination image.</param>
         /// <param name="source">Rectangle for source image.</param>
         /// <param name="offset">Offset point used to control cropping.</param>
-        protected void CalculateCanvas(ref Size size, ref Rectangle dest, ref Rectangle source, Mathematics.CenterPoint offset)
+        protected void CalculateCanvas(ref Size size, ref Rectangle dest, ref Rectangle source, CenterPoint offset)
         {
             source.Width = this.Photo.Width;
             source.Height = this.Photo.Height;
@@ -536,8 +535,8 @@ namespace Fosol.Common.Helpers
             dest.Height = this.Photo.Height;
 
             // Center image inside new larger canvas.
-            dest.X = (int)Mathematics.MathHelper.OffsetCenter(size.Width - this.Photo.Width, offset.X);
-            dest.Y = (int)Mathematics.MathHelper.OffsetCenter(size.Height - this.Photo.Height, offset.Y);
+            dest.X = (int)Mathematics.Formula.OffsetCenter(size.Width - this.Photo.Width, offset.X);
+            dest.Y = (int)Mathematics.Formula.OffsetCenter(size.Height - this.Photo.Height, offset.Y * -1);
         }
 
         /// <summary>
@@ -565,15 +564,29 @@ namespace Fosol.Common.Helpers
 
         /// <summary>
         /// Calculate the size, destination rectangle and source rectangle that will be used to create the new image.
+        /// If one of the dimensions (width, height) is not provided it will be automically calculated to maintain scale.
         /// </summary>
         /// <param name="size">The size of the new image.</param>
         /// <param name="dest">Rectangle for destination image.</param>
         /// <param name="source">Rectangle for source image.</param>
         /// <param name="allowWhitespace">Determines whether the new image has whitespace.</param>
         /// <param name="offset">Offset point used to control cropping.</param>
-        protected void CalculateScale(ref Size size, ref Rectangle dest, ref Rectangle source, bool allowWhitespace, Mathematics.CenterPoint offset)
+        protected void CalculateScale(ref Size size, ref Rectangle dest, ref Rectangle source, bool allowWhitespace, CenterPoint offset)
         {
-            dest = Mathematics.MathHelper.Scale(this.Photo.Size, size, offset, allowWhitespace);
+            // Calculate the width based on the ratio.
+            if (size.Width == 0)
+            {
+                var ratio = Mathematics.Formula.Ratio(size.Height, source.Height);
+                size.Width = Mathematics.Formula.Resize(source.Width, ratio);
+            }
+            // Calculate the height based on the ratio.
+            else if (size.Height == 0)
+            {
+                var ratio = Mathematics.Formula.Ratio(size.Width, source.Width);
+                size.Height = Mathematics.Formula.Resize(source.Width, ratio);
+            }
+
+            dest = Mathematics.Formula.Scale(this.Photo.Size, size, offset, allowWhitespace);
         }
         #endregion
 

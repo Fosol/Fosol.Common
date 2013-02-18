@@ -10,9 +10,44 @@ namespace Fosol.Common.Mathematics
     /// <summary>
     /// Helpful Math formulas.
     /// </summary>
-    public class MathHelper
+    public static class Formula
     {
         #region Methods
+        #region Ratio
+        /// <summary>
+        /// calculates the ratio difference between the two values.
+        /// </summary>
+        /// <param name="val1">Value one.</param>
+        /// <param name="val2">Value two.</param>
+        /// <returns>Ratio difference between two values.</returns>
+        public static float Ratio(short val1, short val2)
+        {
+            return (float)val1 / val2;
+        }
+
+        /// <summary>
+        /// calculates the ratio difference between the two values.
+        /// </summary>
+        /// <param name="val1">Value one.</param>
+        /// <param name="val2">Value two.</param>
+        /// <returns>Ratio difference between two values.</returns>
+        public static float Ratio(int val1, int val2)
+        {
+            return (float)val1 / val2;
+        }
+
+        /// <summary>
+        /// calculates the ratio difference between the two values.
+        /// </summary>
+        /// <param name="val1">Value one.</param>
+        /// <param name="val2">Value two.</param>
+        /// <returns>Ratio difference between two values.</returns>
+        public static float Ratio(long val1, long val2)
+        {
+            return (float)val1 / val2;
+        }
+        #endregion
+
         #region MinRatio
         /// <summary>
         /// Determine which value is the smallest ratio difference from 1.
@@ -117,6 +152,52 @@ namespace Fosol.Common.Mathematics
         }
         #endregion
 
+        #region Resize
+        /// <summary>
+        /// Calculate the new size based on the ratio.
+        /// </summary>
+        /// <param name="value">Value to resize.</param>
+        /// <param name="ratio">Ratio to use to calculate the new size.</param>
+        /// <returns>New size based on ratio.</returns>
+        public static float Resize(float value, float ratio)
+        {
+            return value * ratio;
+        }
+
+        /// <summary>
+        /// Calculate the new size based on the ratio.
+        /// </summary>
+        /// <param name="value">Value to resize.</param>
+        /// <param name="ratio">Ratio to use to calculate the new size.</param>
+        /// <returns>New size based on ratio.</returns>
+        public static double Resize(double value, float ratio)
+        {
+            return (double)(value * ratio);
+        }
+
+        /// <summary>
+        /// Calculate the new size based on the ratio.
+        /// </summary>
+        /// <param name="value">Value to resize.</param>
+        /// <param name="ratio">Ratio to use to calculate the new size.</param>
+        /// <returns>New size based on ratio.</returns>
+        public static int Resize(int value, float ratio)
+        {
+            return (int)(value * ratio);
+        }
+
+        /// <summary>
+        /// Calculate the new size based on the ratio.
+        /// </summary>
+        /// <param name="value">Value to resize.</param>
+        /// <param name="ratio">Ratio to use to calculate the new size.</param>
+        /// <returns>New size based on ratio.</returns>
+        public static long Resize(long value, float ratio)
+        {
+            return (long)(value * ratio);
+        }
+        #endregion
+
         #region Center
         /// <summary>
         /// Calculate the center point of the value (50%).
@@ -198,6 +279,8 @@ namespace Fosol.Common.Mathematics
                 return value;
 
             var center = Center(value);
+
+            // Return the true center.
             if (offset == 0)
                 return center;
             else if (offset == -1)
@@ -249,139 +332,33 @@ namespace Fosol.Common.Mathematics
 
         #region Scale
         /// <summary>
-        /// Calculate the destination rectangle based on the current size and the new size.
-        /// Always maintains the scale of the original object.
+        /// Calculate the destination rectangle that will host the object in the new size.
         /// </summary>
-        /// <param name="size">Size of the current object.</param>
-        /// <param name="resize">Desired size to convert the oject into.</param>
-        /// <param name="offset">Cropping offset control option. Zero represents the center point.</param>
-        /// <param name="restrictSize">Determines whether the scaled image must keep one of the newSize dimensions (width, height).</param>
-        /// <returns>A destination rectangle so that scale of the original object will be maintained.</returns>
-        public static Rectangle FillAndScale(Size size, Size resize, CenterPoint offset, bool restrictSize = true)
-        {
-            return FillAndScale(size, resize, offset.X, offset.Y, restrictSize);
-        }
-
-        /// <summary>
-        /// Calculate the destination rectangle based on the current size and the new size.
-        /// Always maintains the scale of the original object.
-        /// </summary>
-        /// <param name="size">Size of the current object.</param>
-        /// <param name="resize">Desired size to convert the oject into.</param>
-        /// <param name="xOffset">Horizontal cropping offset value [-1 to 1]. Zero represents the center point.</param>
-        /// <param name="yOffset">Vertical cropping offset value [-1 to 1]. Zero represents the center point.</param>
-        /// <param name="restrictSize">Determines whether the scaled image must keep one of the newSize dimensions (width, height).</param>
-        /// <returns>A destination rectangle so that scale of the original object will be maintained.</returns>
-        public static Rectangle FillAndScale(Size size, Size resize, float xOffset = 0f, float yOffset = 0f, bool restrictSize = true)
-        {
-            Validation.Parameter.AssertRange(xOffset, -1, 1, "hOffset");
-            Validation.Parameter.AssertRange(yOffset, -1, 1, "yOffset");
-
-            var dest = new Rectangle(0, 0, resize.Width, resize.Height);
-
-            // Same size as orginal.
-            if (size.Equals(resize))
-                return dest;
-
-            var wr = (float)size.Width / resize.Width;
-            var hr = (float)size.Height / resize.Height;
-            var min = MinRatio(wr, hr);
-            var max = MaxRatio(wr, hr);
-
-            // Restrict destination rectangle to the boundary of smallest ratio change.
-            if (restrictSize)
-            {
-                // Width ratio is smallest.  Use it to calculate height.
-                if (wr == min)
-                {
-                    if (wr == 1)
-                    {
-                        dest.Height = resize.Width;
-                    }
-                    else if (wr < 1)
-                    {
-                        dest.Height = (int)(resize.Height / wr);
-                    }
-                    else
-                    {
-                        dest.Height = (int)(resize.Height * wr);
-                    }
-
-                    dest.Y = (int)OffsetCenter(dest.Height - resize.Height, yOffset) * -1;
-                }
-                // Height ratio is smallest.  Use it to calculate width.
-                else
-                {
-                    if (hr == 1)
-                    {
-                        dest.Width = resize.Height;
-                    }
-                    else if (hr < 1)
-                    {
-                        dest.Width = (int)(resize.Width / hr);
-                    }
-                    else
-                    {
-                        dest.Width = (int)(resize.Width * hr);
-                    }
-
-                    dest.X = (int)OffsetCenter(dest.Width - resize.Width, xOffset) * -1;
-                }
-            }
-            // Use the newSize dimensions to calculate the destination rectangle.
-            else
-            {
-                if (min == 1)
-                {
-                    if (hr != min)
-                    {
-                        if (hr < 1)
-                        {
-                            dest.Height = (int)(resize.Height / hr);
-                        }
-                        else
-                        {
-                            dest.Height = (int)(resize.Height * hr);
-                        }
-                    }
-                    else
-                    {
-                        if (wr < 1)
-                        {
-                            dest.Width = (int)(resize.Width / wr);
-                        }
-                        else
-                        {
-                            dest.Width = (int)(resize.Width * wr);
-                        }
-                    }
-                }
-                // Make larger
-                else if (min < 1)
-                {
-                    dest.Width = (int)(resize.Width / min);
-                    dest.Height = (int)(resize.Height / min);
-                }
-                // Make smaller
-                else
-                {
-                    dest.Width = (int)(size.Width * min);
-                    dest.Height = (int)(size.Height * min);
-                }
-
-                dest.X = (int)OffsetCenter(dest.Width - resize.Width, xOffset) * -1;
-                dest.Y = (int)OffsetCenter(dest.Height - resize.Height, yOffset) * -1;
-            }
-
-            return dest;
-        }
-
-
-        public static Rectangle Scale(Size size, Size resize, CenterPoint offset, bool allowWhitespace = true)
+        /// <param name="size">Original size of the object.</param>
+        /// <param name="resize">Desired size of the new object.</param>
+        /// <param name="offset">Offset point within the new size.</param>
+        /// <param name="allowWhitespace">
+        ///     When 'true' it will ensure the object is not cropped.  
+        ///     When 'false' the object will fill the new size and crop anything extending beyond the new size.
+        /// </param>
+        /// <returns>Destination rectangle.</returns>
+        public static Rectangle Scale(Size size, Size resize, Fosol.Common.CenterPoint offset, bool allowWhitespace = true)
         {
             return Scale(size, resize, offset.X, offset.Y, allowWhitespace);
         }
 
+        /// <summary>
+        /// Calculate the destination rectangle that will host the object in the new size.
+        /// </summary>
+        /// <param name="size">Original size of the object.</param>
+        /// <param name="resize">Desired size of the new object.</param>
+        /// <param name="xOffset">Horizontal x-axis offset point within the new size.</param>
+        /// <param name="yOffset">Vertical y-axis offset point within the new size.</param>
+        /// <param name="allowWhitespace">
+        ///     When 'true' it will ensure the object is not cropped.  
+        ///     When 'false' the object will fill the new size and crop anything extending beyond the new size.
+        /// </param>
+        /// <returns>Destination rectangle.</returns>
         public static Rectangle Scale(Size size, Size resize, float xOffset = 0f, float yOffset = 0f, bool allowWhitespace = true)
         {
             Validation.Parameter.AssertIsNotNull(size, "size");
@@ -394,57 +371,28 @@ namespace Fosol.Common.Mathematics
             if (size.Equals(resize))
                 return dest;
 
-            var wr = (float)size.Width / resize.Width;
-            var hr = (float)size.Height / resize.Height;
+            var wr = Ratio(resize.Width, size.Width);
+            var hr = Ratio(resize.Height, size.Height);
 
-            // Use the min ratio when allowWhitespace = true.
-            var min = MinRatio(wr, hr);
-
-            // Use the max ratio when allowWhitespace = false.
-            var max = MaxRatio(wr, hr);
+            var min = Math.Min(wr, hr);
+            var max = Math.Max(wr, hr);
             var ratio = allowWhitespace ? min : max;
 
-            // Expand the object to fit the new larger size.
-            if (resize.Width >= size.Width && resize.Height >= size.Height)
-            {
-                if (ratio <= 1)
-                {
-                    dest.Width = (int)(size.Width / ratio);
-                    dest.Height = (int)(size.Height / ratio);
-                }
-                else
-                {
-                    dest.Width = (int)(size.Width * ratio);
-                    dest.Height = (int)(size.Height * ratio);
-                }
-            }
-            // Shrink the object to fit the new smaller size.
-            else
-            {
-                if (ratio <= 1)
-                {
-                    dest.Width = (int)(size.Width * ratio);
-                    dest.Height = (int)(size.Height * ratio);
-                }
-                else
-                {
-                    dest.Width = (int)(size.Width / ratio);
-                    dest.Height = (int)(size.Height / ratio);
-                }
-            }
+            dest.Width = Resize(size.Width, ratio);
+            dest.Height = Resize(size.Height, ratio);
 
             // Restricts scaling to remain the boundaries of resize.
             if (allowWhitespace)
             {
                 // Center the object within the resize.
                 dest.X = (int)OffsetCenter(resize.Width - dest.Width, xOffset);
-                dest.Y = (int)OffsetCenter(resize.Height - dest.Height, yOffset);
+                dest.Y = (int)OffsetCenter(resize.Height - dest.Height, yOffset * -1);
             }
-            // The object will scale using the max ration, which means it will be cropped.
+            // The object will scale using the max ratio, which means it will be cropped.
             else
             {
                 dest.X = (int)OffsetCenter(dest.Width - resize.Width, xOffset) * -1;
-                dest.Y = (int)OffsetCenter(dest.Height - resize.Height, yOffset) * -1;
+                dest.Y = (int)OffsetCenter(dest.Height - resize.Height, yOffset * -1) * -1;
             }
 
             return dest;

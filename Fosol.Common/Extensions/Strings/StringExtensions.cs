@@ -113,7 +113,7 @@ namespace Fosol.Common.Extensions.Strings
         public static byte[] ToByteArray(this string value, Encoding encoding = null)
         {
             Validation.Parameter.AssertIsNotNullOrEmpty(value, "value");
-            Initialization.Parameter.AssertIsNotDefault(encoding, new UTF8Encoding());
+            Initialization.Parameter.AssertIsNotDefault<Encoding>(ref encoding, new UTF8Encoding());
             return encoding.GetBytes(value);
         }
 

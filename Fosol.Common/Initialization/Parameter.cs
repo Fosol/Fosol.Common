@@ -19,7 +19,20 @@ namespace Fosol.Common.Initialization
         /// </summary>
         /// <param name="value">The parameter value to set to the default value if it's null.</param>
         /// <param name="defaultValue">Default value to use if the original value is null.</param>
-        public static void AssertIsNotDefault(object value, object defaultValue)
+        public static void AssertIsNotDefault(ref object value, object defaultValue)
+        {
+            if (value == null)
+                value = defaultValue;
+        }
+
+        /// <summary>
+        /// Assert that if the value is null that it is instead the defaultValue.
+        /// Use this method if the object is automatically passed by reference.
+        /// </summary>
+        /// <typeparam name="T">Type of object value.</typeparam>
+        /// <param name="value">The parameter value to set to the default value if it's null.</param>
+        /// <param name="defaultValue">Default value to use if the original value is null.</param>
+        public static void AssertIsNotDefault<T>(ref T value, T defaultValue)
         {
             if (value == null)
                 value = defaultValue;

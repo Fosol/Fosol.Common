@@ -69,10 +69,10 @@
     <Compile Include="Extensions\Uris\UriExtensions.cs" />
     <Compile Include="Helpers\AssemblyResourceHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
-    <Compile Include="Helpers\ImageHelper.cs" />
-    <Compile Include="Mathematics\CenterOption.cs" />
-    <Compile Include="Mathematics\CenterPoint.cs" />
-    <Compile Include="Mathematics\MathHelper.cs" />
+    <Compile Include="Drawing\ImageHelper.cs" />
+    <Compile Include="OffsetRule.cs" />
+    <Compile Include="CenterPoint.cs" />
+    <Compile Include="Mathematics\Formula.cs" />
     <Compile Include="Serialization\CData.cs" />
     <Compile Include="ServiceModel\ServiceException`.cs" />
     <Compile Include="Web\DomainComparer.cs" />

@@ -4,15 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Mathematics
+namespace Fosol.Common
 {
-    public static class CenterOption
+    /// <summary>
+    /// Static collection preconfigured CenterPoint objects.
+    /// Here are a number of default behaviours that specify the center of a object.
+    /// Default center is the true center; position 0, 0 in the x, y axis's.
+    /// A center point ratio can be defined with two number.  The x-axis and the y-axis.
+    /// Each value can be -1 to 1, where 0 represents the true center.
+    /// </summary>
+    /// <exexample>
+    ///    +
+    ///    +
+    ///    +
+    /// ---0+++
+    ///    -
+    ///    -
+    ///    -
+    /// </exexample>
+    public static class OffsetRule
     {
         #region Variables
         /// <summary>
-        /// Centering options for the MathHelper.Scale function.
+        /// Centering options for the Scale function.
         /// </summary>
-        public enum CenterOptionEnum
+        public enum Option
         {
             Center,
             Portrait,
@@ -37,7 +53,7 @@ namespace Fosol.Common.Mathematics
         /// <summary>
         /// get - Center closer to the top.
         /// </summary>
-        public static readonly CenterPoint Portrait = new CenterPoint(0, -0.5f);
+        public static readonly CenterPoint Portrait = new CenterPoint(0, 0.5f);
 
         /// <summary>
         /// get - Center the object.
@@ -57,32 +73,32 @@ namespace Fosol.Common.Mathematics
         /// <summary>
         /// get - Center on the absolute top.
         /// </summary>
-        public static readonly CenterPoint Top = new CenterPoint(0, -1);
+        public static readonly CenterPoint Top = new CenterPoint(0, 1);
 
         /// <summary>
         /// get - Center on the absolute top left.
         /// </summary>
-        public static readonly CenterPoint TopLeft = new CenterPoint(-1, -1);
+        public static readonly CenterPoint TopLeft = new CenterPoint(-1, 1);
 
         /// <summary>
         /// get - Center on the absolute top left.
         /// </summary>
-        public static readonly CenterPoint TopRight = new CenterPoint(1, -1);
+        public static readonly CenterPoint TopRight = new CenterPoint(1, 1);
 
         /// <summary>
         /// get - Center on the absolute bottom.
         /// </summary>
-        public static readonly CenterPoint Bottom = new CenterPoint(0, 1);
+        public static readonly CenterPoint Bottom = new CenterPoint(0, -1);
 
         /// <summary>
         /// get - Center on the absolute bottom.
         /// </summary>
-        public static readonly CenterPoint BottomLeft = new CenterPoint(-1, 1);
+        public static readonly CenterPoint BottomLeft = new CenterPoint(-1, -1);
 
         /// <summary>
         /// get - Center on the absolute bottom.
         /// </summary>
-        public static readonly CenterPoint BottomRight = new CenterPoint(1, 1);
+        public static readonly CenterPoint BottomRight = new CenterPoint(1, -1);
 
         #endregion
 
@@ -93,33 +109,33 @@ namespace Fosol.Common.Mathematics
         /// <summary>
         /// Return the corresponding CenterPoint that matches the specified option.
         /// </summary>
-        /// <param name="option">CenterOptionEnum value.</param>
+        /// <param name="option">Option value.</param>
         /// <returns>CenterPoint object.</returns>
-        public static CenterPoint FromOption(CenterOptionEnum option)
+        public static CenterPoint FromOption(Option option)
         {
             switch (option)
             {
-                case (CenterOptionEnum.Center):
+                case (Option.Center):
                     return Center;
-                case (CenterOptionEnum.Portrait):
+                case (Option.Portrait):
                     return Portrait;
-                case (CenterOptionEnum.Landscape):
+                case (Option.Landscape):
                     return Landscape;
-                case (CenterOptionEnum.Left):
+                case (Option.Left):
                     return Left;
-                case (CenterOptionEnum.Right):
+                case (Option.Right):
                     return Right;
-                case (CenterOptionEnum.Top):
+                case (Option.Top):
                     return Top;
-                case (CenterOptionEnum.TopLeft):
+                case (Option.TopLeft):
                     return TopLeft;
-                case (CenterOptionEnum.TopRight):
+                case (Option.TopRight):
                     return TopRight;
-                case (CenterOptionEnum.Bottom):
+                case (Option.Bottom):
                     return Bottom;
-                case (CenterOptionEnum.BottomLeft):
+                case (Option.BottomLeft):
                     return BottomLeft;
-                case (CenterOptionEnum.BottomRight):
+                case (Option.BottomRight):
                     return BottomRight;
                 default:
                     return Center;
