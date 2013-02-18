@@ -376,6 +376,8 @@ namespace Fosol.Common.Mathematics
 
             var min = Math.Min(wr, hr);
             var max = Math.Max(wr, hr);
+
+            // Using the minimum ratio will result in whitespace.
             var ratio = allowWhitespace ? min : max;
 
             dest.Width = Resize(size.Width, ratio);

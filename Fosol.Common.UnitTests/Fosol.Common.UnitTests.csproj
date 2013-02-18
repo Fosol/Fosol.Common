@@ -54,6 +54,7 @@
     <Compile Include="KeywordParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ImageHelperTest.cs" />
+    <Compile Include="ValidationParameterTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fosol.Common\Fosol.Common.csproj">

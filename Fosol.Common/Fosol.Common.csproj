@@ -106,9 +106,7 @@
     <Compile Include="Validation\Parameter.cs" />
     <Compile Include="Validation\Strings.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utilities\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>

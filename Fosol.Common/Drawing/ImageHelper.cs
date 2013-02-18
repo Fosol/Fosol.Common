@@ -11,7 +11,7 @@ namespace Fosol.Common.Drawing
 {
     /// <summary>
     /// Utility methods to modify image sizes.
-    /// Provides the following methods, Resize, Crop, Scale.
+    /// Provides the following methods, Canvas, Crop, Resize, Scale and Optimize.
     /// 
     /// Canvas:
     /// The original image will stay the same size, but the output will have white space, or it will crop the image.
@@ -30,13 +30,15 @@ namespace Fosol.Common.Drawing
     /// If you do not provide a fill color it will maintain scale and will crop.
     /// 
     /// Optimize:
-    /// This will degrade the quality of the image and make it a smaller file size in bytes.
+    /// Optimize the size of the image by degrading the quality.
+    /// 0 would result in the most optimized image, with the poorest quality.
+    /// 100 would be the least optimized image, with the original quality.
     /// </summary>
     public class ImageHelper
     {
         #region Constants
         private static readonly CenterPoint _DefaultOffset = OffsetRule.Center;
-        private static readonly long _DefaultImageQuality = 100;
+        private static readonly long _DefaultImageQuality = 75;
         #endregion
 
         #region Variables
@@ -67,6 +69,17 @@ namespace Fosol.Common.Drawing
 
         /// <summary>
         /// get/set - Collection of encoder parameters to use when generating the new image.
+        /// The following parameters can be applied to the generated image;
+        /// ChrominanceTable
+        /// ColorDepth
+        /// Compression
+        /// LuminanceTable
+        /// Quality
+        /// RenderMethod
+        /// SaveFlag
+        /// ScanMethod
+        /// Transformation
+        /// Version
         /// </summary>
         public EncoderParameters EncoderParameters { get; set; }
 
@@ -184,7 +197,7 @@ namespace Fosol.Common.Drawing
         /// <param name="quality">Quality of the image.</param>
         /// <param name="graphicsUnit">GraphicsUnit option.</param>
         /// <returns>Size of the new image in bytes</returns>
-        public long Canvas(Stream destination, Size size, Color fill, CenterPoint offset = null, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
+        public long Canvas(Stream destination, Size size, Color fill, CenterPoint offset = null, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
             Validation.Parameter.AssertIsNotNull(size, "size");
             Validation.Parameter.AssertMinRange(size.Width, 0, "size.Width", Resources.Strings.Exception_ImageHelper_InvalidResizeWidth);
@@ -208,7 +221,7 @@ namespace Fosol.Common.Drawing
         /// <param name="quality">Quality of the image.</param>
         /// <param name="graphicsUnit">GraphicsUnit option.</param>
         /// <returns>Size of the new image in bytes</returns>
-        public long Canvas(Stream destination, int width, int height, Color fill, CenterPoint offset = null, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
+        public long Canvas(Stream destination, int width, int height, Color fill, CenterPoint offset = null, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
             Validation.Parameter.AssertIsNotNull(destination, "destination");
             Validation.Parameter.AssertIsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
@@ -253,7 +266,7 @@ namespace Fosol.Common.Drawing
         /// <param name="quality">Quality of the image.</param>
         /// <param name="graphicsUnit">GraphicsUnit option.</param>
         /// <returns>Size of the new image in bytes</returns>
-        public long Crop(Stream destination, Rectangle plot, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
+        public long Crop(Stream destination, Rectangle plot, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
             Validation.Parameter.AssertIsNotNull(plot, "plot");
             Validation.Parameter.AssertRange(plot.X, 0, this.Photo.Width - 1, "plot.X", Resources.Strings.Exception_ImageHelper_InvalidX);
@@ -281,7 +294,7 @@ namespace Fosol.Common.Drawing
         /// <param name="quality">Quality of the image.</param>
         /// <param name="graphicsUnit">GraphicsUnit option.</param>
         /// <returns>Size of the new image in bytes</returns>
-        public long Crop(Stream destination, int xPosition, int yPosition, int width, int height, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
+        public long Crop(Stream destination, int xPosition, int yPosition, int width, int height, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
             Validation.Parameter.AssertIsNotNull(destination, "destination");
             Validation.Parameter.AssertIsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
@@ -342,7 +355,7 @@ namespace Fosol.Common.Drawing
         /// <param name="quality">Quality of the image.</param>
         /// <param name="graphicsUnit">GraphicsUnit option.</param>
         /// <returns>Size of the new image in bytes</returns>
-        public long Resize(Stream destination, Size size, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
+        public long Resize(Stream destination, Size size, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
             Validation.Parameter.AssertIsNotNull(size, "size");
             Validation.Parameter.AssertMinRange(size.Width, 0, "size.Width", Resources.Strings.Exception_ImageHelper_InvalidResizeWidth);
@@ -363,7 +376,7 @@ namespace Fosol.Common.Drawing
         /// <param name="quality">Quality of the image.</param>
         /// <param name="graphicsUnit">GraphicsUnit option.</param>
         /// <returns>Size of the new image in bytes</returns>
-        public long Resize(Stream destination, int width, int height, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
+        public long Resize(Stream destination, int width, int height, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
             Validation.Parameter.AssertIsNotNull(destination, "destination");
             Validation.Parameter.AssertIsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
@@ -408,7 +421,7 @@ namespace Fosol.Common.Drawing
         /// <param name="quality">Quality of the image.</param>
         /// <param name="graphicsUnit">GraphicsUnit option.</param>
         /// <returns>Size of the new image in bytes</returns>
-        public long Scale(Stream destination, int width, int height, Color? fill = null, CenterPoint offset = null, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
+        public long Scale(Stream destination, int width, int height, Color? fill = null, CenterPoint offset = null, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
             Validation.Parameter.AssertIsNotNull(destination, "destination");
             Validation.Parameter.AssertIsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
@@ -471,7 +484,7 @@ namespace Fosol.Common.Drawing
         /// <param name="quality">Quality of the image.</param>
         /// <param name="graphicsUnit">GraphicsUnit option.</param>
         /// <returns>Size of the new image in bytes</returns>
-        private long Generate(Stream destination, Size imageSize, Rectangle destRect, Rectangle sourceRect, Color? fill = null, long quality = 0, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
+        private long Generate(Stream destination, Size imageSize, Rectangle destRect, Rectangle sourceRect, Color? fill = null, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
             using (var bitmap = new Bitmap(imageSize.Width, imageSize.Height))
             {
@@ -485,18 +498,16 @@ namespace Fosol.Common.Drawing
 
                     graphics.DrawImage(this.Photo, destRect, sourceRect, graphicsUnit);
 
-                    EncoderParameters encoder_params;
-                    if (this.EncoderParameters == null)
+                    EncoderParameters encoder_params = null;
+                    if (this.EncoderParameters == null && quality.HasValue)
                     {
-                        // Initialize default values.
-                        Initialization.Parameter.AssertRange(ref quality, 1, 100, _DefaultImageQuality);
-                        encoder_params = new System.Drawing.Imaging.EncoderParameters(1);
-                        encoder_params.Param[0] = new EncoderParameter(Encoder.Quality, quality);
+                        encoder_params = new EncoderParameters(1);
+                        encoder_params.Param[0] = new EncoderParameter(Encoder.Quality, quality.Value);
                     }
-                    else
+                    if (this.EncoderParameters != null)
                     {
                         // Use the overridden quality parameter and make sure there arent duplicate quality params in the EncoderParameters.
-                        if (quality > 0)
+                        if (quality.HasValue)
                         {
                             var duplicate = this.EncoderParameters.Param.Count(p => p.Encoder == Encoder.Quality);
                             encoder_params = new EncoderParameters(this.EncoderParameters.Param.Length + 1 - duplicate);
@@ -504,7 +515,7 @@ namespace Fosol.Common.Drawing
                             for (var i = 0; i < this.EncoderParameters.Param.Length; i++)
                             {
                                 if (this.EncoderParameters.Param[i].Encoder == Encoder.Quality)
-                                    encoder_params.Param[i] = new EncoderParameter(Encoder.Quality, quality);
+                                    encoder_params.Param[i] = new EncoderParameter(Encoder.Quality, quality.Value);
                                 else
                                     encoder_params.Param[i] = this.EncoderParameters.Param[i];
                             }

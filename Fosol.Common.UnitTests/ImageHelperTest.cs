@@ -12,7 +12,7 @@ namespace Fosol.Common.UnitTests
         #region Variables
         private static readonly string _SourcePath = string.Format(@"{0}\Resources\Images\", Directory.GetCurrentDirectory());
         private static readonly string _DestinationPath = string.Format(@"{0}UnitTests\", _SourcePath);
-        private static readonly string _Filename = "Square.png";
+        private static readonly string _Filename = "Jeremy Foster 2008.jpg";
         #endregion
 
         #region Methods
