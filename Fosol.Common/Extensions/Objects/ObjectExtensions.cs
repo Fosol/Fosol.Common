@@ -47,9 +47,9 @@ namespace Fosol.Common.Extensions.Objects
         /// <param name="keepOpen">Determines whether the stream is closed on exist.</param>
         public static void ToStream(this object data, Stream stream, bool keepOpen = true)
         {
-            Validation.Parameter.AssertIsNotNull(data, "data");
-            Validation.Parameter.AssertIsNotNull(stream, "stream");
-            Validation.Parameter.AssertIsValue(stream.CanWrite, true, "stream.CanWrite");
+            Validation.Assert.IsNotNull(data, "data");
+            Validation.Assert.IsNotNull(stream, "stream");
+            Validation.Assert.IsValue(stream.CanWrite, true, "stream.CanWrite");
 
             if (keepOpen)
             {

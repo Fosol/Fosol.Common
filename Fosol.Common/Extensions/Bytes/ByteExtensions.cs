@@ -36,9 +36,9 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>Position within the destination array after the data has been copied.</returns>
         public static int Append(this byte[] destination, byte[] value, int startIndex = 0)
         {
-            Validation.Parameter.AssertIsNotNull(destination, "destination");
-            Validation.Parameter.AssertIsNotNull(value, "value");
-            Validation.Parameter.AssertRange(startIndex, 0, destination.Length - value.Length - 1, "startIndex");
+            Validation.Assert.IsNotNull(destination, "destination");
+            Validation.Assert.IsNotNull(value, "value");
+            Validation.Assert.Range(startIndex, 0, destination.Length - value.Length - 1, "startIndex");
 
             if (destination.Length < value.Length + startIndex)
                 throw new ArgumentOutOfRangeException("destination", String.Format(Resources.Strings.Exception_ValueToSmall, "destination"));
@@ -68,7 +68,7 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>Hex value represents the byte array.</returns>
         public static string ToHex(this byte[] value)
         {
-            Validation.Parameter.AssertIsNotNull(value, "value");
+            Validation.Assert.IsNotNull(value, "value");
 
             return BitConverter.ToString(value).Replace("-", "");
         }
@@ -84,9 +84,9 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>Index position of value within data, or -1 if not found.</returns>
         public static int IndexOf(this byte[] data, byte[] value, int startIndex = 0)
         {
-            Validation.Parameter.AssertIsNotNull(data, "data");
-            Validation.Parameter.AssertIsNotNull(value, "value");
-            Validation.Parameter.AssertRange(startIndex, 0, data.Length, "startIndex");
+            Validation.Assert.IsNotNull(data, "data");
+            Validation.Assert.IsNotNull(value, "value");
+            Validation.Assert.Range(startIndex, 0, data.Length, "startIndex");
 
             if (data.Length == 0 || value.Length == 0)
                 return -1;
@@ -109,9 +109,9 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>True if the value is at the index position within the data.</returns>
         public static bool IsMatch(this byte[] data, byte[] value, int startIndex = 0)
         {
-            Validation.Parameter.AssertIsNotNull(data, "data");
-            Validation.Parameter.AssertIsNotNull(value, "value");
-            Validation.Parameter.AssertRange(startIndex, 0, data.Length, "startIndex");
+            Validation.Assert.IsNotNull(data, "data");
+            Validation.Assert.IsNotNull(value, "value");
+            Validation.Assert.Range(startIndex, 0, data.Length, "startIndex");
 
             if (value.Length > (data.Length - startIndex))
                 return false;
@@ -136,9 +136,9 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>True if the value is at the index position within the data.</returns>
         public static bool IsMatch(this byte[] data, byte[] value, ref int index)
         {
-            Validation.Parameter.AssertIsNotNull(data, "data");
-            Validation.Parameter.AssertIsNotNull(value, "value");
-            Validation.Parameter.AssertRange(index, 0, data.Length, "index");
+            Validation.Assert.IsNotNull(data, "data");
+            Validation.Assert.IsNotNull(value, "value");
+            Validation.Assert.Range(index, 0, data.Length, "index");
 
             if (value.Length > (data.Length - index))
                 return false;
@@ -161,8 +161,8 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>An array of index positions that the value was found.</returns>
         public static int[] IndexOfAll(this byte[] data, byte[] value)
         {
-            Validation.Parameter.AssertIsNotNull(data, "data");
-            Validation.Parameter.AssertIsNotNull(value, "value");
+            Validation.Assert.IsNotNull(data, "data");
+            Validation.Assert.IsNotNull(value, "value");
 
             if (data.Length == 0 || value.Length == 0)
                 return new int[0];

@@ -30,7 +30,7 @@ namespace Fosol.Common.Parsers
         /// <param name="text">The full text value of the keyword.</param>
         public Phrase(string text)
         {
-            Validation.Parameter.AssertIsNotNull(text, "text");
+            Validation.Assert.IsNotNull(text, "text");
 
             this.Text = text;
         }

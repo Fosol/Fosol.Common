@@ -10,10 +10,51 @@ namespace Fosol.Common.Validation
     /// <summary>
     /// Parameter validation utilities.
     /// </summary>
-    public static class Parameter
+    public static class Assert
     {
         #region Methods
-        #region AssertIsNotNull
+        #region IsNotNull
+        /// <summary>
+        /// Asserts that the result of the function is not null.
+        /// If it is null it will throw System.ArgumentNullException.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "function" return value is null.</exception>
+        /// <param name="value">The value to check.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        public static void IsNotNull(Func<object> function, string paramName)
+        {
+            if (function() == null)
+                throw new ArgumentNullException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the result of the function is not null.
+        /// If it is null it will throw System.ArgumentNullException.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "function" return value is null.</exception>
+        /// <param name="value">The value to check.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        public static void IsNotNull(Func<object> function, string paramName, string message)
+        {
+            if (function() == null)
+                throw new ArgumentNullException(paramName, string.Format(message, paramName));
+        }
+
+        /// <summary>
+        /// Asserts that the result of the function is not null.
+        /// If it is null it will throw System.ArgumentNullException.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "function" return value is null.</exception>
+        /// <param name="value">The value to check.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        /// <param name="innerException">The exception that caused this exception.</param>
+        public static void IsNotNull(Func<object> function, string message, Exception innerException)
+        {
+            if (function() == null)
+                throw new ArgumentNullException(message, innerException);
+        }
+
         /// <summary>
         /// Asserts that the parameter value is not null.
         /// If it is null it will throw System.ArgumentNullException.
@@ -21,7 +62,7 @@ namespace Fosol.Common.Validation
         /// <exception cref="System.ArgumentNullException">If the parameter is null.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertIsNotNull(object value, string paramName)
+        public static void IsNotNull(object value, string paramName)
         {
             if (value == null)
                 throw new ArgumentNullException(paramName);
@@ -35,7 +76,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">The value to check.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception.</param>
-        public static void AssertIsNotNull(object value, string paramName, string message)
+        public static void IsNotNull(object value, string paramName, string message)
         {
             if (value == null)
                 throw new ArgumentNullException(paramName, string.Format(message, paramName));
@@ -49,14 +90,14 @@ namespace Fosol.Common.Validation
         /// <param name="value">The value to check.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
-        public static void AssertIsNotNull(object value, string message, Exception innerException)
+        public static void IsNotNull(object value, string message, Exception innerException)
         {
             if (value == null)
                 throw new ArgumentNullException(message, innerException);
         }
         #endregion
 
-        #region AssertIsNotNullOrEmpty
+        #region IsNotNullOrEmpty
         /// <summary>
         /// Asserts that the parameter value is not null or empty.
         /// </summary>
@@ -65,9 +106,9 @@ namespace Fosol.Common.Validation
         /// <param name="value">The value to check.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception.</param>
-        public static void AssertIsNotNullOrEmpty(string value, string paramName, string message = null)
+        public static void IsNotNullOrEmpty(string value, string paramName, string message = null)
         {
-            AssertIsNotNull(value, paramName);
+            IsNotNull(value, paramName);
 
             if (value == String.Empty)
                 throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName);
@@ -82,9 +123,9 @@ namespace Fosol.Common.Validation
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
-        public static void AssertIsNotNullOrEmpty(string value, string paramName, string message, Exception innerException)
+        public static void IsNotNullOrEmpty(string value, string paramName, string message, Exception innerException)
         {
-            AssertIsNotNull(value, paramName);
+            IsNotNull(value, paramName);
 
             if (message != null)
                 message = string.Format(message, paramName);
@@ -101,9 +142,9 @@ namespace Fosol.Common.Validation
         /// <param name="collection">Parameter of type enumerable.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Message to describe the error.</param>
-        public static void AssertIsNotNullOrEmpty(IEnumerable<object> collection, string paramName, string message = null)
+        public static void IsNotNullOrEmpty(IEnumerable<object> collection, string paramName, string message = null)
         {
-            AssertIsNotNull(collection, paramName);
+            IsNotNull(collection, paramName);
 
             if (message != null)
                 message = string.Format(message, paramName);
@@ -121,9 +162,9 @@ namespace Fosol.Common.Validation
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception</param>
-        public static void AssertIsNotNullOrEmpty(IEnumerable<object> collection, string paramName, string message, Exception innerException)
+        public static void IsNotNullOrEmpty(IEnumerable<object> collection, string paramName, string message, Exception innerException)
         {
-            AssertIsNotNull(collection, paramName);
+            IsNotNull(collection, paramName);
 
             if (message != null)
                 message = string.Format(message, paramName);
@@ -140,9 +181,9 @@ namespace Fosol.Common.Validation
         /// <param name="collection">Parameter of type array.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Message to describe the error.</param>
-        public static void AssertIsNotNullOrEmpty(object[] array, string paramName, string message = null)
+        public static void IsNotNullOrEmpty(object[] array, string paramName, string message = null)
         {
-            AssertIsNotNull(array, paramName);
+            IsNotNull(array, paramName);
 
             if (message != null)
                 message = string.Format(message, paramName);
@@ -160,9 +201,9 @@ namespace Fosol.Common.Validation
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception</param>
-        public static void AssertIsNotNullOrEmpty(object[] array, string paramName, string message, Exception innerException)
+        public static void IsNotNullOrEmpty(object[] array, string paramName, string message, Exception innerException)
         {
-            AssertIsNotNull(array, paramName);
+            IsNotNull(array, paramName);
 
             if (message != null)
                 message = string.Format(message, paramName);
@@ -179,9 +220,9 @@ namespace Fosol.Common.Validation
         /// <param name="collection">Parameter of type array.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Message to describe the error.</param>
-        public static void AssertIsNotNullOrEmpty(byte[] array, string paramName, string message = null)
+        public static void IsNotNullOrEmpty(byte[] array, string paramName, string message = null)
         {
-            AssertIsNotNull(array, paramName);
+            IsNotNull(array, paramName);
 
             if (message != null)
                 message = string.Format(message, paramName);
@@ -199,9 +240,9 @@ namespace Fosol.Common.Validation
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception</param>
-        public static void AssertIsNotNullOrEmpty(byte[] array, string paramName, string message, Exception innerException)
+        public static void IsNotNullOrEmpty(byte[] array, string paramName, string message, Exception innerException)
         {
-            AssertIsNotNull(array, paramName);
+            IsNotNull(array, paramName);
 
             if (message != null)
                 message = string.Format(message, paramName);
@@ -211,7 +252,7 @@ namespace Fosol.Common.Validation
         }
         #endregion
 
-        #region AssertMinRange
+        #region MinRange
         #region decimal
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
@@ -220,7 +261,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(decimal value, decimal minimum, string paramName)
+        public static void MinRange(decimal value, decimal minimum, string paramName)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -233,7 +274,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(decimal? value, decimal minimum, string paramName)
+        public static void MinRange(decimal? value, decimal minimum, string paramName)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -247,7 +288,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(decimal value, decimal minimum, string paramName, string message)
+        public static void MinRange(decimal value, decimal minimum, string paramName, string message)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -261,7 +302,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(decimal? value, decimal minimum, string paramName, string message)
+        public static void MinRange(decimal? value, decimal minimum, string paramName, string message)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -275,7 +316,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(decimal value, decimal minimum, string message, Exception innerException)
+        public static void MinRange(decimal value, decimal minimum, string message, Exception innerException)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -289,7 +330,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(decimal? value, decimal minimum, string message, Exception innerException)
+        public static void MinRange(decimal? value, decimal minimum, string message, Exception innerException)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -304,7 +345,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(double value, double minimum, string paramName)
+        public static void MinRange(double value, double minimum, string paramName)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -317,7 +358,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(double? value, double minimum, string paramName)
+        public static void MinRange(double? value, double minimum, string paramName)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -331,7 +372,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(double value, double minimum, string paramName, string message)
+        public static void MinRange(double value, double minimum, string paramName, string message)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -345,7 +386,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(double? value, double minimum, string paramName, string message)
+        public static void MinRange(double? value, double minimum, string paramName, string message)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -359,7 +400,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(double value, double minimum, string message, Exception innerException)
+        public static void MinRange(double value, double minimum, string message, Exception innerException)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -373,7 +414,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(double? value, double minimum, string message, Exception innerException)
+        public static void MinRange(double? value, double minimum, string message, Exception innerException)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -388,7 +429,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(float value, float minimum, string paramName)
+        public static void MinRange(float value, float minimum, string paramName)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -401,7 +442,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(float? value, float minimum, string paramName)
+        public static void MinRange(float? value, float minimum, string paramName)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -415,7 +456,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(float value, float minimum, string paramName, string message)
+        public static void MinRange(float value, float minimum, string paramName, string message)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -429,7 +470,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(float? value, float minimum, string paramName, string message)
+        public static void MinRange(float? value, float minimum, string paramName, string message)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -443,7 +484,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(float value, float minimum, string message, Exception innerException)
+        public static void MinRange(float value, float minimum, string message, Exception innerException)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -457,7 +498,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(float? value, float minimum, string message, Exception innerException)
+        public static void MinRange(float? value, float minimum, string message, Exception innerException)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -472,7 +513,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(int value, int minimum, string paramName)
+        public static void MinRange(int value, int minimum, string paramName)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -485,7 +526,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(int? value, int minimum, string paramName)
+        public static void MinRange(int? value, int minimum, string paramName)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -499,7 +540,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(int value, int minimum, string paramName, string message)
+        public static void MinRange(int value, int minimum, string paramName, string message)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -513,7 +554,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(int? value, int minimum, string paramName, string message)
+        public static void MinRange(int? value, int minimum, string paramName, string message)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -527,7 +568,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(int value, int minimum, string message, Exception innerException)
+        public static void MinRange(int value, int minimum, string message, Exception innerException)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -541,7 +582,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(int? value, int minimum, string message, Exception innerException)
+        public static void MinRange(int? value, int minimum, string message, Exception innerException)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -556,7 +597,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(long value, long minimum, string paramName)
+        public static void MinRange(long value, long minimum, string paramName)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -569,7 +610,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMinRange(long? value, long minimum, string paramName)
+        public static void MinRange(long? value, long minimum, string paramName)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -583,7 +624,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(long value, long minimum, string paramName, string message)
+        public static void MinRange(long value, long minimum, string paramName, string message)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -597,7 +638,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMinRange(long? value, long minimum, string paramName, string message)
+        public static void MinRange(long? value, long minimum, string paramName, string message)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -611,7 +652,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(long value, long minimum, string message, Exception innerException)
+        public static void MinRange(long value, long minimum, string message, Exception innerException)
         {
             if (value < minimum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -625,7 +666,7 @@ namespace Fosol.Common.Validation
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMinRange(long? value, long minimum, string message, Exception innerException)
+        public static void MinRange(long? value, long minimum, string message, Exception innerException)
         {
             if (value.HasValue && value < minimum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -633,7 +674,7 @@ namespace Fosol.Common.Validation
         #endregion
         #endregion
 
-        #region AssertMaxRange
+        #region MaxRange
         #region decimal
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
@@ -642,7 +683,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMaxRange(decimal value, decimal maximum, string paramName)
+        public static void MaxRange(decimal value, decimal maximum, string paramName)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -655,7 +696,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMaxRange(decimal? value, decimal maximum, string paramName)
+        public static void MaxRange(decimal? value, decimal maximum, string paramName)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -669,7 +710,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(decimal value, decimal maximum, string paramName, string message)
+        public static void MaxRange(decimal value, decimal maximum, string paramName, string message)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -683,7 +724,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(decimal? value, decimal maximum, string paramName, string message)
+        public static void MaxRange(decimal? value, decimal maximum, string paramName, string message)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -697,7 +738,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(decimal value, decimal maximum, string message, Exception innerException)
+        public static void MaxRange(decimal value, decimal maximum, string message, Exception innerException)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -711,7 +752,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(decimal? value, decimal maximum, string message, Exception innerException)
+        public static void MaxRange(decimal? value, decimal maximum, string message, Exception innerException)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -726,7 +767,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMaxRange(double value, double maximum, string paramName)
+        public static void MaxRange(double value, double maximum, string paramName)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -739,7 +780,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMaxRange(double? value, double maximum, string paramName)
+        public static void MaxRange(double? value, double maximum, string paramName)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -753,7 +794,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(double value, double maximum, string paramName, string message)
+        public static void MaxRange(double value, double maximum, string paramName, string message)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -767,7 +808,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(double? value, double maximum, string paramName, string message)
+        public static void MaxRange(double? value, double maximum, string paramName, string message)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -781,7 +822,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(double value, double maximum, string message, Exception innerException)
+        public static void MaxRange(double value, double maximum, string message, Exception innerException)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -795,7 +836,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(double? value, double maximum, string message, Exception innerException)
+        public static void MaxRange(double? value, double maximum, string message, Exception innerException)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -810,7 +851,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMaxRange(float value, float maximum, string paramName)
+        public static void MaxRange(float value, float maximum, string paramName)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -823,7 +864,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMaxRange(float? value, float maximum, string paramName)
+        public static void MaxRange(float? value, float maximum, string paramName)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -837,7 +878,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(float value, float maximum, string paramName, string message)
+        public static void MaxRange(float value, float maximum, string paramName, string message)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -851,7 +892,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(float? value, float maximum, string paramName, string message)
+        public static void MaxRange(float? value, float maximum, string paramName, string message)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -865,7 +906,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(float value, float maximum, string message, Exception innerException)
+        public static void MaxRange(float value, float maximum, string message, Exception innerException)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -879,7 +920,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(float? value, float maximum, string message, Exception innerException)
+        public static void MaxRange(float? value, float maximum, string message, Exception innerException)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -894,7 +935,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMaxRange(int value, int maximum, string paramName)
+        public static void MaxRange(int value, int maximum, string paramName)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -907,7 +948,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertMaxRange(int? value, int maximum, string paramName)
+        public static void MaxRange(int? value, int maximum, string paramName)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -921,7 +962,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(int value, int maximum, string paramName, string message)
+        public static void MaxRange(int value, int maximum, string paramName, string message)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -935,7 +976,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(int? value, int maximum, string paramName, string message)
+        public static void MaxRange(int? value, int maximum, string paramName, string message)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -949,7 +990,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(int value, int maximum, string message, Exception innerException)
+        public static void MaxRange(int value, int maximum, string message, Exception innerException)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -963,7 +1004,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(int? value, int maximum, string message, Exception innerException)
+        public static void MaxRange(int? value, int maximum, string message, Exception innerException)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -978,7 +1019,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(long value, long maximum, string paramName)
+        public static void MaxRange(long value, long maximum, string paramName)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -991,7 +1032,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(long? value, long maximum, string paramName)
+        public static void MaxRange(long? value, long maximum, string paramName)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -1005,7 +1046,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(long value, long maximum, string paramName, string message)
+        public static void MaxRange(long value, long maximum, string paramName, string message)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -1019,7 +1060,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertMaxRange(long? value, long maximum, string paramName, string message)
+        public static void MaxRange(long? value, long maximum, string paramName, string message)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -1033,7 +1074,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(long value, long maximum, string message, Exception innerException)
+        public static void MaxRange(long value, long maximum, string message, Exception innerException)
         {
             if (value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -1047,7 +1088,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertMaxRange(long? value, long maximum, string message, Exception innerException)
+        public static void MaxRange(long? value, long maximum, string message, Exception innerException)
         {
             if (value.HasValue && value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -1055,7 +1096,7 @@ namespace Fosol.Common.Validation
         #endregion
         #endregion
 
-        #region AssertRange
+        #region Range
         #region decimal
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
@@ -1063,7 +1104,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertRange(decimal value, decimal minimum, decimal maximum, string paramName)
+        public static void Range(decimal value, decimal minimum, decimal maximum, string paramName)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -1075,7 +1116,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertRange(decimal? value, decimal minimum, decimal maximum, string paramName)
+        public static void Range(decimal? value, decimal minimum, decimal maximum, string paramName)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(paramName);
@@ -1088,7 +1129,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertRange(decimal value, decimal minimum, decimal maximum, string paramName, string message)
+        public static void Range(decimal value, decimal minimum, decimal maximum, string paramName, string message)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -1101,7 +1142,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertRange(decimal? value, decimal minimum, decimal maximum, string paramName, string message)
+        public static void Range(decimal? value, decimal minimum, decimal maximum, string paramName, string message)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -1114,7 +1155,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertRange(decimal value, decimal minimum, decimal maximum, string message, Exception innerException)
+        public static void Range(decimal value, decimal minimum, decimal maximum, string message, Exception innerException)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -1127,7 +1168,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertRange(decimal? value, decimal minimum, decimal maximum, string message, Exception innerException)
+        public static void Range(decimal? value, decimal minimum, decimal maximum, string message, Exception innerException)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -1142,7 +1183,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertRange(double value, double minimum, double maximum, string paramName)
+        public static void Range(double value, double minimum, double maximum, string paramName)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -1155,7 +1196,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertRange(double? value, double minimum, double maximum, string paramName)
+        public static void Range(double? value, double minimum, double maximum, string paramName)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(paramName);
@@ -1168,7 +1209,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertRange(double value, double minimum, double maximum, string paramName, string message)
+        public static void Range(double value, double minimum, double maximum, string paramName, string message)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -1181,7 +1222,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertRange(double? value, double minimum, double maximum, string paramName, string message)
+        public static void Range(double? value, double minimum, double maximum, string paramName, string message)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -1194,7 +1235,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertRange(double value, double minimum, double maximum, string message, Exception innerException)
+        public static void Range(double value, double minimum, double maximum, string message, Exception innerException)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -1207,7 +1248,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertRange(double? value, double minimum, double maximum, string message, Exception innerException)
+        public static void Range(double? value, double minimum, double maximum, string message, Exception innerException)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -1221,7 +1262,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertRange(float value, float minimum, float maximum, string paramName)
+        public static void Range(float value, float minimum, float maximum, string paramName)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -1233,7 +1274,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertRange(float? value, float minimum, float maximum, string paramName)
+        public static void Range(float? value, float minimum, float maximum, string paramName)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(paramName);
@@ -1246,7 +1287,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertRange(float value, float minimum, float maximum, string paramName, string message)
+        public static void Range(float value, float minimum, float maximum, string paramName, string message)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -1259,7 +1300,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertRange(float? value, float minimum, float maximum, string paramName, string message)
+        public static void Range(float? value, float minimum, float maximum, string paramName, string message)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -1272,7 +1313,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertRange(float value, float minimum, float maximum, string message, Exception innerException)
+        public static void Range(float value, float minimum, float maximum, string message, Exception innerException)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -1285,7 +1326,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertRange(float? value, float minimum, float maximum, string message, Exception innerException)
+        public static void Range(float? value, float minimum, float maximum, string message, Exception innerException)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -1299,7 +1340,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertRange(int value, int minimum, int maximum, string paramName)
+        public static void Range(int value, int minimum, int maximum, string paramName)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -1311,7 +1352,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertRange(int? value, int minimum, int maximum, string paramName)
+        public static void Range(int? value, int minimum, int maximum, string paramName)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(paramName);
@@ -1324,7 +1365,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertRange(int value, int minimum, int maximum, string paramName, string message)
+        public static void Range(int value, int minimum, int maximum, string paramName, string message)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -1337,7 +1378,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertRange(int? value, int minimum, int maximum, string paramName, string message)
+        public static void Range(int? value, int minimum, int maximum, string paramName, string message)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -1350,7 +1391,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertRange(int value, int minimum, int maximum, string message, Exception innerException)
+        public static void Range(int value, int minimum, int maximum, string message, Exception innerException)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -1363,7 +1404,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertRange(int? value, int minimum, int maximum, string message, Exception innerException)
+        public static void Range(int? value, int minimum, int maximum, string message, Exception innerException)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -1377,7 +1418,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertRange(long value, long minimum, long maximum, string paramName)
+        public static void Range(long value, long minimum, long maximum, string paramName)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(paramName);
@@ -1389,7 +1430,7 @@ namespace Fosol.Common.Validation
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        public static void AssertRange(long? value, long minimum, long maximum, string paramName)
+        public static void Range(long? value, long minimum, long maximum, string paramName)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(paramName);
@@ -1402,7 +1443,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertRange(long value, long minimum, long maximum, string paramName, string message)
+        public static void Range(long value, long minimum, long maximum, string paramName, string message)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -1415,7 +1456,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception</param>
-        public static void AssertRange(long? value, long minimum, long maximum, string paramName, string message)
+        public static void Range(long? value, long minimum, long maximum, string paramName, string message)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
@@ -1428,7 +1469,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertRange(long value, long minimum, long maximum, string message, Exception innerException)
+        public static void Range(long value, long minimum, long maximum, string message, Exception innerException)
         {
             if (value < minimum || value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -1441,7 +1482,7 @@ namespace Fosol.Common.Validation
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
-        public static void AssertRange(long? value, long minimum, long maximum, string message, Exception innerException)
+        public static void Range(long? value, long minimum, long maximum, string message, Exception innerException)
         {
             if (value.HasValue && (value < minimum || value > maximum))
                 throw new ArgumentOutOfRangeException(message, innerException);
@@ -1449,7 +1490,7 @@ namespace Fosol.Common.Validation
         #endregion
         #endregion
 
-        #region AssertStartsWith
+        #region StartsWith
         /// <summary>
         /// If the value does not start with the appropriatevalu it will throw System.ArgumentException.
         /// </summary>
@@ -1459,7 +1500,7 @@ namespace Fosol.Common.Validation
         /// <param name="comparisonType">StringComparison type.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertStartsWith(string value, string startsWithValue, StringComparison comparisonType, string paramName, string message = null)
+        public static void StartsWith(string value, string startsWithValue, StringComparison comparisonType, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -1477,14 +1518,14 @@ namespace Fosol.Common.Validation
         /// <param name="comparisonType">StringComparison type.</param>
         /// <param name="message">Error message describing the exception.</param>
         /// <param name="innerException">The original exception that caused this exception.</param>
-        public static void AssertStartsWith(string value, string startsWithValue, StringComparison comparisonType, string message, Exception innerException)
+        public static void StartsWith(string value, string startsWithValue, StringComparison comparisonType, string message, Exception innerException)
         {
             if (!value.StartsWith(startsWithValue, comparisonType))
                 throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_StartsWith, startsWithValue), innerException);
         }
         #endregion
 
-        #region AssertEndsWith
+        #region EndsWith
         /// <summary>
         /// If the value does not end with the appropriate value it will throw System.ArgumentException.
         /// </summary>
@@ -1494,7 +1535,7 @@ namespace Fosol.Common.Validation
         /// <param name="comparisonType">StringComparison type.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertEndsWith(string value, string endsWithValue, StringComparison comparisonType, string paramName, string message = null)
+        public static void EndsWith(string value, string endsWithValue, StringComparison comparisonType, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -1512,14 +1553,14 @@ namespace Fosol.Common.Validation
         /// <param name="comparisonType">StringComparison type.</param>
         /// <param name="message">Error message describing the exception.</param>
         /// <param name="innerException">The original exception that caused this exception.</param>
-        public static void AssertEndsWith(string value, string endsWithValue, StringComparison comparisonType, string message, Exception innerException)
+        public static void EndsWith(string value, string endsWithValue, StringComparison comparisonType, string message, Exception innerException)
         {
             if (!value.EndsWith(endsWithValue, comparisonType))
                 throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_EndsWith, endsWithValue), innerException);
         }
         #endregion
 
-        #region AssertIsValue
+        #region IsValue
         /// <summary>
         /// If the value does not exist in the valid values array it will throw System.ArgumentOutOfRangeException.
         /// </summary>
@@ -1529,7 +1570,7 @@ namespace Fosol.Common.Validation
         /// <param name="comparisonType">StringComparison type rule.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertIsValue(string value, string[] validValues, StringComparison comparisonType, string paramName, string message = null)
+        public static void IsValue(string value, string[] validValues, StringComparison comparisonType, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -1546,7 +1587,7 @@ namespace Fosol.Common.Validation
         /// <param name="validValues">An array of valid values to compare against.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertIsValue(object value, object[] validValues, string paramName, string message = null)
+        public static void IsValue(object value, object[] validValues, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -1564,7 +1605,7 @@ namespace Fosol.Common.Validation
         /// <param name="validValue">The only valid value.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertIsValue(object value, object validValue, string paramName, string message = null)
+        public static void IsValue(object value, object validValue, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -1582,7 +1623,7 @@ namespace Fosol.Common.Validation
         /// <param name="comparer">Method to determine if the value is valid.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertIsValue(object value, object[] validValues, IEqualityComparer<object> comparer, string paramName, string message = null)
+        public static void IsValue(object value, object[] validValues, IEqualityComparer<object> comparer, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -1600,7 +1641,7 @@ namespace Fosol.Common.Validation
         /// <param name="comparer">Method to determine if the value is valid. Func<validValue, value, result>.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertIsValue(object value, object[] validValues, Func<object, object, bool> comparer, string paramName, string message = null)
+        public static void IsValue(object value, object[] validValues, Func<object, object, bool> comparer, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -1619,7 +1660,7 @@ namespace Fosol.Common.Validation
         /// <param name="validValue">The only valid value.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertIsValue<T>(T value, T validValue, string paramName, string message = null)
+        public static void IsValue<T>(T value, T validValue, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -1638,7 +1679,7 @@ namespace Fosol.Common.Validation
         /// <param name="comparer">Method to determine if the value is valid. Func<validValue, value, result>.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
-        public static void AssertIsValue<T>(T value, T[] validValues, Func<T, T, bool> comparer, string paramName, string message = null)
+        public static void IsValue<T>(T value, T[] validValues, Func<T, T, bool> comparer, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -1648,7 +1689,7 @@ namespace Fosol.Common.Validation
         }
         #endregion
 
-        #region AssertIsNotValue
+        #region IsNotValue
         /// <summary>
         /// Asserts that the parameter value is equal to the invalid value.
         /// </summary>
@@ -1657,7 +1698,7 @@ namespace Fosol.Common.Validation
         /// <param name="invalidValue">Invalid value that the value cannot be equal to.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception.</param>
-        public static void AssertIsNotValue(object value, object invalidValue, string paramName, string message = null)
+        public static void IsNotValue(object value, object invalidValue, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -1675,7 +1716,7 @@ namespace Fosol.Common.Validation
         /// <param name="invalidValue">Invalid value that the value cannot be equal to.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception.</param>
-        public static void AssertIsNotValue<T>(T value, T invalidValue, string paramName, string message = null)
+        public static void IsNotValue<T>(T value, T invalidValue, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -1685,7 +1726,7 @@ namespace Fosol.Common.Validation
         }
         #endregion
 
-        #region AssertHasAttribute
+        #region HasAttribute
         /// <summary>
         /// Assert that the parameter has an attribute of the specified type defined.
         /// If not throw System.ArgumentException.
@@ -1695,7 +1736,7 @@ namespace Fosol.Common.Validation
         /// <param name="attributeType">Type of attribute to look for.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message to describe the exception.</param>
-        public static void AssertHasAttribute(object element, Type attributeType, string paramName, string message = null)
+        public static void HasAttribute(object element, Type attributeType, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -1714,13 +1755,157 @@ namespace Fosol.Common.Validation
         /// <param name="inherit">If true it will also look in the ancestor objects for the attribute type.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message to describe the exception.</param>
-        public static void AssertHasAttribute(object element, Type attributeType, bool inherit, string paramName, string message = null)
+        public static void HasAttribute(object element, Type attributeType, bool inherit, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
 
             if (!element.HasAttribute(typeof(System.Runtime.Serialization.DataContractAttribute), inherit))
                 throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeMissing, attributeType.Name), paramName);
+        }
+        #endregion
+
+        #region IsTrue
+        /// <summary>
+        /// Assert that the parameter is true..
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" returned false.</exception>
+        /// <param name="function">Parameter value.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        public static void IsTrue(bool value, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!value)
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the function returns true.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" returned false.</exception>
+        /// <param name="function">Parameter value.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        /// <param name="innerException">Exception that occured that caused this exception.</param>
+        public static void IsTrue(bool value, string paramName, string message, Exception innerException)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!value)
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName, innerException);
+        }
+
+        /// <summary>
+        /// Assert that the function returns true.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "function" returned false.</exception>
+        /// <param name="function">Function to call to determine the value of the parameter.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        public static void IsTrue(Func<bool> function, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!function())
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the function returns true.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "function" returned false.</exception>
+        /// <param name="function">Function to call to determine the value of the parameter.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        /// <param name="innerException">Exception that occured that caused this exception.</param>
+        public static void IsTrue(Func<bool> function, string paramName, string message, Exception innerException)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!function())
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName, innerException);
+        }
+        #endregion
+
+        #region IsFalse
+        /// <summary>
+        /// Assert that the parameter is false.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
+        /// <param name="function">Parameter value.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        public static void IsFalse(bool value, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (value)
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the function returns false.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
+        /// <param name="function">Parameter value.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        /// <param name="innerException">Exception that occured that caused this exception.</param>
+        public static void IsFalse(bool value, string paramName, string message, Exception innerException)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (value)
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName, innerException);
+        }
+
+        /// <summary>
+        /// Assert that the function returns false.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "function" returned true.</exception>
+        /// <param name="function">Function to call to determine the value of the parameter.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        public static void IsFalse(Func<bool> function, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (function())
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the function returns false.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "function" returned true.</exception>
+        /// <param name="function">Function to call to determine the value of the parameter.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        /// <param name="innerException">Exception that occured that caused this exception.</param>
+        public static void IsFalse(Func<bool> function, string paramName, string message, Exception innerException)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (function())
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName, innerException);
         }
         #endregion
         #endregion

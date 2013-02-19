@@ -10,7 +10,7 @@ namespace Fosol.Common.Validation
     /// <summary>
     /// A collection of string validation functions.
     /// </summary>
-    public static class Strings
+    public static class AssertFormat
     {
         #region Methods
         /// <summary>

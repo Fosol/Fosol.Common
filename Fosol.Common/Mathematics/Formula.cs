@@ -273,7 +273,7 @@ namespace Fosol.Common.Mathematics
         /// <returns>The offset from center.</returns>
         public static float OffsetCenter(float value, float offset)
         {
-            Validation.Parameter.AssertRange(offset, -1, 1, "offset");
+            Validation.Assert.Range(offset, -1, 1, "offset");
 
             if (value == 0)
                 return value;
@@ -308,7 +308,7 @@ namespace Fosol.Common.Mathematics
         /// <returns>The offset from center.</returns>
         public static double OffsetCenter(double value, float offset)
         {
-            Validation.Parameter.AssertRange(offset, -1, 1, "offset");
+            Validation.Assert.Range(offset, -1, 1, "offset");
 
             if (value == 0)
                 return value;
@@ -361,10 +361,10 @@ namespace Fosol.Common.Mathematics
         /// <returns>Destination rectangle.</returns>
         public static Rectangle Scale(Size size, Size resize, float xOffset = 0f, float yOffset = 0f, bool allowWhitespace = true)
         {
-            Validation.Parameter.AssertIsNotNull(size, "size");
-            Validation.Parameter.AssertIsNotNull(resize, "resize");
-            Validation.Parameter.AssertRange(xOffset, -1, 1, "hOffset");
-            Validation.Parameter.AssertRange(yOffset, -1, 1, "yOffset");
+            Validation.Assert.IsNotNull(size, "size");
+            Validation.Assert.IsNotNull(resize, "resize");
+            Validation.Assert.Range(xOffset, -1, 1, "hOffset");
+            Validation.Assert.Range(yOffset, -1, 1, "yOffset");
 
             var dest = new Rectangle(0, 0, resize.Width, resize.Height);
 

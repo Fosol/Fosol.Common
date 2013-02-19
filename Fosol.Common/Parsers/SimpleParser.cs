@@ -52,8 +52,8 @@ namespace Fosol.Common.Parsers
         /// <param name="endBoundary">Keyword end boundary syntax.</param>
         public SimpleParser(string startBoundary, string endBoundary)
         {
-            Validation.Parameter.AssertIsNotNullOrEmpty(startBoundary, "startBoundary");
-            Validation.Parameter.AssertIsNotNullOrEmpty(endBoundary, "endBoundary");
+            Validation.Assert.IsNotNullOrEmpty(startBoundary, "startBoundary");
+            Validation.Assert.IsNotNullOrEmpty(endBoundary, "endBoundary");
 
             this.StartBoundary = startBoundary;
             this.EndBoundary = endBoundary;
@@ -113,8 +113,8 @@ namespace Fosol.Common.Parsers
         /// <returns>One or two phrases (depending on text).</returns>
         protected List<IPhrase> ParseFirst(string text, int startIndex, out int endIndex)
         {
-            Validation.Parameter.AssertIsNotNull(text, "text");
-            Validation.Parameter.AssertRange(startIndex, 0, text.Length - 1, "startIndex");
+            Validation.Assert.IsNotNull(text, "text");
+            Validation.Assert.Range(startIndex, 0, text.Length - 1, "startIndex");
 
             var keywords = new List<IPhrase>();
             var start = ParseStart(text, startIndex);
@@ -158,8 +158,8 @@ namespace Fosol.Common.Parsers
         /// <returns>Index position of the start boundary, or -1 if not found.</returns>
         protected int ParseStart(string text, int startIndex = 0)
         {
-            Validation.Parameter.AssertIsNotNull(text, "text");
-            Validation.Parameter.AssertRange(startIndex, 0, text.Length - 1, "startIndex");
+            Validation.Assert.IsNotNull(text, "text");
+            Validation.Assert.Range(startIndex, 0, text.Length - 1, "startIndex");
 
             return text.IndexOf(this.StartBoundary, startIndex);
         }
@@ -174,8 +174,8 @@ namespace Fosol.Common.Parsers
         /// <returns>Index position of the start of the end boundary, or -1 if not found.</returns>
         protected int ParseEnd(string text, int startIndex = 0)
         {
-            Validation.Parameter.AssertIsNotNull(text, "text");
-            Validation.Parameter.AssertRange(startIndex, 0, text.Length - 1, "startIndex");
+            Validation.Assert.IsNotNull(text, "text");
+            Validation.Assert.Range(startIndex, 0, text.Length - 1, "startIndex");
 
             var end = text.IndexOf(this.EndBoundary, startIndex);
 

@@ -111,8 +111,8 @@ namespace Fosol.Common.Drawing
         public ImageHelper(Stream imageStream, bool useEmbeddedColorManagement = false, bool validateImageData = false)
             : this()
         {
-            Validation.Parameter.AssertIsNotNull(imageStream, "imageStream");
-            Validation.Parameter.AssertIsValue(imageStream.CanRead, true, "imageStream.CanRead");
+            Validation.Assert.IsNotNull(imageStream, "imageStream");
+            Validation.Assert.IsValue(imageStream.CanRead, true, "imageStream.CanRead");
 
             this.Photo = Image.FromStream(imageStream, useEmbeddedColorManagement, validateImageData);
         }
@@ -125,7 +125,7 @@ namespace Fosol.Common.Drawing
         public ImageHelper(Image image)
             : this()
         {
-            Validation.Parameter.AssertIsNotNull(image, "image");
+            Validation.Assert.IsNotNull(image, "image");
 
             this.Photo = image;
         }
@@ -141,7 +141,7 @@ namespace Fosol.Common.Drawing
         public ImageHelper(byte[] image, bool useEmbeddedColorManagement = false, bool validateImageData = false)
             : this()
         {
-            Validation.Parameter.AssertIsNotNullOrEmpty(image, "image");
+            Validation.Assert.IsNotNullOrEmpty(image, "image");
 
             this.Photo = image.ToImage(useEmbeddedColorManagement, validateImageData);
         }
@@ -156,7 +156,7 @@ namespace Fosol.Common.Drawing
         public ImageHelper(string filename, bool useEmbeddedColorManagement = false)
             : this()
         {
-            Validation.Parameter.AssertIsNotNullOrEmpty(filename, "filename");
+            Validation.Assert.IsNotNullOrEmpty(filename, "filename");
 
             this.Photo = Image.FromFile(filename, useEmbeddedColorManagement);
         }
@@ -199,10 +199,10 @@ namespace Fosol.Common.Drawing
         /// <returns>Size of the new image in bytes</returns>
         public long Canvas(Stream destination, Size size, Color fill, CenterPoint offset = null, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
-            Validation.Parameter.AssertIsNotNull(size, "size");
-            Validation.Parameter.AssertMinRange(size.Width, 0, "size.Width", Resources.Strings.Exception_ImageHelper_InvalidResizeWidth);
-            Validation.Parameter.AssertMinRange(size.Height, 0, "size.Height", Resources.Strings.Exception_ImageHelper_InvalidResizeHeight);
-            Validation.Parameter.AssertIsNotValue(size.Width + size.Height, 0, "size", Resources.Strings.Exception_InvalidSize);
+            Validation.Assert.IsNotNull(size, "size");
+            Validation.Assert.MinRange(size.Width, 0, "size.Width", Resources.Strings.Exception_ImageHelper_InvalidResizeWidth);
+            Validation.Assert.MinRange(size.Height, 0, "size.Height", Resources.Strings.Exception_ImageHelper_InvalidResizeHeight);
+            Validation.Assert.IsNotValue(size.Width + size.Height, 0, "size", Resources.Strings.Exception_InvalidSize);
 
             return Canvas(destination, size.Width, size.Height, fill, offset, quality, graphicsUnit);
         }
@@ -223,19 +223,19 @@ namespace Fosol.Common.Drawing
         /// <returns>Size of the new image in bytes</returns>
         public long Canvas(Stream destination, int width, int height, Color fill, CenterPoint offset = null, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
-            Validation.Parameter.AssertIsNotNull(destination, "destination");
-            Validation.Parameter.AssertIsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
-            Validation.Parameter.AssertIsValue(destination.CanSeek, true, "destination.CanSeek", Resources.Strings.Exception_Stream_IsCanSeek);
-            Validation.Parameter.AssertMinRange(width, 0, "width", Resources.Strings.Exception_ImageHelper_InvalidResizeWidth);
-            Validation.Parameter.AssertMinRange(height, 0, "height", Resources.Strings.Exception_ImageHelper_InvalidResizeHeight);
-            Validation.Parameter.AssertIsNotValue(width + height, 0, "width,height", Resources.Strings.Exception_InvalidSize);
-            Validation.Parameter.AssertIsNotNull(fill, "fill");
-            Validation.Parameter.AssertRange(quality, 0, 100, "quality", Resources.Strings.Exception_ImageHelper_InvalidQuality);
+            Validation.Assert.IsNotNull(destination, "destination");
+            Validation.Assert.IsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
+            Validation.Assert.IsValue(destination.CanSeek, true, "destination.CanSeek", Resources.Strings.Exception_Stream_IsCanSeek);
+            Validation.Assert.MinRange(width, 0, "width", Resources.Strings.Exception_ImageHelper_InvalidResizeWidth);
+            Validation.Assert.MinRange(height, 0, "height", Resources.Strings.Exception_ImageHelper_InvalidResizeHeight);
+            Validation.Assert.IsNotValue(width + height, 0, "width,height", Resources.Strings.Exception_InvalidSize);
+            Validation.Assert.IsNotNull(fill, "fill");
+            Validation.Assert.Range(quality, 0, 100, "quality", Resources.Strings.Exception_ImageHelper_InvalidQuality);
 
             // Initialize default values.
-            Initialization.Parameter.AssertIsNotDefault(ref width, this.Photo.Width);
-            Initialization.Parameter.AssertIsNotDefault(ref height, this.Photo.Height);
-            Initialization.Parameter.AssertIsNotDefault(ref offset, this.Offset);
+            Initialization.Assert.IsNotDefault(ref width, this.Photo.Width);
+            Initialization.Assert.IsNotDefault(ref height, this.Photo.Height);
+            Initialization.Assert.IsNotDefault(ref offset, this.Offset);
 
             // If height and width are the same as the image, return the original image.
             if (width == this.Photo.Width && height == this.Photo.Height)
@@ -268,14 +268,14 @@ namespace Fosol.Common.Drawing
         /// <returns>Size of the new image in bytes</returns>
         public long Crop(Stream destination, Rectangle plot, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
-            Validation.Parameter.AssertIsNotNull(plot, "plot");
-            Validation.Parameter.AssertRange(plot.X, 0, this.Photo.Width - 1, "plot.X", Resources.Strings.Exception_ImageHelper_InvalidX);
-            Validation.Parameter.AssertRange(plot.Y, 0, this.Photo.Height - 1, "plot.Y", Resources.Strings.Exception_ImageHelper_InvalidY);
-            Validation.Parameter.AssertRange(plot.Width, 0, this.Photo.Width, "plot.Width", Resources.Strings.Exception_ImageHelper_InvalidWidth);
-            Validation.Parameter.AssertRange(plot.Height, 0, this.Photo.Height, "plot.Height", Resources.Strings.Exception_ImageHelper_InvalidHeight);
-            Validation.Parameter.AssertRange(plot.X + plot.Width, 0, this.Photo.Width - plot.X, "plot.X, plot.Width", Resources.Strings.Exception_ImageHelper_InvalidXWidth);
-            Validation.Parameter.AssertRange(plot.Y + plot.Height, 0, this.Photo.Height - plot.Y, "plot.Y, plot.Height", Resources.Strings.Exception_ImageHelper_InvalidYHeight);
-            Validation.Parameter.AssertIsNotValue(plot.X + plot.Y + plot.Width + plot.Height, 0, "plot", Resources.Strings.Exception_ImageHelper_InvalidPlot);
+            Validation.Assert.IsNotNull(plot, "plot");
+            Validation.Assert.Range(plot.X, 0, this.Photo.Width - 1, "plot.X", Resources.Strings.Exception_ImageHelper_InvalidX);
+            Validation.Assert.Range(plot.Y, 0, this.Photo.Height - 1, "plot.Y", Resources.Strings.Exception_ImageHelper_InvalidY);
+            Validation.Assert.Range(plot.Width, 0, this.Photo.Width, "plot.Width", Resources.Strings.Exception_ImageHelper_InvalidWidth);
+            Validation.Assert.Range(plot.Height, 0, this.Photo.Height, "plot.Height", Resources.Strings.Exception_ImageHelper_InvalidHeight);
+            Validation.Assert.Range(plot.X + plot.Width, 0, this.Photo.Width - plot.X, "plot.X, plot.Width", Resources.Strings.Exception_ImageHelper_InvalidXWidth);
+            Validation.Assert.Range(plot.Y + plot.Height, 0, this.Photo.Height - plot.Y, "plot.Y, plot.Height", Resources.Strings.Exception_ImageHelper_InvalidYHeight);
+            Validation.Assert.IsNotValue(plot.X + plot.Y + plot.Width + plot.Height, 0, "plot", Resources.Strings.Exception_ImageHelper_InvalidPlot);
 
             return Crop(destination, plot.X, plot.Y, plot.Width, plot.Height, quality, graphicsUnit);
         }
@@ -296,17 +296,17 @@ namespace Fosol.Common.Drawing
         /// <returns>Size of the new image in bytes</returns>
         public long Crop(Stream destination, int xPosition, int yPosition, int width, int height, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
-            Validation.Parameter.AssertIsNotNull(destination, "destination");
-            Validation.Parameter.AssertIsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
-            Validation.Parameter.AssertIsValue(destination.CanSeek, true, "destination.CanSeek", Resources.Strings.Exception_Stream_IsCanSeek);
-            Validation.Parameter.AssertRange(xPosition, 0, this.Photo.Width - 1, "xPosition", Resources.Strings.Exception_ImageHelper_InvalidX);
-            Validation.Parameter.AssertRange(yPosition, 0, this.Photo.Height - 1, "yPosition", Resources.Strings.Exception_ImageHelper_InvalidY);
-            Validation.Parameter.AssertRange(width, 0, this.Photo.Width, "width", Resources.Strings.Exception_ImageHelper_InvalidWidth);
-            Validation.Parameter.AssertRange(height, 0, this.Photo.Height, "height", Resources.Strings.Exception_ImageHelper_InvalidHeight);
-            Validation.Parameter.AssertRange(xPosition + width, 0, this.Photo.Width - xPosition, "xPosition, width", Resources.Strings.Exception_ImageHelper_InvalidXWidth);
-            Validation.Parameter.AssertRange(yPosition + height, 0, this.Photo.Height - yPosition, "yPosition, height", Resources.Strings.Exception_ImageHelper_InvalidYHeight);
-            Validation.Parameter.AssertIsNotValue(width + height + xPosition + yPosition, 0, "xPosition, yPosition, width, height", Resources.Strings.Exception_ImageHelper_InvalidPlot);
-            Validation.Parameter.AssertRange(quality, 0, 100, "quality", Resources.Strings.Exception_ImageHelper_InvalidQuality);
+            Validation.Assert.IsNotNull(destination, "destination");
+            Validation.Assert.IsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
+            Validation.Assert.IsValue(destination.CanSeek, true, "destination.CanSeek", Resources.Strings.Exception_Stream_IsCanSeek);
+            Validation.Assert.Range(xPosition, 0, this.Photo.Width - 1, "xPosition", Resources.Strings.Exception_ImageHelper_InvalidX);
+            Validation.Assert.Range(yPosition, 0, this.Photo.Height - 1, "yPosition", Resources.Strings.Exception_ImageHelper_InvalidY);
+            Validation.Assert.Range(width, 0, this.Photo.Width, "width", Resources.Strings.Exception_ImageHelper_InvalidWidth);
+            Validation.Assert.Range(height, 0, this.Photo.Height, "height", Resources.Strings.Exception_ImageHelper_InvalidHeight);
+            Validation.Assert.Range(xPosition + width, 0, this.Photo.Width - xPosition, "xPosition, width", Resources.Strings.Exception_ImageHelper_InvalidXWidth);
+            Validation.Assert.Range(yPosition + height, 0, this.Photo.Height - yPosition, "yPosition, height", Resources.Strings.Exception_ImageHelper_InvalidYHeight);
+            Validation.Assert.IsNotValue(width + height + xPosition + yPosition, 0, "xPosition, yPosition, width, height", Resources.Strings.Exception_ImageHelper_InvalidPlot);
+            Validation.Assert.Range(quality, 0, 100, "quality", Resources.Strings.Exception_ImageHelper_InvalidQuality);
 
             // Calculate thee width based on the xPosition.
             if (xPosition > 0 && (width == 0 || (xPosition + width) > this.Photo.Width))
@@ -357,10 +357,10 @@ namespace Fosol.Common.Drawing
         /// <returns>Size of the new image in bytes</returns>
         public long Resize(Stream destination, Size size, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
-            Validation.Parameter.AssertIsNotNull(size, "size");
-            Validation.Parameter.AssertMinRange(size.Width, 0, "size.Width", Resources.Strings.Exception_ImageHelper_InvalidResizeWidth);
-            Validation.Parameter.AssertMinRange(size.Height, 0, "size.Height", Resources.Strings.Exception_ImageHelper_InvalidResizeHeight);
-            Validation.Parameter.AssertIsNotValue(size.Width + size.Height, 0, "size", Resources.Strings.Exception_InvalidSize);
+            Validation.Assert.IsNotNull(size, "size");
+            Validation.Assert.MinRange(size.Width, 0, "size.Width", Resources.Strings.Exception_ImageHelper_InvalidResizeWidth);
+            Validation.Assert.MinRange(size.Height, 0, "size.Height", Resources.Strings.Exception_ImageHelper_InvalidResizeHeight);
+            Validation.Assert.IsNotValue(size.Width + size.Height, 0, "size", Resources.Strings.Exception_InvalidSize);
 
             return Resize(destination, size.Width, size.Height, quality, graphicsUnit);
         }
@@ -378,17 +378,17 @@ namespace Fosol.Common.Drawing
         /// <returns>Size of the new image in bytes</returns>
         public long Resize(Stream destination, int width, int height, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
-            Validation.Parameter.AssertIsNotNull(destination, "destination");
-            Validation.Parameter.AssertIsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
-            Validation.Parameter.AssertIsValue(destination.CanSeek, true, "destination.CanSeek", Resources.Strings.Exception_Stream_IsCanSeek);
-            Validation.Parameter.AssertMinRange(width, 0, "width", Resources.Strings.Exception_ImageHelper_InvalidResizeWidth);
-            Validation.Parameter.AssertMinRange(height, 0, "height", Resources.Strings.Exception_ImageHelper_InvalidResizeHeight);
-            Validation.Parameter.AssertIsNotValue(width + height, 0, "width,height", Resources.Strings.Exception_InvalidSize);
-            Validation.Parameter.AssertRange(quality, 0, 100, "quality", Resources.Strings.Exception_ImageHelper_InvalidQuality);
+            Validation.Assert.IsNotNull(destination, "destination");
+            Validation.Assert.IsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
+            Validation.Assert.IsValue(destination.CanSeek, true, "destination.CanSeek", Resources.Strings.Exception_Stream_IsCanSeek);
+            Validation.Assert.MinRange(width, 0, "width", Resources.Strings.Exception_ImageHelper_InvalidResizeWidth);
+            Validation.Assert.MinRange(height, 0, "height", Resources.Strings.Exception_ImageHelper_InvalidResizeHeight);
+            Validation.Assert.IsNotValue(width + height, 0, "width,height", Resources.Strings.Exception_InvalidSize);
+            Validation.Assert.Range(quality, 0, 100, "quality", Resources.Strings.Exception_ImageHelper_InvalidQuality);
 
             // Intialize default values.
-            Initialization.Parameter.AssertIsNotDefault(ref width, this.Photo.Width);
-            Initialization.Parameter.AssertIsNotDefault(ref height, this.Photo.Height);
+            Initialization.Assert.IsNotDefault(ref width, this.Photo.Width);
+            Initialization.Assert.IsNotDefault(ref height, this.Photo.Height);
 
             // If height and width are the same as the image, return the original image.
             if (width == this.Photo.Width && height == this.Photo.Height)
@@ -423,16 +423,16 @@ namespace Fosol.Common.Drawing
         /// <returns>Size of the new image in bytes</returns>
         public long Scale(Stream destination, int width, int height, Color? fill = null, CenterPoint offset = null, long? quality = null, GraphicsUnit graphicsUnit = GraphicsUnit.Pixel)
         {
-            Validation.Parameter.AssertIsNotNull(destination, "destination");
-            Validation.Parameter.AssertIsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
-            Validation.Parameter.AssertIsValue(destination.CanSeek, true, "destination.CanSeek", Resources.Strings.Exception_Stream_IsCanSeek);
-            Validation.Parameter.AssertMinRange(width, 0, "width", Resources.Strings.Exception_ImageHelper_InvalidResizeWidth);
-            Validation.Parameter.AssertMinRange(height, 0, "height", Resources.Strings.Exception_ImageHelper_InvalidResizeHeight);
-            Validation.Parameter.AssertMinRange(width + height, 1, "width, height", Resources.Strings.Exception_InvalidSize);
-            Validation.Parameter.AssertRange(quality, 0, 100, "quality", Resources.Strings.Exception_ImageHelper_InvalidQuality);
+            Validation.Assert.IsNotNull(destination, "destination");
+            Validation.Assert.IsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
+            Validation.Assert.IsValue(destination.CanSeek, true, "destination.CanSeek", Resources.Strings.Exception_Stream_IsCanSeek);
+            Validation.Assert.MinRange(width, 0, "width", Resources.Strings.Exception_ImageHelper_InvalidResizeWidth);
+            Validation.Assert.MinRange(height, 0, "height", Resources.Strings.Exception_ImageHelper_InvalidResizeHeight);
+            Validation.Assert.MinRange(width + height, 1, "width, height", Resources.Strings.Exception_InvalidSize);
+            Validation.Assert.Range(quality, 0, 100, "quality", Resources.Strings.Exception_ImageHelper_InvalidQuality);
 
             // Initialize default values.
-            Initialization.Parameter.AssertIsNotDefault(ref offset, this.Offset);
+            Initialization.Assert.IsNotDefault(ref offset, this.Offset);
 
             // If height and width are the same as the image, return the original image.
             if (width == this.Photo.Width && height == this.Photo.Height)
@@ -460,10 +460,10 @@ namespace Fosol.Common.Drawing
         /// <returns>Size of the new image in bytes</returns>
         public long Optimize(Stream destination, long quality)
         {
-            Validation.Parameter.AssertIsNotNull(destination, "destination");
-            Validation.Parameter.AssertIsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
-            Validation.Parameter.AssertIsValue(destination.CanSeek, true, "destination.CanSeek", Resources.Strings.Exception_Stream_IsCanSeek);
-            Validation.Parameter.AssertRange(quality, 1, 100, "quality", Resources.Strings.Exception_ImageHelper_InvalidQuality);
+            Validation.Assert.IsNotNull(destination, "destination");
+            Validation.Assert.IsValue(destination.CanWrite, true, "destination.CanWrite", Resources.Strings.Exception_Stream_IsCanWrite);
+            Validation.Assert.IsValue(destination.CanSeek, true, "destination.CanSeek", Resources.Strings.Exception_Stream_IsCanSeek);
+            Validation.Assert.Range(quality, 1, 100, "quality", Resources.Strings.Exception_ImageHelper_InvalidQuality);
 
             // Create the destination and source rectangles.
             // These rectangles are used by the Graphics object to modify the dimensions of the image.

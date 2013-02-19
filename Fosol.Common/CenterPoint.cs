@@ -33,7 +33,7 @@ namespace Fosol.Common
             get { return _X; }
             set
             {
-                Validation.Parameter.AssertRange(value, -1, 1, "X");
+                Validation.Assert.Range(value, -1, 1, "X");
                 _X = value;
             }
         }
@@ -50,7 +50,7 @@ namespace Fosol.Common
             get { return _Y; }
             set
             {
-                Validation.Parameter.AssertRange(value, -1, 1, "Y");
+                Validation.Assert.Range(value, -1, 1, "Y");
                 _Y = value;
             }
         }
@@ -72,8 +72,8 @@ namespace Fosol.Common
         /// <param name="Y">Y offset position in the object [-1 to 1].</param>
         public CenterPoint(float X, float Y)
         {
-            Validation.Parameter.AssertRange(X, -1, 1, "X");
-            Validation.Parameter.AssertRange(Y, -1, 1, "Y");
+            Validation.Assert.Range(X, -1, 1, "X");
+            Validation.Assert.Range(Y, -1, 1, "Y");
 
             this.X = X;
             this.Y = Y;

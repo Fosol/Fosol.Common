@@ -11,7 +11,7 @@ namespace Fosol.Common.UnitTests
         {
             try
             {
-                Validation.Parameter.AssertIsNotNull(null, "param");
+                Validation.Assert.IsNotNull(null, "param");
             }
             catch (Exception ex)
             {
@@ -20,7 +20,7 @@ namespace Fosol.Common.UnitTests
             
             try
             {
-                Validation.Parameter.AssertIsNotNull(null, "message", new Exception());
+                Validation.Assert.IsNotNull(null, "message", new Exception());
             }
             catch (Exception ex)
             {
@@ -29,7 +29,7 @@ namespace Fosol.Common.UnitTests
 
             try
             {
-                Validation.Parameter.AssertIsNotNull(null, "param", "message");
+                Validation.Assert.IsNotNull(null, "param", "message");
             }
             catch (Exception ex)
             {
@@ -43,7 +43,7 @@ namespace Fosol.Common.UnitTests
             string value = null;
             try
             {
-                Validation.Parameter.AssertIsNotNullOrEmpty(value, "param");
+                Validation.Assert.IsNotNullOrEmpty(value, "param");
             }
             catch (Exception ex)
             {
@@ -52,7 +52,7 @@ namespace Fosol.Common.UnitTests
 
             try
             {
-                Validation.Parameter.AssertIsNotNullOrEmpty(value, "param", "message", new Exception());
+                Validation.Assert.IsNotNullOrEmpty(value, "param", "message", new Exception());
             }
             catch (Exception ex)
             {
@@ -61,7 +61,7 @@ namespace Fosol.Common.UnitTests
 
             try
             {
-                Validation.Parameter.AssertIsNotNullOrEmpty(value, "param", "message");
+                Validation.Assert.IsNotNullOrEmpty(value, "param", "message");
             }
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ namespace Fosol.Common.UnitTests
             value = "";
             try
             {
-                Validation.Parameter.AssertIsNotNullOrEmpty(value, "param");
+                Validation.Assert.IsNotNullOrEmpty(value, "param");
             }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace Fosol.Common.UnitTests
 
             try
             {
-                Validation.Parameter.AssertIsNotNullOrEmpty(value, "param", "message", new Exception());
+                Validation.Assert.IsNotNullOrEmpty(value, "param", "message", new Exception());
             }
             catch (Exception ex)
             {
@@ -89,7 +89,7 @@ namespace Fosol.Common.UnitTests
 
             try
             {
-                Validation.Parameter.AssertIsNotNullOrEmpty(value, "param", "message");
+                Validation.Assert.IsNotNullOrEmpty(value, "param", "message");
             }
             catch (Exception ex)
             {
@@ -99,7 +99,7 @@ namespace Fosol.Common.UnitTests
             string[] value1 = null;
             try
             {
-                Validation.Parameter.AssertIsNotNullOrEmpty(value1, "param");
+                Validation.Assert.IsNotNullOrEmpty(value1, "param");
             }
             catch (Exception ex)
             {
@@ -108,7 +108,7 @@ namespace Fosol.Common.UnitTests
 
             try
             {
-                Validation.Parameter.AssertIsNotNullOrEmpty(value1, "param", "message", new Exception());
+                Validation.Assert.IsNotNullOrEmpty(value1, "param", "message", new Exception());
             }
             catch (Exception ex)
             {
@@ -117,7 +117,7 @@ namespace Fosol.Common.UnitTests
 
             try
             {
-                Validation.Parameter.AssertIsNotNullOrEmpty(value1, "param", "message");
+                Validation.Assert.IsNotNullOrEmpty(value1, "param", "message");
             }
             catch (Exception ex)
             {
@@ -127,7 +127,7 @@ namespace Fosol.Common.UnitTests
             value1 = new string[0];
             try
             {
-                Validation.Parameter.AssertIsNotNullOrEmpty(value1, "param");
+                Validation.Assert.IsNotNullOrEmpty(value1, "param");
             }
             catch (Exception ex)
             {
@@ -136,7 +136,7 @@ namespace Fosol.Common.UnitTests
 
             try
             {
-                Validation.Parameter.AssertIsNotNullOrEmpty(value1, "param", "message", new Exception());
+                Validation.Assert.IsNotNullOrEmpty(value1, "param", "message", new Exception());
             }
             catch (Exception ex)
             {
@@ -145,7 +145,7 @@ namespace Fosol.Common.UnitTests
 
             try
             {
-                Validation.Parameter.AssertIsNotNullOrEmpty(value1, "param", "message");
+                Validation.Assert.IsNotNullOrEmpty(value1, "param", "message");
             }
             catch (Exception ex)
             {
@@ -156,16 +156,16 @@ namespace Fosol.Common.UnitTests
         [TestMethod]
         public void AssertMinRange()
         {
-            Validation.Parameter.AssertMinRange((decimal)1, 0, "param");
-            Validation.Parameter.AssertMinRange((double)1, 0, "param");
-            Validation.Parameter.AssertMinRange((int)1, 0, "param");
-            Validation.Parameter.AssertMinRange((long)1, 0, "param");
-            Validation.Parameter.AssertMinRange((float)1, 0, "param");
+            Validation.Assert.MinRange((decimal)1, 0, "param");
+            Validation.Assert.MinRange((double)1, 0, "param");
+            Validation.Assert.MinRange((int)1, 0, "param");
+            Validation.Assert.MinRange((long)1, 0, "param");
+            Validation.Assert.MinRange((float)1, 0, "param");
 
             try
             {
                 decimal value = -1;
-                Validation.Parameter.AssertMinRange(value, 0, "param");
+                Validation.Assert.MinRange(value, 0, "param");
             }
             catch (Exception ex)
             {
@@ -175,7 +175,7 @@ namespace Fosol.Common.UnitTests
             try
             {
                 double value = -1;
-                Validation.Parameter.AssertMinRange(value, 0, "param");
+                Validation.Assert.MinRange(value, 0, "param");
             }
             catch (Exception ex)
             {
@@ -185,7 +185,7 @@ namespace Fosol.Common.UnitTests
             try
             {
                 int value = -1;
-                Validation.Parameter.AssertMinRange(value, 0, "param");
+                Validation.Assert.MinRange(value, 0, "param");
             }
             catch (Exception ex)
             {
@@ -195,7 +195,7 @@ namespace Fosol.Common.UnitTests
             try
             {
                 long value = -1;
-                Validation.Parameter.AssertMinRange(value, 0, "param");
+                Validation.Assert.MinRange(value, 0, "param");
             }
             catch (Exception ex)
             {
@@ -205,7 +205,7 @@ namespace Fosol.Common.UnitTests
             try
             {
                 float value = -1;
-                Validation.Parameter.AssertMinRange(value, 0, "param");
+                Validation.Assert.MinRange(value, 0, "param");
             }
             catch (Exception ex)
             {
@@ -216,16 +216,16 @@ namespace Fosol.Common.UnitTests
         [TestMethod]
         public void AssertMaxRange()
         {
-            Validation.Parameter.AssertMaxRange((decimal)1, 1, "param");
-            Validation.Parameter.AssertMaxRange((double)1, 1, "param");
-            Validation.Parameter.AssertMaxRange((int)1, 1, "param");
-            Validation.Parameter.AssertMaxRange((long)1, 1, "param");
-            Validation.Parameter.AssertMaxRange((float)1, 1, "param");
+            Validation.Assert.MaxRange((decimal)1, 1, "param");
+            Validation.Assert.MaxRange((double)1, 1, "param");
+            Validation.Assert.MaxRange((int)1, 1, "param");
+            Validation.Assert.MaxRange((long)1, 1, "param");
+            Validation.Assert.MaxRange((float)1, 1, "param");
 
             try
             {
                 decimal value = 1;
-                Validation.Parameter.AssertMaxRange(value, 0, "param");
+                Validation.Assert.MaxRange(value, 0, "param");
             }
             catch (Exception ex)
             {
@@ -235,7 +235,7 @@ namespace Fosol.Common.UnitTests
             try
             {
                 double value = 1;
-                Validation.Parameter.AssertMaxRange(value, 0, "param");
+                Validation.Assert.MaxRange(value, 0, "param");
             }
             catch (Exception ex)
             {
@@ -245,7 +245,7 @@ namespace Fosol.Common.UnitTests
             try
             {
                 int value = 1;
-                Validation.Parameter.AssertMaxRange(value, 0, "param");
+                Validation.Assert.MaxRange(value, 0, "param");
             }
             catch (Exception ex)
             {
@@ -255,7 +255,7 @@ namespace Fosol.Common.UnitTests
             try
             {
                 long value = 1;
-                Validation.Parameter.AssertMaxRange(value, 0, "param");
+                Validation.Assert.MaxRange(value, 0, "param");
             }
             catch (Exception ex)
             {
@@ -265,7 +265,7 @@ namespace Fosol.Common.UnitTests
             try
             {
                 float value = 1;
-                Validation.Parameter.AssertMaxRange(value, 0, "param");
+                Validation.Assert.MaxRange(value, 0, "param");
             }
             catch (Exception ex)
             {
@@ -276,16 +276,16 @@ namespace Fosol.Common.UnitTests
         [TestMethod]
         public void AssertRange()
         {
-            Validation.Parameter.AssertRange((decimal)1, 0, 10, "param");
-            Validation.Parameter.AssertRange((double)1, 0, 10, "param");
-            Validation.Parameter.AssertRange((int)1, 0, 10, "param");
-            Validation.Parameter.AssertRange((long)1, 0, 10, "param");
-            Validation.Parameter.AssertRange((float)1, 0, 10, "param");
-
+            Validation.Assert.Range((decimal)1, 0, 10, "param");
+            Validation.Assert.Range((double)1, 0, 10, "param");
+            Validation.Assert.Range((int)1, 0, 10, "param");
+            Validation.Assert.Range((long)1, 0, 10, "param");
+            Validation.Assert.Range((float)1, 0, 10, "param");
+            
             try
             {
                 decimal value = 1;
-                Validation.Parameter.AssertRange(value, 0, 10, "param");
+                Validation.Assert.Range(value, 0, 10, "param");
             }
             catch (Exception ex)
             {
@@ -295,7 +295,7 @@ namespace Fosol.Common.UnitTests
             try
             {
                 double value = 1;
-                Validation.Parameter.AssertRange(value, 0, 10, "param");
+                Validation.Assert.Range(value, 0, 10, "param");
             }
             catch (Exception ex)
             {
@@ -305,7 +305,7 @@ namespace Fosol.Common.UnitTests
             try
             {
                 int value = 1;
-                Validation.Parameter.AssertRange(value, 0, 10, "param");
+                Validation.Assert.Range(value, 0, 10, "param");
             }
             catch (Exception ex)
             {
@@ -315,7 +315,7 @@ namespace Fosol.Common.UnitTests
             try
             {
                 long value = 1;
-                Validation.Parameter.AssertRange(value, 0, 10, "param");
+                Validation.Assert.Range(value, 0, 10, "param");
             }
             catch (Exception ex)
             {
@@ -325,7 +325,7 @@ namespace Fosol.Common.UnitTests
             try
             {
                 float value = 1;
-                Validation.Parameter.AssertRange(value, 0, 10, "param");
+                Validation.Assert.Range(value, 0, 10, "param");
             }
             catch (Exception ex)
             {

@@ -37,7 +37,7 @@ namespace Fosol.Common.Serialization
         /// <returns>DataContractSerializer object.</returns>
         public static DataContractSerializer GetSerializer(Type classType)
         {
-            Validation.Parameter.AssertIsNotNull(classType, "classType");
+            Validation.Assert.IsNotNull(classType, "classType");
 
             if (!_CachedSerializers.ContainsKey(classType))
             {
@@ -55,8 +55,8 @@ namespace Fosol.Common.Serialization
         /// <returns>Serialized object as a string.</returns>
         public static string Serialize(object data)
         {
-            Validation.Parameter.AssertIsNotNull(data, "data");
-            Validation.Parameter.AssertHasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
+            Validation.Assert.IsNotNull(data, "data");
+            Validation.Assert.HasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
 
             using (var stream = new MemoryStream())
             {
@@ -75,9 +75,9 @@ namespace Fosol.Common.Serialization
         /// <param name="stream">Stream to write object to.</param>
         public static void ToStream(object data, Stream stream)
         {
-            Validation.Parameter.AssertIsNotNull(data, "data");
-            Validation.Parameter.AssertHasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
-            Validation.Parameter.AssertIsNotNull(stream, "stream");
+            Validation.Assert.IsNotNull(data, "data");
+            Validation.Assert.HasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
+            Validation.Assert.IsNotNull(stream, "stream");
 
             var serializer = GetSerializer(data.GetType());
             serializer.WriteObject(stream, data);
@@ -93,7 +93,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T Deserialize<T>(Stream stream)
         {
-            Validation.Parameter.AssertIsNotNull(stream, "stream");
+            Validation.Assert.IsNotNull(stream, "stream");
 
             var serializer = GetSerializer(typeof(T));
             return (T)serializer.ReadObject(stream);
@@ -110,7 +110,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T Deserialize<T>(string data)
         {
-            Validation.Parameter.AssertIsNotNullOrEmpty(data, "data");
+            Validation.Assert.IsNotNullOrEmpty(data, "data");
 
             var deserializer = GetSerializer(typeof(T));
 
@@ -134,8 +134,8 @@ namespace Fosol.Common.Serialization
         /// <param name="fileShare">File share control.</param>
         public static void SerializeToFile(object data, string path, FileMode fileMode = FileMode.CreateNew, FileAccess fileAccess = FileAccess.Write, FileShare fileShare = FileShare.None)
         {
-            Validation.Parameter.AssertIsNotNull(data, "data");
-            Validation.Parameter.AssertIsNotNullOrEmpty(path, "path");
+            Validation.Assert.IsNotNull(data, "data");
+            Validation.Assert.IsNotNullOrEmpty(path, "path");
 
             using (Stream stream = File.Open(path, fileMode, fileAccess, fileShare))
             {
@@ -153,7 +153,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T DeserializeFromFile<T>(string path)
         {
-            Validation.Parameter.AssertIsNotNullOrEmpty(path, "path");
+            Validation.Assert.IsNotNullOrEmpty(path, "path");
 
             using (var stream = File.OpenRead(path))
             {
@@ -170,7 +170,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T Deserialize<T>(System.IO.IsolatedStorage.IsolatedStorageFileStream stream)
         {
-            Validation.Parameter.AssertIsNotNull(stream, "stream");
+            Validation.Assert.IsNotNull(stream, "stream");
 
             var deserializer = GetSerializer(typeof(T));
             return (T)deserializer.ReadObject(stream);
