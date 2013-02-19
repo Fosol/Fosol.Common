@@ -11,27 +11,25 @@ They also should throw appropriate exceptions when invalid parameter values are 
 The Validation.Parameter methods provide a common, clean syntax that are easily readable and understandable.
 Each assertion method ensures the parameter value is valid.  If the value is not valid it will throw the appropriate exception.
 
-<ul>
-	<li>AssertIsNotNull</li>
-	<li>AssertIsNotNullOrEmpty</li>
-	<li>AssertIsValue</li>
-	<li>AssertIsNotValue</li>
-	<li>AssertMinRange</li>
-	<li>AssertMaxRange</li>
-	<li>AssertRange</li>
-	<li>AssertStartsWith</li>
-	<li>AssertEndsWith</li>
-	<li>AssertHasAttribute</li>
-</ul>
+- Assert.IsNotNull
+- Assert.IsNotNullOrEmpty
+- Assert.IsValue
+- Assert.IsNotValue
+- Assert.IsTrue
+- Assert.IsFalse
+- Assert.MinRange
+- Assert.MaxRange
+- Assert.Range
+- Assert.StartsWith
+- Assert.EndsWith
+- Assert.HasAttribute
 
 There are also a number of format validation methods.
 These methods are used to confirm a value matches a specified format.
 
-<ul>
-	<li>IsEmail</li>
-	<li>IsNumber</li>
-	<li>IsUri</li>
-	<li>IsPostalCode</li>
-	<li>IsFSA</li>
-	<li>IsLDU</li>
-</ul>
+- AssertFormat.IsEmail
+- AssertFormat.IsNumber
+- AssertFormat.IsUri
+- AssertFormat.IsPostalCode
+- AssertFormat.IsFSA
+- AssertFormat.IsLDU
