@@ -13,7 +13,7 @@ namespace Fosol.Common.Extensions.Events
     {
         #region Methods
         /// <summary>
-        /// Provides a nice syntax for raising events.
+        /// Provides a simple thread safe syntax for raising events.
         /// This method makes sure the event exists before raising.
         /// This method makes sure the event has not been unregistered in another thread before raising.
         /// </summary>
@@ -21,10 +21,23 @@ namespace Fosol.Common.Extensions.Events
         /// <param name="handler">EventHandler of type T.</param>
         /// <param name="sender">Object sending the event.</param>
         /// <param name="args">Event arguments to be sent with the event.</param>
-        public static void Raise<T>(this EventHandler<T> handler, object sender, T args)
+        public static void Raise<T>(this EventHandler<T> handler, object sender, T args = null)
             where T : EventArgs
         {
-            if (handler != null) handler(sender, args);
+            if (null != handler) handler(sender, args);
+        }
+
+        /// <summary>
+        /// Provides a simple thread safe syntax for raising events.
+        /// This method makes sure the event exists before raising.
+        /// This method makes sure the event has not been unregistered in another thread before raising.
+        /// </summary>
+        /// <param name="handler">EventHandler object.</param>
+        /// <param name="sender">Object sending the event.</param>
+        /// <param name="args">Event arguments to be sent with the event.</param>
+        public static void Raise(this EventHandler handler, object sender, EventArgs args = null)
+        {
+            if (null != handler) handler(sender, args);
         }
         #endregion
     }

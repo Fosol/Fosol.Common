@@ -49,7 +49,10 @@
   <ItemGroup>
     <Compile Include="Configuration\CDataConfigurationElement.cs" />
     <Compile Include="Configuration\CDataConfigurationPropertyAttribute.cs" />
-    <Compile Include="Configuration\ConfigurationElementCollection.cs" />
+    <Compile Include="Configuration\ConfigurationElementCollection`.cs" />
+    <Compile Include="Configuration\ConfigurationSectionFileWatcher`.cs" />
+    <Compile Include="Configuration\ConfigurationSectionExternalFileWatcher`.cs" />
+    <Compile Include="Configuration\ConfigurationSectionFileWatcherBase`.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
     <Compile Include="Extensions\Attributes\AttributeExtensions.cs" />
     <Compile Include="Extensions\Bytes\ByteExtensions.cs" />
@@ -106,7 +109,9 @@
     <Compile Include="Validation\Assert.cs" />
     <Compile Include="Validation\AssertFormat.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Events\" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>

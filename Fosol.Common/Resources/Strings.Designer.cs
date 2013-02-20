@@ -88,11 +88,29 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The &quot;{0}&quot; configuration section does not exist..
+        /// </summary>
+        internal static string Exception_ConfigurationSectionNotFound {
+            get {
+                return ResourceManager.GetString("Exception_ConfigurationSectionNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parameter value must end with &quot;{0}&quot;..
         /// </summary>
         internal static string Exception_EndsWith {
             get {
                 return ResourceManager.GetString("Exception_EndsWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File &quot;{0}&quot; was not found..
+        /// </summary>
+        internal static string Exception_FileNotFound {
+            get {
+                return ResourceManager.GetString("Exception_FileNotFound", resourceCulture);
             }
         }
         
@@ -306,9 +324,9 @@ namespace Fosol.Common.Resources {
         /// <summary>
         ///   Looks up a localized string similar to {0}   --- End of inner exception stack trace ---{0}.
         /// </summary>
-        internal static string ExceptionExtensions_ExceptionToString {
+        internal static string Value_ExceptionToString {
             get {
-                return ResourceManager.GetString("ExceptionExtensions_ExceptionToString", resourceCulture);
+                return ResourceManager.GetString("Value_ExceptionToString", resourceCulture);
             }
         }
     }
