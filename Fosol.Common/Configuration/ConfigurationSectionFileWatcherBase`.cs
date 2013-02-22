@@ -30,22 +30,22 @@ namespace Fosol.Common.Configuration
         /// <summary>
         /// Fires when the configuration file has changed.
         /// </summary>
-        public EventHandler FileChanged;
+        public event EventHandler<FileSystemEventArgs> FileChanged;
 
         /// <summary>
         /// Fires when the configuration file is created.
         /// </summary>
-        public EventHandler FileCreated;
+        public event EventHandler<FileSystemEventArgs> FileCreated;
 
         /// <summary>
         /// Fires when the configuration file is deleted.
         /// </summary>
-        public EventHandler FileDeleted;
+        public event EventHandler<FileSystemEventArgs> FileDeleted;
 
         /// <summary>
         /// Fires when the configuration file is renamed.
         /// </summary>
-        public EventHandler FileRenamed;
+        public event EventHandler<RenamedEventArgs> FileRenamed;
         #endregion
 
         #region Properties

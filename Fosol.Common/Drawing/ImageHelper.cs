@@ -38,7 +38,6 @@ namespace Fosol.Common.Drawing
     {
         #region Constants
         private static readonly CenterPoint _DefaultOffset = OffsetRule.Center;
-        private static readonly long _DefaultImageQuality = 75;
         #endregion
 
         #region Variables
