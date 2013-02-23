@@ -49,6 +49,9 @@
   <ItemGroup>
     <Compile Include="Collections\FunctorComparer`.cs" />
     <Compile Include="Collections\GenericList`.cs" />
+    <Compile Include="Caching\ICacheObject.cs" />
+    <Compile Include="Caching\SimpleCacheCollection.cs" />
+    <Compile Include="Caching\SimpleCacheObject.cs" />
     <Compile Include="Configuration\CDataConfigurationElement.cs" />
     <Compile Include="Configuration\CDataConfigurationPropertyAttribute.cs" />
     <Compile Include="Configuration\ConfigurationElementCollection`.cs" />
