@@ -78,7 +78,7 @@ namespace Fosol.Common.Configuration
         /// <summary>
         /// get - Path to configuration section file.
         /// </summary>
-        public string PathToFile { get; protected set; }
+        public string FullPath { get; protected set; }
         #endregion
 
         #region Constructors
@@ -93,7 +93,7 @@ namespace Fosol.Common.Configuration
         {
             Validation.Assert.IsNotNullOrEmpty(path, "path");
 
-            this.PathToFile = path;
+            this.FullPath = path;
         }
         #endregion
 
@@ -140,8 +140,8 @@ namespace Fosol.Common.Configuration
                         LoadConfig();
 
                     if (_Watcher == null)
-                        _Watcher = new FileSystemWatcher(this.PathToFile);
-                    _Watcher.Filter = Path.GetFileName(this.PathToFile);
+                        _Watcher = new FileSystemWatcher(Path.GetDirectoryName(this.FullPath));
+                    _Watcher.Filter = Path.GetFileName(this.FullPath);
                     _Watcher.Created += OnFileCreated;
                     _Watcher.Changed += OnFileChanged;
                     _Watcher.Deleted += OnFileDeleted;

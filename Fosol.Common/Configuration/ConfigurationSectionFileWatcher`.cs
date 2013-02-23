@@ -67,11 +67,11 @@ namespace Fosol.Common.Configuration
             if (section == null)
                 throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_ConfigurationSectionNotFound, sectionName));
 
-            var path = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+            var path = Path.GetDirectoryName(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
             if (!string.IsNullOrEmpty(section.SectionInformation.ConfigSource))
-                return Path.GetFileName(Path.Combine(path, section.SectionInformation.ConfigSource));
+                return Path.Combine(path, section.SectionInformation.ConfigSource);
             else
-                return Path.GetFileName(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+                return path;
         }
 
         /// <summary>

@@ -63,6 +63,8 @@
     <Compile Include="Extensions\Enums\EnumExtensions.cs" />
     <Compile Include="Extensions\Events\EventExtensions.cs" />
     <Compile Include="Extensions\Exceptions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\Expressions\ExpressionExtensions.cs" />
+    <Compile Include="Extensions\Expressions\PredicateBuilder.cs" />
     <Compile Include="Extensions\Files\FileExtensions.cs" />
     <Compile Include="Extensions\Images\ImageExtensions.cs" />
     <Compile Include="Extensions\Numbers\NumberExtensions.cs" />

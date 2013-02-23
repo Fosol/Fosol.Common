@@ -59,10 +59,10 @@ namespace Fosol.Common.Configuration
         /// <exception cref="System.Configuration.ConfigurationErrorsException">Configuration Section did not exist.</exception>
         protected override void LoadConfig()
         {
-            this.ConfigSection = DeserializeSection(this.PathToFile);
+            this.ConfigSection = DeserializeSection(this.FullPath);
 
             if (this.ConfigSection == null)
-                throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_ConfigurationSectionNotFound, Path.GetFileName(this.PathToFile)));
+                throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_ConfigurationSectionNotFound, Path.GetFileName(this.FullPath)));
 
             _IsConfigLoaded = true;
         }
