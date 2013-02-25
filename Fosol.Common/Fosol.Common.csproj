@@ -47,6 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\CacheItemPriority.cs" />
+    <Compile Include="Caching\CacheItemRemovedReason.cs" />
+    <Compile Include="Caching\ICacheItemPolicy.cs" />
+    <Compile Include="Caching\Policies\AbsoluteExpiration.cs" />
+    <Compile Include="Caching\Policies\FileChangeDependency.cs" />
+    <Compile Include="Caching\Policies\NoExpiration.cs" />
+    <Compile Include="Caching\Policies\SlidingExpiration.cs" />
     <Compile Include="Collections\FunctorComparer`.cs" />
     <Compile Include="Collections\GenericList`.cs" />
     <Compile Include="Caching\ICacheObject.cs" />
