@@ -67,6 +67,7 @@ namespace Fosol.Common.Parsers
         /// <summary>
         /// Parse the text for all the keywords.
         /// String values outside keyword boundaries are considered keywords of KeywordType = Literal.
+        /// If the text is null or empty it will return an empty collection of Phrases.
         /// </summary>
         /// <example>
         /// text = "${datetime?format={0:u}}&utc=true}${literal?text=some ${ text} - ${message} - ${newline}"
@@ -83,6 +84,9 @@ namespace Fosol.Common.Parsers
         public List<IPhrase> Parse(string text, int startIndex = 0)
         {
             var keywords = new List<IPhrase>();
+
+            if (string.IsNullOrEmpty(text))
+                return keywords;
 
             var length = text.Length - 1;
             while (startIndex < length)

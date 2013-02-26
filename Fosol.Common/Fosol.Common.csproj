@@ -66,6 +66,7 @@
     <Compile Include="Configuration\ConfigurationSectionExternalFileWatcher`.cs" />
     <Compile Include="Configuration\ConfigurationSectionFileWatcherBase`.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
+    <Compile Include="Exceptions\MissingAttributeException.cs" />
     <Compile Include="Extensions\Attributes\AttributeExtensions.cs" />
     <Compile Include="Extensions\Bytes\ByteExtensions.cs" />
     <Compile Include="Extensions\Colors\Drawings\ColorExtensions.cs" />
@@ -125,7 +126,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Events\" />
-    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.fr.resx">

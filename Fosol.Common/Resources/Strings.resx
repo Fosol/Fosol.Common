@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Exception_AttributeMissing" xml:space="preserve">
+  <data name="Exception_AttributeIsRequired" xml:space="preserve">
     <value>Attribute "{0}" is required.</value>
   </data>
   <data name="Exception_AutocropScale" xml:space="preserve">
@@ -170,6 +170,9 @@
   </data>
   <data name="Exception_InvalidSize" xml:space="preserve">
     <value>Parameter "{0}" must have width or height set to greater than '0'.</value>
+  </data>
+  <data name="Exception_InvalidType" xml:space="preserve">
+    <value>Parameter "{0}" is not a valid type.</value>
   </data>
   <data name="Exception_InvalidValue" xml:space="preserve">
     <value>Parameter "{0}" has an invalid value.</value>

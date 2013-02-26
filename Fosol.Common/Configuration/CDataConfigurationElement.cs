@@ -35,9 +35,9 @@ namespace Fosol.Common.Configuration
                 var cdata_attributes = GetAttributes<CDataConfigurationPropertyAttribute>(property);
 
                 if (attributes == null || attributes.Length == 0)
-                    throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_AttributeMissing, "ConfigurationPropertyAttribute"));
+                    throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_AttributeIsRequired, "ConfigurationPropertyAttribute"));
                 else if (cdata_attributes == null || cdata_attributes.Length == 0)
-                    throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_AttributeMissing, "CDataConfigurationPropertyAttribute"));
+                    throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_AttributeIsRequired, "CDataConfigurationPropertyAttribute"));
                 else if (cdata_attributes.Length > 1)
                     throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_TooManyOfAttribute, "CDataConfigurationPropertyAttribute"));
                 else if (!(property.PropertyType == typeof(string)))

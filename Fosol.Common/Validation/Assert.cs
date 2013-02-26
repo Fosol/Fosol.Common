@@ -1742,7 +1742,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!element.HasAttribute(typeof(System.Runtime.Serialization.DataContractAttribute)))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeMissing, attributeType.Name), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeIsRequired, attributeType.Name), paramName);
         }
 
         /// <summary>
@@ -1761,17 +1761,17 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!element.HasAttribute(typeof(System.Runtime.Serialization.DataContractAttribute), inherit))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeMissing, attributeType.Name), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeIsRequired, attributeType.Name), paramName);
         }
         #endregion
 
         #region IsTrue
         /// <summary>
-        /// Assert that the parameter is true..
+        /// Assert that the parameter is true.
         /// If not throw System.ArgumentException.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "value" returned false.</exception>
-        /// <param name="function">Parameter value.</param>
+        /// <param name="value">Parameter value.</param>
         /// <param name="paramName">Name of the parameter being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         public static void IsTrue(bool value, string paramName, string message = null)
@@ -1784,11 +1784,11 @@ namespace Fosol.Common.Validation
         }
 
         /// <summary>
-        /// Assert that the function returns true.
+        /// Assert that the parameter is true.
         /// If not throw System.ArgumentException.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "value" returned false.</exception>
-        /// <param name="function">Parameter value.</param>
+        /// <param name="value">Parameter value.</param>
         /// <param name="paramName">Name of the parameter being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">Exception that occured that caused this exception.</param>
@@ -1843,7 +1843,7 @@ namespace Fosol.Common.Validation
         /// If not throw System.ArgumentException.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
-        /// <param name="function">Parameter value.</param>
+        /// <param name="value">Parameter value.</param>
         /// <param name="paramName">Name of the parameter being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         public static void IsFalse(bool value, string paramName, string message = null)
@@ -1856,11 +1856,11 @@ namespace Fosol.Common.Validation
         }
 
         /// <summary>
-        /// Assert that the function returns false.
+        /// Assert that the parameter is false.
         /// If not throw System.ArgumentException.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
-        /// <param name="function">Parameter value.</param>
+        /// <param name="value">Parameter value.</param>
         /// <param name="paramName">Name of the parameter being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">Exception that occured that caused this exception.</param>
@@ -1906,6 +1906,84 @@ namespace Fosol.Common.Validation
 
             if (function())
                 throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName, innerException);
+        }
+        #endregion
+
+        #region IsType
+        /// <summary>
+        /// Assert that the parameter is of the specified type.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
+        /// <param name="value">Parameter value.</param>
+        /// <param name="validType">Valid type.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        public static void IsType(object value, Type validType, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+            
+            if (value.GetType() != validType)
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidType, paramName), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the parameter is of the specified type.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
+        /// <param name="value">Parameter value.</param>
+        /// <param name="validType">Valid type.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        /// <param name="innerException">Exception that occured that caused this exception.</param>
+        public static void IsType(object value, Type validType, string paramName, string message, Exception innerException)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (value.GetType() != validType)
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidType, paramName), paramName, innerException);
+        }
+        #endregion
+
+        #region IsAssignableFromType
+        /// <summary>
+        /// Assert that the parameter is assignable from the specified type.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
+        /// <param name="value">Parameter value.</param>
+        /// <param name="validType">Valid type.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        public static void IsAssignableFromType(object value, Type validType, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (value.GetType().IsAssignableFrom(validType))
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidType, paramName), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the parameter is assignable from the specified type.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
+        /// <param name="value">Parameter value.</param>
+        /// <param name="validType">Valid type.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        /// <param name="innerException">Exception that occured that caused this exception.</param>
+        public static void IsAssignableFromType(object value, Type validType, string paramName, string message, Exception innerException)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (value.GetType().IsAssignableFrom(validType))
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidType, paramName), paramName, innerException);
         }
         #endregion
         #endregion

@@ -63,9 +63,9 @@ namespace Fosol.Common.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Attribute &quot;{0}&quot; is required..
         /// </summary>
-        internal static string Exception_AttributeMissing {
+        internal static string Exception_AttributeIsRequired {
             get {
-                return ResourceManager.GetString("Exception_AttributeMissing", resourceCulture);
+                return ResourceManager.GetString("Exception_AttributeIsRequired", resourceCulture);
             }
         }
         
@@ -219,6 +219,15 @@ namespace Fosol.Common.Resources {
         internal static string Exception_InvalidSize {
             get {
                 return ResourceManager.GetString("Exception_InvalidSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; is not a valid type..
+        /// </summary>
+        internal static string Exception_InvalidType {
+            get {
+                return ResourceManager.GetString("Exception_InvalidType", resourceCulture);
             }
         }
         
