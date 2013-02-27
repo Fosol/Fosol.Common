@@ -17,7 +17,7 @@ namespace Fosol.Common.Parsers
 
         #region Properties
         /// <summary>
-        /// get - The text value of the keyword.
+        /// get - The original formatted text value that created this phrase.
         /// </summary>
         public string Text { get; private set; }
         #endregion
