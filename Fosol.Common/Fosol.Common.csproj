@@ -78,11 +78,13 @@
     <Compile Include="Extensions\Expressions\PredicateBuilder.cs" />
     <Compile Include="Extensions\Files\FileExtensions.cs" />
     <Compile Include="Extensions\Images\ImageExtensions.cs" />
+    <Compile Include="Extensions\NameValueCollections\NameValueCollectionExtensions.cs" />
     <Compile Include="Extensions\Numbers\NumberExtensions.cs" />
     <Compile Include="Extensions\Objects\ObjectExtensions.cs" />
     <Compile Include="Extensions\Queryables\QueryableExtensions.cs" />
     <Compile Include="Extensions\Streams\StreamExtensions.cs" />
     <Compile Include="Extensions\Strings\StringExtensions.cs" />
+    <Compile Include="Extensions\Types\TypeExtensions.cs" />
     <Compile Include="Extensions\UriBuilders\UriBuilderExtensions.cs" />
     <Compile Include="Extensions\Uris\UriExtensions.cs" />
     <Compile Include="Helpers\AssemblyResourceHelper.cs" />
