@@ -90,6 +90,7 @@
     <Compile Include="Helpers\AssemblyResourceHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Drawing\ImageHelper.cs" />
+    <Compile Include="Helpers\PropertyInfoHelper.cs" />
     <Compile Include="OffsetRule.cs" />
     <Compile Include="CenterPoint.cs" />
     <Compile Include="Mathematics\Formula.cs" />

@@ -67,6 +67,17 @@ namespace Fosol.Common.Extensions.Types
 
             return exists;
         }
+
+        /// <summary>
+        /// Checks if to see if the Type is of type Nullable<>.
+        /// </summary>
+        /// <param name="type">Type of object to test.</param>
+        /// <returns>True if the Type is of type Nullable.</returns>
+        public static bool IsNullableType(this Type type)
+        {
+            return type.IsGenericType
+                && type.GetGenericTypeDefinition().Equals(typeof(Nullable<>));
+        }
         #endregion
     }
 }
