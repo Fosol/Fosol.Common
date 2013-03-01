@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace Fosol.Common.Configuration
 {
+    /// <summary>
+    /// a ConfigurationElementCollection of Type T, where T is a ConfigurationElement.
+    /// </summary>
+    /// <typeparam name="T">Type of ConfigurationElement.</typeparam>
     public class ConfigurationElementCollection<T>
         : ConfigurationElementCollection, ICollection<T>
         where T : ConfigurationElement
@@ -58,46 +62,64 @@ namespace Fosol.Common.Configuration
 
         #region Methods
         /// <summary>
+        /// Get the attribute value with the specified name.
+        /// </summary>
+        /// <param name="name">Name of the attribute.</param>
+        /// <returns>Value of the attribute.</returns>
+        public object Attribute(string name)
+        {
+            return base[name];
+        }
+
+        /// <summary>
+        /// Set the attribute value with the specified name and value.
+        /// </summary>
+        /// <param name="name">Name of the attribute.</param>
+        /// <param name="value">Value to set with.</param>
+        public void Attribute(string name, object value)
+        {
+            base[name] = value;
+        }
+
+        /// <summary>
         /// Creates a new element of type T
         /// </summary>
         /// <returns>Element of type T</returns>
         protected override ConfigurationElement CreateNewElement()
         {
-            T configurationElement = typeof(T).GetConstructor(new Type[] { }).
-                    Invoke(new object[] { }) as T;
-            return configurationElement;
+            T element = typeof(T).GetConstructor(new Type[] { }).Invoke(new object[] { }) as T;
+            return element;
         }
 
         /// <summary>
-        /// Gets the element key name
+        /// Gets the element key name.
+        /// This doesn't support multiple keys.
         /// </summary>
         /// <param name="element">Element to fetch within collection</param>
         /// <returns>Key name of element</returns>
         protected override object GetElementKey(ConfigurationElement element)
         {
             PropertyInfo[] properties = typeof(T).GetProperties();
-            PropertyInfo keyProperty = null;
+            PropertyInfo key_property = null;
             foreach (PropertyInfo property in properties)
             {
-                if (property.IsDefined(typeof(ConfigurationPropertyAttribute),
-                    true))
+                if (property.IsDefined(typeof(ConfigurationPropertyAttribute), true))
                 {
-                    ConfigurationPropertyAttribute attribute = property.GetCustomAttributes(typeof(ConfigurationPropertyAttribute),
-
+                    ConfigurationPropertyAttribute attribute = property.GetCustomAttributes(
+                        typeof(ConfigurationPropertyAttribute),
                         true)[0] as ConfigurationPropertyAttribute;
 
-                    if (attribute != null &&
-                        attribute.IsKey)
+                    if (attribute != null && attribute.IsKey)
                     {
-                        keyProperty = property;
+                        key_property = property;
                         break;
                     }
                 }
             }
             object key = null;
-            if (keyProperty != null)
+            if (key_property != null)
             {
-                key = keyProperty.GetValue(element, null);
+                key = key_property.GetValue(element, null);
             }
             return key;
         }
@@ -186,10 +208,10 @@ namespace Fosol.Common.Configuration
         }
 
         /// <summary>
-        /// 
+        /// Copy into the array starting at the index position.
         /// </summary>
-        /// <param name="array"></param>
-        /// <param name="arrayIndex"></param>
+        /// <param name="array">Array to copy data to.</param>
+        /// <param name="arrayIndex">Index position within destination array to start at.</param>
         public void CopyTo(T[] array, int arrayIndex)
         {
             base.CopyTo(array, arrayIndex);
@@ -229,6 +251,16 @@ namespace Fosol.Common.Configuration
             {
                 yield return this[i];
             }
+        }
+
+        /// <summary>
+        /// Checks if the key exists in the collection.
+        /// </summary>
+        /// <param name="key">Key name.</param>
+        /// <returns>True if the key name exists.</returns>
+        public bool HasKey(object key)
+        {
+            return base.BaseGetAllKeys().FirstOrDefault(k => k.Equals(key)) != null;
         }
         #endregion
 
