@@ -41,6 +41,17 @@ namespace Fosol.Common.Extensions.Types
         }
 
         /// <summary>
+        /// Checks to see if the Type has a constructor with the specified Type.
+        /// </summary>
+        /// <param name="type">Type of object to test.</param>
+        /// <param name="paramType">Parameter Type to test for.</param>
+        /// <returns>True if the constructor exists.</returns>
+        public static bool HasTypeConstructor(this Type type, Type paramType)
+        {
+            return HasTypeConstructor(type, new Type[] { paramType });
+        }
+
+        /// <summary>
         /// Checks to see if the Type has a constructor with the specified parameters of the specified Type.
         /// </summary>
         /// <param name="type">Type of object to test.</param>
@@ -48,8 +59,6 @@ namespace Fosol.Common.Extensions.Types
         /// <returns>True if the constructor exists.</returns>
         public static bool HasTypeConstructor(this Type type, params Type[] paramType)
         {
-            var exists = false;
-
             foreach (var con in type.GetConstructors(BindingFlags.Instance | BindingFlags.Public))
             {
                 var cp = con.GetParameters();
@@ -60,12 +69,14 @@ namespace Fosol.Common.Extensions.Types
 
                 for (var i = 0; i < paramType.Length; i++)
                 {
-                    if (!(cp.Skip(i).SingleOrDefault().ParameterType == paramType[i] != null))
+                    if (!(cp[i].ParameterType == paramType[i]))
                         return false;
                 }
+
+                return true;
             }
 
-            return exists;
+            return false;
         }
 
         /// <summary>
