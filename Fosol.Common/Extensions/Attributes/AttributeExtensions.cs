@@ -12,6 +12,7 @@ namespace Fosol.Common.Extensions.Attributes
     public static class AttributeExtensions
     {
         #region Methods
+
         /// <summary>
         /// Determines if the object has the specified attribute type defined.
         /// </summary>
@@ -31,7 +32,7 @@ namespace Fosol.Common.Extensions.Attributes
         /// <param name="attributeType">Type of attribute to look for.</param>
         /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
         /// <returns>An array of Attribute.</returns>
-        public static Attribute GetAttribute(this object element, Type attributeType, bool inherit = false)
+        public static Attribute GetCustomAttribute(this object element, Type attributeType, bool inherit = false)
         {
             return Attribute.GetCustomAttribute(element.GetType(), attributeType, inherit);
         }
@@ -44,7 +45,7 @@ namespace Fosol.Common.Extensions.Attributes
         /// <param name="attributeType">Type of attribute to look for.</param>
         /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
         /// <returns>An array of Attribute.</returns>
-        public static T GetAttribute<T>(this object element, T attributeType, bool inherit = false)
+        public static T GetCustomAttribute<T>(this object element, T attributeType, bool inherit = false)
             where T : Attribute
         {
             return (T)Attribute.GetCustomAttribute(element.GetType(), typeof(T), inherit);
@@ -57,7 +58,7 @@ namespace Fosol.Common.Extensions.Attributes
         /// <param name="attributeType">Type of attribute to look for.</param>
         /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
         /// <returns>An array of Attribute.</returns>
-        public static Attribute[] GetAttributes(this object element, Type attributeType, bool inherit = false)
+        public static Attribute[] GetCustomAttributes(this object element, Type attributeType, bool inherit = false)
         {
             return Attribute.GetCustomAttributes(element.GetType(), attributeType, inherit);
         }
@@ -70,7 +71,7 @@ namespace Fosol.Common.Extensions.Attributes
         /// <param name="attributeType">Type of attribute to look for.</param>
         /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
         /// <returns>An array of Attribute.</returns>
-        public static T[] GetAttributes<T>(this object element, T attributeType, bool inherit = false)
+        public static T[] GetCustomAttributes<T>(this object element, T attributeType, bool inherit = false)
             where T : Attribute
         {
             return Attribute.GetCustomAttributes(element.GetType(), typeof(T), inherit).Select(a => (T)a).ToArray();
@@ -82,7 +83,7 @@ namespace Fosol.Common.Extensions.Attributes
         /// <param name="element">Object to fetch attribute from.</param>
         /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
         /// <returns>An array of Attribute.</returns>
-        public static Attribute[] GetAttributes(this object element, bool inherit = false)
+        public static Attribute[] GetCustomAttributes(this object element, bool inherit = false)
         {
             return Attribute.GetCustomAttributes(element.GetType(), inherit);
         }
@@ -94,7 +95,7 @@ namespace Fosol.Common.Extensions.Attributes
         /// <param name="element">Object to fetch attribute from.</param>
         /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
         /// <returns>An array of Attribute.</returns>
-        public static T[] GetAttributes<T>(this object element, bool inherit = false)
+        public static T[] GetCustomAttributes<T>(this object element, bool inherit = false)
             where T : Attribute
         {
             return Attribute.GetCustomAttributes(element.GetType(), inherit).Select(a => (T)a).ToArray();

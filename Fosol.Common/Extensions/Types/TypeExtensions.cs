@@ -89,6 +89,93 @@ namespace Fosol.Common.Extensions.Types
             return type.IsGenericType
                 && type.GetGenericTypeDefinition().Equals(typeof(Nullable<>));
         }
+        /// <summary>
+        /// Determines if the Type has the specified attribute type defined.
+        /// </summary>
+        /// <param name="type">Type to verify attribute against.</param>
+        /// <param name="attributeType">Type of attribute to look for.</param>
+        /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
+        /// <returns>True if the object has the attribute defined.</returns>
+        public static bool HasAttribute(this Type type, Type attributeType, bool inherit = false)
+        {
+            return Attribute.IsDefined(type, attributeType, inherit);
+        }
+
+        /// <summary>
+        /// Gets the custom attributes that have been defined for the object.
+        /// </summary>
+        /// <param name="type">Type to fetch attribute from.</param>
+        /// <param name="attributeType">Type of attribute to look for.</param>
+        /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
+        /// <returns>An array of Attribute.</returns>
+        public static Attribute GetCustomAttribute(this Type type, Type attributeType, bool inherit = false)
+        {
+            return Attribute.GetCustomAttribute(type, attributeType, inherit);
+        }
+
+        /// <summary>
+        /// Gets the custom attributes that have been defined for the object.
+        /// </summary>
+        /// <typeparam name="T">Type of attribute.</typeparam>
+        /// <param name="type">Type to fetch attribute from.</param>
+        /// <param name="attributeType">Type of attribute to look for.</param>
+        /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
+        /// <returns>An array of Attribute.</returns>
+        public static T GetCustomAttribute<T>(this Type type, T attributeType, bool inherit = false)
+            where T : Attribute
+        {
+            return (T)Attribute.GetCustomAttribute(type, typeof(T), inherit);
+        }
+
+        /// <summary>
+        /// Gets the custom attributes that have been defined for the object.
+        /// </summary>
+        /// <param name="type">Type to fetch attribute from.</param>
+        /// <param name="attributeType">Type of attribute to look for.</param>
+        /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
+        /// <returns>An array of Attribute.</returns>
+        public static Attribute[] GetCustomAttributes(this Type type, Type attributeType, bool inherit = false)
+        {
+            return Attribute.GetCustomAttributes(type, attributeType, inherit);
+        }
+
+        /// <summary>
+        /// Gets the custom attributes that have been defined for the object.
+        /// </summary>
+        /// <typeparam name="T">Type of attribute.</typeparam>
+        /// <param name="type">Type to fetch attribute from.</param>
+        /// <param name="attributeType">Type of attribute to look for.</param>
+        /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
+        /// <returns>An array of Attribute.</returns>
+        public static T[] GetCustomAttributes<T>(this Type type, T attributeType, bool inherit = false)
+            where T : Attribute
+        {
+            return Attribute.GetCustomAttributes(type, typeof(T), inherit).Select(a => (T)a).ToArray();
+        }
+
+        /// <summary>
+        /// Gets the custom attributes that have been defined for the object.
+        /// </summary>
+        /// <param name="type">Type to fetch attribute from.</param>
+        /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
+        /// <returns>An array of Attribute.</returns>
+        public static Attribute[] GetCustomAttributes(this Type type, bool inherit = false)
+        {
+            return Attribute.GetCustomAttributes(type, inherit);
+        }
+
+        /// <summary>
+        /// Gets the custom attributes that have been defined for the object.
+        /// </summary>
+        /// <typeparam name="T">Type of attribute.</typeparam>
+        /// <param name="type">Type to fetch attribute from.</param>
+        /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
+        /// <returns>An array of Attribute.</returns>
+        public static T[] GetCustomAttributes<T>(this Type type, bool inherit = false)
+            where T : Attribute
+        {
+            return Attribute.GetCustomAttributes(type, inherit).Select(a => (T)a).ToArray();
+        }
         #endregion
     }
 }

@@ -258,7 +258,7 @@ namespace Fosol.Common.Configuration
         /// </summary>
         /// <param name="key">Key name.</param>
         /// <returns>True if the key name exists.</returns>
-        public bool HasKey(object key)
+        public bool ContainsKey(object key)
         {
             return base.BaseGetAllKeys().FirstOrDefault(k => k.Equals(key)) != null;
         }

@@ -1,4 +1,5 @@
 ﻿using Fosol.Common.Extensions.Attributes;
+using Fosol.Common.Extensions.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -1732,6 +1733,43 @@ namespace Fosol.Common.Validation
         /// If not throw System.ArgumentException.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <param name="type">Type to check for the specified attribute.</param>
+        /// <param name="attributeType">Type of attribute to look for.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message to describe the exception.</param>
+        public static void HasAttribute(Type type, Type attributeType, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!type.HasAttribute(attributeType))
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeIsRequired, attributeType.Name), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the parameter has an attribute of the specified type defined.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <param name="type">Type to check for the specified attribute.</param>
+        /// <param name="attributeType">Type of attribute to look for.</param>
+        /// <param name="inherit">If true it will also look in the ancestor objects for the attribute type.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message to describe the exception.</param>
+        public static void HasAttribute(Type type, Type attributeType, bool inherit, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!type.HasAttribute(attributeType, inherit))
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeIsRequired, attributeType.Name), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the parameter has an attribute of the specified type defined.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
         /// <param name="element">Element to check for the specified attribute.</param>
         /// <param name="attributeType">Type of attribute to look for.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1741,7 +1779,7 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (!element.HasAttribute(typeof(System.Runtime.Serialization.DataContractAttribute)))
+            if (!element.HasAttribute(attributeType))
                 throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeIsRequired, attributeType.Name), paramName);
         }
 
@@ -1760,7 +1798,7 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (!element.HasAttribute(typeof(System.Runtime.Serialization.DataContractAttribute), inherit))
+            if (!element.HasAttribute(attributeType, inherit))
                 throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeIsRequired, attributeType.Name), paramName);
         }
         #endregion
