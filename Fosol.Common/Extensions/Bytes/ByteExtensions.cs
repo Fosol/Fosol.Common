@@ -27,26 +27,49 @@ namespace Fosol.Common.Extensions.Bytes
         /// <summary>
         /// Copies the data into the destination array starting at the startIndex position.
         /// </summary>
-        /// <exception cref="System.ArgumentNullException">Parameters "destination", and "value" cannot be null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "startIndex" must be a valid index position within the destination.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "destination" must be large enough to accept the value.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "destIndex" must be a valid index position within the destination.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "length" must be greater than or equal to '0' and less than or equal to the length of the value array.</exception>
         /// <param name="destination">Destination byte array object.</param>
-        /// <param name="value">Byte array to be copied into destination.</param>
-        /// <param name="startIndex">Index position to start copying into destination array.</param>
+        /// <param name="data">Byte array to be copied into destination.</param>
+        /// <param name="destIndex">Index position to start copying into destination array.</param>
+        /// <param name="length">Length of data to append into the destination array.</param>
         /// <returns>Position within the destination array after the data has been copied.</returns>
-        public static int Append(this byte[] destination, byte[] value, int startIndex = 0)
+        public static int Append(this byte[] destination, byte[] data, int destIndex = 0, int length = 0)
         {
-            Validation.Assert.IsNotNull(destination, "destination");
-            Validation.Assert.IsNotNull(value, "value");
-            Validation.Assert.Range(startIndex, 0, destination.Length - value.Length - 1, "startIndex");
+            return Append(destination, data, destIndex, 0, length);
+        }
 
-            if (destination.Length < value.Length + startIndex)
-                throw new ArgumentOutOfRangeException("destination", String.Format(Resources.Strings.Exception_ValueToSmall, "destination"));
+        /// <summary>
+        /// Copies the data into the destination array starting at the startIndex position.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "destIndex" must be a valid index position within the destination.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "length" must be greater than or equal to '0' and less than or equal to the length of the value array.</exception>
+        /// <param name="destination">Destination byte array object.</param>
+        /// <param name="data">Byte array to be copied into destination.</param>
+        /// <param name="destIndex">Index position to start copying into destination array.</param>
+        /// <param name="dataIndex">Index position to start copying from the data array.</param>
+        /// <param name="length">Length of data to append into the destination array.</param>
+        /// <returns>Position within the destination array after the data has been copied.</returns>
+        public static int Append(this byte[] destination, byte[] data, int destIndex, int dataIndex, int length)
+        {
+            Validation.Assert.IsNotNull(data, "data");
+
+            // Default to the value.Length.
+            if (length <= 0)
+                length = data.Length - dataIndex;
+
+            Validation.Assert.Range(destIndex, 0, destination.Length - length, "destIndex");
+            Validation.Assert.Range(length, 0, data.Length, "length");
+
+            if (destination.Length < length + destIndex)
+                throw new ArgumentOutOfRangeException("data", String.Format(Resources.Strings.Exception_DestinationToSmall, "data"));
 
             int i;
-            for (i = 0; i < value.Length; i++)
-                destination[i + startIndex] = value[i];
-            return i + startIndex;
+            for (i = 0; i < length; i++)
+                destination[destIndex + i] = data[dataIndex + i];
+            return i + destIndex;
         }
 
         /// <summary>

@@ -97,6 +97,15 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Destination is too small to accept &quot;{0}&quot;..
+        /// </summary>
+        internal static string Exception_DestinationToSmall {
+            get {
+                return ResourceManager.GetString("Exception_DestinationToSmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parameter value must end with &quot;{0}&quot;..
         /// </summary>
         internal static string Exception_EndsWith {

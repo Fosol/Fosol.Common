@@ -129,6 +129,9 @@
   <data name="Exception_ConfigurationSectionNotFound" xml:space="preserve">
     <value>The "{0}" configuration section does not exist.</value>
   </data>
+  <data name="Exception_DestinationToSmall" xml:space="preserve">
+    <value>Destination is too small to accept "{0}".</value>
+  </data>
   <data name="Exception_EndsWith" xml:space="preserve">
     <value>Parameter value must end with "{0}".</value>
   </data>
