@@ -30,6 +30,23 @@ namespace Fosol.Common.Extensions.Strings
         }
 
         /// <summary>
+        /// Converts the string value into an array of byte.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="value">String value to convert.</param>
+        /// <param name="encoding">
+        ///     Encoding object to use when converting to an array of byte.
+        /// </param>
+        /// <returns>Array of byte.</returns>
+        public static byte[] ToByteArray(this string value, Encoding encoding = null)
+        {
+            Validation.Assert.IsNotNullOrEmpty(value, "value");
+            Initialization.Assert.IsNotDefault<Encoding>(ref encoding, Encoding.Default);
+            return encoding.GetBytes(value);
+        }
+
+        /// <summary>
         /// Provides a way to find and replace a value within a string with option StringComparison parameters.
         /// This method is faster than a RegEx.
         /// </summary>
@@ -97,24 +114,6 @@ namespace Fosol.Common.Extensions.Strings
         public static byte HexToByte(this string value)
         {
             return Extensions.Numbers.NumberExtensions.HexToByte(value);
-        }
-
-        /// <summary>
-        /// Converts the string value into an array of byte.
-        /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
-        /// <param name="value">String value to convert.</param>
-        /// <param name="encoding">
-        ///     Encoding object to use when converting to an array of byte.
-        ///     Default value is UTF8Encoding.
-        /// </param>
-        /// <returns>Array of byte.</returns>
-        public static byte[] ToByteArray(this string value, Encoding encoding = null)
-        {
-            Validation.Assert.IsNotNullOrEmpty(value, "value");
-            Initialization.Assert.IsNotDefault<Encoding>(ref encoding, new UTF8Encoding());
-            return encoding.GetBytes(value);
         }
 
         /// <summary> 

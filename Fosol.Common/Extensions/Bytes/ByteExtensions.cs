@@ -14,14 +14,32 @@ namespace Fosol.Common.Extensions.Bytes
         #region Methods
         /// <summary>
         /// Converts a byte array into a string value.
+        /// By default it uses the Encoding.Default to convert the byte array into a string.
         /// </summary>
         /// <param name="value">Byte array to convert into a string.</param>
+        /// <param name="encoding">Encoding to use when creating the string.</param>
         /// <returns>String value.</returns>
-        public static string ConvertToString(this byte[] value)
+        public static string ConvertToString(this byte[] value, Encoding encoding = null)
         {
-            var data = new char[value.Length / sizeof(char)];
-            System.Buffer.BlockCopy(value, 0, data, 0, value.Length);
-            return new string(data);
+            if (encoding == null)
+                encoding = Encoding.Default;
+            return encoding.GetString(value);
+        }
+
+        /// <summary>
+        /// Converts a byte array into a string value.
+        /// Use this method when the source byte array was encoded with a different encoding, or you want to convert to a different encoding.
+        /// </summary>
+        /// <param name="value">Byte array to convert into a string.</param>
+        /// <param name="sourceEncoding">Encoding the byte array was created with.</param>
+        /// <param name="destEncoding">Encoding to use when creating the string.</param>
+        /// <returns>String value.</returns>
+        public static string ConvertToString(this byte[] value, Encoding sourceEncoding, Encoding destEncoding)
+        {
+            Validation.Assert.IsNotNull(sourceEncoding, "sourceEncoding");
+            Validation.Assert.IsNotNull(destEncoding, "destEncoding");
+            var buffer = Encoding.Convert(sourceEncoding, destEncoding, value);
+            return destEncoding.GetString(buffer);
         }
 
         /// <summary>
