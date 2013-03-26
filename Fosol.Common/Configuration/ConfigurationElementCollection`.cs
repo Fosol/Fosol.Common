@@ -149,7 +149,7 @@ namespace Fosol.Common.Configuration
         /// <param name="element">Element to add</param>
         protected override void BaseAdd(ConfigurationElement element)
         {
-            BaseAdd(element, true);
+            BaseAdd(element, this.ThrowOnDuplicate);
         }
 
         /// <summary>
