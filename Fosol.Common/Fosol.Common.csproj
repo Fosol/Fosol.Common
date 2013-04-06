@@ -68,6 +68,7 @@
     <Compile Include="Converters\MailAddressConverter.cs" />
     <Compile Include="Converters\EncodingConverter.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
+    <Compile Include="Data\TableName.cs" />
     <Compile Include="Exceptions\MissingAttributeException.cs" />
     <Compile Include="Extensions\Attributes\AttributeExtensions.cs" />
     <Compile Include="Extensions\Bytes\ByteExtensions.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Validation\AssertFormat.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Diagnostics\" />
     <Folder Include="Events\" />
   </ItemGroup>
   <ItemGroup>
