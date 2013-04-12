@@ -19,7 +19,7 @@ namespace Fosol.Common.Extensions.Bytes
         /// <param name="value">Byte array to convert into a string.</param>
         /// <param name="encoding">Encoding to use when creating the string.</param>
         /// <returns>String value.</returns>
-        public static string ConvertToString(this byte[] value, Encoding encoding = null)
+        public static string ToStringValue(this byte[] value, Encoding encoding = null)
         {
             if (encoding == null)
                 encoding = Encoding.Default;
@@ -34,7 +34,7 @@ namespace Fosol.Common.Extensions.Bytes
         /// <param name="sourceEncoding">Encoding the byte array was created with.</param>
         /// <param name="destEncoding">Encoding to use when creating the string.</param>
         /// <returns>String value.</returns>
-        public static string ConvertToString(this byte[] value, Encoding sourceEncoding, Encoding destEncoding)
+        public static string ToStringValue(this byte[] value, Encoding sourceEncoding, Encoding destEncoding)
         {
             Validation.Assert.IsNotNull(sourceEncoding, "sourceEncoding");
             Validation.Assert.IsNotNull(destEncoding, "destEncoding");

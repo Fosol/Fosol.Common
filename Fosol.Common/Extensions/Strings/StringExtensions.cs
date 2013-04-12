@@ -20,14 +20,14 @@ namespace Fosol.Common.Extensions.Strings
         /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
         /// <param name="value">String value to convert.</param>
         /// <returns>An array of byte.</returns>
-        public static byte[] ToByteArray(this string value)
-        {
-            Validation.Assert.IsNotNullOrEmpty(value, "value");
+        //public static byte[] ToByteArray(this string value)
+        //{
+        //    Validation.Assert.IsNotNullOrEmpty(value, "value");
 
-            var data = new byte[value.Length * sizeof(char)];
-            System.Buffer.BlockCopy(value.ToCharArray(), 0, data, 0, data.Length);
-            return data;
-        }
+        //    var data = new byte[value.Length * sizeof(char)];
+        //    System.Buffer.BlockCopy(value.ToCharArray(), 0, data, 0, data.Length);
+        //    return data;
+        //}
 
         /// <summary>
         /// Converts the string value into an array of byte.

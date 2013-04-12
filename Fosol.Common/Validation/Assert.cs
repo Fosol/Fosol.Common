@@ -1671,6 +1671,25 @@ namespace Fosol.Common.Validation
         }
 
         /// <summary>
+        /// If the value does not equal the valid value it will throw System.ArgumentException.
+        /// This method is most effective when ensuring a parameter property is appropriate.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" is must be a valid value.</exception>
+        /// <typeparam name="T">Type of object to compare.</typeparam>
+        /// <param name="value">The value to check.</param>
+        /// <param name="validValues">An array of valid values to compare against.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message describing the exception.</param>
+        public static void IsValue<T>(T value, T[] validValues, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!validValues.Contains(value))
+                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+        }
+
+        /// <summary>
         /// If the value does not exist in the valid values array it will throw System.ArgumentOutOfRangeException.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Parameter "value" is must be a valid value.</exception>

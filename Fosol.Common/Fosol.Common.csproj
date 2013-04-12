@@ -47,6 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\Configuration\HttpHeader\EndpointCollection.cs" />
+    <Compile Include="Behaviors\Configuration\HttpHeader\EndpointElement.cs" />
+    <Compile Include="Behaviors\Configuration\HttpHeader\ServiceCollection.cs" />
+    <Compile Include="Behaviors\Configuration\HttpHeader\ServiceElement.cs" />
+    <Compile Include="Behaviors\CorrelationState.cs" />
+    <Compile Include="Behaviors\HttpHeaderBehavior.cs" />
+    <Compile Include="Behaviors\HttpHeaderBehaviorExtensionElement.cs" />
+    <Compile Include="Behaviors\ResponseFormatBehavior.cs" />
+    <Compile Include="Behaviors\ResponseFormatBehaviorExtensionElement.cs" />
     <Compile Include="Caching\CacheItemPriority.cs" />
     <Compile Include="Caching\CacheItemRemovedReason.cs" />
     <Compile Include="Caching\ICacheItemPolicy.cs" />
@@ -59,6 +68,9 @@
     <Compile Include="Caching\ICacheObject.cs" />
     <Compile Include="Caching\SimpleCacheCollection.cs" />
     <Compile Include="Caching\SimpleCacheObject.cs" />
+    <Compile Include="Behaviors\Configuration\HttpHeader\HeaderCollection.cs" />
+    <Compile Include="Behaviors\Configuration\HttpHeader\HeaderElement.cs" />
+    <Compile Include="Behaviors\Configuration\HttpHeader\HttpHeaderSection.cs" />
     <Compile Include="Configuration\CDataConfigurationElement.cs" />
     <Compile Include="Configuration\CDataConfigurationPropertyAttribute.cs" />
     <Compile Include="Configuration\ConfigurationElementCollection`.cs" />
@@ -95,6 +107,7 @@
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Drawing\ImageHelper.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
+    <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="OffsetRule.cs" />
     <Compile Include="CenterPoint.cs" />
     <Compile Include="Mathematics\Formula.cs" />

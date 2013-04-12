@@ -26,7 +26,7 @@ namespace Fosol.Common.Extensions.Exceptions
         /// <param name="ex">Exception to convert to a string.</param>
         /// <param name="customFieldsFormatterAction">Custom handler for other exception information you want to include in the output.</param>
         /// <returns>A full message that contains all the details of the exception.</returns>
-        public static string ExceptionToString(this Exception ex, Action<StringBuilder> customFieldsFormatterAction)
+        public static string ExceptionToString(this Exception ex, Action<StringBuilder> customFieldsFormatterAction = null)
         {
             StringBuilder description = new StringBuilder();
             description.AppendFormat("{0}: {1}", ex.GetType().Name, ex.Message);
