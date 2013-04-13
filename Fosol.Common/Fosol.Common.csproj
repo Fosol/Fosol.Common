@@ -86,6 +86,7 @@
     <Compile Include="Extensions\Bytes\ByteExtensions.cs" />
     <Compile Include="Extensions\Colors\Drawings\ColorExtensions.cs" />
     <Compile Include="Extensions\Colors\Media\ColorExtensions.cs" />
+    <Compile Include="Extensions\Dictionaries\DictionaryExtensions.cs" />
     <Compile Include="Extensions\Enumerables\EnumerableExtensions.cs" />
     <Compile Include="Extensions\Enums\EnumExtensions.cs" />
     <Compile Include="Extensions\Events\EventExtensions.cs" />
