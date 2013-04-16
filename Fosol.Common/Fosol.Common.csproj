@@ -77,6 +77,8 @@
     <Compile Include="Configuration\ConfigurationSectionFileWatcher`.cs" />
     <Compile Include="Configuration\ConfigurationSectionExternalFileWatcher`.cs" />
     <Compile Include="Configuration\ConfigurationSectionFileWatcherBase`.cs" />
+    <Compile Include="Configuration\TypeElement`.cs" />
+    <Compile Include="Configuration\TypeElement.cs" />
     <Compile Include="Converters\MailAddressConverter.cs" />
     <Compile Include="Converters\EncodingConverter.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
