@@ -93,14 +93,15 @@ namespace Fosol.Common.Configuration
 
         /// <summary>
         /// Gets the element key name.
-        /// This doesn't support multiple keys.
+        /// If the ConfigurationElement contains multiple keys it will aggregate their HashCode value.
         /// </summary>
         /// <param name="element">Element to fetch within collection</param>
         /// <returns>Key name of element</returns>
         protected override object GetElementKey(ConfigurationElement element)
         {
-            PropertyInfo[] properties = typeof(T).GetProperties();
-            PropertyInfo key_property = null;
+            var properties = typeof(T).GetProperties();
+            var key_properties = new List<PropertyInfo>();
+
             foreach (PropertyInfo property in properties)
             {
                 if (property.IsDefined(typeof(ConfigurationPropertyAttribute), true))
@@ -110,16 +111,13 @@ namespace Fosol.Common.Configuration
                         true)[0] as ConfigurationPropertyAttribute;
 
                     if (attribute != null && attribute.IsKey)
-                    {
-                        key_property = property;
-                        break;
-                    }
+                        key_properties.Add(property);
                 }
             }
             object key = null;
-            if (key_property != null)
+            if (key_properties.Count > 0)
             {
-                key = key_property.GetValue(element, null);
+                key = key_properties.Select(p => p.GetValue(element, null)).Aggregate((a, b) => a.GetHashCode() + b.GetHashCode());
             }
             return key;
         }

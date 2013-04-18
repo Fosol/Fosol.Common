@@ -62,7 +62,9 @@ namespace Fosol.Common.Configuration
         /// <returns>Path to configuration file.</returns>
         private static string GetPathToFile(string sectionName)
         {
-            var section = (T)ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).GetSection(sectionName);
+            // Just in case the <configSections> is not listed first it is important to attempt to fetch before casting.
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).GetSection(sectionName);
+            var section = config as T;
 
             if (section == null)
                 throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_ConfigurationSectionNotFound, sectionName));

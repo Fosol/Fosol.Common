@@ -17,6 +17,67 @@ namespace Fosol.Common.Helpers
     {
         #region Methods
         /// <summary>
+        /// Try to convert the value to the specified conversionType.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <param name="conversionType">Type to convert to.</param>
+        /// <param name="result">Result of conversion.</param>
+        /// <returns>True if successful.</returns>
+        public static bool TryConvert(object value, Type conversionType, ref object result)
+        {
+            if (value == null)
+            {
+                if (conversionType.IsNullableType())
+                {
+                    result = null;
+                    return true;
+                }
+                return false;
+            }
+
+            try
+            {
+                result = Convert.ChangeType(value, conversionType);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Try to convert the value to type T.
+        /// </summary>
+        /// <typeparam name="T">Type to convert to.</typeparam>
+        /// <param name="value">Value to convert.</param>
+        /// <param name="result">Result of conversion.</param>
+        /// <returns>True if successful.</returns>
+        public static bool TryConvert<T>(object value, ref T result)
+        {
+            var type = typeof(T);
+            if (value == null)
+            {
+                if (type.IsNullableType())
+                {
+                    result = default(T);
+                    return true;
+                }
+                return false;
+            }
+
+            try
+            {
+                result = (T)Convert.ChangeType(value, type);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Sets the property value of the specified object.
         /// Handles basic conversion of the value to the object Type.
         /// Handles Nullable types.
@@ -100,24 +161,21 @@ namespace Fosol.Common.Helpers
 
         /// <summary>
         /// Attempts to create a new instance of the specified Type.
-        /// This method ensures that the specified Type (typeName) is assignable from the baseType.
+        /// This method ensures that the specified Type (type) is assignable from type T.
         /// If the args contain string values that can be converted to enums it will try to convert them.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "typeName" cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter "typeName" cannot be null, or be an invalid type.</exception>
         /// <exception cref="System.InvalidOperationException">Unable to create a new instance of the specified type.</exception>
         /// <typeparam name="T">Type of object to create.</typeparam>
-        /// <param name="typeName">The specified type to create.</param>
-        /// <param name="baseType">The specified type must be assignable from the base type.</param>
+        /// <param name="type">The specified type to create.</param>
         /// <param name="args">Arguments to pass to the constructor.</param>
         /// <returns>New instance of the specified type.</returns>
-        public static T ConstructObject<T>(string typeName, Type baseType, params object[] args)
+        public static T ConstructObject<T>(Type type, params object[] args)
             where T : class
         {
-            Validation.Assert.IsNotNullOrEmpty(typeName, "typeName");
-            var type = Type.GetType(typeName);
-            Validation.Assert.IsNotNull(type, "typeName");
-            Validation.Assert.IsAssignableFromType(type, baseType, "baseType");
+            Validation.Assert.IsNotNull(type, "type");
+            Validation.Assert.IsAssignableFromType(type, typeof(T), "baseType");
 
             T result = null;
             Exception exception = null;
@@ -211,6 +269,27 @@ namespace Fosol.Common.Helpers
             if (exception != null)
                 throw new InvalidOperationException("", exception);
             throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Attempts to create a new instance of the specified Type.
+        /// This method ensures that the specified Type (typeName) is assignable from type T.
+        /// If the args contain string values that can be converted to enums it will try to convert them.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "typeName" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "typeName" cannot be null, or be an invalid type.</exception>
+        /// <exception cref="System.InvalidOperationException">Unable to create a new instance of the specified type.</exception>
+        /// <typeparam name="T">Type of object to create.</typeparam>
+        /// <param name="typeName">The specified type to create.</param>
+        /// <param name="args">Arguments to pass to the constructor.</param>
+        /// <returns>New instance of the specified type.</returns>
+        public static T ConstructObject<T>(string typeName, params object[] args)
+            where T : class
+        {
+            Validation.Assert.IsNotNullOrEmpty(typeName, "typeName");
+            var type = Type.GetType(typeName);
+            Validation.Assert.IsNotNull(type, "typeName");
+            return ConstructObject<T>(type, args);
         }
         #endregion
     }
