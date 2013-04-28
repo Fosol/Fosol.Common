@@ -181,15 +181,7 @@ namespace Fosol.Common.Helpers
             Exception exception = null;
             try
             {
-                if (args == null || args.Length == 0)
-                {
-                    // Attempt to construct the object without arguments.
-                    var constructor = type.GetConstructor(new Type[0]);
-                    if (constructor == null)
-                        throw new InvalidOperationException();
-                    result = (T)constructor.Invoke(new object[0]);
-                }
-                else
+                if (args != null || args.Length > 0)
                 {
                     // Attempt to construct the object with the supplied arguments.
                     var constructor = type.GetConstructor(args.Select(a => a.GetType()).ToArray());
@@ -253,9 +245,16 @@ namespace Fosol.Common.Helpers
                                 break;
                             }
                         }
-
-
                     }
+                }
+
+                if (result == null)
+                {
+                    // Attempt to construct the object without arguments.
+                    var constructor = type.GetConstructor(new Type[0]);
+                    if (constructor == null)
+                        throw new InvalidOperationException();
+                    result = (T)constructor.Invoke(new object[0]);
                 }
             }
             catch (TargetInvocationException ex)
