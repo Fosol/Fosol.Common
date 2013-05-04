@@ -110,6 +110,7 @@
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Drawing\ImageHelper.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
+    <Compile Include="Helpers\SafeNativeMethods.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="OffsetRule.cs" />
     <Compile Include="CenterPoint.cs" />
