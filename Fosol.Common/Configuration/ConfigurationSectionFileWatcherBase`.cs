@@ -50,6 +50,14 @@ namespace Fosol.Common.Configuration
 
         #region Properties
         /// <summary>
+        /// get - Application configuration file.
+        /// </summary>
+        public System.Configuration.Configuration Configuration
+        {
+            get { return ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None); }
+        }
+
+        /// <summary>
         /// get - Access the ConfigurationSection object.
         /// </summary>
         /// <exception cref="System.Configuration.ConfigurationErrorsException">Configuration Section did not exist.</exception>
@@ -59,11 +67,13 @@ namespace Fosol.Common.Configuration
             {
                 lock (_Lock)
                 {
-                    if (!_IsConfigLoaded)
-                        LoadConfig();
-
-                    return _ConfigurationSection;
+                    if (_IsConfigLoaded)
+                        return _ConfigurationSection;
                 }
+
+                // This will load the configuration and return to the get property with the appropriate lock.
+                LoadConfig();
+                return this.ConfigSection;
             }
             protected set
             {
@@ -78,22 +88,28 @@ namespace Fosol.Common.Configuration
         /// <summary>
         /// get - Path to configuration section file.
         /// </summary>
-        public string FullPath { get; protected set; }
+        public string FilePath { get; protected set; }
         #endregion
 
         #region Constructors
         /// <summary>
-        /// Create a new instance of a ConfigurationSectionFileWatcher object.
-        /// Remember to call the Start method to begin watching the configuration file.
+        /// Provides the base abstract implementation for watching Configuration Section files.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "sectionName" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "sectionName" cannot be null.</exception>
-        /// <param name="path">Full path to the section configuration file.</param>
-        public ConfigurationSectionFileWatcherBase(string path)
+        public ConfigurationSectionFileWatcherBase()
         {
-            Validation.Assert.IsNotNullOrEmpty(path, "path");
+        }
 
-            this.FullPath = path;
+        /// <summary>
+        /// Provides the base abstract implementation for watching Configuration Section files.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "pathToFile" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "pathToFile" cannot be null.</exception>
+        /// <param name="pathToFile">Full path to the section configuration file.</param>
+        public ConfigurationSectionFileWatcherBase(string pathToFile)
+        {
+            Validation.Assert.IsNotNullOrEmpty(pathToFile, "pathToFile");
+
+            this.FilePath = pathToFile;
         }
         #endregion
 
@@ -104,16 +120,16 @@ namespace Fosol.Common.Configuration
         /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter "path" cannot be null.</exception>
         /// <exception cref="System.IO.FileNotFoundException">Section configuration file must exist.</exception>
-        /// <param name="path">Path to section configuration file.</param>
+        /// <param name="pathToFile">Path to section configuration file.</param>
         /// <returns>ConfigurationSection object of type T.</returns>
-        protected static T DeserializeSection(string path)
+        protected static T DeserializeSection(string pathToFile)
         {
-            Validation.Assert.IsNotNull(path, "path");
+            Validation.Assert.IsNotNull(pathToFile, "pathToFile");
 
-            if (!File.Exists(path))
-                throw new System.IO.FileNotFoundException(String.Format(Resources.Strings.Exception_FileNotFound, Path.GetFileName(path)), path);
+            if (!File.Exists(pathToFile))
+                throw new System.IO.FileNotFoundException(String.Format(Resources.Strings.Exception_FileNotFound, Path.GetFileName(pathToFile)), pathToFile);
 
-            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream(pathToFile, FileMode.Open, FileAccess.Read))
             {
                 using (var reader = new XmlTextReader(stream))
                 {
@@ -140,8 +156,8 @@ namespace Fosol.Common.Configuration
                         LoadConfig();
 
                     if (_Watcher == null)
-                        _Watcher = new FileSystemWatcher(Path.GetDirectoryName(this.FullPath));
-                    _Watcher.Filter = Path.GetFileName(this.FullPath);
+                        _Watcher = new FileSystemWatcher(Path.GetDirectoryName(this.FilePath));
+                    _Watcher.Filter = Path.GetFileName(this.FilePath);
                     _Watcher.Created += OnFileCreated;
                     _Watcher.Changed += OnFileChanged;
                     _Watcher.Deleted += OnFileDeleted;

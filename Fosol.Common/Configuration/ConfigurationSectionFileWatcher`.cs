@@ -22,60 +22,23 @@ namespace Fosol.Common.Configuration
         #endregion
 
         #region Properties
-        /// <summary>
-        /// get - The name of the configuration section.
-        /// </summary>
-        public string SectionName { get; private set; }
-
-        /// <summary>
-        /// get - Application configuration file.
-        /// </summary>
-        private System.Configuration.Configuration Configuration
-        {
-            get { return ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None); }
-        }
         #endregion
 
         #region Constructors
         /// <summary>
         /// Create a new instance of a ConfigurationSectionFileWatcher object.
-        /// Remember to call the Start method to begin watching the configuration file.
+        /// Call the Start method to begin watching the configuration file.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "sectionName" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "sectionName" cannot be null.</exception>
-        /// <param name="sectionName">Name of the section within the configuration file.</param>
-        public ConfigurationSectionFileWatcher(string sectionName)
-            : base(GetPathToFile(sectionName))
+        /// <exception cref="System.ArgumentException">Parameter "pathToFile" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "pathToFile" cannot be null.</exception>
+        /// <param name="pathToFile">Full path to the section configuration file.</param>
+        public ConfigurationSectionFileWatcher(string pathToFile)
+            : base(pathToFile)
         {
-            Validation.Assert.IsNotNullOrEmpty(sectionName, "sectionName");
-
-            this.SectionName = sectionName;
         }
         #endregion
 
         #region Methods
-        /// <summary>
-        /// Get the path to the section configuration file.
-        /// </summary>
-        /// <exception cref="System.Configuration.ConfigurationErrorsException">Section configuration file not found.</exception>
-        /// <param name="sectionName">Name of the section used in the configuration.</param>
-        /// <returns>Path to configuration file.</returns>
-        private static string GetPathToFile(string sectionName)
-        {
-            // Just in case the <configSections> is not listed first it is important to attempt to fetch before casting.
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).GetSection(sectionName);
-            var section = config as T;
-
-            if (section == null)
-                throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_ConfigurationSectionNotFound, sectionName));
-
-            var path = Path.GetDirectoryName(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
-            if (!string.IsNullOrEmpty(section.SectionInformation.ConfigSource))
-                return Path.Combine(path, section.SectionInformation.ConfigSource);
-            else
-                return path;
-        }
-
         /// <summary>
         /// Refresh and load the configuration section.
         /// </summary>
@@ -83,7 +46,6 @@ namespace Fosol.Common.Configuration
         {
             lock (_Lock)
             {
-                ConfigurationManager.RefreshSection(this.SectionName);
                 _IsConfigLoaded = false;
                 LoadConfig();
             }
@@ -95,10 +57,10 @@ namespace Fosol.Common.Configuration
         /// <exception cref="System.Configuration.ConfigurationErrorsException">Configuration Section did not exist.</exception>
         protected override void LoadConfig()
         {
-            this.ConfigSection = (T)Configuration.GetSection(this.SectionName);
+            this.ConfigSection = ConfigurationSectionFileWatcherBase<T>.DeserializeSection(this.FilePath);
 
             if (this.ConfigSection == null)
-                throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_ConfigurationSectionNotFound, this.SectionName));
+                throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_ConfigurationSectionNotFound, this.FilePath));
 
             _IsConfigLoaded = true;
         }

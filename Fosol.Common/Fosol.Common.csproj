@@ -75,8 +75,8 @@
     <Compile Include="Configuration\CDataConfigurationPropertyAttribute.cs" />
     <Compile Include="Configuration\ConfigurationElementCollection`.cs" />
     <Compile Include="Configuration\ConfigurationSectionFileWatcher`.cs" />
-    <Compile Include="Configuration\ConfigurationSectionExternalFileWatcher`.cs" />
     <Compile Include="Configuration\ConfigurationSectionFileWatcherBase`.cs" />
+    <Compile Include="Configuration\ConfigurationSectionWatcher%27.cs" />
     <Compile Include="Configuration\TypeElement`.cs" />
     <Compile Include="Configuration\TypeElement.cs" />
     <Compile Include="Converters\MailAddressConverter.cs" />
