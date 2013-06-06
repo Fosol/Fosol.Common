@@ -44,10 +44,10 @@ namespace Fosol.Common.Configuration
         /// </summary>
         protected override void RefreshSection()
         {
-            lock (_Lock)
+            lock (_BigLock)
             {
                 ConfigurationManager.RefreshSection(this.SectionName);
-                _IsConfigLoaded = false;
+                this.IsConfigLoaded = false;
                 LoadConfig();
             }
         }
@@ -58,20 +58,23 @@ namespace Fosol.Common.Configuration
         /// <exception cref="System.Configuration.ConfigurationErrorsException">Configuration Section did not exist.</exception>
         protected override void LoadConfig()
         {
-            this.ConfigSection = (T)Configuration.GetSection(this.SectionName);
-
-            if (this.ConfigSection == null)
-                throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_ConfigurationSectionNotFound, this.SectionName));
-
-            // Set the FilePath if it hasn't already been set.
-            if (string.IsNullOrEmpty(this.FilePath))
+            lock (_BigLock)
             {
-                if (!string.IsNullOrEmpty(this.ConfigSection.SectionInformation.ConfigSource))
-                    this.FilePath = this.ConfigSection.SectionInformation.ConfigSource;
-                else
-                    this.FilePath = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+                this.ConfigSection = (T)Configuration.GetSection(this.SectionName);
+
+                if (this.ConfigSection == null)
+                    throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.SectionName));
+
+                // Set the FilePath if it hasn't already been set.
+                if (string.IsNullOrEmpty(this.FilePath))
+                {
+                    if (!string.IsNullOrEmpty(this.ConfigSection.SectionInformation.ConfigSource))
+                        this.FilePath = this.ConfigSection.SectionInformation.ConfigSource;
+                    else
+                        this.FilePath = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+                }
+                this.IsConfigLoaded = true;
             }
-            _IsConfigLoaded = true;
         }
         #endregion
 

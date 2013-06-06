@@ -275,7 +275,7 @@ namespace Fosol.Common.Extensions.Strings
 
             var values = value.Split(delimiter, ignoreCase);
 
-            Validation.Assert.MaxRange(values.Length, 2, "value", String.Format(Resources.Strings.Exception_TooManyPairs, "value"));
+            Validation.Assert.MaxRange(values.Length, 2, "value", String.Format(Resources.Strings.Exception_Too_Many_Pairs, "value"));
 
             return new KeyValuePair<string, string>(values[0], values.Length == 2 ? values[1] : null);
         }

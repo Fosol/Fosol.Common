@@ -44,9 +44,9 @@ namespace Fosol.Common.Configuration
         /// </summary>
         protected override void RefreshSection()
         {
-            lock (_Lock)
+            lock (_BigLock)
             {
-                _IsConfigLoaded = false;
+                this.IsConfigLoaded = false;
                 LoadConfig();
             }
         }
@@ -57,12 +57,15 @@ namespace Fosol.Common.Configuration
         /// <exception cref="System.Configuration.ConfigurationErrorsException">Configuration Section did not exist.</exception>
         protected override void LoadConfig()
         {
-            this.ConfigSection = ConfigurationSectionFileWatcherBase<T>.DeserializeSection(this.FilePath);
+            lock (_BigLock)
+            {
+                this.ConfigSection = ConfigurationSectionFileWatcherBase<T>.DeserializeSection(this.FilePath);
 
-            if (this.ConfigSection == null)
-                throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_ConfigurationSectionNotFound, this.FilePath));
+                if (this.ConfigSection == null)
+                    throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.FilePath));
 
-            _IsConfigLoaded = true;
+                this.IsConfigLoaded = true;
+            }
         }
         #endregion
 

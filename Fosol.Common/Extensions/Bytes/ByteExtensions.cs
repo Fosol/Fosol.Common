@@ -82,7 +82,7 @@ namespace Fosol.Common.Extensions.Bytes
             Validation.Assert.Range(length, 0, data.Length, "length");
 
             if (destination.Length < length + destIndex)
-                throw new ArgumentOutOfRangeException("data", String.Format(Resources.Strings.Exception_DestinationToSmall, "data"));
+                throw new ArgumentOutOfRangeException("data", String.Format(Resources.Strings.Exception_Destination_Too_Small, "data"));
 
             int i;
             for (i = 0; i < length; i++)

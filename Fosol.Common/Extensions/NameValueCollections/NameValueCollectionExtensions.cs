@@ -42,6 +42,26 @@ namespace Fosol.Common.Extensions.NameValueCollections
             }
             return builder.ToString();
         }
+
+        /// <summary>
+        /// Converts a NameValueCollection object into a StringDictionary.
+        /// </summary>
+        /// <param name="obj">NameValueCollection object.</param>
+        /// <returns>New StringDictionary object.</returns>
+        public static StringDictionary ToStringDictionary(this NameValueCollection obj)
+        {
+            if (obj == null)
+                return null;
+
+            var dictionary = new StringDictionary();
+
+            foreach (var key in obj.AllKeys)
+            {
+                dictionary.Add(key, obj[key]);
+            }
+
+            return dictionary;
+        }
         #endregion
     }
 }

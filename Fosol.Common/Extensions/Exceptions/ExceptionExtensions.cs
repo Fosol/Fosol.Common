@@ -39,7 +39,7 @@ namespace Fosol.Common.Extensions.Exceptions
                 description.AppendFormat(" ---> {0}", ex.InnerException);
 
                 if (!string.IsNullOrEmpty(ex.StackTrace))
-                    description.AppendFormat(Resources.Strings.Value_ExceptionToString, Environment.NewLine);
+                    description.AppendFormat(Resources.Strings.Value_Exception_ToString, Environment.NewLine);
             }
 
             description.Append(ex.StackTrace);

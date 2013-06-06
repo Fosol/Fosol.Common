@@ -19,7 +19,7 @@ namespace Fosol.Common.Parsers
     public class Keyword : Phrase, IPhrase
     {
         #region Variables
-        private const char __Parameter_Delimiter = '?';
+        private const char _Parameter_Delimiter = '?';
         #endregion
 
         #region Properties
@@ -44,7 +44,7 @@ namespace Fosol.Common.Parsers
         public Keyword(string text)
             : base(text)
         {
-            var param_start = text.IndexOf(__Parameter_Delimiter);
+            var param_start = text.IndexOf(_Parameter_Delimiter);
 
             if (param_start == -1)
                 this.Name = text;

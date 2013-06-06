@@ -63,6 +63,7 @@
     <Compile Include="Caching\Policies\FileChangeDependency.cs" />
     <Compile Include="Caching\Policies\NoExpiration.cs" />
     <Compile Include="Caching\Policies\SlidingExpiration.cs" />
+    <Compile Include="Caching\SimpleCache`.cs" />
     <Compile Include="Collections\FunctorComparer`.cs" />
     <Compile Include="Collections\GenericList`.cs" />
     <Compile Include="Caching\ICacheObject.cs" />
@@ -81,9 +82,11 @@
     <Compile Include="Configuration\TypeElement.cs" />
     <Compile Include="Converters\MailAddressConverter.cs" />
     <Compile Include="Converters\EncodingConverter.cs" />
+    <Compile Include="Converters\StringFormatterConverter.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
     <Compile Include="Data\TableName.cs" />
-    <Compile Include="Exceptions\MissingAttributeException.cs" />
+    <Compile Include="Exceptions\AttributeRequiredException.cs" />
+    <Compile Include="Exceptions\FormatKeywordAttributeRequiredException.cs" />
     <Compile Include="Extensions\Attributes\AttributeExtensions.cs" />
     <Compile Include="Extensions\Bytes\ByteExtensions.cs" />
     <Compile Include="Extensions\Colors\Drawings\ColorExtensions.cs" />
@@ -106,6 +109,27 @@
     <Compile Include="Extensions\Types\TypeExtensions.cs" />
     <Compile Include="Extensions\UriBuilders\UriBuilderExtensions.cs" />
     <Compile Include="Extensions\Uris\UriExtensions.cs" />
+    <Compile Include="Formatters\Keywords\AppDomainKeyword.cs" />
+    <Compile Include="Formatters\Keywords\CounterKeyword.cs" />
+    <Compile Include="Formatters\Keywords\FormatDynamicKeyword.cs" />
+    <Compile Include="Formatters\Keywords\FormatKeyword.cs" />
+    <Compile Include="Formatters\Keywords\FormatKeywordLibrary.cs" />
+    <Compile Include="Formatters\Keywords\GuidKeyword.cs" />
+    <Compile Include="Formatters\Keywords\FormatStaticKeyword.cs" />
+    <Compile Include="Formatters\Keywords\IdentityKeyword.cs" />
+    <Compile Include="Formatters\Keywords\MachineNameKeyword.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Formatters\Keywords\NewlineKeyword.cs" />
+    <Compile Include="Formatters\Keywords\TextKeyword.cs" />
+    <Compile Include="Formatters\Keywords\FormatKeywordAttribute.cs" />
+    <Compile Include="Formatters\Keywords\FormatKeywordPropertyAttribute.cs" />
+    <Compile Include="Formatters\Keywords\ThreadNameKeyword.cs" />
+    <Compile Include="Formatters\Keywords\TicksKeyword.cs" />
+    <Compile Include="Formatters\Keywords\TimestampKeyword.cs" />
+    <Compile Include="Formatters\Keywords\UserKeyword.cs" />
+    <Compile Include="Formatters\Keywords\WindowsIdentityKeyword.cs" />
+    <Compile Include="Formatters\StringFormatter.cs" />
     <Compile Include="Helpers\AssemblyResourceHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Drawing\ImageHelper.cs" />
@@ -115,6 +139,7 @@
     <Compile Include="OffsetRule.cs" />
     <Compile Include="CenterPoint.cs" />
     <Compile Include="Mathematics\Formula.cs" />
+    <Compile Include="Formatters\Keywords\DateTimeKeyword.cs" />
     <Compile Include="Serialization\CData.cs" />
     <Compile Include="ServiceModel\ServiceException`.cs" />
     <Compile Include="Web\DomainComparer.cs" />

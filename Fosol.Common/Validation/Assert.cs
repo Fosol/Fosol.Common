@@ -112,7 +112,7 @@ namespace Fosol.Common.Validation
             IsNotNull(value, paramName);
 
             if (value == String.Empty)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName);
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Not_Null_Or_Empty, paramName);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value == String.Empty)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName, innerException);
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Not_Null_Or_Empty, paramName, innerException);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (collection.Count() == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName);
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Not_Null_Or_Empty, paramName);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (collection.Count() == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName, innerException);
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Not_Null_Or_Empty, paramName, innerException);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (array.Length == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName);
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Not_Null_Or_Empty, paramName);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (array.Length == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName, innerException);
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Not_Null_Or_Empty, paramName, innerException);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (array.Length == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName);
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Not_Null_Or_Empty, paramName);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (array.Length == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_NotNullOrEmpty, paramName, innerException);
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Not_Null_Or_Empty, paramName, innerException);
         }
         #endregion
 
@@ -1577,7 +1577,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (validValues.Where(v => string.Compare(v, value, comparisonType) == 0).Count() != 1)
-                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -1594,7 +1594,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!validValues.Contains(value))
-                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -1612,7 +1612,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!value.Equals(validValue))
-                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -1630,7 +1630,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!validValues.Contains(value, comparer))
-                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -1648,7 +1648,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (validValues.Where(v => comparer(v, value)).Count() != 1)
-                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -1667,7 +1667,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!value.Equals(validValue))
-                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -1686,7 +1686,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!validValues.Contains(value))
-                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -1705,7 +1705,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (validValues.Where(v => comparer(v, value)).Count() != 1)
-                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName);
         }
         #endregion
 
@@ -1724,7 +1724,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value.Equals(invalidValue))
-                throw new ArgumentException(message ?? Resources.Strings.Exception_InvalidValue, paramName);
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Invalid_Value, paramName);
         }
 
         /// <summary>
@@ -1742,7 +1742,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value.Equals(invalidValue))
-                throw new ArgumentException(message ?? Resources.Strings.Exception_InvalidValue, paramName);
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Invalid_Value, paramName);
         }
         #endregion
 
@@ -1762,7 +1762,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!type.HasAttribute(attributeType))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeIsRequired, attributeType.Name), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Attribute_Required, attributeType.Name), paramName);
         }
 
         /// <summary>
@@ -1781,7 +1781,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!type.HasAttribute(attributeType, inherit))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeIsRequired, attributeType.Name), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Attribute_Required, attributeType.Name), paramName);
         }
 
         /// <summary>
@@ -1799,7 +1799,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!element.HasAttribute(attributeType))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeIsRequired, attributeType.Name), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Attribute_Required, attributeType.Name), paramName);
         }
 
         /// <summary>
@@ -1818,7 +1818,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!element.HasAttribute(attributeType, inherit))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_AttributeIsRequired, attributeType.Name), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Attribute_Required, attributeType.Name), paramName);
         }
         #endregion
 
@@ -1837,7 +1837,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!value)
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -1855,7 +1855,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!value)
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName, innerException);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName, innerException);
         }
 
         /// <summary>
@@ -1872,7 +1872,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!function())
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -1890,7 +1890,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!function())
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName, innerException);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName, innerException);
         }
         #endregion
 
@@ -1909,7 +1909,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value)
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -1927,7 +1927,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value)
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName, innerException);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName, innerException);
         }
 
         /// <summary>
@@ -1944,7 +1944,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (function())
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -1962,7 +1962,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (function())
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidValue, paramName), paramName, innerException);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Invalid_Value, paramName), paramName, innerException);
         }
         #endregion
 
@@ -1982,7 +1982,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
             
             if (value.GetType() != validType)
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidType, paramName), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Invalid_Type, paramName), paramName);
         }
 
         /// <summary>
@@ -2001,7 +2001,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value.GetType() != validType)
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidType, paramName), paramName, innerException);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Invalid_Type, paramName), paramName, innerException);
         }
         #endregion
 
@@ -2021,7 +2021,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value.GetType().IsAssignableFrom(validType))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidType, paramName), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Invalid_Type, paramName), paramName);
         }
 
         /// <summary>
@@ -2040,7 +2040,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value.GetType().IsAssignableFrom(validType))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_InvalidType, paramName), paramName, innerException);
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Invalid_Type, paramName), paramName, innerException);
         }
         #endregion
         #endregion

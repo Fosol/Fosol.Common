@@ -21,11 +21,13 @@ namespace Fosol.Common.Configuration
         where T : ConfigurationSection, new()
     {
         #region Variables
-        protected readonly object _Lock = new object();
+        protected readonly object _BigLock = new object();
+        private readonly System.Threading.ReaderWriterLockSlim _Lock = new System.Threading.ReaderWriterLockSlim();
         private FileSystemWatcher _Watcher;
-        protected bool _IsConfigLoaded = false;
-        protected bool _IsWatching = false;
+        private bool _IsConfigLoaded = false;
+        private bool _IsWatching = false;
         private T _ConfigurationSection;
+        private string _FilePath;
 
         /// <summary>
         /// Fires when the configuration file has changed.
@@ -50,6 +52,36 @@ namespace Fosol.Common.Configuration
 
         #region Properties
         /// <summary>
+        /// get - Whether the configuration file has been loaded.
+        /// </summary>
+        protected bool IsConfigLoaded
+        {
+            get
+            {
+                _Lock.EnterReadLock();
+                try
+                {
+                    return _IsConfigLoaded;
+                }
+                finally
+                {
+                    _Lock.ExitReadLock();
+                }
+            }
+            set
+            {
+                _Lock.EnterWriteLock();
+                try
+                {
+                    _IsConfigLoaded = value;
+                }
+                finally
+                {
+                    _Lock.ExitWriteLock();
+                }
+            }
+        }
+        /// <summary>
         /// get - Application configuration file.
         /// </summary>
         public System.Configuration.Configuration Configuration
@@ -65,10 +97,15 @@ namespace Fosol.Common.Configuration
         {
             get 
             {
-                lock (_Lock)
+                _Lock.EnterReadLock();
+                try
                 {
                     if (_IsConfigLoaded)
                         return _ConfigurationSection;
+                }
+                finally
+                {
+                    _Lock.ExitReadLock();
                 }
 
                 // This will load the configuration and return to the get property with the appropriate lock.
@@ -77,10 +114,15 @@ namespace Fosol.Common.Configuration
             }
             protected set
             {
-                lock (_Lock)
+                _Lock.EnterWriteLock();
+                try
                 {
                     _ConfigurationSection = value;
                     _IsConfigLoaded = true;
+                }
+                finally
+                {
+                    _Lock.ExitWriteLock();
                 }
             }
         }
@@ -88,7 +130,33 @@ namespace Fosol.Common.Configuration
         /// <summary>
         /// get - Path to configuration section file.
         /// </summary>
-        public string FilePath { get; protected set; }
+        public string FilePath 
+        {
+            get
+            {
+                _Lock.EnterReadLock();
+                try
+                {
+                    return _FilePath;
+                }
+                finally
+                {
+                    _Lock.ExitReadLock();
+                }
+            }
+            protected set
+            {
+                _Lock.EnterWriteLock();
+                try
+                {
+                    _FilePath = value;
+                }
+                finally
+                {
+                    _Lock.ExitWriteLock();
+                }
+            }
+        }
         #endregion
 
         #region Constructors
@@ -127,7 +195,7 @@ namespace Fosol.Common.Configuration
             Validation.Assert.IsNotNull(pathToFile, "pathToFile");
 
             if (!File.Exists(pathToFile))
-                throw new System.IO.FileNotFoundException(String.Format(Resources.Strings.Exception_FileNotFound, Path.GetFileName(pathToFile)), pathToFile);
+                throw new System.IO.FileNotFoundException(String.Format(Resources.Strings.Exception_File_Not_Found, Path.GetFileName(pathToFile)), pathToFile);
 
             using (var stream = new FileStream(pathToFile, FileMode.Open, FileAccess.Read))
             {
@@ -147,17 +215,17 @@ namespace Fosol.Common.Configuration
         /// <exception cref="System.Configuration.ConfigurationErrorsException">Configuration Section did not exist.</exception>
         public void Start()
         {
-            lock (_Lock)
+            if (!this.IsConfigLoaded)
+                LoadConfig();
+
+            lock (_BigLock)
             {
                 // Only start the watcher if it hasn't already started.
-                if (!_IsWatching)
+                if (!_IsWatching && _IsConfigLoaded)
                 {
-                    if (!_IsConfigLoaded)
-                        LoadConfig();
-
                     if (_Watcher == null)
-                        _Watcher = new FileSystemWatcher(Path.GetDirectoryName(this.FilePath));
-                    _Watcher.Filter = Path.GetFileName(this.FilePath);
+                        _Watcher = new FileSystemWatcher(Path.GetDirectoryName(this.FilePath), Path.GetFileName(this.FilePath));
+                    _Watcher.NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite | NotifyFilters.CreationTime;
                     _Watcher.Created += OnFileCreated;
                     _Watcher.Changed += OnFileChanged;
                     _Watcher.Deleted += OnFileDeleted;
@@ -233,7 +301,7 @@ namespace Fosol.Common.Configuration
         /// </summary>
         public void Stop()
         {
-            lock (_Lock)
+            lock (_BigLock)
             {
                 if (_IsWatching && _Watcher != null)
                 {

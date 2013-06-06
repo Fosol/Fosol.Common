@@ -76,7 +76,7 @@ namespace Fosol.Common.Serialization
                         Value = reader.ReadContentAsString();
                         break;
                     default:
-                        throw new InvalidOperationException(Resources.Strings.Exception_InvalidCData);
+                        throw new InvalidOperationException(Resources.Strings.Exception_Invalid_CData);
                 }
             }
         }
