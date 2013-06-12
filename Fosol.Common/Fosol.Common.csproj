@@ -78,6 +78,7 @@
     <Compile Include="Configuration\ConfigurationSectionFileWatcher`.cs" />
     <Compile Include="Configuration\ConfigurationSectionFileWatcherBase`.cs" />
     <Compile Include="Configuration\ConfigurationSectionWatcher%27.cs" />
+    <Compile Include="Configuration\Events\ConfigurationSectionErrorEventArgs.cs" />
     <Compile Include="Configuration\TypeElement`.cs" />
     <Compile Include="Configuration\TypeElement.cs" />
     <Compile Include="Converters\MailAddressConverter.cs" />

@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 
 namespace Fosol.Common.Configuration
 {
-    public sealed class ConfigurationSectionWatcher<T> : ConfigurationSectionFileWatcherBase<T>
+    /// <summary>
+    /// The ConfigurationSectionWather will watch the specified section within the configuration to detect if it changes.
+    /// </summary>
+    /// <typeparam name="T">Type of the ConfigurationSection being watched.</typeparam>
+    public sealed class ConfigurationSectionWatcher<T> 
+        : ConfigurationSectionFileWatcherBase<T>
         where T : ConfigurationSection, new()
     {
         #region Variables
@@ -47,9 +52,9 @@ namespace Fosol.Common.Configuration
             lock (_BigLock)
             {
                 ConfigurationManager.RefreshSection(this.SectionName);
-                this.IsConfigLoaded = false;
-                LoadConfig();
+                this.Section = null;
             }
+            LoadConfig();
         }
 
         /// <summary>
@@ -60,20 +65,27 @@ namespace Fosol.Common.Configuration
         {
             lock (_BigLock)
             {
-                this.ConfigSection = (T)Configuration.GetSection(this.SectionName);
-
-                if (this.ConfigSection == null)
-                    throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.SectionName));
-
-                // Set the FilePath if it hasn't already been set.
-                if (string.IsNullOrEmpty(this.FilePath))
+                try
                 {
-                    if (!string.IsNullOrEmpty(this.ConfigSection.SectionInformation.ConfigSource))
-                        this.FilePath = this.ConfigSection.SectionInformation.ConfigSource;
-                    else
-                        this.FilePath = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+                    this.Section = (T)Configuration.GetSection(this.SectionName);
+
+                    if (this.Section == null)
+                        throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.SectionName));
+
+                    // Set the FilePath if it hasn't already been set.
+                    if (string.IsNullOrEmpty(this.FilePath))
+                    {
+                        if (!string.IsNullOrEmpty(this.Section.SectionInformation.ConfigSource))
+                            this.FilePath = this.Section.SectionInformation.ConfigSource;
+                        else
+                            this.FilePath = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+                    }
+                    this.IsConfigLoaded = true;
                 }
-                this.IsConfigLoaded = true;
+                catch (Exception ex)
+                {
+                    base.OnConfigurationError(ex);
+                }
             }
         }
         #endregion

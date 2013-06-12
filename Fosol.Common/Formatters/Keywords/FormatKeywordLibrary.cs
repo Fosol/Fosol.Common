@@ -152,12 +152,15 @@ namespace Fosol.Common.Formatters.Keywords
         public static Type Get(string name)
         {
             Common.Validation.Assert.IsNotNullOrEmpty(name, "name");
+
+            Type type = null;
             // The cache contains the LogTarget so return it.
             if (_Cache.ContainsKey(name))
-                return _Cache[name];
+                type = _Cache[name];
 
             // Check if the name is a fully qualified type name in the executing assembly.
-            var type = GetKeywordType(Assembly.GetEntryAssembly(), name);
+            if (type == null)
+                type = GetKeywordType(Assembly.GetEntryAssembly(), name);
             if (type == null)
                 type = GetKeywordType(Assembly.GetCallingAssembly(), name);
             if (type == null)

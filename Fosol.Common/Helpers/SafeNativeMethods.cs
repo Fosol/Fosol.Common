@@ -28,6 +28,13 @@ namespace Fosol.Common.Helpers
         /// <param name="message"></param>
         [DllImport("kernel32.dll", BestFitMapping = true, CharSet = CharSet.Auto)]
         public static extern void OutputDebugString(string message);
+
+        /// <summary>
+        /// Get the current process Id.
+        /// </summary>
+        /// <returns>Id of the current process.</returns>
+        [DllImport("kernal32.dll", CharSet = CharSet.Auto)]
+        public static extern int GetCurrentProcessId();
         #endregion
     }
 }

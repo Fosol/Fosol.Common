@@ -59,9 +59,9 @@ namespace Fosol.Common.Configuration
         {
             lock (_BigLock)
             {
-                this.ConfigSection = ConfigurationSectionFileWatcherBase<T>.DeserializeSection(this.FilePath);
+                this.Section = ConfigurationSectionFileWatcherBase<T>.DeserializeSection(this.FilePath);
 
-                if (this.ConfigSection == null)
+                if (this.Section == null)
                     throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.FilePath));
 
                 this.IsConfigLoaded = true;

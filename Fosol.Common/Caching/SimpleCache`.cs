@@ -9,6 +9,8 @@ namespace Fosol.Common.Caching
 {
     /// <summary>
     /// A SimpleCache object contains a dictionary that resides in memory.
+    /// Objects within the cache are weak referenced.
+    /// Simple cache cannot contain null values.
     /// </summary>
     /// <typeparam name="T">Type of object to be cached in the dictionary.</typeparam>
     public sealed class SimpleCache<T>
@@ -16,14 +18,14 @@ namespace Fosol.Common.Caching
     {
         #region Variables
         private readonly ReaderWriterLockSlim _Lock = new ReaderWriterLockSlim();
-        private readonly Dictionary<string, T> _Cache = new Dictionary<string, T>();
+        private readonly Dictionary<string, WeakReference> _Cache = new Dictionary<string, WeakReference>();
         #endregion
 
         #region Properties
         /// <summary>
         /// get - The keys within the cache dictionary collection.
         /// </summary>
-        public Dictionary<string, T>.KeyCollection Keys
+        public Dictionary<string, WeakReference>.KeyCollection Keys
         {
             get { return _Cache.Keys; }
         }
@@ -43,7 +45,10 @@ namespace Fosol.Common.Caching
         /// <returns>Item with the specified cache key.</returns>
         public T this[string key]
         {
-            get { return _Cache[key]; }
+            get 
+            {
+                return Get(key);
+            }
         }
         #endregion
 
@@ -54,15 +59,18 @@ namespace Fosol.Common.Caching
         /// <summary>
         /// Add an object to cache so that it doens't need to be recreated each time.
         /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter 'item' cannot be null.</exception>
         /// <param name="cacheKey">Cache key value to identify item.</param>
         /// <param name="item">Object to add to cache.</param>
         /// <returns>Number of items in Cache.</returns>
         public int Add(string cacheKey, T item)
         {
+            Fosol.Common.Validation.Assert.IsNotNull(item, "item");
+
             _Lock.EnterWriteLock();
             try
             {
-                _Cache.Add(cacheKey, item);
+                _Cache.Add(cacheKey, new WeakReference(item));
                 return _Cache.Count;
             }
             finally
@@ -82,7 +90,11 @@ namespace Fosol.Common.Caching
             _Lock.EnterReadLock();
             try
             {
-                return _Cache[cacheKey];
+                if (_Cache.ContainsKey(cacheKey)
+                    && _Cache[cacheKey].IsAlive)
+                    return (T)_Cache[cacheKey].Target;
+
+                return default(T);
             }
             finally
             {
@@ -100,7 +112,16 @@ namespace Fosol.Common.Caching
             _Lock.EnterReadLock();
             try
             {
-                return _Cache.ContainsKey(cacheKey);
+                var found = _Cache.ContainsKey(cacheKey);
+
+                // The reference has expired and it now contains a null value.
+                if (found && !_Cache[cacheKey].IsAlive)
+                {
+                    _Cache.Remove(cacheKey);
+                    return false;
+                }
+
+                return found;
             }
             finally
             {

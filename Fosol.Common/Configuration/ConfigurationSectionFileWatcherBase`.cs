@@ -30,6 +30,11 @@ namespace Fosol.Common.Configuration
         private string _FilePath;
 
         /// <summary>
+        /// Fires when the configuration fails to load.
+        /// </summary>
+        public event EventHandler<Events.ConfigurationSectionErrorEventArgs> ConfigurationError;
+
+        /// <summary>
         /// Fires when the configuration file has changed.
         /// </summary>
         public event EventHandler<FileSystemEventArgs> FileChanged;
@@ -93,7 +98,7 @@ namespace Fosol.Common.Configuration
         /// get - Access the ConfigurationSection object.
         /// </summary>
         /// <exception cref="System.Configuration.ConfigurationErrorsException">Configuration Section did not exist.</exception>
-        public T ConfigSection
+        public T Section
         {
             get 
             {
@@ -108,9 +113,7 @@ namespace Fosol.Common.Configuration
                     _Lock.ExitReadLock();
                 }
 
-                // This will load the configuration and return to the get property with the appropriate lock.
-                LoadConfig();
-                return this.ConfigSection;
+                return null;
             }
             protected set
             {
@@ -118,7 +121,11 @@ namespace Fosol.Common.Configuration
                 try
                 {
                     _ConfigurationSection = value;
-                    _IsConfigLoaded = true;
+
+                    if (value != null)
+                        _IsConfigLoaded = true;
+                    else
+                        _IsConfigLoaded = false;
                 }
                 finally
                 {
@@ -183,6 +190,15 @@ namespace Fosol.Common.Configuration
 
         #region Methods
         /// <summary>
+        /// Provides a way to inherited classes to fire the ConfigurationError event.
+        /// </summary>
+        /// <param name="ex">Exception that was thrown.</param>
+        protected virtual void OnConfigurationError(Exception ex)
+        {
+            this.ConfigurationError.Raise(this, new Events.ConfigurationSectionErrorEventArgs(ex));
+        }
+
+        /// <summary>
         /// Deserialize the section configuration into the ConfigurationSection of object of type T.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
@@ -245,8 +261,18 @@ namespace Fosol.Common.Configuration
         /// <param name="e">Event argument to include with event.</param>
         protected void OnFileChanged(object sender, FileSystemEventArgs e)
         {
-            RefreshSection();
-            this.FileChanged.Raise(sender, e);
+            try
+            {
+                RefreshSection();
+            }
+            catch (Exception ex)
+            {
+                this.ConfigurationError.Raise(sender, new Events.ConfigurationSectionErrorEventArgs(ex, e));
+            }
+            finally
+            {
+                this.FileChanged.Raise(sender, e);
+            }
         }
 
         /// <summary>
@@ -257,8 +283,18 @@ namespace Fosol.Common.Configuration
         /// <param name="e">Event argument to include with event.</param>
         protected void OnFileCreated(object sender, FileSystemEventArgs e)
         {
-            RefreshSection();
-            this.FileCreated.Raise(sender, e);
+            try
+            {
+                RefreshSection();
+            }
+            catch (Exception ex)
+            {
+                this.ConfigurationError.Raise(sender, new Events.ConfigurationSectionErrorEventArgs(ex, e));
+            }
+            finally
+            {
+                this.FileCreated.Raise(sender, e);
+            }
         }
 
         /// <summary>
@@ -269,8 +305,18 @@ namespace Fosol.Common.Configuration
         /// <param name="e">Event argument to include with event.</param>
         protected void OnFileDeleted(object sender, FileSystemEventArgs e)
         {
-            RefreshSection();
-            this.FileDeleted.Raise(sender, e);
+            try
+            {
+                RefreshSection();
+            }
+            catch (Exception ex)
+            {
+                this.ConfigurationError.Raise(sender, new Events.ConfigurationSectionErrorEventArgs(ex, e));
+            }
+            finally
+            {
+                this.FileDeleted.Raise(sender, e);
+            }
         }
 
         /// <summary>
@@ -281,8 +327,18 @@ namespace Fosol.Common.Configuration
         /// <param name="e">Event argument to include with event.</param>
         protected void OnFileRenamed(object sender, RenamedEventArgs e)
         {
-            RefreshSection();
-            this.FileRenamed.Raise(sender, e);
+            try
+            {
+                RefreshSection();
+            }
+            catch (Exception ex)
+            {
+                this.ConfigurationError.Raise(sender, new Events.ConfigurationSectionErrorEventArgs(ex, e));
+            }
+            finally
+            {
+                this.FileRenamed.Raise(sender, e);
+            }
         }
 
         /// <summary>
