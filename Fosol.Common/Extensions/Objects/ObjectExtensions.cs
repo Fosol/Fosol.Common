@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -65,6 +66,22 @@ namespace Fosol.Common.Extensions.Objects
                     writer.Flush();
                 }
             }
+        }
+
+        /// <summary>
+        /// Converts an object with the BinaryFormatter into an array of bytes.
+        /// </summary>
+        /// <param name="obj">Object to convert to a byte array.</param>
+        /// <returns>A new byte array representing the object.</returns>
+        public static byte[] ToByteArray(this object obj)
+        {
+            if (obj == null)
+                return null;
+
+            var formatter = new BinaryFormatter();
+            var stream = new MemoryStream();
+            formatter.Serialize(stream, obj);
+            return stream.ToArray();
         }
         #endregion
     }

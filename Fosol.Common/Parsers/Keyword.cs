@@ -16,7 +16,7 @@ namespace Fosol.Common.Parsers
     /// A keyword can contain parameters to help define its dynamic behaviour (i.e. ${keyword?parm1=value&param2=value}).
     /// Start and end boundaries are defined within the SimpleParser.
     /// </summary>
-    public class Keyword : Phrase, IPhrase
+    public class Keyword : SentencePart, ISentencePart
     {
         #region Variables
         private const char _Parameter_Delimiter = '?';
@@ -45,15 +45,25 @@ namespace Fosol.Common.Parsers
             : base(text)
         {
             var param_start = text.IndexOf(_Parameter_Delimiter);
+            string name;
 
             if (param_start == -1)
-                this.Name = text;
+                name = text;
             else
             {
-                this.Name = text.Substring(0, param_start);
-
+                name = text.Substring(0, param_start);
                 this.Params = System.Web.HttpUtility.ParseQueryString(text.Substring(param_start + 1));
             }
+
+            // This is a parameter.
+            // Parameter has special syntax to shorten the configuration.
+            if (name.StartsWith("@"))
+            {
+                this.Name = "parameter";
+                this.Params.Add("name", name);
+            }
+            else
+                this.Name = name;
         }
         #endregion
 

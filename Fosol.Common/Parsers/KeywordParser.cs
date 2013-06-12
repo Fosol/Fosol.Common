@@ -15,9 +15,10 @@ namespace Fosol.Common.Parsers
     /// 
     /// The Parser() method returns a collection of Phrases, which can be aggregated to recreate the original text.
     /// </summary>
-    public class SimpleParser
+    public class KeywordParser
     {
         #region Variables
+        private readonly string _StartBoundaryEscape;
         private readonly string _EndBoundaryEscape;
         #endregion
 
@@ -39,7 +40,7 @@ namespace Fosol.Common.Parsers
         /// Defaults StartBoundary = "${".
         /// Defaults EndBoundary = "}".
         /// </summary>
-        public SimpleParser()
+        public KeywordParser()
             : this ("${", "}")
         {
         }
@@ -50,7 +51,7 @@ namespace Fosol.Common.Parsers
         /// </summary>
         /// <param name="startBoundary">Keyword start boundary syntax.</param>
         /// <param name="endBoundary">Keyword end boundary syntax.</param>
-        public SimpleParser(string startBoundary, string endBoundary)
+        public KeywordParser(string startBoundary, string endBoundary)
         {
             Validation.Assert.IsNotNullOrEmpty(startBoundary, "startBoundary");
             Validation.Assert.IsNotNullOrEmpty(endBoundary, "endBoundary");
@@ -58,7 +59,7 @@ namespace Fosol.Common.Parsers
             this.StartBoundary = startBoundary;
             this.EndBoundary = endBoundary;
 
-            // Set the escape boundaries so that they don't have to be done every time.
+            _StartBoundaryEscape = startBoundary + startBoundary;
             _EndBoundaryEscape = endBoundary + endBoundary;
         }
         #endregion
@@ -81,15 +82,15 @@ namespace Fosol.Common.Parsers
         /// <param name="text">Text value you want to parse into a collection of phrases.</param>
         /// <param name="startIndex">Index position to start parsing the text at.</param>
         /// <returns>Collection of phrases that make up this text.</returns>
-        public List<IPhrase> Parse(string text, int startIndex = 0)
+        public List<ISentencePart> Parse(string text, int startIndex = 0)
         {
-            var keywords = new List<IPhrase>();
+            var keywords = new List<ISentencePart>();
 
             if (string.IsNullOrEmpty(text))
                 return keywords;
 
             var length = text.Length - 1;
-            while (startIndex < length)
+            while (startIndex <= length)
             {
                 keywords.AddRange(ParseFirst(text, startIndex, out startIndex));
             }
@@ -106,8 +107,8 @@ namespace Fosol.Common.Parsers
         /// var format = "some text ${datetime}";
         /// var end = -1;
         /// var keywords = ParseFirst(format, 0, out end);
-        /// // keywords[0] = "some text ";
-        /// // keywords[1] = "${datetime}";
+        /// // SentencePart[0] = "some text ";
+        /// // SentencePart[1] = "${datetime}";
         /// </example>
         /// <exception cref="System.ArgumentNullException">Parameter "text" cannot be null.</exception>
         /// <exception cref="System.ArgumentOutOfRangeException">Parameter "startIndex" must be within a valid range.</exception>
@@ -115,36 +116,36 @@ namespace Fosol.Common.Parsers
         /// <param name="startIndex">Index position to start search at within the text.</param>
         /// <param name="endIndex">The next position after the discovered phrase/keyword.</param>
         /// <returns>One or two phrases (depending on text).</returns>
-        protected List<IPhrase> ParseFirst(string text, int startIndex, out int endIndex)
+        protected List<ISentencePart> ParseFirst(string text, int startIndex, out int endIndex)
         {
             Validation.Assert.IsNotNull(text, "text");
             Validation.Assert.Range(startIndex, 0, text.Length - 1, "startIndex");
 
-            var keywords = new List<IPhrase>();
-            var start = ParseStart(text, startIndex);
+            var keywords = new List<ISentencePart>();
+            var start = FindStartBoundary(text, startIndex);
 
             // A keyword was not found, so return the text as a literal keyword.
             if (start == -1)
             {
-                endIndex = text.Length - 1;
-                keywords.Add(CreatePhrase(text.Substring(startIndex, text.Length - startIndex)));
+                endIndex = text.Length;
+                keywords.Add(CreateText(text.Substring(startIndex, text.Length - startIndex)));
                 return keywords;
             }
 
-            var end = ParseEnd(text, start);
+            var end = FindEndBoundary(text, start);
 
             // The closing syntax was not found, so return the text as a literal keyword.
             if (end == -1)
             {
-                endIndex = text.Length - 1;
-                keywords.Add(CreatePhrase(text.Substring(startIndex, text.Length - startIndex)));
+                endIndex = text.Length;
+                keywords.Add(CreateText(text.Substring(startIndex, text.Length - startIndex)));
                 return keywords;
             }
 
             // There is a literal string before the keyword.
             if (start > startIndex)
             {
-                keywords.Add(CreatePhrase(text.Substring(startIndex, start - startIndex)));
+                keywords.Add(CreateText(text.Substring(startIndex, start - startIndex)));
             }
 
             endIndex = end + 1;
@@ -160,12 +161,25 @@ namespace Fosol.Common.Parsers
         /// <param name="text">Text to search through for the start boundary.</param>
         /// <param name="startIndex">Index position to start searching at.</param>
         /// <returns>Index position of the start boundary, or -1 if not found.</returns>
-        protected int ParseStart(string text, int startIndex = 0)
+        protected int FindStartBoundary(string text, int startIndex = 0)
         {
             Validation.Assert.IsNotNull(text, "text");
             Validation.Assert.Range(startIndex, 0, text.Length - 1, "startIndex");
 
-            return text.IndexOf(this.StartBoundary, startIndex);
+            var start = text.IndexOf(this.StartBoundary, startIndex);
+
+            // Make sure this start boundary hasn't been escaped.
+            if (start != -1
+                && text.Length > (start + 1)
+                && text.Substring(start + 1, this.StartBoundary.Length) == this.StartBoundary)
+            {
+                if (text.Length > (start + 2))
+                    return FindStartBoundary(text, start + 2);
+                else
+                    return -1;
+            }
+
+            return start;
         }
 
         /// <summary>
@@ -176,22 +190,41 @@ namespace Fosol.Common.Parsers
         /// <param name="text">Text to search through for the end boundary.</param>
         /// <param name="startIndex">Index position to start searching at.</param>
         /// <returns>Index position of the start of the end boundary, or -1 if not found.</returns>
-        protected int ParseEnd(string text, int startIndex = 0)
+        protected int FindEndBoundary(string text, int startIndex = 0)
         {
             Validation.Assert.IsNotNull(text, "text");
             Validation.Assert.Range(startIndex, 0, text.Length - 1, "startIndex");
 
             var end = text.IndexOf(this.EndBoundary, startIndex);
 
+            // There was no end boundary.
             if (end == -1)
                 return text.Length - 1;
 
+            // An end boundary was found but we need to check to see if it belongs to the start boundary.
+            // We do this by backtracking and looking for a start boundary.
+            var range = end - startIndex;
+            if (range > 0)
+            {
+                var start = FindStartBoundary(text.Substring(startIndex + 1, range));
+
+                // We found start boundary, which means our end boundary may belong to it.
+                if (start != -1)
+                {
+                    return FindEndBoundary(text, end + 1);
+                }
+            }
+
             // Make sure this end wasn't escaped.
             // Escaping is done by doubling the syntax.
-            var length = _EndBoundaryEscape.Length;
-            if (end + length <= text.Length
-                && text.Substring(end + this.EndBoundary.Length, this.EndBoundary.Length) == this.EndBoundary)
-                return ParseEnd(text, end + length);
+            if (text.Length > (end + 1)
+                && text.Substring(end + 1, this.EndBoundary.Length) == this.EndBoundary)
+            {
+                if (text.Length > (end + 2))
+                    return FindEndBoundary(text, end + 2);
+                else
+                    return text.Length - 1;
+            }
 
             return end;
         }
@@ -208,7 +241,7 @@ namespace Fosol.Common.Parsers
             var start = this.StartBoundary.Length;
             var length = text.Length - start - this.EndBoundary.Length;
             // Updated escaped boundaries.
-            return new Keyword(text.Substring(start, length).Replace(_EndBoundaryEscape, this.EndBoundary));
+            return new Keyword(text.Substring(start, length).Replace(_StartBoundaryEscape, this.StartBoundary).Replace(_EndBoundaryEscape, this.EndBoundary));
         }
 
         /// <summary>
@@ -216,23 +249,23 @@ namespace Fosol.Common.Parsers
         /// </summary>
         /// <param name="text">Phrase text value.</param>
         /// <returns>A new Phrase object.</returns>
-        protected Phrase CreatePhrase(string text)
+        protected SentencePart CreateText(string text)
         {
-            return new Phrase(text.Replace(_EndBoundaryEscape, this.EndBoundary));
+            return new SentencePart(text.Replace(_StartBoundaryEscape, this.StartBoundary).Replace(_EndBoundaryEscape, this.EndBoundary));
         }
 
         /// <summary>
         /// Aggregate the phrases together into an original text value.
         /// </summary>
-        /// <param name="phrases">Collection of phrases.</param>
+        /// <param name="parts">Collection of phrases.</param>
         /// <returns>String value with the aggregate of the phrases.</returns>
-        public string Aggregate(IEnumerable<IPhrase> phrases)
+        public string Aggregate(IEnumerable<ISentencePart> parts)
         {
-            return phrases
+            return parts
                 .Select(p => 
                     (p is Keyword) ? 
-                    string.Format("{0}{1}{2}", this.StartBoundary, p.Text, this.EndBoundary) : 
-                    p.Text.Replace(this.EndBoundary, _EndBoundaryEscape))
+                    string.Format("{0}{1}{2}", this.StartBoundary, p.Text, this.EndBoundary) :
+                    p.Text.Replace(_StartBoundaryEscape, this.StartBoundary).Replace(this.EndBoundary, _EndBoundaryEscape))
                 .Aggregate((a, b) => a + b);
         }
         #endregion

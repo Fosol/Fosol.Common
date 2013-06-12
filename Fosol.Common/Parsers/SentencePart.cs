@@ -10,7 +10,7 @@ namespace Fosol.Common.Parsers
     /// A Phrase is a part of a parsed syntax.
     /// A phrase is used within the SimpleParser.
     /// </summary>
-    public class Phrase : Fosol.Common.Parsers.IPhrase
+    public class SentencePart : Fosol.Common.Parsers.ISentencePart
     {
         #region Variables
         #endregion
@@ -28,7 +28,7 @@ namespace Fosol.Common.Parsers
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameter "text" cannot be null.</exception>
         /// <param name="text">The full text value of the keyword.</param>
-        public Phrase(string text)
+        public SentencePart(string text)
         {
             Validation.Assert.IsNotNull(text, "text");
 

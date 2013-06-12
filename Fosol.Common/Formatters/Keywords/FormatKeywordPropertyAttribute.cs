@@ -151,6 +151,19 @@ namespace Fosol.Common.Formatters.Keywords
                     _Converter = (TypeConverter)Activator.CreateInstance(converterType);
             }
         }
+
+        /// <summary>
+        /// Creates a new instance of a LogKeywordParameterAttribute object.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "name" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "name" cannot be null.</exception>
+        /// <param name="name">Parameter name.</param>
+        /// <param name="abbrev">Parameter name abbreviations.</param>
+        /// <param name="isRequired">Whether the parameter is optional.</param>
+        public FormatKeywordPropertyAttribute(string name, string[] abbrev, bool isRequired)
+            : this(name, abbrev, isRequired, null)
+        {
+        }
         #endregion
 
         #region Methods
