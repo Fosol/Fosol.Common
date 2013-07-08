@@ -116,7 +116,10 @@ namespace Fosol.Common.Formatters
                 is_cached = _Cache.ContainsKey(phrase.Text);
 
                 if (is_cached)
+                {
                     yield return _Cache.Get(phrase.Text);
+                    break;
+                }
 
                 Fosol.Common.Formatters.Keywords.FormatKeyword keyword = null;
                 var key = phrase as Common.Parsers.Keyword;

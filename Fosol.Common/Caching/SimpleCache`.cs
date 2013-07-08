@@ -80,19 +80,59 @@ namespace Fosol.Common.Caching
         }
 
         /// <summary>
+        /// Try to get the value from cache, if it is not in cache add it to cache.
+        /// </summary>
+        /// <param name="key">Unique cache key to identify the item.</param>
+        /// <param name="add">Function to retrieve the value that will be added to cache.</param>
+        /// <returns>Item from cache if it exists.</returns>
+        public T LazyGet(string key, Func<T> add)
+        {
+            _Lock.EnterUpgradeableReadLock();
+            try
+            {
+                if (_Cache.ContainsKey(key)
+                    && _Cache[key].IsAlive)
+                    return (T)_Cache[key].Target;
+
+                _Lock.EnterWriteLock();
+                try
+                {
+                    // Try again before attempting to add the value.
+                    if (_Cache.ContainsKey(key)
+                        && _Cache[key].IsAlive)
+                        return (T)_Cache[key].Target;
+
+                    var value = new WeakReference(add());
+                    if (value == null)
+                        return default(T);
+                    _Cache.Add(key, value);
+                    return (T)value.Target;
+                }
+                finally
+                {
+                    _Lock.ExitWriteLock();
+                }
+            }
+            finally
+            {
+                _Lock.ExitUpgradeableReadLock();
+            }
+        }
+
+        /// <summary>
         /// Get the object.
         /// If cacheKey does not exist it will return null.
         /// </summary>
-        /// <param name="cacheKey">Cache key value to identify item.</param>
+        /// <param name="key">Cache key value to identify item.</param>
         /// <returns>Cached object if found, or null if not.</returns>
-        public T Get(string cacheKey)
+        public T Get(string key)
         {
             _Lock.EnterReadLock();
             try
             {
-                if (_Cache.ContainsKey(cacheKey)
-                    && _Cache[cacheKey].IsAlive)
-                    return (T)_Cache[cacheKey].Target;
+                if (_Cache.ContainsKey(key)
+                    && _Cache[key].IsAlive)
+                    return (T)_Cache[key].Target;
 
                 return default(T);
             }

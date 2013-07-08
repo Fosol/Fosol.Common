@@ -105,6 +105,8 @@
     <Compile Include="Extensions\Numbers\NumberExtensions.cs" />
     <Compile Include="Extensions\Objects\ObjectExtensions.cs" />
     <Compile Include="Extensions\Queryables\QueryableExtensions.cs" />
+    <Compile Include="Extensions\Reflection\FieldInfoExtensions.cs" />
+    <Compile Include="Extensions\Reflection\PropertyInfoExtensions.cs" />
     <Compile Include="Extensions\Streams\StreamExtensions.cs" />
     <Compile Include="Extensions\Strings\StringExtensions.cs" />
     <Compile Include="Extensions\Types\TypeExtensions.cs" />
@@ -123,6 +125,7 @@
     </Compile>
     <Compile Include="Formatters\Keywords\NewlineKeyword.cs" />
     <Compile Include="Formatters\Keywords\ParameterKeyword.cs" />
+    <Compile Include="Formatters\Keywords\ThreadKeyword.cs" />
     <Compile Include="Formatters\Keywords\ValueKeyword.cs" />
     <Compile Include="Formatters\Keywords\TextKeyword.cs" />
     <Compile Include="Formatters\Keywords\FormatKeywordAttribute.cs" />

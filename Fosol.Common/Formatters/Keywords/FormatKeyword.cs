@@ -1,4 +1,5 @@
 ﻿using Fosol.Common.Extensions.Dictionaries;
+using Fosol.Common.Extensions.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -109,9 +110,9 @@ namespace Fosol.Common.Formatters.Keywords
                 if (value != null)
                 {
                     if (attr.Converter == null)
-                        Common.Helpers.ReflectionHelper.SetValue(prop, this, value);
+                        prop.SetValue2(this, value);
                     else
-                        Common.Helpers.ReflectionHelper.SetValue(prop, this, value, attr.Converter);
+                        prop.SetValue2(this, value, attr.Converter);
 
                     this.Attributes.Add(attr.Name, value);
                     continue;
