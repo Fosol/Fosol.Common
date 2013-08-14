@@ -37,14 +37,31 @@ namespace Fosol.Common.Formatters.Keywords
         /// </summary>
         static FormatKeywordLibrary()
         {
+            Initialize();
+        }
+        #endregion
+
+        #region Methods
+        /// <summary>
+        /// Initialize what FormatKeyword types are in the library.
+        /// </summary>
+        private static void Initialize()
+        {
             foreach (var type in GetKeywordTypes(Assembly.GetCallingAssembly(), typeof(FormatKeyword).Namespace))
             {
                 Add(type);
             }
         }
-        #endregion
 
-        #region Methods
+        /// <summary>
+        /// Refresh the library so that it only contains the default FormatKeyword types.
+        /// </summary>
+        public static void Refresh()
+        {
+            _Cache.Clear();
+            Initialize();
+        }
+
         /// <summary>
         /// Add the FormatKeywordBase Type to the library.
         /// </summary>
@@ -70,10 +87,10 @@ namespace Fosol.Common.Formatters.Keywords
         }
 
         /// <summary>
-        /// Add all the FormatKeywordBase Types within the specified Assembly and Namespace.
+        /// Add all the FormatKeyword Types within the specified Assembly and Namespace.
         /// </summary>
         /// <param name="assemblyString">Fully qualified name of the assembly.</param>
-        /// <param name="nameOrNamespace">Namespace or fully qualified name to the FormatKeywordBase(s).</param>
+        /// <param name="nameOrNamespace">Namespace or fully qualified name to the FormatKeyword(s).</param>
         /// <returns>Number of items in library.</returns>
         public static int Add(string assemblyString, string nameOrNamespace)
         {
@@ -84,7 +101,18 @@ namespace Fosol.Common.Formatters.Keywords
             if (assembly == null)
                 throw new InvalidOperationException(string.Format(Resources.Strings.Exception_Assembly_Is_Invalid, assemblyString));
 
-            // Fetch every FormatKeywordBase in the specified namespacePath.
+            return Add(assembly, nameOrNamespace);
+        }
+
+        /// <summary>
+        /// Add all the FormatKeyword Types within the specified Assembly and Namespace.
+        /// </summary>
+        /// <param name="assembly">Assembly containing FormatKeyword(s).</param>
+        /// <param name="nameOrNamespace">Namespace or fully qualified name to the FormatKeyword(s).</param>
+        /// <returns>Number of items in library.</returns>
+        public static int Add(Assembly assembly, string nameOrNamespace)
+        {
+            // Fetch every FormatKeyword in the specified namespacePath.
             foreach (var type in GetKeywordTypes(assembly, nameOrNamespace))
             {
                 Add(type);
@@ -94,11 +122,11 @@ namespace Fosol.Common.Formatters.Keywords
         }
 
         /// <summary>
-        /// Fetch all the FormatKeywordBase Type objects in the specified Assembly and Namespace.
+        /// Fetch all the FormatKeyword Type objects in the specified Assembly and Namespace.
         /// </summary>
-        /// <param name="assembly">Assembly containing FormatKeywordBase objects.</param>
-        /// <param name="nameOrNamespace">Namespace or fully qualified name to the FormatKeywordBase(s).</param>
-        /// <returns>Collection of FormatKeywordBase Types.</returns>
+        /// <param name="assembly">Assembly containing FormatKeyword objects.</param>
+        /// <param name="nameOrNamespace">Namespace or fully qualified name to the FormatKeyword(s).</param>
+        /// <returns>Collection of FormatKeyword Types.</returns>
         static IEnumerable<Type> GetKeywordTypes(Assembly assembly, string nameOrNamespace)
         {
             var type = GetKeywordType(assembly, nameOrNamespace);
@@ -115,11 +143,11 @@ namespace Fosol.Common.Formatters.Keywords
         }
 
         /// <summary>
-        /// Checks to see if the fullyQualifiedTypeName is of Type FormatKeywordBase.
+        /// Checks to see if the fullyQualifiedTypeName is of Type FormatKeyword.
         /// </summary>
-        /// <param name="assembly">Assembly containing FormatKeywordBase objects.</param>
-        /// <param name="fullyQualifiedTypeName">Fully qualified name of the FormatKeywordBase.</param>
-        /// <returns>FormatKeywordBase Type, or null if the fullyQualifiedTypeName was only a namespace.</returns>
+        /// <param name="assembly">Assembly containing FormatKeyword objects.</param>
+        /// <param name="fullyQualifiedTypeName">Fully qualified name of the FormatKeyword.</param>
+        /// <returns>FormatKeyword Type, or null if the fullyQualifiedTypeName was only a namespace.</returns>
         static Type GetKeywordType(Assembly assembly, string fullyQualifiedTypeName)
         {
             var type = assembly.GetType(fullyQualifiedTypeName, false);
@@ -156,7 +184,7 @@ namespace Fosol.Common.Formatters.Keywords
             Type type = null;
             // The cache contains the LogTarget so return it.
             if (_Cache.ContainsKey(name))
-                type = _Cache[name];
+                type = _Cache[name].Value;
 
             // Check if the name is a fully qualified type name in the executing assembly.
             if (type == null)

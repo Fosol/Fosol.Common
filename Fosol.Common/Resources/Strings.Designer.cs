@@ -70,15 +70,6 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Attribute &quot;{0}&quot; is required..
-        /// </summary>
-        internal static string Exception_Attribute_Required {
-            get {
-                return ResourceManager.GetString("Exception_Attribute_Required", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Autocrop height or width must be greater than zero..
         /// </summary>
         internal static string Exception_AutocropScale {
@@ -111,15 +102,6 @@ namespace Fosol.Common.Resources {
         internal static string Exception_Destination_Too_Small {
             get {
                 return ResourceManager.GetString("Exception_Destination_Too_Small", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parameter value must end with &quot;{0}&quot;..
-        /// </summary>
-        internal static string Exception_EndsWith {
-            get {
-                return ResourceManager.GetString("Exception_EndsWith", resourceCulture);
             }
         }
         
@@ -169,7 +151,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; must be less than or equal to the original image height..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be less than or equal to the original image height..
         /// </summary>
         internal static string Exception_ImageHelper_Invalid_Height {
             get {
@@ -178,7 +160,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; must have at least one property value set greater than &apos;0&apos;..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must have at least one property value set greater than &apos;0&apos;..
         /// </summary>
         internal static string Exception_ImageHelper_Invalid_Plot {
             get {
@@ -187,7 +169,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; must be between &apos;0&apos; and &apos;100&apos;..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be between &apos;0&apos; and &apos;100&apos;..
         /// </summary>
         internal static string Exception_ImageHelper_Invalid_Quality {
             get {
@@ -196,7 +178,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; must be greater than or equal to &apos;0&apos;..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be greater than or equal to &apos;0&apos;..
         /// </summary>
         internal static string Exception_ImageHelper_Invalid_Resize_Height {
             get {
@@ -205,7 +187,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; must be greater than or equal to &apos;0&apos;..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be greater than or equal to &apos;0&apos;..
         /// </summary>
         internal static string Exception_ImageHelper_Invalid_Resize_Width {
             get {
@@ -214,7 +196,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; must be less than or equal to the original image width..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be less than or equal to the original image width..
         /// </summary>
         internal static string Exception_ImageHelper_Invalid_Width {
             get {
@@ -223,7 +205,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; must be greater than or equal to &apos;0&apos; and less than the original image width..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be greater than or equal to &apos;0&apos; and less than the original image width..
         /// </summary>
         internal static string Exception_ImageHelper_Invalid_X {
             get {
@@ -232,7 +214,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameters &quot;{0}&quot; must plot within the original image width..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must plot within the original image width..
         /// </summary>
         internal static string Exception_ImageHelper_Invalid_XWidth {
             get {
@@ -241,7 +223,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; must be greater than or equal to &apos;0&apos; and less than the original image height..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be greater than or equal to &apos;0&apos; and less than the original image height..
         /// </summary>
         internal static string Exception_ImageHelper_Invalid_Y {
             get {
@@ -250,7 +232,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameters &quot;{0}&quot; must plot within the original image height..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must plot within the original image height..
         /// </summary>
         internal static string Exception_ImageHelper_Invalid_YHeight {
             get {
@@ -268,38 +250,11 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; must have width or height set to greater than &apos;0&apos;..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must have width or height set to greater than &apos;0&apos;..
         /// </summary>
         internal static string Exception_Invalid_Size {
             get {
                 return ResourceManager.GetString("Exception_Invalid_Size", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; is not a valid type..
-        /// </summary>
-        internal static string Exception_Invalid_Type {
-            get {
-                return ResourceManager.GetString("Exception_Invalid_Type", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; has an invalid value..
-        /// </summary>
-        internal static string Exception_Invalid_Value {
-            get {
-                return ResourceManager.GetString("Exception_Invalid_Value", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parameter cannot be null or empty..
-        /// </summary>
-        internal static string Exception_Not_Null_Or_Empty {
-            get {
-                return ResourceManager.GetString("Exception_Not_Null_Or_Empty", resourceCulture);
             }
         }
         
@@ -313,16 +268,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter value must start with &quot;{0}&quot;..
-        /// </summary>
-        internal static string Exception_StartsWith {
-            get {
-                return ResourceManager.GetString("Exception_StartsWith", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; must be readable (CanRead=true)..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be readable (CanRead=true)..
         /// </summary>
         internal static string Exception_Stream_IsCanRead {
             get {
@@ -331,7 +277,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; must be seekable (CanSeek=true)..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be seekable (CanSeek=true)..
         /// </summary>
         internal static string Exception_Stream_IsCanSeek {
             get {
@@ -340,7 +286,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; must be writable (CanWrite=true)..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be writable (CanWrite=true)..
         /// </summary>
         internal static string Exception_Stream_IsCanWrite {
             get {
@@ -358,7 +304,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; contains more than one key value pair..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; contains more than one key value pair..
         /// </summary>
         internal static string Exception_Too_Many_Pairs {
             get {
@@ -376,7 +322,70 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; is too small to accept value..
+        ///   Looks up a localized string similar to Attribute &quot;{0}&quot; is required..
+        /// </summary>
+        internal static string Exception_Validation_Attribute_Required {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Attribute_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument value must end with &quot;{0}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_EndsWith {
+            get {
+                return ResourceManager.GetString("Exception_Validation_EndsWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid type..
+        /// </summary>
+        internal static string Exception_Validation_Invalid_Type {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Invalid_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; has an invalid value..
+        /// </summary>
+        internal static string Exception_Validation_Invalid_Value {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Invalid_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; cannot be empty..
+        /// </summary>
+        internal static string Exception_Validation_IsNotEmpty {
+            get {
+                return ResourceManager.GetString("Exception_Validation_IsNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; cannot be null..
+        /// </summary>
+        internal static string Exception_Validation_IsNotNull {
+            get {
+                return ResourceManager.GetString("Exception_Validation_IsNotNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument value must start with &quot;{0}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_StartsWith {
+            get {
+                return ResourceManager.GetString("Exception_Validation_StartsWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is too small to accept value..
         /// </summary>
         internal static string Exception_Value_Too_Small {
             get {

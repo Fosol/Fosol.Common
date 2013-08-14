@@ -20,14 +20,14 @@ namespace Fosol.Common.Helpers
         /// Try to convert the value to the specified conversionType.
         /// </summary>
         /// <param name="value">Value to convert.</param>
-        /// <param name="conversionType">Type to convert to.</param>
+        /// <param name="convertTo">Type to convert to.</param>
         /// <param name="result">Result of conversion.</param>
         /// <returns>True if successful.</returns>
-        public static bool TryConvert(object value, Type conversionType, ref object result)
+        public static bool TryConvert(object value, Type convertTo, ref object result)
         {
             if (value == null)
             {
-                if (conversionType.IsNullableType())
+                if (convertTo.IsNullableType())
                 {
                     result = null;
                     return true;
@@ -37,7 +37,7 @@ namespace Fosol.Common.Helpers
 
             try
             {
-                result = Convert.ChangeType(value, conversionType);
+                result = Convert.ChangeType(value, convertTo);
                 return true;
             }
             catch

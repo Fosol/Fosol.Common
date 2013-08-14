@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Caching
 {
     /// <summary>
-    /// A SimpleCache object provides a dictionary to manage a collection of CacheItem objects.
+    /// A WeakCache object provides a way to maintain a collection of cached values with a WeakReference.
+    /// This ensures the values stored in cache do not keep unused values in memory.
     /// </summary>
-    /// <typeparam name="T">Type of item being place in cache.</typeparam>
-    public sealed class SimpleCache<T>
+    /// <typeparam name="T">Type of object being stored in cache.</typeparam>
+    public sealed class WeakCache<T>
         : IEnumerable<CacheItem<T>>, IDisposable
+        where T : class
     {
         #region Variables
         private readonly System.Threading.ReaderWriterLockSlim _Lock = new System.Threading.ReaderWriterLockSlim();
-        private readonly Dictionary<string, CacheItem<T>> _Items;
+        private readonly Dictionary<string, CacheItem<WeakReference<T>>> _Items;
         #endregion
 
         #region Properties
@@ -39,45 +41,35 @@ namespace Fosol.Common.Caching
         public CacheItem<T> this[string key]
         {
             get 
-            { 
-                return _Items[key];
+            {
+                T item;
+                if (_Items[key].Value.TryGetTarget(out item))
+                    return new CacheItem<T>(_Items[key], item);
+
+                // Remove the expired item from cache.
+                Remove(key);
+
+                throw new Exceptions.CacheExpiredException();
             }
         }
-
-        /// <summary>
-        /// get - Collection of all the keys within the cache.
-        /// </summary>
-        public Dictionary<string, CacheItem<T>>.KeyCollection Keys 
-        {
-            get { return _Items.Keys; }
-        }
-
-        /// <summary>
-        /// get - Collection of all the values within the cache.
-        /// </summary>
-        internal Dictionary<string, CacheItem<T>>.ValueCollection Values
-        {
-            get { return _Items.Values; }
-        }
-
         #endregion
 
         #region Constructors
         /// <summary>
         /// Creates a new instance of a Cache object.
         /// </summary>
-        public SimpleCache()
+        public WeakCache()
         {
-            _Items = new Dictionary<string, CacheItem<T>>(StringComparer.CurrentCultureIgnoreCase);
+            _Items = new Dictionary<string, CacheItem<WeakReference<T>>>(StringComparer.CurrentCultureIgnoreCase);
         }
 
         /// <summary>
         /// Creates a new instance of a Cache object.
         /// </summary>
         /// <param name="comparer">Controls how cache keys are compared.</param>
-        public SimpleCache(IEqualityComparer<string> comparer)
+        public WeakCache(IEqualityComparer<string> comparer)
         {
-            _Items = new Dictionary<string, CacheItem<T>>(comparer);
+            _Items = new Dictionary<string, CacheItem<WeakReference<T>>>(comparer);
         }
         #endregion
 
@@ -93,7 +85,7 @@ namespace Fosol.Common.Caching
             _Lock.EnterReadLock();
             try
             {
-                return _Items[key];
+                return this[key];
             }
             finally
             {
@@ -113,22 +105,31 @@ namespace Fosol.Common.Caching
             _Lock.EnterUpgradeableReadLock();
             try
             {
-                if (_Items.ContainsKey(key))
-                    return _Items[key];
+                T item;
+                var found = _Items.ContainsKey(key);
+                if (found
+                    && _Items[key].Value.TryGetTarget(out item))
+                    return new CacheItem<T>(_Items[key], item);
 
                 _Lock.EnterWriteLock();
                 try
                 {
                     // Try again before attempting to add the value.
-                    if (_Items.ContainsKey(key))
-                        return _Items[key];
+                    if (_Items.ContainsKey(key)
+                        && _Items[key].Value.TryGetTarget(out item))
+                        return new CacheItem<T>(_Items[key], item);
 
-                    var value = new CacheItem<T>(key, add());
+                    var value = add();
                     if (value == null)
                         throw new InvalidOperationException();
 
-                    _Items.Add(key, value);
-                    return value;
+                    // Need to remove the CacheItem who's value was garbage collected.
+                    if (found)
+                        _Items.Remove(key);
+                    
+                    var new_cache_item = new CacheItem<WeakReference<T>>(key, new WeakReference<T>(value));
+                    _Items.Add(key, new_cache_item);
+                    return new CacheItem<T>(new_cache_item, value);
                 }
                 finally
                 {
@@ -167,7 +168,7 @@ namespace Fosol.Common.Caching
             _Lock.EnterWriteLock();
             try
             {
-                _Items.Add(key, new CacheItem<T>(key, value));
+                _Items.Add(key, new CacheItem<WeakReference<T>>(key, new WeakReference<T>(value)));
             }
             finally
             {
@@ -251,7 +252,7 @@ namespace Fosol.Common.Caching
             : IEnumerator<CacheItem<T>>, System.Collections.IEnumerator
         {
             #region Variables
-            private CacheItem<T>[] _Items;
+            private CacheItem<WeakReference<T>>[] _Items;
             private int _Position;
             private CacheItem<T> _CurrentItem;
             #endregion
@@ -263,8 +264,8 @@ namespace Fosol.Common.Caching
             /// <summary>
             /// Creates a new instance of an Enumerator.
             /// </summary>
-            /// <param name="cache"></param>
-            public Enumerator(SimpleCache<T> cache)
+            /// <param name="cache">WeakCache object.</param>
+            public Enumerator(WeakCache<T> cache)
             {
                 _Items = cache._Items.Values.ToArray();
                 _Position = -1;
@@ -299,14 +300,25 @@ namespace Fosol.Common.Caching
             /// <summary>
             /// Move to the next item in the enumeration.
             /// </summary>
+            /// <exception cref="Exceptions.CacheExpiredException">WeakReference to value in cache was garabage collected.</exception>
             /// <returns>True if there is a value.</returns>
             public bool MoveNext()
             {
                 if (++_Position >= _Items.Count())
                     return false;
                 else
-                    _CurrentItem = _Items[_Position];
-                return true;
+                {
+                    var item = _Items[_Position];
+                    T value;
+
+                    if (item.Value.TryGetTarget(out value))
+                    {
+                        _CurrentItem = new CacheItem<T>(item, value);
+                        return true;
+                    }
+
+                    throw new Exceptions.CacheExpiredException();
+                }
             }
 
             /// <summary>

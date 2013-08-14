@@ -11,7 +11,7 @@ namespace Fosol.Common.Formatters
     /// <summary>
     /// A StringFormatter provides a way to generate an output based on a configured format.
     /// </summary>
-    public class StringFormatter
+    public sealed class StringFormatter
         : IDisposable
     {
         #region Variables
@@ -117,7 +117,7 @@ namespace Fosol.Common.Formatters
 
                 if (is_cached)
                 {
-                    yield return _Cache.Get(phrase.Text);
+                    yield return _Cache.Get(phrase.Text).Value;
                     break;
                 }
 
