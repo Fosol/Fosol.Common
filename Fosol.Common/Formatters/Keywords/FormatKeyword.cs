@@ -47,7 +47,7 @@ namespace Fosol.Common.Formatters.Keywords
         /// Initializes the Name property with the KeywordAttribute.Name property.
         /// </summary>
         /// <exception cref="Fosol.Common.Exceptions.AttributeRequiredException">The KeywordAttributeAttribute is required.</exception>
-        public FormatKeyword()
+        internal FormatKeyword()
         {
             var attr = (FormatKeywordAttribute)Attribute.GetCustomAttribute(this.GetType(), typeof(FormatKeywordAttribute));
             if (attr != null)
@@ -60,7 +60,7 @@ namespace Fosol.Common.Formatters.Keywords
         /// Creates a new instance of a Keyword object.
         /// </summary>
         /// <param name="attributes">Dictionary of attributes to include with this keyword.</param>
-        public FormatKeyword(StringDictionary attributes)
+        internal FormatKeyword(StringDictionary attributes)
             : this()
         {
             InitAttributes(attributes);
@@ -133,7 +133,7 @@ namespace Fosol.Common.Formatters.Keywords
         /// Returns a formatted string value to create this keyword.
         /// </summary>
         /// <example>
-        /// ${datetime:format=u}
+        /// {datetime?format=u}
         /// </example>
         /// <returns>Special formatted string value.</returns>
         public override string ToString()
@@ -142,6 +142,19 @@ namespace Fosol.Common.Formatters.Keywords
                 return "{" + this.Name + "}";
             else
                 return string.Format("{{{0}?{1}}}", this.Name, this.Attributes.ToQueryString());
+        }
+
+        /// <summary>
+        /// Returns a formatted string value based on the formatter which can be used to create this keyword.
+        /// </summary>
+        /// <param name="formatter">KeywordFormatter object.</param>
+        /// <returns>Special formatted string value.</returns>
+        public string ToString(KeywordFormatter formatter)
+        {
+            if (this.Attributes.Count == 0)
+                return formatter.StartBoundary + this.Name + formatter.EndBoundary;
+            else
+                return string.Format("{0}{1}{2}{3}{4}", formatter.StartBoundary, this.Name, formatter.AttributeBoundary, this.Attributes.ToQueryString(), formatter.EndBoundary);
         }
 
         /// <summary>

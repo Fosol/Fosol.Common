@@ -114,6 +114,13 @@
     <Compile Include="Extensions\Types\TypeExtensions.cs" />
     <Compile Include="Extensions\UriBuilders\UriBuilderExtensions.cs" />
     <Compile Include="Extensions\Uris\UriExtensions.cs" />
+    <Compile Include="Formatters\Format.cs" />
+    <Compile Include="Formatters\FormatPart.cs" />
+    <Compile Include="Formatters\Formatter.cs" />
+    <Compile Include="Formatters\FormatBoundary.cs" />
+    <Compile Include="Formatters\IFormatter.cs" />
+    <Compile Include="Formatters\KeywordFormat.cs" />
+    <Compile Include="Formatters\KeywordFormatter.cs" />
     <Compile Include="Formatters\Keywords\AppDomainKeyword.cs" />
     <Compile Include="Formatters\Keywords\CounterKeyword.cs" />
     <Compile Include="Formatters\Keywords\FormatDynamicKeyword.cs" />

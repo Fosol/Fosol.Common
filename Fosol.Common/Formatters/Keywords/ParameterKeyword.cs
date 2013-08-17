@@ -10,7 +10,7 @@ namespace Fosol.Common.Formatters.Keywords
     /// <summary>
     /// A ParameterKeyword provides a dynamic way to apply static parameter names while including attributes for further logic.
     /// It is useful for database parameters (i.e. {parameter?name=@Id&SqlDbType=NVarChar}).
-    /// You can use the shortcut syntax too (i.e. {@Id?value={message}}}).
+    /// You can use the shortcut syntax too (i.e. {@Id?value={message}}} or {@Id={message}}}.
     /// Note that the Value property/attribute can contain keywords, just be sure to escape the end boundary if it is next to the parameter keyword end boundary.
     /// </summary>
     [FormatKeyword("parameter")]

@@ -46,7 +46,6 @@ namespace Fosol.Common.Formatters.Keywords
 
         /// <summary>
         /// Creates a new instance of a StaticKeyword object.
-        /// Remember to populate the Text property in your subclass.
         /// </summary>
         /// <param name="text">Original string value that created this keyword.</param>
         public FormatStaticKeyword(string text)
