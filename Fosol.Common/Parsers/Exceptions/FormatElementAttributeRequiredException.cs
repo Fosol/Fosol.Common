@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Exceptions
+namespace Fosol.Common.Parsers.Exceptions
 {
     /// <summary>
     /// An error occured while parsing the FormatKeyword objects from the formatted string and a required parameter is missing.
     /// </summary>
-    public sealed class FormatKeywordAttributeRequiredException
+    public sealed class FormatElementAttributeRequiredException
         : Exception
     {
         #region Variables
@@ -31,7 +31,7 @@ namespace Fosol.Common.Exceptions
         /// <summary>
         /// Creates a new instance of a FormatKeywordAttributeRequiredException.
         /// </summary>
-        public FormatKeywordAttributeRequiredException()
+        public FormatElementAttributeRequiredException()
             : base()
         {
         }
@@ -40,7 +40,7 @@ namespace Fosol.Common.Exceptions
         /// Creates a new instance of a FormatKeywordAttributeRequiredException.
         /// </summary>
         /// <param name="message">A message to describe the error.</param>
-        public FormatKeywordAttributeRequiredException(string message)
+        public FormatElementAttributeRequiredException(string message)
             : base(message)
         {
         }
@@ -50,7 +50,7 @@ namespace Fosol.Common.Exceptions
         /// </summary>
         /// <param name="message">A message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
-        public FormatKeywordAttributeRequiredException(string message, Exception innerException)
+        public FormatElementAttributeRequiredException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
@@ -60,8 +60,8 @@ namespace Fosol.Common.Exceptions
         /// </summary>
         /// <param name="keyword">The name of the keyword that cause the error.</param>
         /// <param name="parameter">The name of the paramter that caused the error.</param>
-        public FormatKeywordAttributeRequiredException(string keyword, string parameter)
-            : base(String.Format(Resources.Strings.Exception_FormatKeyword_Attribute_Required, keyword, parameter))
+        public FormatElementAttributeRequiredException(string keyword, string parameter)
+            : base(String.Format(Resources.Strings.Exception_FormatElement_Attribute_Required, keyword, parameter))
         {
         }
 
@@ -71,8 +71,8 @@ namespace Fosol.Common.Exceptions
         /// <param name="keyword">The name of the keyword that cause the error.</param>
         /// <param name="parameter">The name of the paramter that caused the error.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
-        public FormatKeywordAttributeRequiredException(string keyword, string parameter, Exception innerException)
-            : base(String.Format(Resources.Strings.Exception_FormatKeyword_Attribute_Required, keyword, parameter), innerException)
+        public FormatElementAttributeRequiredException(string keyword, string parameter, Exception innerException)
+            : base(String.Format(Resources.Strings.Exception_FormatElement_Attribute_Required, keyword, parameter), innerException)
         {
         }
         #endregion

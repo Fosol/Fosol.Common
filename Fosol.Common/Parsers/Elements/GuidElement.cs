@@ -6,14 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Formatters.Keywords
+namespace Fosol.Common.Parsers.Elements
 {
     /// <summary>
     /// Renders a guid into the message.
     /// </summary>
-    [FormatKeyword("guid")]
-    public sealed class GuidKeyword
-        : FormatDynamicKeyword
+    [Element("guid")]
+    public sealed class GuidElement
+        : DynamicElement
     {
         #region Variables
         #endregion
@@ -23,16 +23,16 @@ namespace Fosol.Common.Formatters.Keywords
         /// get/set - The format string for the Guid.
         /// </summary>
         [DefaultValue("N")]
-        [FormatKeywordProperty("format", new string[] { "f" })]
+        [ElementProperty("format", new string[] { "f" })]
         public string Format { get; set; }
         #endregion
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a GuidKeyword.
+        /// Creates a new instance of a GuidElement.
         /// </summary>
         /// <param name="attribute">StringDictionary object.</param>
-        public GuidKeyword(StringDictionary attributes)
+        public GuidElement(StringDictionary attributes)
             : base(attributes)
         {
         }

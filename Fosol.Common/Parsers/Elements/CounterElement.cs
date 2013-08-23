@@ -1,4 +1,4 @@
-﻿using Fosol.Common.Formatters.Keywords;
+﻿using Fosol.Common.Parsers.Elements;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Formatters.Keywords
+namespace Fosol.Common.Parsers.Elements
 {
     /// <summary>
     /// A counter value (increases on each execution).
     /// </summary>
-    [FormatKeyword("counter")]
-    public sealed class CounterKeyword
-        : FormatDynamicKeyword
+    [Element("counter")]
+    public sealed class CounterElement
+        : DynamicElement
     {
         #region Variables
         private static Dictionary<string, int> _Counters = new Dictionary<string, int>();
@@ -25,29 +25,29 @@ namespace Fosol.Common.Formatters.Keywords
         /// get/set - A sequence name provides a way to have multiple counters.
         /// </summary>
         [DefaultValue("default")]
-        [FormatKeywordProperty("counter", new string[] { "c", "count", "name" })]
+        [ElementProperty("counter", new string[] { "c", "count", "name" })]
         public string CounterName { get; set; }
 
         /// <summary>
         /// get/set - The starting value of the sequence.
         /// </summary>
-        [FormatKeywordProperty("value", new string[] { "v", "val" })]
+        [ElementProperty("value", new string[] { "v", "val" })]
         public int Value { get; set; }
 
         /// <summary>
         /// get/set - The value to increment each time.
         /// </summary>
         [DefaultValue(1)]
-        [FormatKeywordProperty("increment", new string[] { "i", "inc" })]
+        [ElementProperty("increment", new string[] { "i", "inc" })]
         public int Increment { get; set; }
         #endregion
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a CounterKeyword object.
+        /// Creates a new instance of a CounterElement object.
         /// </summary>
         /// <param name="attributes">StringDictionary object.</param>
-        public CounterKeyword(StringDictionary attributes)
+        public CounterElement(StringDictionary attributes)
             : base(attributes)
         {
             lock (_Counters)

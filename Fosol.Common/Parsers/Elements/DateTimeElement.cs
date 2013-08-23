@@ -6,14 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Formatters.Keywords
+namespace Fosol.Common.Parsers.Elements
 {
     /// <summary>
-    /// The DateTimeKeyword dynamically generates a string to represent the current DateTime.
+    /// The DateTimeElement dynamically generates a string to represent the current DateTime.
     /// </summary>
-    [FormatKeyword("datetime")]
-    public class DateTimeKeyword
-        : FormatDynamicKeyword
+    [Element("datetime")]
+    public class DateTimeElement
+        : DynamicElement
     {
         #region Variables
         #endregion
@@ -23,22 +23,22 @@ namespace Fosol.Common.Formatters.Keywords
         /// get/set - The format string for the DateTime value.
         /// </summary>
         [DefaultValue("G")]
-        [FormatKeywordProperty("format", new string[] { "f" })]
+        [ElementProperty("format", new string[] { "f" })]
         public string Format { get; set; }
 
         /// <summary>
         /// get/set - Whether to display the ticks value instead of the DateTime.
         /// </summary>
-        [FormatKeywordProperty("ticks")]
+        [ElementProperty("ticks")]
         public bool Ticks { get; set; }
         #endregion
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a DateTimeKeyword object.
+        /// Creates a new instance of a DateTimeElement object.
         /// </summary>
         /// <param name="attributes">StringDictionary object.</param>
-        public DateTimeKeyword(StringDictionary attributes = null)
+        public DateTimeElement(StringDictionary attributes = null)
             : base(attributes)
         {
         }

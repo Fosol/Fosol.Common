@@ -10,7 +10,7 @@ namespace Fosol.Common.Converters
     /// <summary>
     /// Convert a special formatted string into a StringFormatter (or vise-versa).
     /// </example>
-    public class StringFormatterConverter
+    public class ElementFormatConverter
         : TypeConverter
     {
         #region Variables
@@ -62,7 +62,7 @@ namespace Fosol.Common.Converters
         {
             if (value.GetType() == typeof(string))
             {
-                return new Formatters.StringFormatter((string)value);
+                return new Parsers.ElementParser().Parse((string)value);
             }
             return base.ConvertFrom(context, culture, value);
         }
@@ -79,9 +79,9 @@ namespace Fosol.Common.Converters
         {
             if (destinationType == typeof(string))
             {
-                if (value.GetType() == typeof(Formatters.StringFormatter))
+                if (value.GetType() == typeof(Parsers.ElementParser))
                 {
-                    var val = value as Formatters.StringFormatter;
+                    var val = value as Parsers.ElementParser;
                     return val.ToString();
                 }
             }

@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Formatters.Keywords
+namespace Fosol.Common.Parsers.Elements
 {
     /// <summary>
-    /// A TextKeyword is a basic text value that may include parameters.
+    /// A TextElement is a basic text value that may include parameters.
     /// </summary>
-    [FormatKeyword("text")]
-    public sealed class TextKeyword
-        : FormatStaticKeyword
+    [Element("text")]
+    public sealed class TextElement
+        : StaticElement
     {
         #region Variables
         #endregion
@@ -22,11 +22,11 @@ namespace Fosol.Common.Formatters.Keywords
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a TextKeyword object.
+        /// Creates a new instance of a TextElement object.
         /// Remember to populate the Text property in your subclass.
         /// </summary>
         /// <param name="text">Original string value that created this keyword.</param>
-        public TextKeyword(string text)
+        public TextElement(string text)
             : base(text)
         {
         }

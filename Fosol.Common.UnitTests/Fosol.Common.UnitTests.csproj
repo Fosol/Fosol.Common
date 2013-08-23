@@ -51,7 +51,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="KeywordParserTest.cs" />
+    <Compile Include="ElementParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ImageHelperTest.cs" />
     <Compile Include="ValidationParameterTest.cs" />

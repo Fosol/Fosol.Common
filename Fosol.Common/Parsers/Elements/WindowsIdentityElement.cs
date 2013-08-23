@@ -1,4 +1,4 @@
-﻿using Fosol.Common.Formatters.Keywords;
+﻿using Fosol.Common.Parsers.Elements;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -8,14 +8,14 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Formatters.Keywords
+namespace Fosol.Common.Parsers.Elements
 {
     /// <summary>
     /// Thread Windows identity information (username).
     /// </summary>
-    [FormatKeyword("windowsIdentity")]
-    public sealed class WindowsIdentityKeyword
-        : FormatStaticKeyword
+    [Element("windowsIdentity")]
+    public sealed class WindowsIdentityElement
+        : StaticElement
     {
         #region Variables
         /// <summary>
@@ -39,23 +39,23 @@ namespace Fosol.Common.Formatters.Keywords
         /// get/set - Whether to show the username.
         /// </summary>
         [DefaultValue(true)]
-        [FormatKeywordProperty("username")]
+        [ElementProperty("username")]
         public bool ShowUsername { get; set; }
 
         /// <summary>
         /// get/set - Whether to show the domain.
         /// </summary>
         [DefaultValue(true)]
-        [FormatKeywordProperty("domain")]
+        [ElementProperty("domain")]
         public bool ShowDomain { get; set; }
         #endregion
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a WindowsIndentityKeyword object.
+        /// Creates a new instance of a WindowsIndentityElement object.
         /// </summary>
         /// <param name="attributes">StringDictionary object.</param>
-        public WindowsIdentityKeyword(StringDictionary attributes)
+        public WindowsIdentityElement(StringDictionary attributes)
             : base(attributes)
         {
             var current_id = WindowsIdentity.GetCurrent();

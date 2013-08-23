@@ -1,4 +1,4 @@
-﻿using Fosol.Common.Formatters.Keywords;
+﻿using Fosol.Common.Parsers.Elements;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Formatters.Keywords
+namespace Fosol.Common.Parsers.Elements
 {
     /// <summary>
-    /// A NewlineKeyword is a newline character.
+    /// A NewlineElement is a newline character.
     /// </summary>
-    [FormatKeyword("newline")]
-    public sealed class NewlineKeyword
-        : FormatStaticKeyword
+    [Element("newline")]
+    public sealed class NewlineElement
+        : StaticElement
     {
         #region Variables
         public enum LineEnding
@@ -48,7 +48,7 @@ namespace Fosol.Common.Formatters.Keywords
         /// get/set - Line ending mode syntax.
         /// </summary>
         [DefaultValue(LineEnding.Default)]
-        [FormatKeywordProperty("mode", new string[] { "m" }, typeof(EnumConverter), typeof(LineEnding))]
+        [ElementProperty("mode", new string[] { "m" }, typeof(EnumConverter), typeof(LineEnding))]
         public LineEnding Mode
         {
             get { return _Mode; }
@@ -56,7 +56,7 @@ namespace Fosol.Common.Formatters.Keywords
             {
                 // Update the Text property.
                 if (value != _Mode)
-                    this.Text = NewlineKeyword.GetLineEnding(value);
+                    this.Text = NewlineElement.GetLineEnding(value);
                 _Mode = value;
             }
         }
@@ -64,10 +64,10 @@ namespace Fosol.Common.Formatters.Keywords
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a NewlineKeyword object.
+        /// Creates a new instance of a NewlineElement object.
         /// </summary>
         /// <param name="attributes">StringDictionary object.</param>
-        public NewlineKeyword(StringDictionary attributes)
+        public NewlineElement(StringDictionary attributes)
             : base(System.Environment.NewLine, attributes)
         {
         }

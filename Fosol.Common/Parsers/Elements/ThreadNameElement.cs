@@ -1,18 +1,19 @@
-﻿using Fosol.Common.Formatters.Keywords;
+﻿using Fosol.Common.Parsers.Elements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Formatters.Keywords
+namespace Fosol.Common.Parsers.Elements
 {
     /// <summary>
-    /// Renders the current username.
+    /// Renders the current thread name.
     /// </summary>
-    [FormatKeyword("user")]
-    public sealed class UserKeyword
-        : FormatDynamicKeyword
+    [Element("threadName")]
+    public sealed class ThreadNameElement
+        : DynamicElement
     {
         #region Variables
         #endregion
@@ -21,17 +22,25 @@ namespace Fosol.Common.Formatters.Keywords
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of a ThreadNameElement object.
+        /// </summary>
+        public ThreadNameElement()
+            : base()
+        {
+
+        }
         #endregion
 
         #region Methods
         /// <summary>
-        /// Outputs the username and domain.
+        /// Returns the thread name.
         /// </summary>
         /// <param name="data">Information object containing data for the keyword.</param>
-        /// <returns>The username currently logged in.</returns>
+        /// <returns>Thread name.</returns>
         public override string Render(object data)
         {
-            return Environment.UserDomainName + "\\" + Environment.UserName;
+            return Thread.CurrentThread.Name;
         }
         #endregion
 

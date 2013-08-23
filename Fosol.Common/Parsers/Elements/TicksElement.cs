@@ -1,19 +1,19 @@
-﻿using Fosol.Common.Formatters.Keywords;
+﻿using Fosol.Common.Parsers.Elements;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Formatters.Keywords
+namespace Fosol.Common.Parsers.Elements
 {
     /// <summary>
-    /// The Timestamp from the trace event.
+    /// The Ticks value of the current date and time.
     /// </summary>
-    [FormatKeyword("timestamp")]
-    public sealed class TimestampKeyword
-        : FormatDynamicKeyword
+    [Element("ticks")]
+    public sealed class TicksElement
+        : DynamicElement
     {
         #region Variables
         #endregion
@@ -23,24 +23,24 @@ namespace Fosol.Common.Formatters.Keywords
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a StackFormatKeyword object.
+        /// Creates a new instance of a TicksElement object.
         /// </summary>
-        /// <param name="attributes">Attributes to include with this keyword.</param>
-        public TimestampKeyword(StringDictionary attributes = null)
-            : base(attributes)
+        public TicksElement()
+            : base()
         {
+
         }
         #endregion
 
         #region Methods
         /// <summary>
-        /// Returns the timestamp of the TraceEvent.
+        /// The Ticks value of the current date and time.
         /// </summary>
         /// <param name="data">Information object containing data for the keyword.</param>
-        /// <returns>The trace event call stack.</returns>
+        /// <returns>The Ticks value of the current date and time.</returns>
         public override string Render(object data)
         {
-            return DateTime.Now.Ticks.ToString();
+            return DateTime.Now.Ticks.ToString(CultureInfo.InvariantCulture);
         }
         #endregion
 

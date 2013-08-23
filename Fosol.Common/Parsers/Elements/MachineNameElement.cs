@@ -1,18 +1,18 @@
-﻿using Fosol.Common.Formatters.Keywords;
+﻿using Fosol.Common.Parsers.Elements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Formatters.Keywords
+namespace Fosol.Common.Parsers.Elements
 {
     /// <summary>
-    /// The MachineNameKeyword output is the machine name.
+    /// The MachineNameElement output is the machine name.
     /// </summary>
-    [FormatKeyword("machineName")]
-    public sealed class MachineNameKeyword
-        : FormatStaticKeyword
+    [Element("machineName")]
+    public sealed class MachineNameElement
+        : StaticElement
     {
         #region Variables
         #endregion
@@ -22,10 +22,10 @@ namespace Fosol.Common.Formatters.Keywords
 
         #region Constructors
         /// <summary>
-        /// Creates a new MachineNameKeyword object.
+        /// Creates a new MachineNameElement object.
         /// Initialize with MachineName.
         /// </summary>
-        public MachineNameKeyword()
+        public MachineNameElement()
             : base(Environment.MachineName)
         {
         }

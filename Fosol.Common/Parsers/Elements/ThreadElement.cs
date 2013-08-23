@@ -1,4 +1,4 @@
-﻿using Fosol.Common.Formatters.Keywords;
+﻿using Fosol.Common.Parsers.Elements;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -9,14 +9,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Formatters.Keywords
+namespace Fosol.Common.Parsers.Elements
 {
     /// <summary>
-    /// The ThreadKeyword provides a way to output thread information within the TraceEvent object.
+    /// The ThreadElement provides a way to output thread information within the TraceEvent object.
     /// </summary>
-    [FormatKeyword("thread")]
-    public sealed class ThreadKeyword
-        : FormatDynamicKeyword
+    [Element("thread")]
+    public sealed class ThreadElement
+        : DynamicElement
     {
         #region Variables
         private string _Key;
@@ -24,7 +24,7 @@ namespace Fosol.Common.Formatters.Keywords
 
         #region Properties
         [DefaultValue("Name")]
-        [FormatKeywordProperty("Key", new[] { "k" })]
+        [ElementProperty("Key", new[] { "k" })]
         public string Key
         {
             get { return _Key; }
@@ -34,10 +34,10 @@ namespace Fosol.Common.Formatters.Keywords
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a ThreadKeyword object.
+        /// Creates a new instance of a ThreadElement object.
         /// </summary>
         /// <param name="attributes">Attributes to include with this keyword.</param>
-        public ThreadKeyword(StringDictionary attributes = null)
+        public ThreadElement(StringDictionary attributes = null)
             : base(attributes)
         {
         }

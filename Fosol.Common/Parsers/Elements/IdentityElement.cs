@@ -1,4 +1,4 @@
-﻿using Fosol.Common.Formatters.Keywords;
+﻿using Fosol.Common.Parsers.Elements;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -6,14 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Formatters.Keywords
+namespace Fosol.Common.Parsers.Elements
 {
     /// <summary>
     /// Thread identity information (name and authentication information).
     /// </summary>
-    [FormatKeyword("identity")]
-    public sealed class IdentityKeyword
-        : FormatDynamicKeyword
+    [Element("identity")]
+    public sealed class IdentityElement
+        : DynamicElement
     {
         #region Variables
         #endregion
@@ -22,34 +22,34 @@ namespace Fosol.Common.Formatters.Keywords
         /// <summary>
         /// get/set - Value to separate identity values.
         /// </summary>
-        [FormatKeywordProperty("delimiter")]
+        [ElementProperty("delimiter")]
         public string Delimiter { get; set; }
 
         /// <summary>
         /// get/set - Whether to include the name.
         /// </summary>
-        [FormatKeywordProperty("name")]
+        [ElementProperty("name")]
         public bool ShowName { get; set; }
 
         /// <summary>
         /// get/set - Whether to include the authentication type.
         /// </summary>
-        [FormatKeywordProperty("type")]
+        [ElementProperty("type")]
         public bool ShowAuthType { get; set; }
 
         /// <summary>
         /// get/set - Whether to include the is authenticated value.
         /// </summary>
-        [FormatKeywordProperty("auth")]
+        [ElementProperty("auth")]
         public bool ShowIsAuthenticated { get; set; }
         #endregion
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a IdentityKeyword object.
+        /// Creates a new instance of a IdentityElement object.
         /// </summary>
         /// <param name="attributes">StringDictionary object.</param>
-        public IdentityKeyword(StringDictionary attributes)
+        public IdentityElement(StringDictionary attributes)
             : base(attributes)
         {
             var show_name = true;

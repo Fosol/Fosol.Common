@@ -83,13 +83,14 @@
     <Compile Include="Configuration\Events\ConfigurationSectionErrorEventArgs.cs" />
     <Compile Include="Configuration\TypeElement`.cs" />
     <Compile Include="Configuration\TypeElement.cs" />
+    <Compile Include="Converters\EnumConverter`.cs" />
     <Compile Include="Converters\MailAddressConverter.cs" />
     <Compile Include="Converters\EncodingConverter.cs" />
-    <Compile Include="Converters\StringFormatterConverter.cs" />
+    <Compile Include="Converters\ElementFormatConverter.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
     <Compile Include="Data\TableName.cs" />
     <Compile Include="Exceptions\AttributeRequiredException.cs" />
-    <Compile Include="Exceptions\FormatKeywordAttributeRequiredException.cs" />
+    <Compile Include="Parsers\Exceptions\FormatElementAttributeRequiredException.cs" />
     <Compile Include="Extensions\Attributes\AttributeExtensions.cs" />
     <Compile Include="Extensions\Bytes\ByteExtensions.cs" />
     <Compile Include="Extensions\Colors\Drawings\ColorExtensions.cs" />
@@ -114,37 +115,33 @@
     <Compile Include="Extensions\Types\TypeExtensions.cs" />
     <Compile Include="Extensions\UriBuilders\UriBuilderExtensions.cs" />
     <Compile Include="Extensions\Uris\UriExtensions.cs" />
-    <Compile Include="Formatters\Format.cs" />
-    <Compile Include="Formatters\FormatPart.cs" />
-    <Compile Include="Formatters\Formatter.cs" />
-    <Compile Include="Formatters\FormatBoundary.cs" />
-    <Compile Include="Formatters\IFormatter.cs" />
-    <Compile Include="Formatters\KeywordFormat.cs" />
-    <Compile Include="Formatters\KeywordFormatter.cs" />
-    <Compile Include="Formatters\Keywords\AppDomainKeyword.cs" />
-    <Compile Include="Formatters\Keywords\CounterKeyword.cs" />
-    <Compile Include="Formatters\Keywords\FormatDynamicKeyword.cs" />
-    <Compile Include="Formatters\Keywords\FormatKeyword.cs" />
-    <Compile Include="Formatters\Keywords\FormatKeywordLibrary.cs" />
-    <Compile Include="Formatters\Keywords\GuidKeyword.cs" />
-    <Compile Include="Formatters\Keywords\FormatStaticKeyword.cs" />
-    <Compile Include="Formatters\Keywords\IdentityKeyword.cs" />
-    <Compile Include="Formatters\Keywords\MachineNameKeyword.cs">
+    <Compile Include="Parsers\Format.cs" />
+    <Compile Include="Parsers\DynamicElement.cs" />
+    <Compile Include="Parsers\FormatElement.cs" />
+    <Compile Include="Parsers\ElementAttribute.cs" />
+    <Compile Include="Parsers\ElementPropertyAttribute.cs" />
+    <Compile Include="Parsers\ElementLibrary.cs" />
+    <Compile Include="Parsers\StaticElement.cs" />
+    <Compile Include="Parsers\Parser.cs" />
+    <Compile Include="Parsers\ElementBoundary.cs" />
+    <Compile Include="Parsers\ElementParser.cs" />
+    <Compile Include="Parsers\Elements\AppDomainElement.cs" />
+    <Compile Include="Parsers\Elements\CounterElement.cs" />
+    <Compile Include="Parsers\Elements\GuidElement.cs" />
+    <Compile Include="Parsers\Elements\IdentityElement.cs" />
+    <Compile Include="Parsers\Elements\MachineNameElement.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Formatters\Keywords\NewlineKeyword.cs" />
-    <Compile Include="Formatters\Keywords\ParameterKeyword.cs" />
-    <Compile Include="Formatters\Keywords\ThreadKeyword.cs" />
-    <Compile Include="Formatters\Keywords\ValueKeyword.cs" />
-    <Compile Include="Formatters\Keywords\TextKeyword.cs" />
-    <Compile Include="Formatters\Keywords\FormatKeywordAttribute.cs" />
-    <Compile Include="Formatters\Keywords\FormatKeywordPropertyAttribute.cs" />
-    <Compile Include="Formatters\Keywords\ThreadNameKeyword.cs" />
-    <Compile Include="Formatters\Keywords\TicksKeyword.cs" />
-    <Compile Include="Formatters\Keywords\TimestampKeyword.cs" />
-    <Compile Include="Formatters\Keywords\UserKeyword.cs" />
-    <Compile Include="Formatters\Keywords\WindowsIdentityKeyword.cs" />
-    <Compile Include="Formatters\StringFormatter.cs" />
+    <Compile Include="Parsers\Elements\NewlineElement.cs" />
+    <Compile Include="Parsers\Elements\ParameterElement.cs" />
+    <Compile Include="Parsers\Elements\ThreadElement.cs" />
+    <Compile Include="Parsers\Elements\ValueElement.cs" />
+    <Compile Include="Parsers\Elements\TextElement.cs" />
+    <Compile Include="Parsers\Elements\ThreadNameElement.cs" />
+    <Compile Include="Parsers\Elements\TicksElement.cs" />
+    <Compile Include="Parsers\Elements\TimestampElement.cs" />
+    <Compile Include="Parsers\Elements\UserElement.cs" />
+    <Compile Include="Parsers\Elements\WindowsIdentityElement.cs" />
     <Compile Include="Helpers\AssemblyResourceHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Drawing\ImageHelper.cs" />
@@ -155,7 +152,8 @@
     <Compile Include="OffsetRule.cs" />
     <Compile Include="CenterPoint.cs" />
     <Compile Include="Mathematics\Formula.cs" />
-    <Compile Include="Formatters\Keywords\DateTimeKeyword.cs" />
+    <Compile Include="Parsers\Elements\DateTimeElement.cs" />
+    <Compile Include="Parsers\IFormat.cs" />
     <Compile Include="Serialization\CData.cs" />
     <Compile Include="ServiceModel\ServiceException`.cs" />
     <Compile Include="Web\DomainComparer.cs" />
@@ -165,7 +163,6 @@
     <Compile Include="Initialization\Assert.cs" />
     <Compile Include="Serialization\BinaryHelper.cs" />
     <Compile Include="Optimization\FastDateTime.cs" />
-    <Compile Include="Parsers\ISentencePart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -177,11 +174,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.fr.resx</DependentUpon>
     </Compile>
-    <Compile Include="Parsers\SentencePart.cs" />
     <Compile Include="Helpers\IdentityInt.cs" />
     <Compile Include="Helpers\IdentityLong.cs" />
-    <Compile Include="Parsers\Keyword.cs" />
-    <Compile Include="Parsers\KeywordParser.cs" />
     <Compile Include="Helpers\DiagnosticsHelper.cs" />
     <Compile Include="Serialization\DataContractJsonHelper.cs" />
     <Compile Include="Serialization\DataContractHelper.cs" />

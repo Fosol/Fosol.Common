@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Formatters.Keywords
+namespace Fosol.Common.Parsers.Elements
 {
     /// <summary>
-    /// A ValueKeyword provides a way to dynamically format the passed data and convert it into a string value.
+    /// A ValueElement provides a way to dynamically format the passed data and convert it into a string value.
     /// </summary>
-    [FormatKeyword("value")]
-    public sealed class ValueKeyword
-        : FormatDynamicKeyword
+    [Element("value")]
+    public sealed class ValueElement
+        : DynamicElement
     {
         #region Variables
         #endregion
@@ -21,16 +21,16 @@ namespace Fosol.Common.Formatters.Keywords
         /// <summary>
         /// get/set - The formatting for the data.
         /// </summary>
-        [FormatKeywordProperty("format", new string[] { "f" })]
+        [ElementProperty("format", new string[] { "f" })]
         public string Format { get; set; }
         #endregion
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a ValueKeyword.
+        /// Creates a new instance of a ValueElement.
         /// </summary>
         /// <param name="attributes">Configuration for this keyword.</param>
-        public ValueKeyword(StringDictionary attributes)
+        public ValueElement(StringDictionary attributes)
             : base(attributes)
         {
         }

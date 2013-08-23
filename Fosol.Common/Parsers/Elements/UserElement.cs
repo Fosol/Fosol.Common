@@ -1,18 +1,18 @@
-﻿using Fosol.Common.Formatters.Keywords;
+﻿using Fosol.Common.Parsers.Elements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Formatters.Keywords
+namespace Fosol.Common.Parsers.Elements
 {
     /// <summary>
-    /// Renders the application domain name.
+    /// Renders the current username.
     /// </summary>
-    [FormatKeyword("appDomain")]
-    public sealed class AppDomainKeyword
-        : FormatDynamicKeyword
+    [Element("user")]
+    public sealed class UserElement
+        : DynamicElement
     {
         #region Variables
         #endregion
@@ -25,13 +25,13 @@ namespace Fosol.Common.Formatters.Keywords
 
         #region Methods
         /// <summary>
-        /// Renders the current application domain name.
+        /// Outputs the username and domain.
         /// </summary>
         /// <param name="data">Information object containing data for the keyword.</param>
-        /// <returns>The current application domain name.</returns>
+        /// <returns>The username currently logged in.</returns>
         public override string Render(object data)
         {
-            return AppDomain.CurrentDomain.FriendlyName;
+            return Environment.UserDomainName + "\\" + Environment.UserName;
         }
         #endregion
 
