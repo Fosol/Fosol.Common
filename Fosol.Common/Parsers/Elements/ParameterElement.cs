@@ -47,12 +47,19 @@ namespace Fosol.Common.Parsers.Elements
 
         #region Methods
         /// <summary>
-        /// Dynamically generate the value this keyword makes.
+        /// Return the parameter name.
+        /// If the data is a string value it will be treated as a string format (i.e. {0}={1} will result in the Name=Value).
         /// </summary>
         /// <param name="data">Data to be used in the result.</param>
         /// <returns>String value.</returns>
         public override string Render(object data)
         {
+            // Check if a format string was supplied.
+            var format = data as string;
+            if (format != null && format.Contains("{0}"))
+            {
+                return string.Format(format, this.ParameterName, this.Value.Render(data));
+            }
             return this.ParameterName;
         }
         #endregion

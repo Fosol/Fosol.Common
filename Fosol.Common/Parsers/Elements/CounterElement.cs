@@ -31,7 +31,7 @@ namespace Fosol.Common.Parsers.Elements
         /// <summary>
         /// get/set - The starting value of the sequence.
         /// </summary>
-        [ElementProperty("value", new string[] { "v", "val" })]
+        [ElementProperty("value", new string[] { "v", "val", "start" })]
         public int Value { get; set; }
 
         /// <summary>
@@ -52,10 +52,10 @@ namespace Fosol.Common.Parsers.Elements
         {
             lock (_Counters)
             {
+                // Subtract the increment to ensure the first render results in the start value.
+                // Any other instance of a counter without a unique CounterName will use the static value.
                 if (!_Counters.ContainsKey(this.CounterName))
-                    _Counters.Add(this.CounterName, this.Value);
-                else
-                    _Counters[this.CounterName] = this.Value;
+                    _Counters.Add(this.CounterName, this.Value - this.Increment);
             }
         }
         #endregion

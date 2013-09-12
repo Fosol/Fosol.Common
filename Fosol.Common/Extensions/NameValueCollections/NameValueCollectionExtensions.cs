@@ -62,6 +62,26 @@ namespace Fosol.Common.Extensions.NameValueCollections
 
             return dictionary;
         }
+
+        /// <summary>
+        /// Converts a NameValueCollection object into a Dictionary.
+        /// </summary>
+        /// <param name="obj">NameValueCollection object.</param>
+        /// <returns>New Dictionary object.</returns>
+        public static Dictionary<string, object> ToDictionary(this NameValueCollection obj)
+        {
+            if (obj == null)
+                return null;
+
+            var dictionary = new Dictionary<string, object>();
+
+            foreach (var key in obj.AllKeys)
+            {
+                dictionary.Add(key, obj[key]);
+            }
+
+            return dictionary;
+        }
         #endregion
     }
 }

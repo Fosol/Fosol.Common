@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,25 +23,29 @@ namespace Fosol.Common.Parsers.Elements
         /// <summary>
         /// get/set - Value to separate identity values.
         /// </summary>
-        [ElementProperty("delimiter")]
+        [DefaultValue(":")]
+        [ElementProperty("delimiter", new[] { "del", "d" })]
         public string Delimiter { get; set; }
 
         /// <summary>
         /// get/set - Whether to include the name.
         /// </summary>
-        [ElementProperty("name")]
+        [DefaultValue(true)]
+        [ElementProperty("name", new []{ "showname", "n" })]
         public bool ShowName { get; set; }
 
         /// <summary>
         /// get/set - Whether to include the authentication type.
         /// </summary>
-        [ElementProperty("type")]
+        [DefaultValue(true)]
+        [ElementProperty("type", new[] { "showauthtype", "t" })]
         public bool ShowAuthType { get; set; }
 
         /// <summary>
         /// get/set - Whether to include the is authenticated value.
         /// </summary>
-        [ElementProperty("auth")]
+        [DefaultValue(true)]
+        [ElementProperty("auth", new[] { "showisauth", "a" })]
         public bool ShowIsAuthenticated { get; set; }
         #endregion
 
@@ -52,18 +57,6 @@ namespace Fosol.Common.Parsers.Elements
         public IdentityElement(StringDictionary attributes)
             : base(attributes)
         {
-            var show_name = true;
-            var show_authtype = true;
-            var show_is_auth = true;
-
-            bool.TryParse(this.Attributes["name"], out show_name);
-            bool.TryParse(this.Attributes["type"], out show_authtype);
-            bool.TryParse(this.Attributes["auth"], out show_is_auth);
-
-            this.Delimiter = this.Attributes["delimiter"] ?? ":";
-            this.ShowName = show_name;
-            this.ShowAuthType = show_authtype;
-            this.ShowIsAuthenticated = show_is_auth;
         }
         #endregion
 
@@ -94,13 +87,15 @@ namespace Fosol.Common.Parsers.Elements
 
                     if (this.ShowAuthType)
                     {
-                        builder.Append(this.Delimiter);
+                        if (builder.Length > 0)
+                            builder.Append(this.Delimiter);
                         builder.Append(identity.AuthenticationType);
                     }
 
                     if (this.ShowName)
                     {
-                        builder.Append(this.Delimiter);
+                        if (builder.Length > 0)
+                            builder.Append(this.Delimiter);
                         builder.Append(identity.Name);
                     }
 

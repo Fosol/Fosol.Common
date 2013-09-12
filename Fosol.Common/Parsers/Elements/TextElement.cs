@@ -23,7 +23,6 @@ namespace Fosol.Common.Parsers.Elements
         #region Constructors
         /// <summary>
         /// Creates a new instance of a TextElement object.
-        /// Remember to populate the Text property in your subclass.
         /// </summary>
         /// <param name="text">Original string value that created this keyword.</param>
         public TextElement(string text)

@@ -47,8 +47,9 @@ namespace Fosol.Common.Parsers
         /// </summary>
         /// <param name="text">Text value to look for the start boundary in.</param>
         /// <param name="startIndex">Index position to begin searching within the string.</param>
+        /// <param name="checkForEscape">When 'true' it will check for to see if the boundary is escaped, if escaped it will continue looking for the next boundary.</param>
         /// <returns>Index position of boundary if found, or -1 if not found.</returns>
-        public int IndexOfBoundaryIn(string text, int startIndex)
+        public int IndexOfBoundaryIn(string text, int startIndex, bool checkForEscape = true)
         {
             if (startIndex >= text.Length)
                 return -1;
@@ -57,7 +58,8 @@ namespace Fosol.Common.Parsers
 
             // Check if the boundary has been escaped.
             // If it's escaped continue looking or return -1.
-            if (pos != -1
+            if (checkForEscape
+                && pos != -1
                 && IsEscaped(text, pos))
             {
                 pos = ShiftRight(text, pos, true);
@@ -74,8 +76,9 @@ namespace Fosol.Common.Parsers
         /// <param name="text">Text value to look for the start boundary in.</param>
         /// <param name="startIndex">Index position to begin searching within the string.</param>
         /// <param name="count">Number of character positions to examine.</param>
+        /// <param name="checkForEscape">When 'true' it will check for to see if the boundary is escaped, if escaped it will continue looking for the next boundary.</param>
         /// <returns>Index position of boundary if found, or -1 if not found.</returns>
-        public int IndexOfBoundaryIn(string text, int startIndex, int count)
+        public int IndexOfBoundaryIn(string text, int startIndex, int count, bool checkForEscape = true)
         {
             if (startIndex >= text.Length)
                 return -1;
@@ -88,7 +91,8 @@ namespace Fosol.Common.Parsers
 
             // Check if the boundary has been escaped.
             // If it's escaped continue looking or return -1.
-            if (pos != -1
+            if (checkForEscape
+                && pos != -1
                 && IsEscaped(text, pos))
             {
                 pos = ShiftRight(text, pos, true);
@@ -159,7 +163,7 @@ namespace Fosol.Common.Parsers
         /// <param name="text"></param>
         /// <param name="boundaryIndex"></param>
         /// <returns></returns>
-        private bool IsEscaped(string text, int boundaryIndex)
+        public bool IsEscaped(string text, int boundaryIndex)
         {
             if (boundaryIndex >= text.Length)
                 return false;

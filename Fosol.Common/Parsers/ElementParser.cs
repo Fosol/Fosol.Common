@@ -52,15 +52,15 @@ namespace Fosol.Common.Parsers
         /// <summary>
         /// Parses the specially formatted text and updates the Parts collection.
         /// </summary>
-        /// <param name="format">A format string with special boundary syntax that represents Element objects.</param>
+        /// <param name="text">A format string with special boundary syntax that represents Element objects.</param>
         /// <returns>A new ElementFormat object from the format string.</returns>
-        public override Format Parse(string format)
+        public override Format Parse(string text)
         {
             var elements = new List<FormatElement>();
             var pos = 0;
             do
             {
-                elements.Add(NextElement(format, ref pos));
+                elements.Add(NextElement(text, ref pos));
             } while (pos != -1);
             return new Format(elements);
         }
@@ -71,14 +71,14 @@ namespace Fosol.Common.Parsers
         /// <param name="format">A format string with special boundary syntax that represents Element objects.</param>
         /// <param name="indexPosition">Index position to begin searching for elements within the format string.</param>
         /// <returns>A new Element object.</returns>
-        private FormatElement NextElement(string format, ref int indexPosition)
+        private FormatElement NextElement(string text, ref int indexPosition)
         {
-            var start = this.StartBoundary.IndexOfBoundaryIn(format, indexPosition);
+            var start = this.StartBoundary.IndexOfBoundaryIn(text, indexPosition);
 
             // There are no keywords found, return the raw text value.
             if (start == -1)
             {
-                var element = CreateElement(format.Substring(indexPosition));
+                var element = CreateElement(text.Substring(indexPosition));
                 indexPosition = -1;
                 return element;
             }
@@ -86,38 +86,58 @@ namespace Fosol.Common.Parsers
             // A keyword was found but there is text before it, return the text first.
             if (start > indexPosition)
             {
-                var element = CreateElement(format.Substring(indexPosition, start - indexPosition));
+                var element = CreateElement(text.Substring(indexPosition, start - indexPosition));
                 indexPosition = start;
                 return element;
             }
 
             // If we've got to this part it means the indexPosition points to a StartBoundary.
-            var after_start = this.StartBoundary.ShiftRight(format, start);
-            var end = this.EndBoundary.IndexOfBoundaryIn(format, after_start);
+            var after_start = this.StartBoundary.ShiftRight(text, start);
+
+            var end = EndBoundaryIndex(text, after_start);
 
             // End boundary was not found, return the text value.
             if (end == -1)
-                return CreateElement(format.Substring(start));
-
-            var after_end = this.EndBoundary.ShiftRight(format, end);
-
-            // Check if this end belongs to an inner start boundary (i.e. {element?value={value}}}).
-            var inner_start = this.StartBoundary.IndexOfBoundaryIn(format, after_start, end - start);
-            if (inner_start != -1)
-            {
-                end = this.EndBoundary.IndexOfBoundaryIn(format, after_end);
-
-                // End boundary was not found, return the text value.
-                if (end == -1)
-                    return CreateElement(format.Substring(start));
-
-                after_end = this.EndBoundary.ShiftRight(format, end);
-            }
+                return CreateElement(text.Substring(start));
 
             // Update the indexPosition to be after this FormatPart.
-            indexPosition = after_end;
+            indexPosition = this.EndBoundary.ShiftRight(text, end);
 
-            return CreateElement(format.Substring(after_start, end - after_start));
+            return CreateElement(text.Substring(after_start, end - after_start));
+        }
+
+        /// <summary>
+        /// Search for the end boundary.
+        /// Check for inner boundaries before returning index position of end boundary.
+        /// </summary>
+        /// <param name="text">Formatted text containing element boundaries.</param>
+        /// <param name="afterStart">Index position after the discovered start boundary.</param>
+        /// <returns>Index position of end boundary, or -1 if none is found.</returns>
+        private int EndBoundaryIndex(string text, int afterStart)
+        {
+            var end = this.EndBoundary.IndexOfBoundaryIn(text, afterStart, false);
+
+            // End boundary was not found.
+            if (end == -1)
+                return end;
+
+            // Check to make sure the current end boundary doesn't belong to an inner boundary.
+            // An inner boundary match was discovered.  Continue check for an end boundary.
+            if (this.StartBoundary.IndexOfBoundaryIn(text, afterStart, end - afterStart) != -1)
+            {
+                var after_end = this.EndBoundary.ShiftRight(text, end);
+                return EndBoundaryIndex(text, after_end);
+            }
+
+            // There was no inner start boundary, now check if this end boundary has been escaped.
+            // If it has been escaped continue looking for an end boundary.
+            if (this.EndBoundary.IsEscaped(text, end))
+            {
+                var after_end = this.EndBoundary.ShiftRight(text, end);
+                return EndBoundaryIndex(text, after_end);
+            }
+
+            return end;
         }
 
         /// <summary>

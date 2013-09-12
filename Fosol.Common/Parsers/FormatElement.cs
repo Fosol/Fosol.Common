@@ -15,7 +15,7 @@ namespace Fosol.Common.Parsers
     /// <summary>
     /// A Element represents an individual part of a Format.
     /// </summary>
-    public class FormatElement
+    public abstract class FormatElement
     {
         #region Variables
         private string _Name;
@@ -76,6 +76,17 @@ namespace Fosol.Common.Parsers
         /// <returns>New Instance of a FormatElement.</returns>
         public static FormatElement CreateNew(string name, NameValueCollection attributes)
         {
+            return CreateNew(name, attributes.ToStringDictionary());
+        }
+
+        /// <summary>
+        /// Creates a new instance of the FormatElement that uses the specified name.
+        /// </summary>
+        /// <param name="name">Unique name to identify the FormatElement.</param>
+        /// <param name="attributes">Attributes for the element.</param>
+        /// <returns>New Instance of a FormatElement.</returns>
+        public static FormatElement CreateNew(string name, StringDictionary attributes)
+        {
             // There was no FormatElement with the specified name, simply generate a static TextElement.
             if (!ElementLibrary.ContainsKey(name))
                 return new Elements.TextElement(name);
@@ -90,14 +101,14 @@ namespace Fosol.Common.Parsers
                 if (is_static)
                 {
                     if (type.GetConstructor(new Type[] { typeof(StringDictionary) }) != null)
-                        return (Fosol.Common.Parsers.StaticElement)Activator.CreateInstance(type, attributes.ToStringDictionary());
+                        return (Fosol.Common.Parsers.StaticElement)Activator.CreateInstance(type, attributes);
                     else if (type.GetConstructor(new Type[0]) != null)
                         return (Fosol.Common.Parsers.StaticElement)Activator.CreateInstance(type);
                 }
                 else if (is_dynamic)
                 {
                     if (type.GetConstructor(new Type[] { typeof(StringDictionary) }) != null)
-                        return (Fosol.Common.Parsers.DynamicElement)Activator.CreateInstance(type, attributes.ToStringDictionary());
+                        return (Fosol.Common.Parsers.DynamicElement)Activator.CreateInstance(type, attributes);
                     else if (type.GetConstructor(new Type[0]) != null)
                         return (Fosol.Common.Parsers.DynamicElement)Activator.CreateInstance(type);
                 }
@@ -177,10 +188,7 @@ namespace Fosol.Common.Parsers
         /// <returns>Special formatted string value.</returns>
         public override string ToString()
         {
-            if (this.Attributes.Count == 0)
-                return "{" + this.Name + "}";
-            else
-                return string.Format("{{{0}?{1}}}", this.Name, this.Attributes.ToQueryString());
+            return this.Name;
         }
 
         /// <summary>
@@ -195,25 +203,28 @@ namespace Fosol.Common.Parsers
         }
 
         /// <summary>
-        /// Determine if the object is equal to this keyword.
+        /// Determine if the object is equal to this FormatElement.
         /// </summary>
         /// <param name="obj">Object to compare.</param>
         /// <returns>True if they are equal.</returns>
         public override bool Equals(object obj)
         {
-            var keyword = obj as FormatElement;
+            var element = obj as FormatElement;
 
-            if (ReferenceEquals(keyword, null))
+            if (ReferenceEquals(element, null))
                 return false;
 
-            if (ReferenceEquals(keyword, this))
+            if (ReferenceEquals(element, this))
                 return true;
 
-            if (this.Name == keyword.Name)
-                return this.Attributes.IsEqual(keyword.Attributes);
+            if (this.Name == element.Name
+                && this.Attributes.Count == element.Attributes.Count)
+                return this.Attributes.Equals(element.Attributes);
 
             return false;
         }
+
+
         #endregion
 
         #region Operators

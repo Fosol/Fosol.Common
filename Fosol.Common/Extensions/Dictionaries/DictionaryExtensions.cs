@@ -48,6 +48,27 @@ namespace Fosol.Common.Extensions.Dictionaries
             }
             return builder.ToString();
         }
+
+        /// <summary>
+        /// Converts the StringDictionary into a generic Dictionary.
+        /// </summary>
+        /// <param name="obj">StringDictionary object.</param>
+        /// <returns>New Dictionary object.</returns>
+        public static Dictionary<string, object> ToDictionary(this StringDictionary obj)
+        {
+            if (obj == null)
+                return null;
+
+            var dictionary = new Dictionary<string, object>();
+
+            foreach (string key in obj.Keys)
+            {
+                var v = obj[key];
+                dictionary.Add(key, obj[key]);
+            }
+
+            return dictionary;
+        }
         #endregion
     }
 }
