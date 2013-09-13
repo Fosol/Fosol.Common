@@ -110,7 +110,7 @@ namespace Fosol.Common.Parsers
         /// <param name="boundaryIndex"></param>
         /// <param name="isEscaped"></param>
         /// <returns></returns>
-        private int ShiftRight(string text, int boundaryIndex, bool isEscaped)
+        internal int ShiftRight(string text, int boundaryIndex, bool isEscaped)
         {
             if (isEscaped)
             {
@@ -169,7 +169,7 @@ namespace Fosol.Common.Parsers
                 return false;
 
             // If we've moved past the end of the string return false.
-            if (text.Length <= boundaryIndex + (_Value.Length * 2))
+            if (text.Length <= boundaryIndex + _Value.Length)
                 return false;
             else if (text.Substring(boundaryIndex + _Value.Length, _Value.Length).Equals(_Value, _StringComparison))
                 return true;

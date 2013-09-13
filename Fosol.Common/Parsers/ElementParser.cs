@@ -98,7 +98,10 @@ namespace Fosol.Common.Parsers
 
             // End boundary was not found, return the text value.
             if (end == -1)
+            {
+                indexPosition = end;
                 return CreateElement(text.Substring(start));
+            }
 
             // Update the indexPosition to be after this FormatPart.
             indexPosition = this.EndBoundary.ShiftRight(text, end);
@@ -133,7 +136,11 @@ namespace Fosol.Common.Parsers
             // If it has been escaped continue looking for an end boundary.
             if (this.EndBoundary.IsEscaped(text, end))
             {
-                var after_end = this.EndBoundary.ShiftRight(text, end);
+                var after_end = this.EndBoundary.ShiftRight(text, end, true);
+
+                if (after_end == -1)
+                    return after_end;
+
                 return EndBoundaryIndex(text, after_end);
             }
 

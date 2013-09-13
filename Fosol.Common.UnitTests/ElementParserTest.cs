@@ -41,6 +41,109 @@ namespace Fosol.Common.UnitTests
 
         #region Methods
         /// <summary>
+        /// Test various escape sequences to ensure a format is correctly created from the syntax.
+        /// </summary>
+        [TestMethod]
+        public void EscapedFormats()
+        {
+            var parser = new Fosol.Common.Parsers.ElementParser();
+
+            var format = parser.Parse("{guid");
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 1);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.TextElement);
+            var output = format.Render(null);
+            Assert.IsTrue(output.Equals("{guid"));
+
+            format = parser.Parse("guid}");
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 1);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.TextElement);
+            output = format.Render(null);
+            Assert.IsTrue(output.Equals("guid}"));
+
+            format = parser.Parse("{{guid}}");
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 1);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.TextElement);
+            output = format.Render(null);
+            Assert.IsTrue(output.Equals("{guid}"));
+
+            format = parser.Parse("{guid}}");
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 1);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.TextElement);
+            output = format.Render(null);
+            Assert.IsTrue(output.Equals("{guid}"));
+
+            format = parser.Parse("{{guid}}");
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 1);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.TextElement);
+            output = format.Render(null);
+            Assert.IsTrue(output.Equals("{guid}"));
+
+            format = parser.Parse("{{guid");
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 1);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.TextElement);
+            output = format.Render(null);
+            Assert.IsTrue(output.Equals("{guid"));
+
+            format = parser.Parse("guid}}");
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 1);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.TextElement);
+            output = format.Render(null);
+            Assert.IsTrue(output.Equals("guid}"));
+
+            format = parser.Parse("{guid{}}");
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 1);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.TextElement);
+            output = format.Render(null);
+            Assert.IsTrue(output.Equals("guid{}"));
+
+            format = parser.Parse("{guid{test}}");
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 1);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.TextElement);
+            output = format.Render(null);
+            Assert.IsTrue(output.Equals("guid{test}"));
+
+            format = parser.Parse("{guid{test}}{guid}");
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 2);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.TextElement);
+            Assert.IsTrue(format.Elements[1] is Fosol.Common.Parsers.Elements.GuidElement);
+            output = format.Render(null);
+            Assert.IsTrue(output.StartsWith("guid{test}"));
+
+            format = parser.Parse("{guid{test}} {guid}");
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 3);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.TextElement);
+            Assert.IsTrue(format.Elements[1] is Fosol.Common.Parsers.Elements.TextElement);
+            Assert.IsTrue(format.Elements[2] is Fosol.Common.Parsers.Elements.GuidElement);
+            output = format.Render(null);
+            Assert.IsTrue(output.StartsWith("guid{test} "));
+
+            format = parser.Parse("{guid{test}?value={test2}}");
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 1);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.TextElement);
+            output = format.Render(null);
+            Assert.IsTrue(output.StartsWith("guid{test}"));
+
+            format = parser.Parse("{guid{{test}}");
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 1);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.TextElement);
+            output = format.Render(null);
+            Assert.IsTrue(output.StartsWith("{guid{test}"));
+        }
+
+        /// <summary>
         /// Test AppDomainElement.
         /// </summary>
         [TestMethod]
@@ -356,8 +459,21 @@ namespace Fosol.Common.UnitTests
             Assert.IsTrue(format.Elements.Count == 1);
             Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.ValueElement);
 
-            var output = format.Render(null);
+            var output = format.Render(10);
             Assert.IsNotNull(output);
+            Assert.IsTrue(int.Parse(output) == 10);
+
+            format = parser.Parse("{value?format={0:00.00}}");
+
+            Assert.IsNotNull(format);
+            Assert.IsTrue(format.Elements.Count == 1);
+            Assert.IsTrue(format.Elements[0] is Fosol.Common.Parsers.Elements.ValueElement);
+            Assert.IsTrue(format.Elements[0].Attributes.Count == 1);
+
+            output = format.Render(5.4);
+            Assert.IsNotNull(output);
+            Assert.IsTrue(output.Equals("05.40"));
+            Assert.IsTrue(double.Parse(output) == 5.4);
         }
         #endregion
 

@@ -45,9 +45,9 @@ namespace Fosol.Common.Parsers.Elements
         public override string Render(object data)
         {
             if (string.IsNullOrEmpty(this.Format))
-                return string.Format("{0}", data);
+                return data.ToString();
             else
-                return string.Format("{0:" + this.Format + "}", data);
+                return string.Format(this.Format, data);
         }
         #endregion
 
