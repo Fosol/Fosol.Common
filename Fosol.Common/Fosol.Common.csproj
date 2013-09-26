@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
@@ -79,14 +80,13 @@
     <Compile Include="Configuration\ConfigurationElementCollection`.cs" />
     <Compile Include="Configuration\ConfigurationSectionFileWatcher`.cs" />
     <Compile Include="Configuration\ConfigurationSectionFileWatcherBase`.cs" />
-    <Compile Include="Configuration\ConfigurationSectionWatcher%27.cs" />
     <Compile Include="Configuration\Events\ConfigurationSectionErrorEventArgs.cs" />
     <Compile Include="Configuration\TypeElement`.cs" />
     <Compile Include="Configuration\TypeElement.cs" />
     <Compile Include="Converters\EnumConverter`.cs" />
     <Compile Include="Converters\MailAddressConverter.cs" />
     <Compile Include="Converters\EncodingConverter.cs" />
-    <Compile Include="Converters\ElementFormatConverter.cs" />
+    <Compile Include="Parsers\Converters\ElementFormatConverter.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
     <Compile Include="Data\TableName.cs" />
     <Compile Include="Exceptions\AttributeRequiredException.cs" />

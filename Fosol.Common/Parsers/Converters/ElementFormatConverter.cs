@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Converters
+namespace Fosol.Common.Parsers.Converters
 {
     /// <summary>
-    /// Convert a special formatted string into a StringFormatter (or vise-versa).
+    /// Convert a special formatted string into a Format (or vise-versa).
     /// </example>
-    public class ElementFormatConverter
+    public class FormatConverter
         : TypeConverter
     {
         #region Variables
@@ -52,7 +52,7 @@ namespace Fosol.Common.Converters
         }
 
         /// <summary>
-        /// Convert from a specially formatted string value to a StringFormatter.
+        /// Convert from a specially formatted string value to a Format.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="culture"></param>

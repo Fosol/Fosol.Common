@@ -10,7 +10,7 @@ namespace Fosol.Common.Caching
     /// A CacheItem contains a reference to a value.
     /// </summary>
     /// <typeparam name="T">Type of object being cached.</typeparam>
-    public class CacheItem<T>
+    public sealed class CacheItem<T>
         : IDisposable, Fosol.Common.Caching.ICacheItem<T>
     {
         #region Variables

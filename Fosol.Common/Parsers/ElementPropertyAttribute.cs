@@ -18,7 +18,6 @@ namespace Fosol.Common.Parsers
         #region Variables
         private readonly string _Name;
         private readonly string[] _Abbr;
-        private readonly bool _IsRequired;
         private readonly TypeConverter _Converter;
         #endregion
 
@@ -33,12 +32,6 @@ namespace Fosol.Common.Parsers
         /// Be careful when assigning abbreviations to ensure they are not used by another parameter for the same keyword.
         /// </summary>
         public string[] Abbreviations { get { return _Abbr; } }
-
-        /// <summary>
-        /// get - Whether this parameter is optional.
-        /// </summary>
-        [DefaultValue(false)]
-        public bool IsRequired { get { return _IsRequired; } }
 
         /// <summary>
         /// get - Type of TypeConverter to use when setting the property of field.
@@ -57,19 +50,7 @@ namespace Fosol.Common.Parsers
         /// <exception cref="System.ArgumentNullException">Parameter "name" cannot be null.</exception>
         /// <param name="name">Parameter name.</param>
         public ElementPropertyAttribute(string name)
-            : this(name, null, false, null)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new instance of a LogKeywordParameterAttribute object.
-        /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "name" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "name" cannot be null.</exception>
-        /// <param name="name">Parameter name.</param>
-        /// <param name="isRequired">Whether the parameter is optional.</param>
-        public ElementPropertyAttribute(string name, bool isRequired)
-            : this(name, null, isRequired, null)
+            : this(name, new string[0])
         {
         }
 
@@ -82,21 +63,7 @@ namespace Fosol.Common.Parsers
         /// <param name="converterType">TypeConverter to use to convert configuration values.</param>
         /// <param name="converterArgs">Arguments to supply to the TypeConverter.</param>
         public ElementPropertyAttribute(string name, Type converterType, params object[] converterArgs)
-            : this(name, null, false, converterType, converterArgs)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new instance of a LogKeywordParameterAttribute object.
-        /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "name" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "name" cannot be null.</exception>
-        /// <param name="name">Parameter name.</param>
-        /// <param name="isRequired">Whether the parameter is optional.</param>
-        /// <param name="converterType">TypeConverter to use to convert configuration values.</param>
-        /// <param name="converterArgs">Arguments to supply to the TypeConverter.</param>
-        public ElementPropertyAttribute(string name, bool isRequired, Type converterType, params object[] converterArgs)
-            : this(name, null, isRequired, converterType, converterArgs)
+            : this(name, null, converterType, converterArgs)
         {
         }
 
@@ -108,7 +75,7 @@ namespace Fosol.Common.Parsers
         /// <param name="name">Parameter name.</param>
         /// <param name="abbrev">Parameter name abbreviations.</param>
         public ElementPropertyAttribute(string name, string[] abbrev)
-            : this(name, abbrev, false, null)
+            : this(name, abbrev, null)
         {
         }
 
@@ -119,29 +86,13 @@ namespace Fosol.Common.Parsers
         /// <exception cref="System.ArgumentNullException">Parameter "name" cannot be null.</exception>
         /// <param name="name">Parameter name.</param>
         /// <param name="abbrev">Parameter name abbreviations.</param>
-        /// <param name="converterType">TypeConverter to use to convert configuration values.</param>
-        /// <param name="converterArgs">Arguments to supply to the TypeConverter.</param>
-        public ElementPropertyAttribute(string name, string[] abbrev, Type converterType, params object[] converterArgs)
-            : this(name, abbrev, false, converterType, converterArgs)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new instance of a LogKeywordParameterAttribute object.
-        /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "name" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "name" cannot be null.</exception>
-        /// <param name="name">Parameter name.</param>
-        /// <param name="abbrev">Parameter name abbreviations.</param>
-        /// <param name="isRequired">Whether the parameter is optional.</param>
         /// <param name="converter">TypeConverter to use to convert configuration values.</param>
         /// <param name="converterArgs">Arguments to supply to the TypeConverter.</param>
-        public ElementPropertyAttribute(string name, string[] abbrev, bool isRequired, Type converterType, params object[] converterArgs)
+        public ElementPropertyAttribute(string name, string[] abbrev, Type converterType, params object[] converterArgs)
         {
             Common.Validation.Assert.IsNotNullOrEmpty(name, "name");
             _Name = name;
             _Abbr = abbrev;
-            _IsRequired = isRequired;
 
             if (converterType != null)
             {
@@ -150,19 +101,6 @@ namespace Fosol.Common.Parsers
                 else if (converterType.HasEmptyConstructor())
                     _Converter = (TypeConverter)Activator.CreateInstance(converterType);
             }
-        }
-
-        /// <summary>
-        /// Creates a new instance of a LogKeywordParameterAttribute object.
-        /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "name" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "name" cannot be null.</exception>
-        /// <param name="name">Parameter name.</param>
-        /// <param name="abbrev">Parameter name abbreviations.</param>
-        /// <param name="isRequired">Whether the parameter is optional.</param>
-        public ElementPropertyAttribute(string name, string[] abbrev, bool isRequired)
-            : this(name, abbrev, isRequired, null)
-        {
         }
         #endregion
 
