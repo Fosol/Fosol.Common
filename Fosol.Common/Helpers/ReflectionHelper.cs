@@ -37,7 +37,15 @@ namespace Fosol.Common.Helpers
 
             try
             {
-                result = Convert.ChangeType(value, convertTo);
+                if (!convertTo.IsEnum)
+                    result = Convert.ChangeType(value, convertTo);
+                else
+                {
+                    var converter = new EnumConverter(convertTo);
+                    if (converter.CanConvertFrom(value.GetType()))
+                        result = converter.ConvertFrom(value);
+                }
+
                 return true;
             }
             catch
@@ -68,7 +76,15 @@ namespace Fosol.Common.Helpers
 
             try
             {
-                result = (T)Convert.ChangeType(value, type);
+                if (!type.IsEnum)
+                    result = (T)Convert.ChangeType(value, type);
+                else
+                {
+                    var converter = new EnumConverter(type);
+                    if (converter.CanConvertFrom(value.GetType()))
+                        result = (T)converter.ConvertFrom(value);
+                }
+
                 return true;
             }
             catch

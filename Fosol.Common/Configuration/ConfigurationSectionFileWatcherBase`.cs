@@ -28,11 +28,12 @@ namespace Fosol.Common.Configuration
         private bool _IsWatching = false;
         private T _ConfigurationSection;
         private string _FilePath;
+        private bool _ThrowOnError = true;
 
         /// <summary>
         /// Fires when the configuration fails to load.
         /// </summary>
-        public event EventHandler<Events.ConfigurationSectionErrorEventArgs> ConfigurationError;
+        public event EventHandler<Events.ConfigurationSectionErrorEventArgs> Error;
 
         /// <summary>
         /// Fires when the configuration file has changed.
@@ -164,6 +165,38 @@ namespace Fosol.Common.Configuration
                 }
             }
         }
+
+        /// <summary>
+        /// Whether exceptions that occur during the LoadConfig or RefreshSection are thrown as exceptions or whether they fire the ConfigurationError event instead.
+        /// By default it will throw the exception as per usual coding standards.
+        /// </summary>
+        public bool ThrowOnError
+        {
+            get
+            {
+                _Lock.EnterReadLock();
+                try
+                {
+                    return _ThrowOnError;
+                }
+                finally
+                {
+                    _Lock.ExitReadLock();
+                }
+            }
+            set
+            {
+                _Lock.EnterWriteLock();
+                try
+                {
+                    _ThrowOnError = value;
+                }
+                finally
+                {
+                    _Lock.ExitWriteLock();
+                }
+            }
+        }
         #endregion
 
         #region Constructors
@@ -190,12 +223,16 @@ namespace Fosol.Common.Configuration
 
         #region Methods
         /// <summary>
-        /// Provides a way to inherited classes to fire the ConfigurationError event.
+        /// Raises ConfigurationError event.
+        /// Provides a way for inherited classes to receive the ConfigurationError event.
         /// </summary>
         /// <param name="ex">Exception that was thrown.</param>
-        protected virtual void OnConfigurationError(Exception ex)
+        protected virtual void OnError(Exception ex)
         {
-            this.ConfigurationError.Raise(this, new Events.ConfigurationSectionErrorEventArgs(ex));
+            if (this.ThrowOnError)
+                throw ex;
+            else
+                this.Error.Raise(this, new Events.ConfigurationSectionErrorEventArgs(ex));
         }
 
         /// <summary>
@@ -263,15 +300,17 @@ namespace Fosol.Common.Configuration
         {
             try
             {
+                this._Watcher.EnableRaisingEvents = false;
                 RefreshSection();
             }
             catch (Exception ex)
             {
-                this.ConfigurationError.Raise(sender, new Events.ConfigurationSectionErrorEventArgs(ex, e));
+                this.Error.Raise(sender, new Events.ConfigurationSectionErrorEventArgs(ex, e));
             }
             finally
             {
                 this.FileChanged.Raise(sender, e);
+                this._Watcher.EnableRaisingEvents = true;
             }
         }
 
@@ -285,15 +324,17 @@ namespace Fosol.Common.Configuration
         {
             try
             {
+                this._Watcher.EnableRaisingEvents = false;
                 RefreshSection();
             }
             catch (Exception ex)
             {
-                this.ConfigurationError.Raise(sender, new Events.ConfigurationSectionErrorEventArgs(ex, e));
+                this.Error.Raise(sender, new Events.ConfigurationSectionErrorEventArgs(ex, e));
             }
             finally
             {
                 this.FileCreated.Raise(sender, e);
+                this._Watcher.EnableRaisingEvents = true;
             }
         }
 
@@ -307,15 +348,17 @@ namespace Fosol.Common.Configuration
         {
             try
             {
+                this._Watcher.EnableRaisingEvents = false;
                 RefreshSection();
             }
             catch (Exception ex)
             {
-                this.ConfigurationError.Raise(sender, new Events.ConfigurationSectionErrorEventArgs(ex, e));
+                this.Error.Raise(sender, new Events.ConfigurationSectionErrorEventArgs(ex, e));
             }
             finally
             {
                 this.FileDeleted.Raise(sender, e);
+                this._Watcher.EnableRaisingEvents = true;
             }
         }
 
@@ -329,15 +372,17 @@ namespace Fosol.Common.Configuration
         {
             try
             {
+                this._Watcher.EnableRaisingEvents = false;
                 RefreshSection();
             }
             catch (Exception ex)
             {
-                this.ConfigurationError.Raise(sender, new Events.ConfigurationSectionErrorEventArgs(ex, e));
+                this.Error.Raise(sender, new Events.ConfigurationSectionErrorEventArgs(ex, e));
             }
             finally
             {
                 this.FileRenamed.Raise(sender, e);
+                this._Watcher.EnableRaisingEvents = true;
             }
         }
 

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -172,10 +173,18 @@ namespace Fosol.Common.Parsers
 
                 // Use the default value.
                 if (default_attr != null)
+                {
                     prop.SetValue(this, default_attr.Value);
-                // This parameter is required, throw exception.
-                else if (attr.IsRequired)
+                    continue;
+                }
+
+                var required_attr = prop.GetCustomAttributes(typeof(RequiredAttribute), false).FirstOrDefault() as RequiredAttribute;
+
+                // This parameter is required and has not been set; throw exception.
+                if (required_attr != null)
+                {
                     throw new Exceptions.FormatElementAttributeRequiredException(this.Name, attr.Name);
+                }
             }
         }
 

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Fosol.Common.Parsers.Converters;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,13 +26,15 @@ namespace Fosol.Common.Parsers.Elements
         /// <summary>
         /// get/set - The parameter name.
         /// </summary>
-        [ElementProperty("name", true)]
+        [ElementProperty("name")]
+        [Required(AllowEmptyStrings = false)]
         public string ParameterName { get; set; }
 
         /// <summary>
         /// get/set - The parameter value.
         /// </summary>
-        [ElementProperty("value", true, typeof(Converters.ElementFormatConverter))]
+        [ElementProperty("value", typeof(FormatConverter))]
+        [Required(AllowEmptyStrings = false)]
         public Format Value { get; set; }
         #endregion
 
