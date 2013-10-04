@@ -26,8 +26,9 @@ namespace Fosol.Common.Configuration
         private FileSystemWatcher _Watcher;
         private bool _IsConfigLoaded = false;
         private bool _IsWatching = false;
+        private System.Configuration.Configuration _Configuration;
         private T _ConfigurationSection;
-        private string _FilePath;
+        private string _Filename;
         private bool _ThrowOnError = true;
 
         /// <summary>
@@ -87,12 +88,20 @@ namespace Fosol.Common.Configuration
                 }
             }
         }
+
         /// <summary>
-        /// get - Application configuration file.
+        /// get - Application reference to System.Configuration object.
         /// </summary>
         public System.Configuration.Configuration Configuration
         {
-            get { return ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None); }
+            get 
+            {
+                if (_Configuration == null)
+                    return ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+                return _Configuration; 
+            }
+            protected set { _Configuration = value; }
         }
 
         /// <summary>
@@ -136,16 +145,16 @@ namespace Fosol.Common.Configuration
         }
 
         /// <summary>
-        /// get - Path to configuration section file.
+        /// get - Path to configuration file.
         /// </summary>
-        public string FilePath 
+        public string Filename 
         {
             get
             {
                 _Lock.EnterReadLock();
                 try
                 {
-                    return _FilePath;
+                    return _Filename;
                 }
                 finally
                 {
@@ -157,7 +166,7 @@ namespace Fosol.Common.Configuration
                 _Lock.EnterWriteLock();
                 try
                 {
-                    _FilePath = value;
+                    _Filename = value;
                 }
                 finally
                 {
@@ -212,12 +221,12 @@ namespace Fosol.Common.Configuration
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "pathToFile" cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter "pathToFile" cannot be null.</exception>
-        /// <param name="pathToFile">Full path to the section configuration file.</param>
-        public ConfigurationSectionFileWatcherBase(string pathToFile)
+        /// <param name="filename">Full path to the section configuration file.</param>
+        public ConfigurationSectionFileWatcherBase(string filename)
         {
-            Validation.Assert.IsNotNullOrEmpty(pathToFile, "pathToFile");
+            Validation.Assert.IsNotNullOrEmpty(filename, "filename");
 
-            this.FilePath = pathToFile;
+            this.Filename = filename;
         }
         #endregion
 
@@ -241,16 +250,16 @@ namespace Fosol.Common.Configuration
         /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter "path" cannot be null.</exception>
         /// <exception cref="System.IO.FileNotFoundException">Section configuration file must exist.</exception>
-        /// <param name="pathToFile">Path to section configuration file.</param>
+        /// <param name="filename">Path to section configuration file.</param>
         /// <returns>ConfigurationSection object of type T.</returns>
-        protected static T DeserializeSection(string pathToFile)
+        protected static T DeserializeSection(string filename)
         {
-            Validation.Assert.IsNotNull(pathToFile, "pathToFile");
+            Validation.Assert.IsNotNull(filename, "filename");
 
-            if (!File.Exists(pathToFile))
-                throw new System.IO.FileNotFoundException(String.Format(Resources.Strings.Exception_File_Not_Found, Path.GetFileName(pathToFile)), pathToFile);
+            if (!File.Exists(filename))
+                throw new System.IO.FileNotFoundException(String.Format(Resources.Strings.Exception_File_Not_Found, Path.GetFileName(filename)), filename);
 
-            using (var stream = new FileStream(pathToFile, FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
                 using (var reader = new XmlTextReader(stream))
                 {
@@ -277,7 +286,14 @@ namespace Fosol.Common.Configuration
                 if (!_IsWatching && _IsConfigLoaded)
                 {
                     if (_Watcher == null)
-                        _Watcher = new FileSystemWatcher(Path.GetDirectoryName(this.FilePath), Path.GetFileName(this.FilePath));
+                    {
+                        var path = Path.GetDirectoryName(this.Filename);
+
+                        if (!string.IsNullOrEmpty(path))
+                            _Watcher = new FileSystemWatcher(path, Path.GetFileName(this.Filename));
+                        else
+                            _Watcher = new FileSystemWatcher(Environment.CurrentDirectory, Path.GetFileName(this.Filename));
+                    }
                     _Watcher.NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite | NotifyFilters.CreationTime;
                     _Watcher.Created += OnFileCreated;
                     _Watcher.Changed += OnFileChanged;

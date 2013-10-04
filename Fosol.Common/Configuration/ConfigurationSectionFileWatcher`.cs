@@ -20,6 +20,7 @@ namespace Fosol.Common.Configuration
         where T : ConfigurationSection, new()
     {
         #region Variables
+        private readonly bool _IsExternalConfig;
         #endregion
 
         #region Properties
@@ -27,26 +28,60 @@ namespace Fosol.Common.Configuration
         /// get - The name of the configuration section.
         /// </summary>
         public string SectionName { get; private set; }
+
+        /// <summary>
+        /// get - Whether the configuration file is an full external System.Configuration file.
+        /// </summary>
+        private bool IsExternalConfig 
+        {
+            get { return _IsExternalConfig; }
+        }
         #endregion
 
         #region Constructors
         /// <summary>
         /// Create a new instance of a ConfigurationSectionFileWatcher object.
-        /// Call the Start method to begin watching the configuration file.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "sectionNameOrFilePath" cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter "sectionNameOrFilePath" cannot be null.</exception>
-        /// <param name="sectionNameOrFilePath">Full path to the section configuration file, or the section name of the configuration.</param>
-        public ConfigurationSectionFileWatcher(string sectionNameOrFilePath)
+        /// <param name="sectionNameOrFilename">Full path to the section configuration file, or the section name of the configuration.</param>
+        public ConfigurationSectionFileWatcher(string sectionNameOrFilename)
             : base()
         {
-            Validation.Assert.IsNotNullOrEmpty(sectionNameOrFilePath, "sectionNameOrFilePath");
+            Validation.Assert.IsNotNullOrEmpty(sectionNameOrFilename, "sectionNameOrFilename");
+
+            var full_path = System.IO.Path.Combine(Environment.CurrentDirectory, sectionNameOrFilename);
 
             // Check to see if the file exists at the specified path.  If it doesn't assume this is a section name instead.
-            if (System.IO.File.Exists(sectionNameOrFilePath))
-                this.FilePath = sectionNameOrFilePath;
+            if (System.IO.File.Exists(sectionNameOrFilename))
+                this.Filename = sectionNameOrFilename;
+            else if (System.IO.File.Exists(full_path))
+                this.Filename = full_path;
             else
-                this.SectionName = sectionNameOrFilePath;
+                this.SectionName = sectionNameOrFilename;
+        }
+
+        /// <summary>
+        /// Creates a new instance of a ConfigurationSectionFileWatcher object.
+        /// 
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameters "externalConfigPath" and "sectionName" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameters "externalConfigPath" and "sectionName" cannot be null.</exception>
+        /// <param name="externalConfigFilename">Path to the external System.Configuration file.</param>
+        /// <param name="sectionName">Name of the custom section within the configuraiton file.</param>
+        public ConfigurationSectionFileWatcher(string externalConfigFilename, string sectionName)
+        {
+            Validation.Assert.IsNotNullOrEmpty(externalConfigFilename, "externalConfigFilename");
+            Validation.Assert.IsNotNullOrEmpty(sectionName, "sectionName");
+
+            var full_path = System.IO.Path.Combine(Environment.CurrentDirectory, externalConfigFilename);
+            if (System.IO.File.Exists(externalConfigFilename))
+                this.Filename = externalConfigFilename;
+            else
+                this.Filename = full_path;
+
+            this.SectionName = sectionName;
+            _IsExternalConfig = true;
         }
         #endregion
 
@@ -93,7 +128,21 @@ namespace Fosol.Common.Configuration
         {
             try
             {
-                if (!string.IsNullOrEmpty(this.SectionName))
+                if (this.IsExternalConfig)
+                {
+                    // This is pointing to an external System.Configuration file which will contain a section within it.
+                    if (!System.IO.File.Exists(this.Filename)
+                        || !System.IO.File.Exists(System.IO.Path.Combine(Environment.CurrentDirectory, this.Filename)))
+                        throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.Filename));
+
+                    var file_map = new ConfigurationFileMap(this.Filename);
+                    this.Configuration = ConfigurationManager.OpenMappedMachineConfiguration(file_map);
+                    this.Section = (T)this.Configuration.GetSection(this.SectionName);
+
+                    if (this.Section == null)
+                        throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.SectionName));
+                }
+                else if (!string.IsNullOrEmpty(this.SectionName))
                 {
                     this.Section = (T)Configuration.GetSection(this.SectionName);
 
@@ -101,20 +150,21 @@ namespace Fosol.Common.Configuration
                         throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.SectionName));
 
                     // Set the FilePath if it hasn't already been set.
-                    if (string.IsNullOrEmpty(this.FilePath))
+                    if (string.IsNullOrEmpty(this.Filename))
                     {
                         if (!string.IsNullOrEmpty(this.Section.SectionInformation.ConfigSource))
-                            this.FilePath = this.Section.SectionInformation.ConfigSource;
+                            this.Filename = this.Section.SectionInformation.ConfigSource;
                         else
-                            this.FilePath = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+                            this.Filename = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
                     }
                 }
                 else
                 {
-                    this.Section = ConfigurationSectionFileWatcherBase<T>.DeserializeSection(this.FilePath);
+                    // The external independant section configuration file.
+                    this.Section = ConfigurationSectionFileWatcherBase<T>.DeserializeSection(this.Filename);
 
                     if (this.Section == null)
-                        throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.FilePath));
+                        throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.Filename));
 
                     if (string.IsNullOrEmpty(this.SectionName))
                         this.SectionName = Section.SectionInformation.Name;
