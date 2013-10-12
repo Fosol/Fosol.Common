@@ -38,6 +38,7 @@ namespace Fosol.Common.Parsers
         {
             Validation.Assert.IsNotNullOrEmpty(value, "value");
             _Value = value;
+            _StringComparison = stringComparison;
         }
         #endregion
 
