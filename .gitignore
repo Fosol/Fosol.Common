@@ -1,5 +1,4 @@
-/Fosol.Common/bin/
-/Fosol.Common/obj/
-/Fosol.Common.UnitTests/bin/
-/Fosol.Common.UnitTests/obj/
-
+[Bb]in
+[Oo]bj
+*.user
+*.suo
