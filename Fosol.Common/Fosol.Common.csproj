@@ -201,10 +201,9 @@
     <Content Include="License.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Schemas\NuSpec.xsd">
+    <None Include="Schemas\NuSpec.xsd">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
