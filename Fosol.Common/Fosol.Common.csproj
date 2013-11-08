@@ -86,6 +86,7 @@
     <Compile Include="Converters\EnumConverter`.cs" />
     <Compile Include="Converters\MailAddressConverter.cs" />
     <Compile Include="Converters\EncodingConverter.cs" />
+    <Compile Include="HashCode.cs" />
     <Compile Include="Parsers\Converters\ElementFormatConverter.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
     <Compile Include="Data\TableName.cs" />
