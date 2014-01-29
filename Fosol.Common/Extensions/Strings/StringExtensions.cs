@@ -14,6 +14,26 @@ namespace Fosol.Common.Extensions.Strings
     public static class StringExtensions
     {
         #region Methods
+
+        /// <summary>
+        /// Indent the text value the specified number of times.
+        /// </summary>
+        /// <param name="text">Text value to be indented</param>
+        /// <param name="quantity">Number of tabs to indent the text.</param>
+        /// <param name="tab">Tab value to use when indenting.  Default value is "\t".</param>
+        /// <returns>Indented text value.</returns>
+        public static string Indent(this string text, int quantity, string tab = "\t")
+        {
+            if (quantity <= 0)
+                return text;
+
+            var indent_array = new string[quantity];
+
+            for (var i = 0; i < quantity; i++) indent_array[i] = tab;
+
+            return indent_array.Aggregate((a, b) => a + b) + text;
+        }
+
         /// <summary>
         /// Converts a string into a byte array.
         /// </summary>

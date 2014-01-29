@@ -13,7 +13,7 @@ namespace Fosol.Common.Data
     {
         #region Variables
         #endregion
-
+        
         #region Properties
         /// <summary>
         /// get - The name of the table.

@@ -67,7 +67,7 @@ namespace Fosol.Common.Extensions.Enums
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "enumType" must be of type enum.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter "enumType" cannot be null.</exception>
-        /// <param name="enumType">Type of Enum you want to create a Dictionary for.</param>
+        /// <param name="enumType">Type of Enum you want to create a collection from.</param>
         /// <returns>Collection of string values.</returns>
         public static IEnumerable<string> GetNames(this Type enumType)
         {
@@ -78,6 +78,24 @@ namespace Fosol.Common.Extensions.Enums
                 from f in enumType.GetFields(BindingFlags.Public | BindingFlags.Static)
                 where f.IsLiteral
                 select f.Name);
+        }
+
+        /// <summary>
+        /// Returns a collection of enum values from the specified Enum.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "enumType" must be of type enum.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "enumType" cannot be null.</exception>
+        /// <param name="enumType">Type of Enum you want to create a collection from.</param>
+        /// <returns>Collection of enum values.</returns>
+        public static IEnumerable<object> GetEnums(this Type enumType)
+        {
+            Validation.Assert.IsNotNull(enumType, "enumType");
+            Validation.Assert.IsValue(enumType.IsEnum, true, "enumType");
+
+            return (
+                from f in enumType.GetFields(BindingFlags.Public | BindingFlags.Static)
+                where f.IsLiteral
+                select f);
         }
         #endregion
     }
