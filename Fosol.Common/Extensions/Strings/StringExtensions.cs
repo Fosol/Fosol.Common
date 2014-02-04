@@ -14,6 +14,42 @@ namespace Fosol.Common.Extensions.Strings
     public static class StringExtensions
     {
         #region Methods
+        /// <summary>
+        /// Creates a new string an uppercases every single word based on the provided 'text' value.
+        /// This method will uppercase ever word after a space.
+        /// </summary>
+        /// <param name="text">String value to use to create the new result.</param>
+        /// <returns>A new string using title case.</returns>
+        public static string ToTitleCase(this string text)
+        {
+            return text.ToTitleCase(new[] { ' ' });
+        }
+
+        /// <summary>
+        /// Creates a new string an uppercases every single word based on the provided 'text' value.
+        /// </summary>
+        /// <param name="text">String value to use to create the new result.</param>
+        /// <param name="separator">An array of Char which indicate new words.</param>
+        /// <returns>A new string using title case.</returns>
+        public static string ToTitleCase(this string text, char[] separator)
+        {
+            var result = new List<char>();
+            var new_word = true;
+            foreach (var c in text)
+            {
+                var is_separator = separator.Contains(c);
+                if (!is_separator && new_word)
+                {
+                    result.Add(Char.ToUpper(c));
+                    new_word = false;
+                }
+                else result.Add(Char.ToLower(c));
+
+                if (is_separator) new_word = true;
+            }
+
+            return new String(result.ToArray());
+        }
 
         /// <summary>
         /// Indent the text value the specified number of times.
