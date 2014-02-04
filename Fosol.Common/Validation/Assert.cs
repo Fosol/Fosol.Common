@@ -1085,6 +1085,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1097,6 +1098,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1109,6 +1111,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1122,6 +1125,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1135,6 +1139,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -1148,6 +1153,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -1163,6 +1169,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1176,6 +1183,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1189,6 +1197,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1202,6 +1211,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1215,6 +1225,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -1228,6 +1239,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -1243,6 +1255,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1255,6 +1268,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1267,6 +1281,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1280,6 +1295,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1293,6 +1309,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -1306,6 +1323,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -1321,6 +1339,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1333,6 +1352,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1345,6 +1365,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1358,6 +1379,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1371,6 +1393,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -1384,6 +1407,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -1399,6 +1423,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1411,6 +1436,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1423,6 +1449,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1436,6 +1463,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1449,6 +1477,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -1462,6 +1491,7 @@ namespace Fosol.Common.Validation
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
