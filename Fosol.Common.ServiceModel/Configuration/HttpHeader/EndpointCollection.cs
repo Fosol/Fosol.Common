@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Behaviors.Configuration.HttpHeader
+namespace Fosol.Common.ServiceModel.Configuration.HttpHeader
 {
     /// <summary>
     /// Collection of endpoints for a specific service.

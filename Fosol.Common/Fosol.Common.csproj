@@ -48,15 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\Configuration\HttpHeader\EndpointCollection.cs" />
-    <Compile Include="Behaviors\Configuration\HttpHeader\EndpointElement.cs" />
-    <Compile Include="Behaviors\Configuration\HttpHeader\ServiceCollection.cs" />
-    <Compile Include="Behaviors\Configuration\HttpHeader\ServiceElement.cs" />
-    <Compile Include="Behaviors\CorrelationState.cs" />
-    <Compile Include="Behaviors\HttpHeaderBehavior.cs" />
-    <Compile Include="Behaviors\HttpHeaderBehaviorExtensionElement.cs" />
-    <Compile Include="Behaviors\ResponseFormatBehavior.cs" />
-    <Compile Include="Behaviors\ResponseFormatBehaviorExtensionElement.cs" />
     <Compile Include="Caching\CacheItemPriority.cs" />
     <Compile Include="Caching\CacheItemRemovedReason.cs" />
     <Compile Include="Caching\CacheItem`.cs" />
@@ -72,9 +63,6 @@
     <Compile Include="Caching\WeakCache`.cs" />
     <Compile Include="Collections\FunctorComparer`.cs" />
     <Compile Include="Collections\GenericList`.cs" />
-    <Compile Include="Behaviors\Configuration\HttpHeader\HeaderCollection.cs" />
-    <Compile Include="Behaviors\Configuration\HttpHeader\HeaderElement.cs" />
-    <Compile Include="Behaviors\Configuration\HttpHeader\HttpHeaderSection.cs" />
     <Compile Include="Configuration\CDataConfigurationElement.cs" />
     <Compile Include="Configuration\CDataConfigurationPropertyAttribute.cs" />
     <Compile Include="Configuration\ConfigurationElementCollection`.cs" />
@@ -157,7 +145,6 @@
     <Compile Include="Parsers\Elements\DateTimeElement.cs" />
     <Compile Include="Parsers\IFormat.cs" />
     <Compile Include="Serialization\CData.cs" />
-    <Compile Include="ServiceModel\ServiceException`.cs" />
     <Compile Include="Web\DomainComparer.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\WebServiceHelper.cs" />
@@ -186,6 +173,7 @@
     <Compile Include="Validation\AssertFormat.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Behaviors\" />
     <Folder Include="Diagnostics\" />
     <Folder Include="Events\" />
   </ItemGroup>

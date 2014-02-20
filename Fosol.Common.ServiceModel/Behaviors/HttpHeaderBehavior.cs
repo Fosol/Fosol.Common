@@ -1,4 +1,4 @@
-﻿using Fosol.Common.Behaviors.Configuration.HttpHeader;
+﻿using Fosol.Common.ServiceModel.Configuration.HttpHeader;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

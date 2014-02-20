@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Behaviors.Configuration.HttpHeader
+namespace Fosol.Common.ServiceModel.Configuration.HttpHeader
 {
     /// <summary>
     /// An HTTP header to add to the response.

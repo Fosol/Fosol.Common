@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Behaviors.Configuration.HttpHeader
+namespace Fosol.Common.ServiceModel.Configuration.HttpHeader
 {
     /// <summary>
     /// Configuration section to identify, control and add HTTP headers to service endpoints.

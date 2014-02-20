@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.ServiceModel
+namespace Fosol.Common.ServiceModel.Exceptions
 {
     /// <summary>
     /// This provides a standard exception object for Wcf FaultExceptions that occur due to the framework not correctly serializing DataContracts.
