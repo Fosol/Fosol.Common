@@ -147,7 +147,6 @@
     <Compile Include="Serialization\CData.cs" />
     <Compile Include="Web\DomainComparer.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
-    <Compile Include="Helpers\WebServiceHelper.cs" />
     <Compile Include="Initialization\Configuration.cs" />
     <Compile Include="Initialization\Assert.cs" />
     <Compile Include="Serialization\BinaryHelper.cs" />

@@ -6,7 +6,7 @@ using System.ServiceModel.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Behaviors
+namespace Fosol.Common.ServiceModel.Behaviors
 {
     public sealed class HttpHeaderBehaviorExtensionElement
         : BehaviorExtensionElement
@@ -26,8 +26,8 @@ namespace Fosol.Common.Behaviors
         /// <summary>
         /// get/set - The configuration section name for the behavior.
         /// </summary>
-        [ConfigurationProperty("configSectionName", DefaultValue = "httpHeaders", Options = ConfigurationPropertyOptions.None)]
-        public string ConfigSectionName { get; set; }
+        [ConfigurationProperty("sectionName", DefaultValue = "httpHeaders", Options = ConfigurationPropertyOptions.None)]
+        public string SectionName { get; set; }
         #endregion
 
         #region Constructors
@@ -40,7 +40,7 @@ namespace Fosol.Common.Behaviors
         /// <returns>New ResponseFormatBehavior object.</returns>
         protected override object CreateBehavior()
         {
-            var section_name = (string)this.ElementInformation.Properties["configSectionName"].Value;
+            var section_name = (string)this.ElementInformation.Properties["sectionName"].Value;
             if (!string.IsNullOrEmpty(section_name))
                 return new HttpHeaderBehavior(section_name);
             else

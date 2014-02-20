@@ -56,6 +56,7 @@
     <Compile Include="Behaviors\ResponseFormatBehavior.cs" />
     <Compile Include="Behaviors\ResponseFormatBehaviorExtensionElement.cs" />
     <Compile Include="Extensions\Exceptions\ExceptionExtensions.cs" />
+    <Compile Include="Helpers\WebOperationContextHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\ServiceException`.cs" />
     <Compile Include="Resources\Strings.Designer.cs">

@@ -6,12 +6,12 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common.ServiceModel.Helpers
 {
     /// <summary>
     /// Useful methods for web services.
     /// </summary>
-    public static class WebServiceHelper
+    public static class WebOperationContextHelper
     {
         #region Methods
         /// <summary>

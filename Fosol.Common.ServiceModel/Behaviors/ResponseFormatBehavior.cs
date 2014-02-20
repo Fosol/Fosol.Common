@@ -8,7 +8,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Behaviors
+namespace Fosol.Common.ServiceModel.Behaviors
 {
     /// <summary>
     /// Provides a way to ensure the response format is controlled by the request Accept Header or the Query string parameter.
@@ -65,7 +65,7 @@ namespace Fosol.Common.Behaviors
         }
 
         /// <summary>
-        /// Apply a MessageInspector to every endpoint to apply the desired response format.
+        /// Apply a MessageInspector to every endpoint so that they all use this ResponseFormatBehavior
         /// </summary>
         /// <param name="serviceDescription"></param>
         /// <param name="serviceHostBase"></param>
@@ -134,6 +134,7 @@ namespace Fosol.Common.Behaviors
         /// <returns></returns>
         public object AfterReceiveRequest(ref System.ServiceModel.Channels.Message request, System.ServiceModel.IClientChannel channel, System.ServiceModel.InstanceContext instanceContext)
         {
+            Fosol.Common.ServiceModel.Helpers.WebOperationContextHelper.SetResponseFormat(DefaultFormat, QueryParamName);
             return null;
         }
 
@@ -144,7 +145,6 @@ namespace Fosol.Common.Behaviors
         /// <param name="correlationState"></param>
         public void BeforeSendReply(ref System.ServiceModel.Channels.Message reply, object correlationState)
         {
-            Fosol.Common.Helpers.WebServiceHelper.SetResponseFormat(DefaultFormat, QueryParamName);
         }
         #endregion
 

@@ -10,20 +10,20 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Behaviors
+namespace Fosol.Common.ServiceModel.Behaviors
 {
     /// <summary>
     /// Provides a way to automatically include Http Headers in WCF responses based on a configuration file.
     /// By default the configuration section name is "httpHeaders".  You can override this.
     /// </summary>
     public class HttpHeaderBehavior
-        : IEndpointBehavior, IDispatchMessageInspector
+        : IServiceBehavior, IEndpointBehavior, IDispatchMessageInspector
     {
         #region Variables
         private const string ConfigSectionName = "httpHeaders";
         private const string ServiceName = "Service";
         private const string EndpointName = "Endpoint";
-        private const string RequestUriRegex = @"/(?<Service>\w+\.svc)/(?<Endpoint>\w+)/?";
+        private const string RequestUriRegex = @"/(?<Service>\w+(\.svc)?)/(?<Endpoint>(\w+/?)+)";
         private static HttpHeaderSection _HttpHeaderConfiguration;
         #endregion
 
@@ -51,11 +51,55 @@ namespace Fosol.Common.Behaviors
         }
         #endregion
 
+        #region IServiceBehavior Methods
+        /// <summary>
+        /// No behavior added.
+        /// </summary>
+        /// <param name="serviceDescription"></param>
+        /// <param name="serviceHostBase"></param>
+        /// <param name="endpoints"></param>
+        /// <param name="bindingParameters"></param>
+        public void AddBindingParameters(ServiceDescription serviceDescription, System.ServiceModel.ServiceHostBase serviceHostBase, System.Collections.ObjectModel.Collection<ServiceEndpoint> endpoints, BindingParameterCollection bindingParameters)
+        {
+        }
+
+        /// <summary>
+        /// Apply a MessageInspector to every endpoint so that they all use this HttpHeaderBehavior.
+        /// </summary>
+        /// <param name="serviceDescription"></param>
+        /// <param name="serviceHostBase"></param>
+        public void ApplyDispatchBehavior(ServiceDescription serviceDescription, System.ServiceModel.ServiceHostBase serviceHostBase)
+        {
+            foreach (ChannelDispatcher cd in serviceHostBase.ChannelDispatchers)
+                foreach (EndpointDispatcher ed in cd.Endpoints)
+                    ed.DispatchRuntime.MessageInspectors.Add(this);
+        }
+
+        /// <summary>
+        /// No behavior added.
+        /// </summary>
+        /// <param name="serviceDescription"></param>
+        /// <param name="serviceHostBase"></param>
+        public void Validate(ServiceDescription serviceDescription, System.ServiceModel.ServiceHostBase serviceHostBase)
+        {
+        }
+        #endregion
+
         #region IEndpointBehavior Methods
+        /// <summary>
+        /// No behavior added.
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="bindingParameters"></param>
         public void AddBindingParameters(ServiceEndpoint endpoint, System.ServiceModel.Channels.BindingParameterCollection bindingParameters)
         {
         }
 
+        /// <summary>
+        /// No behavior added.
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="clientRuntime"></param>
         public void ApplyClientBehavior(ServiceEndpoint endpoint, System.ServiceModel.Dispatcher.ClientRuntime clientRuntime)
         {
         }
@@ -70,6 +114,10 @@ namespace Fosol.Common.Behaviors
             endpointDispatcher.DispatchRuntime.MessageInspectors.Add(this);
         }
 
+        /// <summary>
+        /// No behavior added.
+        /// </summary>
+        /// <param name="endpoint"></param>
         public void Validate(ServiceEndpoint endpoint)
         {
         }
@@ -108,6 +156,10 @@ namespace Fosol.Common.Behaviors
         /// <param name="correlationState"></param>
         public void BeforeSendReply(ref System.ServiceModel.Channels.Message reply, object correlationState)
         {
+            // No configuration file present.
+            if (_HttpHeaderConfiguration == null)
+                return;
+
             HttpResponseMessageProperty httpResponseMessage;
             object httpResponseMessageObject;
             var state = correlationState as CorrelationState;

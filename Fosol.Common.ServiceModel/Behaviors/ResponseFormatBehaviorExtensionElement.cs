@@ -7,7 +7,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Behaviors
+namespace Fosol.Common.ServiceModel.Behaviors
 {
     /// <summary>
     /// Extension object for the ResponseFormatBehavior object.
@@ -22,7 +22,7 @@ namespace Fosol.Common.Behaviors
     ///     </behaviors>
     ///     <extensions>
     ///         <behaviorExtensions>
-    ///             <add name="responseFormatBehavior" type="Fosol.Common.Behaviors.ResponseFormatBehaviorExtensionElement, Fosol.Common"/>
+    ///             <add name="responseFormatBehavior" type="Fosol.Common.ServiceModel.Behaviors.ResponseFormatBehaviorExtensionElement, Fosol.Common"/>
     ///         </behaviorExtensions>
     ///     </extensions>
     /// </example>

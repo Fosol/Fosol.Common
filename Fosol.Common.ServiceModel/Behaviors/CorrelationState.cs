@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Behaviors
+namespace Fosol.Common.ServiceModel.Behaviors
 {
     /// <summary>
     /// Represents information that will be passed from the AfterReceiveRequest event to the BeforeSendReply event.
