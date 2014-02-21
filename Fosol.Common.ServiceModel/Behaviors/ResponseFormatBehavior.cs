@@ -134,7 +134,7 @@ namespace Fosol.Common.ServiceModel.Behaviors
         /// <returns></returns>
         public object AfterReceiveRequest(ref System.ServiceModel.Channels.Message request, System.ServiceModel.IClientChannel channel, System.ServiceModel.InstanceContext instanceContext)
         {
-            Fosol.Common.ServiceModel.Helpers.WebOperationContextHelper.SetResponseFormat(DefaultFormat, QueryParamName);
+            Fosol.Common.ServiceModel.Helpers.WebOperationContextHelper.AutoResponseFormat(DefaultFormat, QueryParamName);
             return null;
         }
 

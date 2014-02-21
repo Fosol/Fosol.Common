@@ -11,7 +11,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Extensions.Exceptions
+namespace Fosol.Common.ServiceModel.Extensions.Exceptions
 {
     /// <summary>
     /// Extension methods for Exceptions.
@@ -144,7 +144,7 @@ namespace Fosol.Common.Extensions.Exceptions
                             // when an error occured on the service side. An service side error serialized object  
                             // is not deserializable into a TServiceResult 
 
-                            // Reset responseStream to beginning and deserialize to a TServiceError instead 
+                            // Reset responseStream to beginning and deserialize to a TServiceFault instead 
                             response_stream.Seek(0, SeekOrigin.Begin);
 
                             TServiceFault serviceFault;

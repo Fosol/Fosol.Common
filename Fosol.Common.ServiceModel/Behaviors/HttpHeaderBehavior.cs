@@ -16,7 +16,7 @@ namespace Fosol.Common.ServiceModel.Behaviors
     /// Provides a way to automatically include Http Headers in WCF responses based on a configuration file.
     /// By default the configuration section name is "httpHeaders".  You can override this.
     /// </summary>
-    public class HttpHeaderBehavior
+    public sealed class HttpHeaderBehavior
         : IServiceBehavior, IEndpointBehavior, IDispatchMessageInspector
     {
         #region Variables
@@ -131,7 +131,7 @@ namespace Fosol.Common.ServiceModel.Behaviors
         /// <param name="request"></param>
         /// <param name="channel"></param>
         /// <param name="instanceContext"></param>
-        /// <returns></returns>
+        /// <returns>CorrelationState object containing request information.</returns>
         public object AfterReceiveRequest(ref System.ServiceModel.Channels.Message request, System.ServiceModel.IClientChannel channel, System.ServiceModel.InstanceContext instanceContext)
         {
             var uri = request.Headers.To;
@@ -142,8 +142,8 @@ namespace Fosol.Common.ServiceModel.Behaviors
             // Request contains Service and Endpoint information.  This information must be passed to the BeforeSendReply event.
             if (match.Success)
             {
-                state.Properties[ServiceName] = match.Groups[ServiceName].Value;
-                state.Properties[EndpointName] = endpoint;
+                state[ServiceName] = match.Groups[ServiceName].Value;
+                state[EndpointName] = endpoint;
             }
 
             return state;
@@ -152,8 +152,8 @@ namespace Fosol.Common.ServiceModel.Behaviors
         /// <summary>
         /// Apply Http Headers to the response if the configuration has headers for the specified request.
         /// </summary>
-        /// <param name="reply"></param>
-        /// <param name="correlationState"></param>
+        /// <param name="reply">System.ServiceModel.Chennels.Message object.</param>
+        /// <param name="correlationState">CorrelationState object created in the AfterReceiveRequest method.</param>
         public void BeforeSendReply(ref System.ServiceModel.Channels.Message reply, object correlationState)
         {
             // No configuration file present.
@@ -170,8 +170,8 @@ namespace Fosol.Common.ServiceModel.Behaviors
                 httpResponseMessage = httpResponseMessageObject as HttpResponseMessageProperty;
 
                 // Only add the header if it does not exist, or is null or empty.
-                if (state.Properties.ContainsKey(ServiceName) && state.Properties.ContainsKey(EndpointName))
-                    foreach (HeaderElement header in _HttpHeaderConfiguration.GetHeaders(state.Properties[ServiceName] as string, state.Properties[EndpointName] as string))
+                if (state.ContainsKey(ServiceName) && state.ContainsKey(EndpointName))
+                    foreach (HeaderElement header in _HttpHeaderConfiguration.GetHeaders(state[ServiceName] as string, state[EndpointName] as string))
                         if (string.IsNullOrEmpty(httpResponseMessage.Headers[header.Name]))
                             httpResponseMessage.Headers[header.Name] = header.Value;
             }
@@ -180,8 +180,8 @@ namespace Fosol.Common.ServiceModel.Behaviors
                 httpResponseMessage = new HttpResponseMessageProperty();
 
                 // Add all the headers to the message.
-                if (state.Properties.ContainsKey(ServiceName) && state.Properties.ContainsKey(EndpointName))
-                    foreach (HeaderElement header in _HttpHeaderConfiguration.GetHeaders(state.Properties[ServiceName] as string, state.Properties[EndpointName] as string))
+                if (state.ContainsKey(ServiceName) && state.ContainsKey(EndpointName))
+                    foreach (HeaderElement header in _HttpHeaderConfiguration.GetHeaders(state[ServiceName] as string, state[EndpointName] as string))
                         httpResponseMessage.Headers.Add(header.Name, header.Value);
 
                 reply.Properties.Add(HttpResponseMessageProperty.Name, httpResponseMessage);

@@ -10,7 +10,8 @@ namespace Fosol.Common.ServiceModel.Exceptions
     /// This provides a standard exception object for Wcf FaultExceptions that occur due to the framework not correctly serializing DataContracts.
     /// </summary>
     /// <typeparam name="TServiceFault">Type of Service Fault being thrown.</typeparam>
-    public class ServiceException<TServiceFault> : Exception
+    public sealed class ServiceException<TServiceFault> 
+        : Exception
         where TServiceFault : class
     {
         #region Variables

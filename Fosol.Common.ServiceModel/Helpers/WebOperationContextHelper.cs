@@ -1,7 +1,11 @@
 ﻿using Fosol.Common.Extensions.Strings;
+using Fosol.Common.ServiceModel.Extensions.OperationContexts;
+using Fosol.Common.ServiceModel.Extensions.WebOperationContexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.ServiceModel.Channels;
 using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +19,16 @@ namespace Fosol.Common.ServiceModel.Helpers
     {
         #region Methods
         /// <summary>
+        /// Sets the WebOperationContext.Current.OutgoingResponse.Format value.
+        /// WebMessageFormatException - If format is not a valid WebMessageFormat.
+        /// </summary>
+        /// <param name="format">Requested format [XML|JSON]</param>
+        public static void SetResponseFormat(string format)
+        {
+            WebOperationContext.Current.SetResponseFormat(format);
+        }
+
+        /// <summary>
         /// Sets the WebOperationContext.Current.OutgoingResponse.Format to the specified WebMessageFormat value.
         /// First it will check if the WebOperationContext.Current.IncomingRequest.UriTemplateMatch.QueryParameters contains a 'format' parameter.
         /// If the query parameter contains a 'format' value it will use it.
@@ -26,43 +40,47 @@ namespace Fosol.Common.ServiceModel.Helpers
         /// <param name="defaultFormat">The default WebMessageFormat value if one is not supplied in the query parameters.</param>
         /// <param name="queryParamName">The query string parameter name used to specify the WebMessageFormat (default is 'format').</param>
         /// <returns>The WebMessageFormat that the OutgoingResponse will use.</returns>
-        public static WebMessageFormat SetResponseFormat(WebMessageFormat defaultFormat = WebMessageFormat.Xml, string queryParamName = "format")
+        public static WebMessageFormat AutoResponseFormat(WebMessageFormat defaultFormat = WebMessageFormat.Xml, string queryParamName = "format")
         {
-            var format = defaultFormat;
-            var web_operation_context = WebOperationContext.Current;
+            return WebOperationContext.Current.AutoResponseFormat(defaultFormat, queryParamName);
+        }
 
-            // An Accept header can contain multiple content types.
-            var accept_header = web_operation_context.IncomingRequest.Headers["Accept"];
-            if (!string.IsNullOrEmpty(accept_header))
-            {
-                var accepts = accept_header.Split(',');
+        /// <summary>
+        /// Sets the WebOperationContext.Current.OutgoingResponse.SetETag() value.
+        /// Throws WebFaultException with HttpWebStatusCode of 304 if the entityTag is equal to the IncomingRequest ETag.
+        /// </summary>
+        /// <param name="entityTag">Unique key that provides a way to determine if the data has changed since the last request</param>
+        public static void SetETag(string entityTag)
+        {
+            WebOperationContext.Current.SetETag(entityTag);
+        }
 
-                // A valid type is [json|xml].
-                foreach (var accept in accepts)
-                {
-                    var type = accept.Trim();
-                    if (type.EndsWith("json", StringComparison.InvariantCulture) && type.Length >= 4 && "/+".Contains(type.Substring(type.Length - 5, 1)))
-                    {
-                        format = WebMessageFormat.Json;
-                        break;
-                    }
-                    else if (type.EndsWith("xml", StringComparison.InvariantCulture) && type.Length >= 3 && "/+".Contains(type.Substring(type.Length - 4, 1)))
-                    {
-                        format = WebMessageFormat.Xml;
-                        break;
-                    }
-                }
-            }
+        /// <summary>
+        /// Returns client ip
+        /// Look up is in following sequence
+        /// 1. X-Postmedia-True-Client-IP
+        /// 2. True-Client-IP
+        /// 3. X-Forwarded-For
+        /// 4. Request Address (Dns resoloved)
+        /// </summary>
+        /// <returns>list of ip addresses for the client</returns>
+        public static List<string> GetClientIP()
+        {
+            return System.ServiceModel.OperationContext.Current.GetClientIP();
+        }
 
-            // Check if the parameter exists in the query, if it does, use it.
-            // Valid query format values [Xml|Json].
-            var query_format = web_operation_context.IncomingRequest.UriTemplateMatch.QueryParameters[queryParamName];
-            // If the format is invalid throw exception.
-            if (!string.IsNullOrEmpty(query_format))
-                Validation.Assert.IsValue<bool>(Enum.TryParse<WebMessageFormat>(query_format, true, out format), new bool[] { true }, "format");
-
-            web_operation_context.OutgoingResponse.Format = format;
-            return format;
+        /// <summary>
+        /// Returns client ip with source
+        /// Look up is in following sequence
+        /// 1. X-Postmedia-True-Client-IP
+        /// 2. True-Client-IP
+        /// 3. X-Forwarded-For
+        /// 4. Request Address (Dns resoloved)
+        /// </summary>
+        /// <returns>dictionary list of ip addresses for the client with source. Key = source, Value = ip</returns>
+        public static Dictionary<string, string> GetClientIPWithSource()
+        {
+            return System.ServiceModel.OperationContext.Current.GetClientIPWithSource();
         }
         #endregion
     }
