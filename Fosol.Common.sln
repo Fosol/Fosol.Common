@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fosol.Common.UnitTests", "F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fosol.Common.ServiceModel", "Fosol.Common.ServiceModel\Fosol.Common.ServiceModel.csproj", "{40D29ACE-B69A-4DED-9A4B-2BF5AC719C04}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fosol.Common.Azure", "Fosol.Common.Azure\Fosol.Common.Azure.csproj", "{21750702-F041-4094-87E3-7BBC33ADC024}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{40D29ACE-B69A-4DED-9A4B-2BF5AC719C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40D29ACE-B69A-4DED-9A4B-2BF5AC719C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40D29ACE-B69A-4DED-9A4B-2BF5AC719C04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21750702-F041-4094-87E3-7BBC33ADC024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21750702-F041-4094-87E3-7BBC33ADC024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21750702-F041-4094-87E3-7BBC33ADC024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21750702-F041-4094-87E3-7BBC33ADC024}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
