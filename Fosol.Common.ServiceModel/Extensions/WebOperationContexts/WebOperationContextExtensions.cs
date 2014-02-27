@@ -78,7 +78,7 @@ namespace Fosol.Common.ServiceModel.Extensions.WebOperationContexts
                 var query_format = context.IncomingRequest.UriTemplateMatch.QueryParameters[queryParamName];
                 // If the format is invalid throw exception.
                 if (!string.IsNullOrEmpty(query_format))
-                    Validation.Assert.IsValue<bool>(Enum.TryParse<WebMessageFormat>(query_format, true, out format), new bool[] { true }, "format");
+                    Validation.Assert.IsValue(Enum.TryParse<WebMessageFormat>(query_format, true, out format), true, "format");
             }
 
             context.OutgoingResponse.Format = format;

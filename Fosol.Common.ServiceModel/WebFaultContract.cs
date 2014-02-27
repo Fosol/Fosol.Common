@@ -10,7 +10,7 @@ namespace Fosol.Common.ServiceModel
     /// <summary>
     /// WebFault provides a common DataContract for WebFaultException responses.
     /// </summary>
-    [DataContract(Name = "WebFaultContract", Namespace = "www.fosol.ca")]
+    [DataContract(Name = "WebFaultContract", Namespace = "http://www.fosol.ca")]
     [Description("Web service fault DataContract.")]
     public sealed class WebFaultContract
     {
@@ -61,7 +61,7 @@ namespace Fosol.Common.ServiceModel
         /// <param name="statusCode">The HTTP status code of the response.</param>
         public WebFaultContract(string message, HttpStatusCode statusCode)
         {
-            Validation.Assert.IsNotNullOrEmpty(message, "message");
+            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(message, "message");
 
             _Message = message;
             _StatusCode = statusCode;

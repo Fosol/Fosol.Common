@@ -477,6 +477,44 @@ namespace Fosol.Common.Initialization
         }
         #endregion
 
+        #region Convert
+        /// <summary>
+        /// Attempts to convert the value to the desired type and return the result.
+        /// If it fails it resubmits the exception with a valid message which will contain the parameter name.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter 'value' cannot be null.</exception>
+        /// <exception cref="System.FormatException">Parameter 'value' must have a valid format to covert.</exception>
+        /// <exception cref="System.InvalidCastException">Parameter 'value' must be convertable to the desired type.</exception>
+        /// <exception cref="System.OverflowException">Parameter 'value' must be within a valid range for the desired type.</exception>
+        /// <typeparam name="T">Type you want to convert the value into.</typeparam>
+        /// <param name="value">Value to convert from.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Description of the error if it fails to convert the value.</param>
+        public static T Convert<T>(object value, string paramName, string message = null)
+        {
+            try
+            {
+                return (T)System.Convert.ChangeType(value, typeof(T));
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentNullException(string.Format(message ?? Resources.Strings.Initialization_Convert_ArgumentNullException, paramName), paramName);
+            }
+            catch (InvalidCastException ex)
+            {
+                throw new InvalidCastException(string.Format(message ?? Resources.Strings.Iniitialization_Convert_InvalidCastException, paramName, typeof(T).Name), ex);
+            }
+            catch (OverflowException ex)
+            {
+                throw new OverflowException(string.Format(message ?? Resources.Strings.Initialization_Convert_OverflowException, paramName, typeof(T).Name), ex);
+            }
+            catch (FormatException ex)
+            {
+                throw new FormatException(string.Format(message ?? Resources.Strings.Initialization_Convert_FormatException, paramName, typeof(T)), ex);
+            }
+        }
+        #endregion
+
         #region TryParse
         /// <summary>
         /// Asserts that the value uses the defaultValue if it cannot be parsed.

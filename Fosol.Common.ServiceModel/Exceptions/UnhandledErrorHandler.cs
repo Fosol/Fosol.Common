@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Dispatcher;
@@ -67,10 +68,26 @@ namespace Fosol.Common.ServiceModel.Exceptions
         /// <param name="fault">Message that will be sent containing a fault contract.</param>
         public void ProvideFault(Exception error, System.ServiceModel.Channels.MessageVersion version, ref System.ServiceModel.Channels.Message fault)
         {
-            // Any exception that is already a FaultException is assumed to be already handled.
-            if (!(error is FaultException))
+            var web_fault = error as FaultException;
+            if (web_fault != null)
             {
-                var web_fault = (WebFaultException<WebFaultContract>)new WebFaultContract(error);
+                fault = Message.CreateMessage(version, web_fault.CreateMessageFault(), "http://team.fosol.ca");
+
+                // Change the HTTP status code.
+                if (error is WebFaultException)
+                    Helpers.WebOperationContextHelper.SetOutgoingResponseStatusCode(((WebFaultException)error).StatusCode);
+                else if (error.GetType().GetGenericTypeDefinition() == typeof(WebFaultException<>))
+                {
+                    var prop_info = error.GetType().GetProperty("StatusCode", System.Reflection.BindingFlags.GetProperty | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+                    var status = (HttpStatusCode)prop_info.GetValue(error);
+                    Helpers.WebOperationContextHelper.SetOutgoingResponseStatusCode(status);
+                }
+                else
+                    Helpers.WebOperationContextHelper.SetOutgoingResponseStatusCode(System.Net.HttpStatusCode.InternalServerError);
+            }
+            else
+            {
+                web_fault = (WebFaultException<WebFaultContract>)new WebFaultContract(error);
                 fault = Message.CreateMessage(version, web_fault.CreateMessageFault(), "http://team.fosol.ca");
 
                 Helpers.WebOperationContextHelper.SetOutgoingResponseStatusCode(System.Net.HttpStatusCode.InternalServerError);

@@ -75,6 +75,7 @@
     <Compile Include="Extensions\OperationContexts\OperationContextExtensions.cs" />
     <Compile Include="Extensions\WebOperationContexts\WebOperationContextExtensions.cs" />
     <Compile Include="Helpers\WebOperationContextHelper.cs" />
+    <Compile Include="Initialization\Assert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\ServiceException`.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
@@ -82,9 +83,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Validation\Assert.cs" />
     <Compile Include="WebFaultContract.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fosol.Common.ServiceModel.Faults\Fosol.Common.ServiceModel.Faults.csproj">
+      <Project>{e3ca50ce-bcd7-4131-ae94-5a4362bba62f}</Project>
+      <Name>Fosol.Common.ServiceModel.Faults</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fosol.Common\Fosol.Common.csproj">
       <Project>{61d8cac1-6f1b-48fc-b94c-0601f1ce78d5}</Project>
       <Name>Fosol.Common</Name>

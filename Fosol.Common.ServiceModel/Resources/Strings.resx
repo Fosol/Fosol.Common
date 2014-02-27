@@ -120,4 +120,25 @@
   <data name="Exception_ServiceFault" xml:space="preserve">
     <value>A service error occured.  Please inspect the Fault property for details.</value>
   </data>
+  <data name="Iniitialization_Convert_InvalidCastException" xml:space="preserve">
+    <value>Parameter '{0}' must be a valid '{1}' value.</value>
+  </data>
+  <data name="Initialization_Convert_ArgumentNullException" xml:space="preserve">
+    <value>Parameter '{0}' cannot be null.</value>
+  </data>
+  <data name="Initialization_Convert_FormatException" xml:space="preserve">
+    <value>Parameter '{0}' must be a valid format to convert to the desired '{1}' type.</value>
+  </data>
+  <data name="Initialization_Convert_OverflowException" xml:space="preserve">
+    <value>Parameter '{0}' must be a valid '{1}' value.</value>
+  </data>
+  <data name="Validation_Assert_IsNotNull" xml:space="preserve">
+    <value>Parameter '{0}' cannot be null.</value>
+  </data>
+  <data name="Validation_Assert_IsTrue" xml:space="preserve">
+    <value>Parameter '{0}' is not a valid value.</value>
+  </data>
+  <data name="Validation_Assert_IsValue" xml:space="preserve">
+    <value>Parameter '{0}' is not a valid value.</value>
+  </data>
 </root>

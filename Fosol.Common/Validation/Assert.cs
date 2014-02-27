@@ -1611,10 +1611,10 @@ namespace Fosol.Common.Validation
         }
 
         /// <summary>
-        /// If the value does not equal the valid value it will throw System.ArgumentException.
+        /// If the value does not equal the valid value it will throw System.ArgumentOutOfRangeException.
         /// This method is most effective when ensuring a parameter property is appropriate.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "value" is must be a valid value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="validValue">The only valid value.</param>
         /// <param name="paramName">Name of the parameter.</param>
@@ -1625,7 +1625,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!value.Equals(validValue))
-                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>

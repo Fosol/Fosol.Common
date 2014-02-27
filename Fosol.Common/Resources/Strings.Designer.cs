@@ -385,6 +385,42 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; must be a valid &apos;{1}&apos; value..
+        /// </summary>
+        internal static string Iniitialization_Convert_InvalidCastException {
+            get {
+                return ResourceManager.GetString("Iniitialization_Convert_InvalidCastException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; cannot be null..
+        /// </summary>
+        internal static string Initialization_Convert_ArgumentNullException {
+            get {
+                return ResourceManager.GetString("Initialization_Convert_ArgumentNullException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; must be a valid format to convert to the desired &apos;{1}&apos; type..
+        /// </summary>
+        internal static string Initialization_Convert_FormatException {
+            get {
+                return ResourceManager.GetString("Initialization_Convert_FormatException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; must be a valid &apos;{1}&apos; value..
+        /// </summary>
+        internal static string Initialization_Convert_OverflowException {
+            get {
+                return ResourceManager.GetString("Initialization_Convert_OverflowException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}   --- End of inner exception stack trace ---{0}.
         /// </summary>
         internal static string Value_Exception_ToString {

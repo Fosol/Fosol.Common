@@ -46,7 +46,7 @@ namespace Fosol.Common.ServiceModel.Behaviors
             {
                 if (value != null)
                 {
-                    Validation.Assert.IsTrue(value.IsStatic, "ErrorHandlerType", "Type must be static.");
+                    Fosol.Common.Validation.Assert.IsTrue(value.IsStatic(), "ErrorHandlerType", "Type must be static.");
                 }
 
                 _ErrorHandlerType = value;

@@ -68,5 +68,68 @@ namespace Fosol.Common.ServiceModel.Resources {
                 return ResourceManager.GetString("Exception_ServiceFault", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; must be a valid &apos;{1}&apos; value..
+        /// </summary>
+        internal static string Iniitialization_Convert_InvalidCastException {
+            get {
+                return ResourceManager.GetString("Iniitialization_Convert_InvalidCastException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; cannot be null..
+        /// </summary>
+        internal static string Initialization_Convert_ArgumentNullException {
+            get {
+                return ResourceManager.GetString("Initialization_Convert_ArgumentNullException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; must be a valid format to convert to the desired &apos;{1}&apos; type..
+        /// </summary>
+        internal static string Initialization_Convert_FormatException {
+            get {
+                return ResourceManager.GetString("Initialization_Convert_FormatException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; must be a valid &apos;{1}&apos; value..
+        /// </summary>
+        internal static string Initialization_Convert_OverflowException {
+            get {
+                return ResourceManager.GetString("Initialization_Convert_OverflowException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; cannot be null..
+        /// </summary>
+        internal static string Validation_Assert_IsNotNull {
+            get {
+                return ResourceManager.GetString("Validation_Assert_IsNotNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; is not a valid value..
+        /// </summary>
+        internal static string Validation_Assert_IsTrue {
+            get {
+                return ResourceManager.GetString("Validation_Assert_IsTrue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; is not a valid value..
+        /// </summary>
+        internal static string Validation_Assert_IsValue {
+            get {
+                return ResourceManager.GetString("Validation_Assert_IsValue", resourceCulture);
+            }
+        }
     }
 }

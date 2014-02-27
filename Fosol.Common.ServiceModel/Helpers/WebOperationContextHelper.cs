@@ -90,7 +90,7 @@ namespace Fosol.Common.ServiceModel.Helpers
         /// <param name="statusCode">HttpStatusCode you want to return.</param>
         public static void SetOutgoingResponseStatusCode(HttpStatusCode statusCode)
         {
-            WebOperationContext.Current.SetOutgoingResponseStatusCode(HttpStatusCode.InternalServerError);
+            WebOperationContext.Current.SetOutgoingResponseStatusCode(statusCode);
         }
         #endregion
     }
