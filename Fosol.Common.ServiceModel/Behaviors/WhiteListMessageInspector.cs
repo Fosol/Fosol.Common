@@ -74,7 +74,7 @@ namespace Fosol.Common.ServiceModel.Behaviors
                 if (!allow)
                 {
                     /// TODO: AH, will there always be at least one ip in request_ips?
-                    WebFault.RaiseFault(
+                    WebFaultContract.RaiseFault(
                         string.Format("IP address [{0}] from source [{1}] not authorized",
                             request_ips.First().Value.ToString(),
                             request_ips.First().Key.ToString()),

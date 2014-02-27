@@ -11,7 +11,7 @@ namespace Fosol.Common.Converters
     /// <summary>
     /// Converter MailAddress objects.
     /// </summary>
-    public class MailAddressConverter
+    public sealed class MailAddressConverter
         : TypeConverter
     {
         #region Variables

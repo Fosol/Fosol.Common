@@ -82,6 +82,16 @@ namespace Fosol.Common.ServiceModel.Helpers
         {
             return System.ServiceModel.OperationContext.Current.GetClientIPWithSource();
         }
+
+        /// <summary>
+        /// Set the outgoing response HTTP status code.
+        /// </summary>
+        /// <param name="context">WebOperationContext object.</param>
+        /// <param name="statusCode">HttpStatusCode you want to return.</param>
+        public static void SetOutgoingResponseStatusCode(HttpStatusCode statusCode)
+        {
+            WebOperationContext.Current.SetOutgoingResponseStatusCode(HttpStatusCode.InternalServerError);
+        }
         #endregion
     }
 }

@@ -176,6 +176,16 @@ namespace Fosol.Common.Extensions.Types
         {
             return Attribute.GetCustomAttributes(type, inherit).Select(a => (T)a).ToArray();
         }
+
+        /// <summary>
+        /// Determines if the specified type is a static class.
+        /// </summary>
+        /// <param name="type">Type you want to check.</param>
+        /// <returns>True if the type is a static class.</returns>
+        public static bool IsStatic(this Type type)
+        {
+            return type.IsAbstract && type.IsSealed;
+        }
         #endregion
     }
 }

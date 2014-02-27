@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Converters
 {
     /// <summary>
-    /// Converter Encoding objects.
+    /// AssemblyTypeConverter provides a way to convert a string value into the specified Type.
     /// </summary>
-    public sealed class EncodingConverter
+    public sealed class AssemblyTypeConverter
         : TypeConverter
     {
         #region Variables
@@ -52,39 +52,24 @@ namespace Fosol.Common.Converters
         }
 
         /// <summary>
-        /// Convert the value to an Encoding object.
+        /// Convert from the current value to the specified Type.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" must be a valid Encoding.</exception>
         /// <param name="context"></param>
         /// <param name="culture"></param>
         /// <param name="value"></param>
         /// <returns></returns>
         public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
         {
-            if (value.GetType() == typeof(string))
+            if (value.GetType() == typeof(string) && !string.IsNullOrEmpty((string)value))
             {
-                var val = value as string;
-                if (val == null)
-                    return null;
-                switch (val.ToLower())
-                {
-                    case("default"):
-                        return Encoding.Default;
-                    case ("utf7"):
-                        return Encoding.UTF7;
-                    case ("utf8"):
-                        return Encoding.UTF8;
-                    case ("utf32"):
-                        return Encoding.UTF32;
-                    default:
-                        return Encoding.GetEncoding(val);
-                }
+                return Type.GetType((string)value, true, true);
             }
+
             return base.ConvertFrom(context, culture, value);
         }
 
         /// <summary>
-        /// Converts an Encoding object to the specified destination Type.
+        /// If the current value is a Type object it will return the full name.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="culture"></param>
@@ -93,15 +78,16 @@ namespace Fosol.Common.Converters
         /// <returns></returns>
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType == typeof(string))
+            if (value.GetType() == typeof(Type))
             {
-                var val = value as Encoding;
-                if (val == null)
-                    return null;
-                return val.EncodingName;
+                return ((Type)value).FullName;
             }
+
             return base.ConvertTo(context, culture, value, destinationType);
         }
+        #endregion
+
+        #region Operators
         #endregion
 
         #region Events

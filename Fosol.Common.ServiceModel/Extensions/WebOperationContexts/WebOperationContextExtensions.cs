@@ -27,7 +27,7 @@ namespace Fosol.Common.ServiceModel.Extensions.WebOperationContexts
             }
             catch (Exception ex)
             {
-                WebFault.RaiseFault("Invalid format. XML or JSON[JSONP] are only supported.", ex, HttpStatusCode.BadRequest);
+                WebFaultContract.RaiseFault("Invalid format. XML or JSON[JSONP] are only supported.", ex, HttpStatusCode.BadRequest);
             }
         }
 
@@ -73,10 +73,13 @@ namespace Fosol.Common.ServiceModel.Extensions.WebOperationContexts
 
             // Check if the parameter exists in the query, if it does, use it.
             // Valid query format values [Xml|Json].
-            var query_format = context.IncomingRequest.UriTemplateMatch.QueryParameters[queryParamName];
-            // If the format is invalid throw exception.
-            if (!string.IsNullOrEmpty(query_format))
-                Validation.Assert.IsValue<bool>(Enum.TryParse<WebMessageFormat>(query_format, true, out format), new bool[] { true }, "format");
+            if (context.IncomingRequest.UriTemplateMatch != null)
+            {
+                var query_format = context.IncomingRequest.UriTemplateMatch.QueryParameters[queryParamName];
+                // If the format is invalid throw exception.
+                if (!string.IsNullOrEmpty(query_format))
+                    Validation.Assert.IsValue<bool>(Enum.TryParse<WebMessageFormat>(query_format, true, out format), new bool[] { true }, "format");
+            }
 
             context.OutgoingResponse.Format = format;
             return format;
@@ -94,8 +97,18 @@ namespace Fosol.Common.ServiceModel.Extensions.WebOperationContexts
 
             // Need to manually check the Conditional GET so that the StatusCode is correctly returned for JSONP requests.
             if (context.IncomingRequest.Headers["If-None-Match"] == string.Format("\"{0}\"", entityTag))
-                WebFault.RaiseFault("Content not modified.", HttpStatusCode.NotModified);
+                WebFaultContract.RaiseFault("Content not modified.", HttpStatusCode.NotModified);
             //context.IncomingRequest.CheckConditionalRetrieve(entityTag);
+        }
+
+        /// <summary>
+        /// Set the outgoing response HTTP status code.
+        /// </summary>
+        /// <param name="context">WebOperationContext object.</param>
+        /// <param name="statusCode">HttpStatusCode you want to return.</param>
+        public static void SetOutgoingResponseStatusCode(this WebOperationContext context, HttpStatusCode statusCode)
+        {
+            context.OutgoingResponse.StatusCode = statusCode;
         }
         #endregion
     }

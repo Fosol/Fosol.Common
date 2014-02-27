@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Behaviors\ComplexQueryBehavior.cs" />
     <Compile Include="Behaviors\ComplexQueryBehaviorExtensionElement.cs" />
+    <Compile Include="Behaviors\UnhandledErrorBehavior.cs" />
+    <Compile Include="Behaviors\UnhandledErrorBehaviorExtensionElement.cs" />
     <Compile Include="Behaviors\WhiteListBehavior.cs" />
     <Compile Include="Behaviors\WhiteListBehaviorExtensionElement.cs" />
     <Compile Include="Behaviors\WhiteListMessageInspector.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Configuration\WhiteList\ServiceElement.cs" />
     <Compile Include="Configuration\WhiteList\WhiteListSection.cs" />
     <Compile Include="Converters\ComplexQueryConverter.cs" />
+    <Compile Include="Exceptions\UnhandledErrorHandler.cs" />
     <Compile Include="Extensions\Exceptions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\OperationContexts\OperationContextExtensions.cs" />
     <Compile Include="Extensions\WebOperationContexts\WebOperationContextExtensions.cs" />
@@ -79,7 +82,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="WebFault.cs" />
+    <Compile Include="WebFaultContract.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fosol.Common\Fosol.Common.csproj">

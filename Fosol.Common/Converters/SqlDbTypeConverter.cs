@@ -12,7 +12,7 @@ namespace Fosol.Common.Converters
     /// <summary>
     /// SqlNativeTypeConverter provides a way to convert SqlDbType values into native .NET types.
     /// </summary>
-    public class SqlDbTypeConverter
+    public sealed class SqlDbTypeConverter
         : TypeConverter
     {
         #region Variables
