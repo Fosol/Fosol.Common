@@ -12,7 +12,7 @@ namespace Fosol.Common.ServiceModel.Validation
         /// <summary>
         /// If the value is null it will throw a WebFaultException of type ParameterNullFault.
         /// </summary>
-        /// <exception cref="WebFaultException<ParameterNullFault>">Parameter 'value' cannot be null.</exception>
+        /// <exception cref="WebFaultException of type ParameterNullFault">Parameter 'value' cannot be null.</exception>
         /// <param name="value">Value to check.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">Error message describing the exception.</param>
@@ -31,7 +31,7 @@ namespace Fosol.Common.ServiceModel.Validation
         /// Assert that the parameter is true.
         /// If not throw WebFaultException of type ParameterFault.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" returned false.</exception>
+        /// <exception cref="WebFaultException of type ParameterFault">Parameter "value" returned false.</exception>
         /// <param name="value">Parameter value.</param>
         /// <param name="paramName">Name of the parameter being tested.</param>
         /// <param name="message">Error message describing the exception</param>
@@ -49,7 +49,7 @@ namespace Fosol.Common.ServiceModel.Validation
         /// <summary>
         /// If the value does not exist in the valid values array it will throw WebFaultException of type ParameterOutOfRangeFault.
         /// </summary>
-        /// <exception cref="WebFaultException<ParameterOutOfRange>">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="WebFaultException of type ParameterOutOfRangeFault">Parameter "value" is must be a valid value.</exception>
         /// <typeparam name="T">Type of value being tested.</typeparam>
         /// <param name="value">The value to check.</param>
         /// <param name="validValues">An array of valid values to compare against.</param>
@@ -68,7 +68,7 @@ namespace Fosol.Common.ServiceModel.Validation
         /// If the value does not equal the valid value it will throw WebFaultException of type ParameterOutOfRangeFault.
         /// This method is most effective when ensuring a parameter property is appropriate.
         /// </summary>
-        /// <exception cref="WebFaultException<ParameterOutOfRange>">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="WebFaultException of type ParameterOutOfRangeFault">Parameter "value" is must be a valid value.</exception>
         /// <typeparam name="T">Type of value being tested.</typeparam>
         /// <param name="value">The value to check.</param>
         /// <param name="validValue">The only valid value.</param>

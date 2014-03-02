@@ -13,10 +13,10 @@ namespace Fosol.Common.ServiceModel.Initialization
         /// Attempts to convert the value to the desired type and return the result.
         /// If it fails it resubmits the exception with a valid message which will contain the parameter name.
         /// </summary>
-        /// <exception cref="WebFaultException<ParameterNullFault>">Parameter 'value' cannot be null.</exception>
-        /// <exception cref="WebFaultException<ParameterFault>">Parameter 'value' must have a valid format to covert.</exception>
-        /// <exception cref="WebFaultException<ParameterFault>">Parameter 'value' must be convertable to the desired type.</exception>
-        /// <exception cref="WebFaultException<ParameterFault>">Parameter 'value' must be within a valid range for the desired type.</exception>
+        /// <exception cref="WebFaultException of type ParameterFormatFault">Parameter 'value' must have a valid format to covert.</exception>
+        /// <exception cref="WebFaultException of type ParameterInvalidCastFault">Parameter 'value' must be convertable to the desired type.</exception>
+        /// <exception cref="WebFaultException of type ParameterNullFault">Parameter 'value' cannot be null.</exception>
+        /// <exception cref="WebFaultException of type ParameterOverflowFault">Parameter 'value' must be within a valid range for the desired type.</exception>
         /// <typeparam name="T">Type you want to convert the value into.</typeparam>
         /// <param name="value">Value to convert from.</param>
         /// <param name="paramName">Name of the parameter.</param>

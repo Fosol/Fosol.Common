@@ -47,6 +47,39 @@ namespace Fosol.Common.Validation
         }
 
         /// <summary>
+        /// Asserts that the result of the function is not null.
+        /// If it is null it will throw System.ArgumentNullException.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "function" return value is null.</exception>
+        /// <typeparam name="T">Type of the value.</typeparam>
+        /// <param name="value">The value to check.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        public static void IsNotNull<T>(Func<T> function, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (function() == null)
+                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsNotNull, paramName));
+        }
+
+        /// <summary>
+        /// Asserts that the result of the function is not null.
+        /// If it is null it will throw System.ArgumentNullException.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter "function" return value is null.</exception>
+        /// <typeparam name="T">Type of the value.</typeparam>
+        /// <param name="value">The value to check.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        /// <param name="innerException">The exception that caused this exception.</param>
+        public static void IsNotNull<T>(Func<T> function, string message, Exception innerException)
+        {
+            if (function() == null)
+                throw new ArgumentNullException(message, innerException);
+        }
+
+        /// <summary>
         /// Asserts that the parameter value is not null.
         /// If it is null it will throw System.ArgumentNullException.
         /// </summary>
@@ -72,6 +105,39 @@ namespace Fosol.Common.Validation
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNull(object value, string message, Exception innerException)
+        {
+            if (value == null)
+                throw new ArgumentNullException(message, innerException);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is not null.
+        /// If it is null it will throw System.ArgumentNullException.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">If the parameter is null.</exception>
+        /// <typeparam name="T">Type of the value.</typeparam>
+        /// <param name="value">The value to check.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        public static void IsNotNull<T>(T value, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (value == null)
+                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsNotNull, paramName));
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is not null.
+        /// If it is null it will throw System.ArgumentNullException.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">If the parameter is null.</exception>
+        /// <typeparam name="T">Type of the value.</typeparam>
+        /// <param name="value">The value to check.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        /// <param name="innerException">The exception that caused this exception.</param>
+        public static void IsNotNull<T>(T value, string message, Exception innerException)
         {
             if (value == null)
                 throw new ArgumentNullException(message, innerException);
