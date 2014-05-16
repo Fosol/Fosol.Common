@@ -35,6 +35,13 @@ namespace Fosol.Common.Helpers
                 return false;
             }
 
+            // Conversion not required.
+            if (convertTo == value.GetType())
+            {
+                result = value;
+                return true;
+            }
+
             try
             {
                 if (!convertTo.IsEnum)
@@ -72,6 +79,13 @@ namespace Fosol.Common.Helpers
                     return true;
                 }
                 return false;
+            }
+
+            // Conversion not required.
+            if (type == value.GetType())
+            {
+                result = (T)value;
+                return true;
             }
 
             try

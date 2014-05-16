@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -212,6 +213,106 @@ namespace Fosol.Common.Initialization
             return Initialization.Assert.TryParse(value, defaultValue);
         }
 
+        #endregion
+
+        #region NameValueCollection Methods
+        public delegate T DefaultValueMethod<T>();
+
+        /// <summary>
+        /// Get the value for the specified key and convert it into the appropriate type.
+        /// </summary>
+        /// <exception cref="Exceptions.ConfigurationException">The configuration value for the specified key is not valid.</exception>
+        /// <typeparam name="T">Type of value you want.</typeparam>
+        /// <param name="config">NameValueCollection containing configuration information.</param>
+        /// <param name="key">Key name to identify the configuration value.</param>
+        /// <param name="defaultValue">Default value if one is not specified in the configuration.</param>
+        /// <returns>The value for the specified key.</returns>
+        public static T GetValue<T>(NameValueCollection config, string key, T defaultValue)
+        {
+            var value = config[key];
+
+            if (value == null)
+                return defaultValue;
+
+            T result = default(T);
+
+            if (Helpers.ReflectionHelper.TryConvert<T>(value, ref result))
+                return result;
+
+            throw new Exceptions.ConfigurationException(string.Format("The value of key '{0}' cannot be converted to type '{1}'", key, typeof(T).Name));
+        }
+
+        /// <summary>
+        /// Get the value for the specified key and convert it into the appropriate type.
+        /// This particular method essentially lazy loads the default value.
+        /// </summary>
+        /// <exception cref="Exceptions.ConfigurationException">The configuration value for the specified key is not valid.</exception>
+        /// <typeparam name="T">Type of value you want.</typeparam>
+        /// <param name="config">NameValueCollection containing configuration information.</param>
+        /// <param name="key">Key name to identify the configuration value.</param>
+        /// <param name="defaultValueMethod">A method that will return a default value.</param>
+        /// <returns>The value for the specified key.</returns>
+        public static T GetValue<T>(NameValueCollection config, string key, DefaultValueMethod<T> defaultValueMethod)
+        {
+            var value = config[key];
+
+            if (value == null)
+                return defaultValueMethod();
+
+            T result = default(T);
+
+            if (Helpers.ReflectionHelper.TryConvert<T>(value, ref result))
+                return result;
+
+            throw new Exceptions.ConfigurationException(string.Format("The value of key '{0}' cannot be converted to type '{1}'", key, typeof(T).Name));
+        }
+
+        /// <summary>
+        /// Get the value for the specified key and convert it into the appropriate type.
+        /// Ensure that the value is within the minimum and maximum constraints.
+        /// </summary>
+        /// <exception cref="Exceptions.ConfigurationException">The configuration value for the specified key is not valid.</exception>
+        /// <param name="config">NameValueCollection containing configuration information.</param>
+        /// <param name="key">Key name to identify the configuration value.</param>
+        /// <param name="defaultValue">Default value if one is not specified in the configuration.</param>
+        /// <param name="minimum">The minimum value the key can be configured with.</param>
+        /// <param name="maximum">The maximum value the key can be configured with.</param>
+        /// <returns>The value for the specified key.</returns>
+        public static int GetValue(NameValueCollection config, string key, int defaultValue, int? minimum, int? maximum)
+        {
+            var value = GetValue(config, key, defaultValue);
+
+            if (minimum.HasValue && value < minimum.Value)
+                throw new Exceptions.ConfigurationException(string.Format("The value of key '{0}' must be greater than or equal to the minimum '{1}'.", key, minimum.Value));
+            else if (maximum.HasValue && value > maximum.Value)
+                throw new Exceptions.ConfigurationException(string.Format("The value of key '{0}' must be less than or equal to the maximum '{1}'.", key, maximum.Value));
+
+            return value;
+        }
+
+        /// <summary>
+        /// Get the value for the specified key and convert it into the appropriate type.
+        /// Ensure that the value is within the minimum and maximum constraints.
+        /// This particular method essentially lazy loads the default value.
+        /// </summary>
+        /// <exception cref="Exceptions.ConfigurationException">The configuration value for the specified key is not valid.</exception>
+        /// <param name="config">NameValueCollection containing configuration information.</param>
+        /// <param name="key">Key name to identify the configuration value.</param>
+        /// <param name="defaultValueMethod">A method that will return a default value.</param>
+        /// <param name="minimum">The minimum value the key can be configured with.</param>
+        /// <param name="maximum">The maximum value the key can be configured with.</param>
+        /// <returns>The value for the specified key.</returns>
+        public static int GetValue(NameValueCollection config, string key, DefaultValueMethod<int> defaultValueMethod, int? minimum, int? maximum)
+        {
+            var value = GetValue(config, key, defaultValueMethod);
+
+            if (minimum.HasValue && value < minimum.Value)
+                throw new Exceptions.ConfigurationException(string.Format("The value of key '{0}' must be greater than or equal to the minimum '{1}'.", key, minimum.Value));
+            else if (maximum.HasValue && value > maximum.Value)
+                throw new Exceptions.ConfigurationException(string.Format("The value of key '{0}' must be less than or equal to the maximum '{1}'.", key, maximum.Value));
+
+            return value;
+        }
         #endregion
     }
 }
