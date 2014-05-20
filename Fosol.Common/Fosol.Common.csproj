@@ -175,7 +175,6 @@
     <Compile Include="Serialization\XmlHelper.cs" />
     <Compile Include="Validation\Assert.cs" />
     <Compile Include="Validation\AssertFormat.cs" />
-    <Compile Include="Web\Security\FosolMembershipProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Behaviors\" />
