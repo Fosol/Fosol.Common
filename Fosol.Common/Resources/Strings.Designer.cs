@@ -313,6 +313,69 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid email..
+        /// </summary>
+        internal static string Exception_Validation_AssertFormat_IsEmail {
+            get {
+                return ResourceManager.GetString("Exception_Validation_AssertFormat_IsEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid FSA..
+        /// </summary>
+        internal static string Exception_Validation_AssertFormat_IsFSA {
+            get {
+                return ResourceManager.GetString("Exception_Validation_AssertFormat_IsFSA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid LDU..
+        /// </summary>
+        internal static string Exception_Validation_AssertFormat_IsLDU {
+            get {
+                return ResourceManager.GetString("Exception_Validation_AssertFormat_IsLDU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid number..
+        /// </summary>
+        internal static string Exception_Validation_AssertFormat_IsNumber {
+            get {
+                return ResourceManager.GetString("Exception_Validation_AssertFormat_IsNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid postal code..
+        /// </summary>
+        internal static string Exception_Validation_AssertFormat_IsPostalCode {
+            get {
+                return ResourceManager.GetString("Exception_Validation_AssertFormat_IsPostalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid URI..
+        /// </summary>
+        internal static string Exception_Validation_AssertFormat_IsUri {
+            get {
+                return ResourceManager.GetString("Exception_Validation_AssertFormat_IsUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid password..
+        /// </summary>
+        internal static string Exception_Validation_AssertPassword_IsValid {
+            get {
+                return ResourceManager.GetString("Exception_Validation_AssertPassword_IsValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attribute &quot;{0}&quot; is required..
         /// </summary>
         internal static string Exception_Validation_Attribute_Required {

@@ -80,6 +80,7 @@
     <Compile Include="Converters\AssemblyTypeConverter.cs" />
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="HashCode.cs" />
+    <Compile Include="Helpers\RegexHelper.cs" />
     <Compile Include="Helpers\WebApplicationHelper.cs" />
     <Compile Include="Parsers\Converters\ElementFormatConverter.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
