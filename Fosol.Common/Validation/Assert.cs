@@ -302,6 +302,47 @@ namespace Fosol.Common.Validation
         }
         #endregion
 
+        #region IsNotNullOrWhiteSpace
+        /// <summary>
+        /// Asserts that the parameter value is not null or empty after being trimmed.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="value">The value to check.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        public static void IsNotNullOrWhiteSpace(string value, string paramName, string message = null)
+        {
+            IsNotNull(value, paramName);
+
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (value.Trim() == String.Empty)
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is not null or empty after being trimmed.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="value">The value to check.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        /// <param name="innerException">The exception that caused this exception.</param>
+        public static void IsNotNullOrWhiteSpace(string value, string paramName, string message, Exception innerException)
+        {
+            IsNotNull(value, paramName);
+
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (value.Trim() == String.Empty)
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName, innerException);
+        }
+        #endregion
+
         #region MinRange
         #region decimal
         /// <summary>

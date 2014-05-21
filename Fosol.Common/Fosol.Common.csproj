@@ -150,6 +150,8 @@
     <Compile Include="Parsers\Elements\DateTimeElement.cs" />
     <Compile Include="Parsers\IFormat.cs" />
     <Compile Include="Serialization\CData.cs" />
+    <Compile Include="Validation\AssertPassword.cs" />
+    <Compile Include="Web\CrossSiteScriptingValidation.cs" />
     <Compile Include="Web\DomainComparer.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Initialization\Configuration.cs" />

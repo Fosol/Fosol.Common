@@ -18,9 +18,9 @@ namespace Fosol.Common.Cryptography
         /// <summary>
         /// Encrypt a string with AesManaged algorithm.
         /// </summary>
-        /// <exception cref="System.ArgumentException"></exception>
-        /// <exception cref="System.ArgumentNullException"></exception>
-        /// <exception cref="System.ArgumentOutOfRangeException"></exception>
+        /// <exception cref="System.ArgumentException">Parameters 'text', 'password' and 'salt' cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameters 'text', 'password' and 'salt' cannot be null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter 'salt' must be at least 8 bytes long.</exception>
         /// <exception cref="System.InvalidOperationException"></exception>
         /// <exception cref="System.FormatException"></exception>
         /// <exception cref="System.NotSupportedException"></exception>
@@ -32,6 +32,11 @@ namespace Fosol.Common.Cryptography
         /// <returns>Encrypted string value.</returns>
         public static string Encrypt(string text, string password, string salt)
         {
+            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(text, "text");
+            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(password, "password");
+            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(salt, "salt");
+            Fosol.Common.Validation.Assert.MinRange(salt.Length, 8, "salt");
+
             AesManaged aes = null;
             MemoryStream stream = null;
             CryptoStream crypto_stream = null;
@@ -72,9 +77,9 @@ namespace Fosol.Common.Cryptography
         /// <summary>
         /// Decrypt a string with AesManaged algorithm.
         /// </summary>
-        /// <exception cref="System.ArgumentException"></exception>
-        /// <exception cref="System.ArgumentNullException"></exception>
-        /// <exception cref="System.ArgumentOutOfRangeException"></exception>
+        /// <exception cref="System.ArgumentException">Parameters 'encryptedText', 'password' and 'salt' cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameters 'encryptedText', 'password' and 'salt' cannot be null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter 'salt' must be at least 8 bytes long.</exception>
         /// <exception cref="System.InvalidOperationException"></exception>
         /// <exception cref="System.FormatException"></exception>
         /// <exception cref="System.NotSupportedException"></exception>
@@ -86,6 +91,11 @@ namespace Fosol.Common.Cryptography
         /// <returns>Decrypted string value.</returns>
         public static string Decrypt(string encryptedText, string password, string salt)
         {
+            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(encryptedText, "encryptedText");
+            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(password, "password");
+            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(salt, "salt");
+            Fosol.Common.Validation.Assert.MinRange(salt.Length, 8, "salt");
+
             AesManaged aes = null;
             MemoryStream stream = null;
             CryptoStream crypto_stream = null;
@@ -131,7 +141,9 @@ namespace Fosol.Common.Cryptography
         /// Creates a hash based on the text and salt value.
         /// Uses SHA1 encryption formula.
         /// </summary>
-        /// <exception cref="System.ArgumentNullException"></exception>
+        /// <exception cref="System.ArgumentException">Parameters 'text' and 'salt' cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameters 'text' and 'salt' cannot be null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Parameter 'salt' must be at least 8 bytes long.</exception>
         /// <exception cref="System.InvalidOperationException"></exception>
         /// <exception cref="System.ObjectDisposedException"></exception>
         /// <exception cref="System.Text.EncoderFallbackException"></exception>
@@ -140,6 +152,10 @@ namespace Fosol.Common.Cryptography
         /// <returns>Hashed text value.</returns>
         public static string ComputeHash(string text, string salt)
         {
+            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(text, "text");
+            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(salt, "salt");
+            Fosol.Common.Validation.Assert.MinRange(salt.Length, 8, "salt");
+
             var text_data = System.Text.Encoding.UTF8.GetBytes(text);
             var salt_data = System.Text.Encoding.UTF8.GetBytes(salt);
 
@@ -150,6 +166,17 @@ namespace Fosol.Common.Cryptography
             formula.ComputeHash(data);
 
             return Convert.ToBase64String(formula.Hash);
+        }
+
+        /// <summary>
+        /// Generates a random salt value to use.
+        /// </summary>
+        /// <returns>A new salt value.</returns>
+        public static string GenerateSalt()
+        {
+            var array = new byte[16];
+            new RNGCryptoServiceProvider().GetBytes(array);
+            return Convert.ToBase64String(array);
         }
         #endregion
     }

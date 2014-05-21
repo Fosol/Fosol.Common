@@ -15,11 +15,15 @@ namespace Fosol.Common.Validation
         #region Methods
         /// <summary>
         /// Determines if the value is an email address.
+        /// Maximum size of an email is 254 characters.
         /// </summary>
         /// <param name="value">String value to test.</param>
         /// <returns>True if the value is an email address.</returns>
         public static bool IsEmail(string value)
         {
+            if (value.Length > 254)
+                return false;
+
             var reg = new Regex(@"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$", RegexOptions.IgnoreCase);
             return reg.IsMatch(value);
         }
