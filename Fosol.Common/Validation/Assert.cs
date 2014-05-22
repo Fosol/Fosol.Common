@@ -2140,7 +2140,7 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (value.GetType().IsAssignableFrom(validType))
+            if (!validType.IsAssignableFrom(value.GetType()))
                 throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Type, paramName), paramName);
         }
 
@@ -2159,7 +2159,44 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (value.GetType().IsAssignableFrom(validType))
+            if (!validType.IsAssignableFrom(value.GetType()))
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
+        }
+
+        /// <summary>
+        /// Assert that the parameter is assignable from the specified type.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
+        /// <param name="valueType">Parameter value type.</param>
+        /// <param name="validType">Valid type.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        public static void IsAssignableFromType(Type valueType, Type validType, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!validType.IsAssignableFrom(valueType))
+                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Type, paramName), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the parameter is assignable from the specified type.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
+        /// <param name="valueType">Parameter value type.</param>
+        /// <param name="validType">Valid type.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        /// <param name="innerException">Exception that occured that caused this exception.</param>
+        public static void IsAssignableFromType(Type valueType, Type validType, string paramName, string message, Exception innerException)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!validType.IsAssignableFrom(valueType))
                 throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
         }
         #endregion
