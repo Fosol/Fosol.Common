@@ -78,13 +78,15 @@
     <Compile Include="Converters\EncodingConverter.cs" />
     <Compile Include="Converters\SqlDbTypeConverter.cs" />
     <Compile Include="Converters\AssemblyTypeConverter.cs" />
+    <Compile Include="Cryptography\AesHelper.cs" />
+    <Compile Include="Cryptography\CryptographyFactory.cs" />
+    <Compile Include="Cryptography\RijndaelHelper.cs" />
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\RegexHelper.cs" />
     <Compile Include="Helpers\WebApplicationHelper.cs" />
     <Compile Include="Parsers\Converters\ElementFormatConverter.cs" />
-    <Compile Include="Cryptography\CryptographyFactory.cs" />
     <Compile Include="Data\TableName.cs" />
     <Compile Include="Exceptions\AttributeRequiredException.cs" />
     <Compile Include="Parsers\Exceptions\FormatElementAttributeRequiredException.cs" />
