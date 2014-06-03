@@ -763,6 +763,90 @@ namespace Fosol.Common.Validation
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
         #endregion
+
+        #region DateTime
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        public static void MinRange(DateTime value, DateTime minimum, string paramName)
+        {
+            if (value < minimum)
+                throw new ArgumentOutOfRangeException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        public static void MinRange(DateTime? value, DateTime minimum, string paramName)
+        {
+            if (value.HasValue && value.Value < minimum)
+                throw new ArgumentOutOfRangeException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void MinRange(DateTime value, DateTime minimum, string paramName, string message)
+        {
+            if (value < minimum)
+                throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void MinRange(DateTime? value, DateTime minimum, string paramName, string message)
+        {
+            if (value.HasValue && value.Value < minimum)
+                throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        /// <param name="innerException">The exception that is the cause of this exception.</param>
+        public static void MinRange(DateTime value, DateTime minimum, string message, Exception innerException)
+        {
+            if (value < minimum)
+                throw new ArgumentOutOfRangeException(message, innerException);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="minimum">Minimum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        /// <param name="innerException">The exception that is the cause of this exception.</param>
+        public static void MinRange(DateTime? value, DateTime minimum, string message, Exception innerException)
+        {
+            if (value.HasValue && value.Value < minimum)
+                throw new ArgumentOutOfRangeException(message, innerException);
+        }
+        #endregion
         #endregion
 
         #region MaxRange
@@ -1182,6 +1266,90 @@ namespace Fosol.Common.Validation
         public static void MaxRange(long? value, long maximum, string message, Exception innerException)
         {
             if (value.HasValue && value > maximum)
+                throw new ArgumentOutOfRangeException(message, innerException);
+        }
+        #endregion
+
+        #region DateTime
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void MaxRange(DateTime value, DateTime maximum, string paramName)
+        {
+            if (value > maximum)
+                throw new ArgumentOutOfRangeException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void MaxRange(DateTime? value, DateTime maximum, string paramName)
+        {
+            if (value.HasValue && value.Value > maximum)
+                throw new ArgumentOutOfRangeException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void MaxRange(DateTime value, DateTime maximum, string paramName, string message)
+        {
+            if (value > maximum)
+                throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void MaxRange(DateTime? value, DateTime maximum, string paramName, string message)
+        {
+            if (value.HasValue && value.Value > maximum)
+                throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        /// <param name="innerException">The exception that is the cause of this exception.</param>
+        public static void MaxRange(DateTime value, DateTime maximum, string message, Exception innerException)
+        {
+            if (value > maximum)
+                throw new ArgumentOutOfRangeException(message, innerException);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        /// <param name="innerException">The exception that is the cause of this exception.</param>
+        public static void MaxRange(DateTime? value, DateTime maximum, string message, Exception innerException)
+        {
+            if (value.HasValue && value.Value > maximum)
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
         #endregion
@@ -1606,6 +1774,90 @@ namespace Fosol.Common.Validation
         public static void Range(long? value, long minimum, long maximum, string message, Exception innerException)
         {
             if (value.HasValue && (value < minimum || value > maximum))
+                throw new ArgumentOutOfRangeException(message, innerException);
+        }
+        #endregion
+
+        #region DateTime
+        /// <summary>
+        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        public static void Range(DateTime value, DateTime minimum, DateTime maximum, string paramName)
+        {
+            if (value < minimum || value > maximum)
+                throw new ArgumentOutOfRangeException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        public static void Range(DateTime? value, DateTime minimum, DateTime maximum, string paramName)
+        {
+            if (value.HasValue && (value.Value < minimum || value.Value > maximum))
+                throw new ArgumentOutOfRangeException(paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void Range(DateTime value, DateTime minimum, DateTime maximum, string paramName, string message)
+        {
+            if (value < minimum || value > maximum)
+                throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception</param>
+        public static void Range(DateTime? value, DateTime minimum, DateTime maximum, string paramName, string message)
+        {
+            if (value.HasValue && (value.Value < minimum || value.Value > maximum))
+                throw new ArgumentOutOfRangeException(paramName, string.Format(message, paramName));
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        /// <param name="innerException">The exception that is the cause of this exception.</param>
+        public static void Range(DateTime value, DateTime minimum, DateTime maximum, string message, Exception innerException)
+        {
+            if (value < minimum || value > maximum)
+                throw new ArgumentOutOfRangeException(message, innerException);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
+        /// <param name="value">Parameter value to check.</param>
+        /// <param name="maximum">Maximum value allowed.</param>
+        /// <param name="message">A message to describe the exception</param>
+        /// <param name="innerException">The exception that is the cause of this exception.</param>
+        public static void Range(DateTime? value, DateTime minimum, DateTime maximum, string message, Exception innerException)
+        {
+            if (value.HasValue && (value.Value < minimum || value.Value > maximum))
                 throw new ArgumentOutOfRangeException(message, innerException);
         }
         #endregion
