@@ -12,26 +12,16 @@ namespace Fosol.Common.Cryptography
     /// <summary>
     /// CyrptographyFactory provides a simple inteface to encrypt data with any SymmetricAlgorithm objects.
     /// </summary>
-    public class CryptographyFactory
+    public abstract class CryptographyFactory
         : IDisposable
     {
         #region Variables
-        private SymmetricAlgorithm _Algorithm;
         #endregion
 
         #region Properties
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Creates a new instance of a CryptographyFactory object.
-        /// </summary>
-        /// <param name="algorithm">SymmetricAlgorithm object.</param>
-        public CryptographyFactory(SymmetricAlgorithm algorithm)
-        {
-            Fosol.Common.Validation.Assert.IsNotNull(algorithm, "algorithm");
-            _Algorithm = algorithm;
-        }
         #endregion
 
         #region Methods
@@ -43,53 +33,26 @@ namespace Fosol.Common.Cryptography
         /// <param name="key">Key used to encrypt data.</param>
         /// <param name="salt">Salt to use for encrypting data.</param>
         /// <returns>Encrypted data.</returns>
-        public byte[] Encrypt(byte[] data, string key, byte[] salt = null)
-        {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(key, "key");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
-            Fosol.Common.Validation.Assert.MinRange(salt.Length, 8, "Parameter 'salt' must be at least 8 bytes.");
-
-            return Encrypt(data, new Rfc2898DeriveBytes(key, salt));
-        }
+        public abstract byte[] Encrypt(byte[] data, string key, byte[] salt = null);
 
         /// <summary>
         /// Encrypt the data.
         /// </summary>
         /// <param name="data">Data to be encrypted.</param>
         /// <param name="generator">DeriveBytes object used to populate the algorithm.</param>
-        /// <returns></returns>
-        public byte[] Encrypt(byte[] data, DeriveBytes generator)
-        {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
-            Fosol.Common.Validation.Assert.IsNotNull(generator, "generator");
+        /// <param name="keySize">Size in bytes of the key.</param>
+        /// <param name="ivSize">Size in bytes of the initialization vector.</param>
+        /// <returns>Encrypted data.</returns>
+        public abstract byte[] Encrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16);
 
-            MemoryStream memory_stream = null;
-            CryptoStream crypto_stream = null;
-
-            try
-            {
-                _Algorithm.Key = generator.GetBytes(32);
-                _Algorithm.IV = generator.GetBytes(16);
-
-                memory_stream = new MemoryStream();
-                crypto_stream = new CryptoStream(memory_stream, _Algorithm.CreateEncryptor(), CryptoStreamMode.Write);
-
-                crypto_stream.Write(data, 0, data.Length);
-                return memory_stream.ToArray();
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                if (crypto_stream != null)
-                    crypto_stream.Close();
-
-                if (memory_stream != null)
-                    memory_stream.Close();
-            }
-        }
+        /// <summary>
+        /// Encrypt data.
+        /// </summary>
+        /// <param name="data">Data to be encrypted.</param>
+        /// <param name="key">Algorithm key.</param>
+        /// <param name="iv">Algorithm initialization vector.</param>
+        /// <returns>Encrypted data.</returns>
+        public abstract byte[] Encrypt(byte[] data, byte[] key, byte[] iv);
 
         /// <summary>
         /// Decrypt the data.
@@ -99,65 +62,31 @@ namespace Fosol.Common.Cryptography
         /// <param name="key">Key used to decrypt data.</param>
         /// <param name="salt">Salt to use for decrypting data.</param>
         /// <returns>Decrypted data.</returns>
-        public byte[] Decrypt(byte[] data, string key, byte[] salt = null)
-        {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(key, "key");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
-            Fosol.Common.Validation.Assert.MinRange(salt.Length, 8, "Parameter 'salt' must be at least 8 bytes.");
-
-            return Decrypt(data, new Rfc2898DeriveBytes(key, salt));
-        }
+        public abstract byte[] Decrypt(byte[] data, string key, byte[] salt = null);
 
         /// <summary>
         /// Decrypt the data.
         /// </summary>
         /// <param name="data">Data to be decrypted.</param>
         /// <param name="generator">DeriveBytes object used to populate the algorithm.</param>
+        /// <param name="keySize">Size in bytes of the key.</param>
+        /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Decrypted data.</returns>
-        public byte[] Decrypt(byte[] data, DeriveBytes generator)
-        {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
-            Fosol.Common.Validation.Assert.IsNotNull(generator, "generator");
+        public abstract byte[] Decrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16);
 
-            MemoryStream stream = null;
-            CryptoStream crypto_stream = null;
-
-            try
-            {
-                _Algorithm.Key = generator.GetBytes(32);
-                _Algorithm.IV = generator.GetBytes(16);
-
-                stream = new MemoryStream();
-                crypto_stream = new CryptoStream(stream, _Algorithm.CreateDecryptor(), CryptoStreamMode.Write);
-
-                crypto_stream.Write(data, 0, data.Length);
-                crypto_stream.FlushFinalBlock();
-
-                var result = stream.ToArray();
-
-                return result;
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                if (crypto_stream != null)
-                    crypto_stream.Close();
-
-                if (stream != null)
-                    stream.Close();
-            }
-        }
+        /// <summary>
+        /// Decrypt the data.
+        /// </summary>
+        /// <param name="data">Data to be decrypted.</param>
+        /// <param name="key">Algorithm key.</param>
+        /// <param name="iv">Algorithm initialization vector.</param>
+        /// <returns>Decrypted data.</returns>
+        public abstract byte[] Decrypt(byte[] data, byte[] key, byte[] iv);
 
         /// <summary>
         /// Clear that SymmetricAlgorithm.
         /// </summary>
-        public void Dispose()
-        {
-            _Algorithm.Clear();
-        }
+        public abstract void Dispose();
 
         /// <summary>
         /// Generates a random salt value to use.

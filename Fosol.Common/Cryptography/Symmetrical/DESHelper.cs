@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Fosol.Common.Cryptography
 {
-    public sealed class AesHelper
-        : CryptographyFactory
+    public sealed class DESHelper
+        : SymmetricalFactory
     {
         #region Variables
         #endregion
@@ -18,18 +17,15 @@ namespace Fosol.Common.Cryptography
         #endregion
 
         #region Constructors
-        public AesHelper()
-            : base(new AesManaged())
+        public DESHelper()
+            : base(new DESCryptoServiceProvider())
         {
-        }
 
-        public AesHelper(DeriveBytes generator)
-            : base(new AesManaged())
-        {
         }
         #endregion
 
         #region Methods
+
         #endregion
 
         #region Operators

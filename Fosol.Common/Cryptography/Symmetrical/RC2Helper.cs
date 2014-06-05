@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Fosol.Common.Cryptography
 {
-    public sealed class RijndaelHelper
-        : CryptographyFactory
+    public sealed class RC2Helper
+        : SymmetricalFactory
     {
         #region Variables
         #endregion
@@ -18,18 +17,14 @@ namespace Fosol.Common.Cryptography
         #endregion
 
         #region Constructors
-        public RijndaelHelper()
-            : base(Rijndael.Create())
-        {
-        }
-
-        public RijndaelHelper(DeriveBytes generator)
-            : base(Rijndael.Create())
+        public RC2Helper()
+            : base(new RC2CryptoServiceProvider())
         {
         }
         #endregion
 
         #region Methods
+
         #endregion
 
         #region Operators

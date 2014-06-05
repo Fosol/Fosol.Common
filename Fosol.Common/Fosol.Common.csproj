@@ -78,9 +78,19 @@
     <Compile Include="Converters\EncodingConverter.cs" />
     <Compile Include="Converters\SqlDbTypeConverter.cs" />
     <Compile Include="Converters\AssemblyTypeConverter.cs" />
-    <Compile Include="Cryptography\AesHelper.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
-    <Compile Include="Cryptography\RijndaelHelper.cs" />
+    <Compile Include="Cryptography\SymmetricalFactory.cs" />
+    <Compile Include="Cryptography\Symmetrical\AESHelper.cs" />
+    <Compile Include="Cryptography\Symmetrical\DESHelper.cs" />
+    <Compile Include="Cryptography\Symmetrical\RC2Helper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cryptography\Symmetrical\RijndaelHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cryptography\Symmetrical\TripleDESHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
@@ -184,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Behaviors\" />
+    <Folder Include="Cryptography\Asymmetrical\" />
     <Folder Include="Diagnostics\" />
     <Folder Include="Events\" />
   </ItemGroup>

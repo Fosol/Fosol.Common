@@ -43,7 +43,7 @@ namespace Fosol.Common.Extensions.Bytes
         }
 
         /// <summary>
-        /// Copies the data into the destination array starting at the startIndex position.
+        /// Inserts the data into the destination array starting at the destIndex position.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
         /// <exception cref="System.ArgumentOutOfRangeException">Parameter "destIndex" must be a valid index position within the destination.</exception>
@@ -53,13 +53,13 @@ namespace Fosol.Common.Extensions.Bytes
         /// <param name="destIndex">Index position to start copying into destination array.</param>
         /// <param name="length">Length of data to append into the destination array.</param>
         /// <returns>Position within the destination array after the data has been copied.</returns>
-        public static int Append(this byte[] destination, byte[] data, int destIndex = 0, int length = 0)
+        public static int Insert(this byte[] destination, byte[] data, int destIndex = 0, int length = 0)
         {
-            return Append(destination, data, destIndex, 0, length);
+            return Insert(destination, data, destIndex, 0, length);
         }
 
         /// <summary>
-        /// Copies the data into the destination array starting at the startIndex position.
+        /// Inserts the data into the destination array starting at the destIndex position.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
         /// <exception cref="System.ArgumentOutOfRangeException">Parameter "destIndex" must be a valid index position within the destination.</exception>
@@ -70,7 +70,7 @@ namespace Fosol.Common.Extensions.Bytes
         /// <param name="dataIndex">Index position to start copying from the data array.</param>
         /// <param name="length">Length of data to append into the destination array.</param>
         /// <returns>Position within the destination array after the data has been copied.</returns>
-        public static int Append(this byte[] destination, byte[] data, int destIndex, int dataIndex, int length)
+        public static int Insert(this byte[] destination, byte[] data, int destIndex, int dataIndex, int length)
         {
             Validation.Assert.IsNotNull(data, "data");
 
