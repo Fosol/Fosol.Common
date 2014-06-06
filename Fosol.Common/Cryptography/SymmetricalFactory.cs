@@ -81,17 +81,7 @@ namespace Fosol.Common.Cryptography
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(key, "key");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(iv, "iv");
 
-            var legal_key_sizes = _Algorithm.LegalKeySizes;
-            var valid_key_size = false;
-            foreach (var ks in legal_key_sizes)
-            {
-                if (key.Length >= ks.MinSize && key.Length <= ks.MaxSize)
-                {
-                    valid_key_size = true;
-                    break;
-                }
-            }
-            Fosol.Common.Validation.Assert.IsTrue(valid_key_size, "key.Length", "Parameter 'key' length is not a legal key size.");
+            Fosol.Common.Validation.Assert.IsTrue(_Algorithm.ValidKeySize(key.Length * 8), "key", "Parameter 'key' size is invalid.");
 
             var legal_block_sizes = _Algorithm.LegalBlockSizes;
             var valid_iv_size = false;
@@ -105,7 +95,7 @@ namespace Fosol.Common.Cryptography
                 }
             }
             Fosol.Common.Validation.Assert.IsTrue(valid_iv_size, "iv.Length", "Parameter 'iv' length is not a legal initialization vector size.");
-
+            
             MemoryStream memory_stream = null;
             CryptoStream crypto_stream = null;
 

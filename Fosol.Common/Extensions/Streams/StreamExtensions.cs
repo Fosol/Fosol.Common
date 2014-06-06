@@ -60,6 +60,7 @@ namespace Fosol.Common.Extensions.Streams
         /// <summary>
         /// Writes the string to the stream.
         /// Remember that the stream index position will be at the end of the string.
+        /// Remember to close the stream.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "data" cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
@@ -71,11 +72,9 @@ namespace Fosol.Common.Extensions.Streams
             Validation.Assert.IsNotNull(stream, "stream");
             Validation.Assert.IsNotValue(stream.CanWrite, false, "stream.CanWrite");
 
-            using (var writer = new StreamWriter(stream))
-            {
-                writer.Write(value);
-                writer.Flush();
-            }
+            var writer = new StreamWriter(stream);
+            writer.Write(value);
+            writer.Flush();
         }
 
         /// <summary>
