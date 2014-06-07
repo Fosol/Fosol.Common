@@ -25,7 +25,6 @@ namespace Fosol.Common.Cryptography
         #endregion
 
         #region Methods
-
         #endregion
 
         #region Operators

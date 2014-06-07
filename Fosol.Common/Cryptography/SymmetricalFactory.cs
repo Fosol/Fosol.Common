@@ -20,6 +20,10 @@ namespace Fosol.Common.Cryptography
         #endregion
 
         #region Properties
+        protected SymmetricAlgorithm Algorithm
+        {
+            get { return _Algorithm; }
+        }
         #endregion
 
         #region Constructors
@@ -54,6 +58,7 @@ namespace Fosol.Common.Cryptography
 
         /// <summary>
         /// Encrypt the data.
+        /// Initializeation vector is by default appended to the end of the data.
         /// </summary>
         /// <param name="data">Data to be encrypted.</param>
         /// <param name="generator">DeriveBytes object used to populate the algorithm.</param>
@@ -65,7 +70,11 @@ namespace Fosol.Common.Cryptography
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
             Fosol.Common.Validation.Assert.IsNotNull(generator, "generator");
 
-            return Encrypt(data, generator.GetBytes(keySize), generator.GetBytes(ivSize));
+            var key = generator.GetBytes(keySize);
+            var iv = generator.GetBytes(ivSize);
+
+            var encrypted_data = Encrypt(data, key, iv);
+            return encrypted_data.Concat(iv).ToArray();
         }
 
         /// <summary>
@@ -95,32 +104,25 @@ namespace Fosol.Common.Cryptography
                 }
             }
             Fosol.Common.Validation.Assert.IsTrue(valid_iv_size, "iv.Length", "Parameter 'iv' length is not a legal initialization vector size.");
-            
-            MemoryStream memory_stream = null;
-            CryptoStream crypto_stream = null;
 
             try
             {
                 _Algorithm.Key = key;
                 _Algorithm.IV = iv;
+                var encryptor = _Algorithm.CreateEncryptor();
 
-                memory_stream = new MemoryStream();
-                crypto_stream = new CryptoStream(memory_stream, _Algorithm.CreateEncryptor(), CryptoStreamMode.Write);
-
-                crypto_stream.Write(data, 0, data.Length);
-                return memory_stream.ToArray();
+                using (var memory_stream = new MemoryStream())
+                {
+                    using (var crypto_stream = new CryptoStream(memory_stream, encryptor, CryptoStreamMode.Write))
+                    {
+                        crypto_stream.Write(data, 0, data.Length);
+                    }
+                    return memory_stream.ToArray();
+                }
             }
             catch
             {
                 throw;
-            }
-            finally
-            {
-                if (crypto_stream != null)
-                    crypto_stream.Close();
-
-                if (memory_stream != null)
-                    memory_stream.Close();
             }
         }
 
@@ -143,8 +145,9 @@ namespace Fosol.Common.Cryptography
 
         /// <summary>
         /// Decrypt the data.
+        /// Initializeation vector is by default appended to the end of the data.
         /// </summary>
-        /// <param name="data">Data to be decrypted.</param>
+        /// <param name="data">Data to be decrypted.  This data must have the IV appended to the end.</param>
         /// <param name="generator">DeriveBytes object used to populate the algorithm.</param>
         /// <param name="keySize">Size in bytes of the key.</param>
         /// <param name="ivSize">Size in bytes of the initialization vector.</param>
@@ -154,7 +157,15 @@ namespace Fosol.Common.Cryptography
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
             Fosol.Common.Validation.Assert.IsNotNull(generator, "generator");
 
-            return Encrypt(data, generator.GetBytes(keySize), generator.GetBytes(ivSize));
+            var key = generator.GetBytes(keySize);
+
+            // Extract the IV from the data.  By default it is appended to the end of the data.
+            var iv = new byte[ivSize];
+            Array.Copy(data, data.Length - ivSize, iv, 0, ivSize);
+            var extracted_data = new byte[data.Length - ivSize];
+            Array.Copy(data, extracted_data, extracted_data.Length);
+
+            return Decrypt(extracted_data, key, iv);
         }
 
         /// <summary>
@@ -170,17 +181,7 @@ namespace Fosol.Common.Cryptography
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(key, "key");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(iv, "iv");
 
-            var legal_key_sizes = _Algorithm.LegalKeySizes;
-            var valid_key_size = false;
-            foreach (var ks in legal_key_sizes)
-            {
-                if (key.Length >= ks.MinSize && key.Length <= ks.MaxSize)
-                {
-                    valid_key_size = true;
-                    break;
-                }
-            }
-            Fosol.Common.Validation.Assert.IsTrue(valid_key_size, "key.Length", "Parameter 'key' length is not a legal key size.");
+            Fosol.Common.Validation.Assert.IsTrue(_Algorithm.ValidKeySize(key.Length * 8), "key", "Parameter 'key' size is invalid.");
 
             var legal_block_sizes = _Algorithm.LegalBlockSizes;
             var valid_iv_size = false;
@@ -196,35 +197,25 @@ namespace Fosol.Common.Cryptography
             }
             Fosol.Common.Validation.Assert.IsTrue(valid_iv_size, "iv.Length", "Parameter 'iv' length is not a legal initialization vector size.");
 
-            MemoryStream stream = null;
-            CryptoStream crypto_stream = null;
-
             try
             {
                 _Algorithm.Key = key;
                 _Algorithm.IV = iv;
+                var decryptor = _Algorithm.CreateDecryptor();
 
-                stream = new MemoryStream();
-                crypto_stream = new CryptoStream(stream, _Algorithm.CreateDecryptor(), CryptoStreamMode.Write);
+                using (var stream = new MemoryStream())
+                {
+                    using (var crypto_stream = new CryptoStream(stream, decryptor, CryptoStreamMode.Write))
+                    {
+                        crypto_stream.Write(data, 0, data.Length);
+                    }
 
-                crypto_stream.Write(data, 0, data.Length);
-                crypto_stream.FlushFinalBlock();
-
-                var result = stream.ToArray();
-
-                return result;
+                    return stream.ToArray();
+                }
             }
             catch
             {
                 throw;
-            }
-            finally
-            {
-                if (crypto_stream != null)
-                    crypto_stream.Close();
-
-                if (stream != null)
-                    stream.Close();
             }
         }
 
