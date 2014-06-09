@@ -28,7 +28,7 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (function() == null)
+            if (function == null || function() == null)
                 throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsNotNull, paramName));
         }
 
@@ -42,7 +42,7 @@ namespace Fosol.Common.Validation
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNull(Func<object> function, string message, Exception innerException)
         {
-            if (function() == null)
+            if (function == null || function() == null)
                 throw new ArgumentNullException(message, innerException);
         }
 
@@ -60,7 +60,7 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (function() == null)
+            if (function == null || function() == null)
                 throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsNotNull, paramName));
         }
 
@@ -75,7 +75,7 @@ namespace Fosol.Common.Validation
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNull<T>(Func<T> function, string message, Exception innerException)
         {
-            if (function() == null)
+            if (function == null || function() == null)
                 throw new ArgumentNullException(message, innerException);
         }
 

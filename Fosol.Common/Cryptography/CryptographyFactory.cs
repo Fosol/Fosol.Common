@@ -27,25 +27,14 @@ namespace Fosol.Common.Cryptography
         #region Methods
         /// <summary>
         /// Encrypt the data.
-        /// Uses Rfc2898DeriveBytes object to generate an algorithm hash.
         /// </summary>
         /// <param name="data">Data to be encrypted.</param>
         /// <param name="password">Password used to encrypt data.</param>
         /// <param name="salt">Salt to use for encrypting data.</param>
-        /// <returns>Encrypted data.</returns>
-        public abstract byte[] Encrypt(byte[] data, string password, byte[] salt);
-
-        /// <summary>
-        /// Encrypt the data.
-        /// Uses Rfc2898DeriveBytes object to generate an algorithm hash.
-        /// </summary>
-        /// <param name="data">Data to be encrypted.</param>
-        /// <param name="password">Password used to encrypt data.</param>
-        /// <param name="iv">Algorithm initialization vector.</param>
         /// <param name="keySize">Size in bytes of the key.</param>
         /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Encrypted data.</returns>
-        public abstract byte[] Encrypt(byte[] data, string password, byte[] salt, out byte[] iv, int keySize = 32, int ivSize = 16);
+        public abstract byte[] Encrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16);
 
         /// <summary>
         /// Encrypt the data.
@@ -68,25 +57,14 @@ namespace Fosol.Common.Cryptography
 
         /// <summary>
         /// Decrypt the data.
-        /// Uses Rfc2898DeriveBytes object to generate an algorithm hash.
         /// </summary>
         /// <param name="data">Data to be decrypted.</param>
         /// <param name="password">Password used to decrypt data.</param>
         /// <param name="salt">Salt to use for decrypting data.</param>
-        /// <returns>Decrypted data.</returns>
-        public abstract byte[] Decrypt(byte[] data, string password, byte[] salt);
-
-        /// <summary>
-        /// Decrypt the data.
-        /// Uses Rfc2898DeriveBytes object to generate an algorithm hash.
-        /// </summary>
-        /// <param name="data">Data to be decrypted.</param>
-        /// <param name="password">Password used to decrypt data.</param>
-        /// <param name="salt">Salt to use for decrypting data.</param>
-        /// <param name="iv">Algorithm initialization vector.</param>
         /// <param name="keySize">Size in bytes of the key.</param>
+        /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Decrypted data.</returns>
-        public abstract byte[] Decrypt(byte[] data, string password, byte[] salt, byte[] iv, int keySize = 32);
+        public abstract byte[] Decrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16);
 
         /// <summary>
         /// Decrypt the data.
@@ -122,7 +100,8 @@ namespace Fosol.Common.Cryptography
         public static byte[] GenerateSalt(int size = 16)
         {
             var array = new byte[size];
-            new RNGCryptoServiceProvider().GetBytes(array);
+            var generator = new RNGCryptoServiceProvider();
+            generator.GetBytes(array);
             return array;
         }
         #endregion

@@ -42,48 +42,24 @@ namespace Fosol.Common.Cryptography
         /// <summary>
         /// Encrypt the data.
         /// Uses Rfc2898DeriveBytes object to generate an algorithm hash.
-        /// Use this method if you want the initialization vector to be appended to the encrypted data.
         /// </summary>
         /// <param name="data">Data to be encrypted.</param>
         /// <param name="password">Password used to encrypt data.</param>
         /// <param name="salt">Salt to use for encrypting data.</param>
+        /// <param name="keySize">Size in bytes of the key.</param>
+        /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Encrypted data.</returns>
-        public override byte[] Encrypt(byte[] data, string password, byte[] salt)
+        public override byte[] Encrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(password, "password");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
             Fosol.Common.Validation.Assert.MinRange(salt.Length, 8, "Parameter 'salt' must be at least 8 bytes.");
 
-            return Encrypt(data, new Rfc2898DeriveBytes(password, salt));
+            return Encrypt(data, new Rfc2898DeriveBytes(password, salt), keySize, ivSize);
         }
 
         /// <summary>
         /// Encrypt the data.
-        /// Uses Rfc2898DeriveBytes object to generate an algorithm hash.
-        /// Use this method if you want to retain the initialization vector yourself.
-        /// </summary>
-        /// <param name="data">Data to be encrypted.</param>
-        /// <param name="password">Password used to encrypt data.</param>
-        /// <param name="iv">Algorithm initialization vector.</param>
-        /// <param name="keySize">Size in bytes of the key.</param>
-        /// <param name="ivSize">Size in bytes of the initialization vector.</param>
-        /// <returns>Encrypted data.</returns>
-        public override byte[] Encrypt(byte[] data, string password, byte[] salt, out byte[] iv, int keySize = 32, int ivSize = 16)
-        {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(password, "password");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
-
-            var generator = new Rfc2898DeriveBytes(password, salt);
-            var key = generator.GetBytes(keySize);
-            iv = generator.GetBytes(ivSize);
-
-            return Encrypt(data, key, iv);
-        }
-
-        /// <summary>
-        /// Encrypt the data.
-        /// Initializeation vector is appended to the end of the data.
         /// </summary>
         /// <param name="data">Data to be encrypted.</param>
         /// <param name="generator">DeriveBytes object used to populate the algorithm.</param>
@@ -98,8 +74,7 @@ namespace Fosol.Common.Cryptography
             var key = generator.GetBytes(keySize);
             var iv = generator.GetBytes(ivSize);
 
-            var encrypted_data = Encrypt(data, key, iv);
-            return encrypted_data.Concat(iv).ToArray();
+            return Encrypt(data, key, iv);
         }
 
         /// <summary>
@@ -154,47 +129,24 @@ namespace Fosol.Common.Cryptography
         /// <summary>
         /// Decrypt the data.
         /// Uses Rfc2898DeriveBytes object to generate an algorithm hash.
-        /// Use this method if the initialization vector has been appended to the encrypted data.
         /// </summary>
         /// <param name="data">Data to be decrypted.</param>
         /// <param name="password">Password used to decrypt data.</param>
         /// <param name="salt">Salt to use for decrypting data.</param>
+        /// <param name="keySize">Size in bytes of the key.</param>
+        /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Decrypted data.</returns>
-        public override byte[] Decrypt(byte[] data, string password, byte[] salt)
+        public override byte[] Decrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(password, "password");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
             Fosol.Common.Validation.Assert.MinRange(salt.Length, 8, "Parameter 'salt' must be at least 8 bytes.");
 
-            return Decrypt(data, new Rfc2898DeriveBytes(password, salt));
+            return Decrypt(data, new Rfc2898DeriveBytes(password, salt), keySize, ivSize);
         }
 
         /// <summary>
         /// Decrypt the data.
-        /// Uses Rfc2898DeriveBytes object to generate an algorithm hash.
-        /// Use this method if you are managing the initialization vector and it has not been appended to the encrypted data.
-        /// </summary>
-        /// <param name="data">Data to be decrypted.</param>
-        /// <param name="password">Password used to decrypt data.</param>
-        /// <param name="salt">Salt to use for decrypting data.</param>
-        /// <param name="iv">Algorithm initialization vector.</param>
-        /// <param name="keySize">Size in bytes of the key.</param>
-        /// <returns>Decrypted data.</returns>
-        public override byte[] Decrypt(byte[] data, string password, byte[] salt, byte[] iv, int keySize = 32)
-        {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(password, "password");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(iv, "iv");
-
-            var generator = new Rfc2898DeriveBytes(password, salt);
-            var key = generator.GetBytes(keySize);
-            return Decrypt(data, key, iv);
-        }
-
-        /// <summary>
-        /// Decrypt the data.
-        /// Use this method if the initialization vector has been appended to the encrypted data.
         /// </summary>
         /// <param name="data">Data to be decrypted.  This data must have the IV appended to the end.</param>
         /// <param name="generator">DeriveBytes object used to populate the algorithm.</param>
@@ -207,14 +159,9 @@ namespace Fosol.Common.Cryptography
             Fosol.Common.Validation.Assert.IsNotNull(generator, "generator");
 
             var key = generator.GetBytes(keySize);
+            var iv = generator.GetBytes(ivSize);
 
-            // Extract the IV from the data.  By default it is appended to the end of the data.
-            var iv = new byte[ivSize];
-            Array.Copy(data, data.Length - ivSize, iv, 0, ivSize);
-            var extracted_data = new byte[data.Length - ivSize];
-            Array.Copy(data, extracted_data, extracted_data.Length);
-
-            return Decrypt(extracted_data, key, iv);
+            return Decrypt(data, key, iv);
         }
 
         /// <summary>

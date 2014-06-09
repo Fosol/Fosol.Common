@@ -359,7 +359,7 @@ namespace Fosol.Common.UnitTests
             var output = format.Render(null);
 
             Assert.IsNotNull(output);
-            Assert.IsTrue(output == "This is a test for TextElement ({}}).");
+            Assert.IsTrue(output == "This is a test for TextElement ({}).");
         }
 
         /// <summary>
