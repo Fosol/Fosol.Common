@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Fosol.Common.Configuration
 {
+    /// <summary>
+    /// TypeElement provides a way to include an object type as a configurable option.
+    /// </summary>
     public class TypeElement
         : ConfigurationElement
     {
@@ -21,6 +24,9 @@ namespace Fosol.Common.Configuration
         #endregion
 
         #region Properties
+        /// <summary>
+        /// get/set - The name of the type.
+        /// </summary>
         [ConfigurationProperty(TypeNameKey, IsRequired = true, DefaultValue = "")]
         public virtual string TypeName
         {
@@ -28,6 +34,9 @@ namespace Fosol.Common.Configuration
             set { base[TypeNameKey] = value; }
         }
 
+        /// <summary>
+        /// get/set - Initialization data to include when creating a new instance of the specified type.
+        /// </summary>
         [ConfigurationProperty(InitDataKey, DefaultValue = "")]
         public string InitData
         {
@@ -35,6 +44,9 @@ namespace Fosol.Common.Configuration
             set { base[InitDataKey] = value; }
         }
 
+        /// <summary>
+        /// get - Access to the properties in the base ConfigurationElement class.
+        /// </summary>
         protected override ConfigurationPropertyCollection Properties
         {
             get
@@ -45,6 +57,10 @@ namespace Fosol.Common.Configuration
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of a TypeElement object.
+        /// </summary>
+        /// <param name="baseType">Object type this configuration element is for.</param>
         public TypeElement(Type baseType)
         {
             _Properties = new ConfigurationPropertyCollection();
@@ -55,6 +71,10 @@ namespace Fosol.Common.Configuration
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Creates a new instance of the specified type.
+        /// </summary>
+        /// <returns></returns>
         protected object BaseConstructObject()
         {
             if (_RuntimeObject != null)

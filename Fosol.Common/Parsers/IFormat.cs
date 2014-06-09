@@ -5,9 +5,10 @@ namespace Fosol.Common.Parsers
     /// IFormat is a an interface for format objects that conain a collection of elements which represent dynamic string values.
     /// </summary>
     public interface IFormat<T>
+        where T : FormatElement
     {
         /// <summary>
-        /// get - Collection of Element objects.
+        /// get - Collection of FormatElement objects.
         /// </summary>
         global::System.Collections.Generic.List<T> Elements { get; }
 

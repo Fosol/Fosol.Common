@@ -193,10 +193,7 @@
     <Compile Include="Validation\AssertFormat.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Behaviors\" />
     <Folder Include="Cryptography\Asymmetrical\" />
-    <Folder Include="Diagnostics\" />
-    <Folder Include="Events\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.fr.resx">

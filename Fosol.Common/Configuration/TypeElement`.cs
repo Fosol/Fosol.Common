@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Fosol.Common.Configuration
 {
+    /// <summary>
+    /// TypeElement provides a way to include an object type as a configurable option.
+    /// </summary>
     public class TypeElement<T>
         : TypeElement
         where T : class
@@ -18,6 +21,9 @@ namespace Fosol.Common.Configuration
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of a TypeElement object of type T.
+        /// </summary>
         public TypeElement()
             : base(typeof(T))
         {

@@ -7,22 +7,47 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Collections
 {
     /// <summary>
-    /// I'm not sure what purpose this comparer has, but it's from Microsoft source code and is used within the List collection.
+    /// FunctorComparer provides a way to sort collections of type T.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    internal sealed class FunctorComparer<T> : IComparer<T>
+    /// <typeparam name="T">Type of object to sort.</typeparam>
+    internal sealed class FunctorComparer<T> 
+        : IComparer<T>
     {
-        Comparison<T> comparison;
-        Comparer<T> c = Comparer<T>.Default;
+        #region Variables
+        Comparison<T> _Comparison;
+        #endregion
 
+        #region Properties
+        #endregion
+
+        #region Constructors
+        /// <summary>
+        /// Creates a new instance of a FunctorComparer object.
+        /// </summary>
+        /// <param name="comparison">Comparison object of type T.</param>
         public FunctorComparer(Comparison<T> comparison)
         {
-            this.comparison = comparison;
+            _Comparison = comparison;
         }
+        #endregion
 
+        #region Methods
+        /// <summary>
+        /// Compaires object 'x' to object 'y'.
+        /// </summary>
+        /// <param name="x">First object to compare.</param>
+        /// <param name="y">Second object to compare.</param>
+        /// <returns></returns>
         public int Compare(T x, T y)
         {
-            return comparison(x, y);
+            return _Comparison(x, y);
         }
+        #endregion
+
+        #region Operators
+        #endregion
+
+        #region Events
+        #endregion
     } 
 }

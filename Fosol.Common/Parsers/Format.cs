@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Parsers
 {
     /// <summary>
-    /// A ElementFormat provides a way to generate an output
+    /// Format is a collection of FormatElement objects that are used to create a dynamically rendered text.
     /// </summary>
     public class Format 
         : IFormat<FormatElement>
@@ -18,14 +18,14 @@ namespace Fosol.Common.Parsers
 
         #region Properties
         /// <summary>
-        /// get - Collection of Element objects.
+        /// get - Collection of FormatElement objects.
         /// </summary>
         public List<FormatElement> Elements { get { return _Elements; } }
         #endregion
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a ElementFormat object.
+        /// Creates a new instance of a FormatElement object.
         /// </summary>
         public Format()
         {
@@ -33,7 +33,7 @@ namespace Fosol.Common.Parsers
         }
 
         /// <summary>
-        /// Creates a new instance of a ElementFormat object.
+        /// Creates a new instance of a FormatElement object.
         /// </summary>
         internal Format(List<FormatElement> elements)
         {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Parsers
 {
     /// <summary>
-    /// ElementParser provides a consistant way to generate ElementFormat objects that use the same boundaries.
+    /// ElementParser provides a consistant way to generate FormatElement objects that use the same boundaries.
     /// </summary>
     public sealed class ElementParser
         : Parser<Format, FormatElement>
@@ -53,7 +53,7 @@ namespace Fosol.Common.Parsers
         /// Parses the specially formatted text and updates the Parts collection.
         /// </summary>
         /// <param name="text">A format string with special boundary syntax that represents Element objects.</param>
-        /// <returns>A new ElementFormat object from the format string.</returns>
+        /// <returns>A new FormatElement object from the format string.</returns>
         public override Format Parse(string text)
         {
             var elements = new List<FormatElement>();
@@ -218,9 +218,9 @@ namespace Fosol.Common.Parsers
         }
 
         /// <summary>
-        /// Generate the format string with boundary syntax for the specified ElementFormat object.
+        /// Generate the format string with boundary syntax for the specified FormatElement object.
         /// </summary>
-        /// <param name="format">ElementFormat object to render.</param>
+        /// <param name="format">FormatElement object to render.</param>
         /// <returns>String value with boundary formats.</returns>
         public override string Render(Format format)
         {

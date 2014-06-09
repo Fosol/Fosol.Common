@@ -937,6 +937,10 @@ namespace Fosol.Common.Collections
             _Version++;
         }
 
+        /// <summary>
+        /// Sort this collection with the specified comparison object.
+        /// </summary>
+        /// <param name="comparison">Comparison object of type T.</param>
         public void Sort(Comparison<T> comparison)
         {
             Validation.Assert.IsNotNull(comparison, "comparison");

@@ -82,7 +82,7 @@ namespace Fosol.Common
 
         #region Methods
         /// <summary>
-        /// If the CropPoint objects have the same X and Y value they are equal.
+        /// If the CenterPoint objects have the same X and Y value they are equal.
         /// </summary>
         /// <param name="obj">Object to compare.</param>
         /// <returns>True if they are equal.</returns>

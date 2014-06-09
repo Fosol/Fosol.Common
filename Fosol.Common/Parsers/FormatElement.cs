@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Parsers
 {
     /// <summary>
-    /// A Element represents an individual part of a Format.
+    /// A FormatElement represents an individual part of a Format.
     /// </summary>
     public abstract class FormatElement
     {
@@ -232,8 +232,6 @@ namespace Fosol.Common.Parsers
 
             return false;
         }
-
-
         #endregion
 
         #region Operators

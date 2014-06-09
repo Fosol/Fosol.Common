@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Parsers
 {
     /// <summary>
-    /// Base abstract class for formatters.
+    /// Parser is an abstract class for all text parsers that convert text into objects.
     /// </summary>
     /// <typeparam name="T">The Format type this formatter will create.</typeparam>
     public abstract class Parser<T, E> 
         where T : IFormat<E>
+        where E : FormatElement
     {
         #region Variables
         private readonly ElementBoundary _StartBoundary;
