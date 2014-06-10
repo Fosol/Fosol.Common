@@ -14,6 +14,136 @@ namespace Fosol.Common.Validation
     public static class Assert
     {
         #region Methods
+        #region IsEqual
+        /// <summary>
+        /// Asserts that the function returns a value equal to the validValue specified.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter 'function' does not return a valid value.</exception>
+        /// <param name="function">Function to validate.</param>
+        /// <param name="validValue">Valid value.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        public static void IsEqual(Func<object> function, object validValue, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!ReferenceEquals(function, validValue)
+                || !ReferenceEquals(function(), validValue))
+                throw new ArgumentException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsEqual, paramName));
+        }
+
+        /// <summary>
+        /// Asserts that the function returns a value equal to the validValue specified.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter 'function' does not return a valid value.</exception>
+        /// <param name="function">Function to validate.</param>
+        /// <param name="validValue">Valid value.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        /// <param name="innerException">The exception that caused this exception.</param>
+        public static void IsEqual(Func<object> function, object validValue, string message, Exception innerException)
+        {
+            if (!ReferenceEquals(function, validValue)
+                || !ReferenceEquals(function(), validValue))
+                throw new ArgumentException(message, innerException);
+        }
+
+        /// <summary>
+        /// Asserts that the function returns a value equal to the validValue specified.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter 'function' does not return a valid value.</exception>
+        /// <param name="function">Function to validate.</param>
+        /// <param name="validValue">Valid value.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        public static void IsEqual<T>(Func<T> function, T validValue, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!ReferenceEquals(function, validValue)
+                || !ReferenceEquals(function(), validValue))
+                throw new ArgumentException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsEqual, paramName));
+        }
+
+        /// <summary>
+        /// Asserts that the function returns a value equal to the validValue specified.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter 'function' does not return a valid value.</exception>
+        /// <param name="function">Function to validate.</param>
+        /// <param name="validValue">Valid value.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        /// <param name="innerException">The exception that caused this exception.</param>
+        public static void IsEqual<T>(Func<T> function, T validValue, string message, Exception innerException)
+        {
+            if (!ReferenceEquals(function, validValue)
+                || !ReferenceEquals(function(), validValue))
+                throw new ArgumentException(message, innerException);
+        }
+
+        /// <summary>
+        /// Asserts that the value is equal to the validValue specified.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter 'value' does not return a valid value.</exception>
+        /// <param name="function">Function to validate.</param>
+        /// <param name="validValue">Valid value.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        public static void IsEqual(object value, object validValue, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!ReferenceEquals(value, validValue))
+                throw new ArgumentException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsEqual, paramName));
+        }
+
+        /// <summary>
+        /// Asserts that the value is equal to the validValue specified.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter 'value' does not return a valid value.</exception>
+        /// <param name="value">Value to validate.</param>
+        /// <param name="validValue">Valid value.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        /// <param name="innerException">The exception that caused this exception.</param>
+        public static void IsEqual(object value, object validValue, string message, Exception innerException)
+        {
+            if (!ReferenceEquals(value, validValue))
+                throw new ArgumentException(message, innerException);
+        }
+
+        /// <summary>
+        /// Asserts that the value is equal to the validValue specified.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter 'value' does not return a valid value.</exception>
+        /// <param name="value">Value to validate.</param>
+        /// <param name="validValue">Valid value.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        public static void IsEqual<T>(T value, T validValue, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!ReferenceEquals(value, validValue))
+                throw new ArgumentException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsEqual, paramName));
+        }
+
+        /// <summary>
+        /// Asserts that the value is equal to the validValue specified.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter 'value' does not return a valid value.</exception>
+        /// <param name="value">Value to validate.</param>
+        /// <param name="validValue">Valid value.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        /// <param name="innerException">The exception that caused this exception.</param>
+        public static void IsEqual<T>(T value, T validValue, string message, Exception innerException)
+        {
+            if (!ReferenceEquals(value, validValue))
+                throw new ArgumentException(message, innerException);
+        }
+        #endregion
+
         #region IsNotNull
         /// <summary>
         /// Asserts that the result of the function is not null.
@@ -28,7 +158,7 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (function() == null)
+            if (function == null || function() == null)
                 throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsNotNull, paramName));
         }
 
@@ -42,7 +172,7 @@ namespace Fosol.Common.Validation
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNull(Func<object> function, string message, Exception innerException)
         {
-            if (function() == null)
+            if (function == null || function() == null)
                 throw new ArgumentNullException(message, innerException);
         }
 
@@ -60,7 +190,7 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (function() == null)
+            if (function == null || function() == null)
                 throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsNotNull, paramName));
         }
 
@@ -75,7 +205,7 @@ namespace Fosol.Common.Validation
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNull<T>(Func<T> function, string message, Exception innerException)
         {
-            if (function() == null)
+            if (function == null || function() == null)
                 throw new ArgumentNullException(message, innerException);
         }
 
@@ -224,6 +354,45 @@ namespace Fosol.Common.Validation
         }
 
         /// <summary>
+        /// Asserts that the parameter collection is not null and not empty.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="collection">Parameter of type enumerable.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Message to describe the error.</param>
+        public static void IsNotNullOrEmpty<T>(IEnumerable<T> collection, string paramName, string message = null)
+        {
+            IsNotNull(collection, paramName);
+
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (collection.Count() == 0)
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter collection is not null and not empty.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="collection">Parameter of type enumerable.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Message to describe the error.</param>
+        /// <param name="innerException">The exception that caused this exception</param>
+        public static void IsNotNullOrEmpty<T>(IEnumerable<T> collection, string paramName, string message, Exception innerException)
+        {
+            IsNotNull(collection, paramName);
+
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (collection.Count() == 0)
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName, innerException);
+        }
+
+        /// <summary>
         /// Asserts that the parameter array is not null and not empty.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
@@ -291,6 +460,45 @@ namespace Fosol.Common.Validation
         /// <param name="message">Message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception</param>
         public static void IsNotNullOrEmpty(byte[] array, string paramName, string message, Exception innerException)
+        {
+            IsNotNull(array, paramName);
+
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (array.Length == 0)
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName, innerException);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter array is not null and not empty.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="collection">Parameter of type array.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Message to describe the error.</param>
+        public static void IsNotNullOrEmpty<T>(T[] array, string paramName, string message = null)
+        {
+            IsNotNull(array, paramName);
+
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (array.Length == 0)
+                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName);
+        }
+
+        /// <summary>
+        /// Asserts that the parameter array is not null and not empty.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <param name="collection">Parameter of type array.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Message to describe the error.</param>
+        /// <param name="innerException">The exception that caused this exception</param>
+        public static void IsNotNullOrEmpty<T>(T[] array, string paramName, string message, Exception innerException)
         {
             IsNotNull(array, paramName);
 

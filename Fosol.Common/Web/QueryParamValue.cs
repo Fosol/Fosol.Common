@@ -1,0 +1,254 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Fosol.Common.Web
+{
+    /// <summary>
+    /// QueryParamValue provides a way to maintain multiple values for a single query parameter key.
+    /// 
+    /// Not threadsafe.
+    /// </summary>
+    public sealed class QueryParamValue
+        : IEnumerable<string>, ICollection<string>
+    {
+        #region Variables
+        private const int _DefaultArraySize = 1;
+        private const int _DefaultArrayGrowSize = 5;
+        private string[] _Values;
+        private int _Count;
+        private int _Size;
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// get/set - The value at the specified index position.
+        /// </summary>
+        /// <exception cref="System.IndexOutOfRangeException">Parameter 'index' must be a valid position within the collection.</exception>
+        /// <param name="index">Index position within the collection.</param>
+        /// <returns>String value at the specified index position.</returns>
+        public string this[int index]
+        {
+            get 
+            {
+                Fosol.Common.Validation.Enumerables.Assert.IsValidIndexPosition(index, _Count, "index");
+                return _Values[index]; 
+            }
+            set
+            {
+                Fosol.Common.Validation.Enumerables.Assert.IsValidIndexPosition(index, _Count, "index");
+                _Values[index] = value; 
+            }
+        }
+
+        /// <summary>
+        /// get - Number of values within the collection.
+        /// </summary>
+        public int Count
+        {
+            get { return _Count; }
+        }
+
+        /// <summary>
+        /// get - Whether the collection is readonly.
+        /// </summary>
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
+        #endregion
+
+        #region Constructors
+        /// <summary>
+        /// Creates a new instance of a QueryParamValue class.
+        /// </summary>
+        public QueryParamValue()
+            : this(_DefaultArraySize)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of a QueryParamValue class.
+        /// </summary>
+        /// <param name="initialSize">Size of the collection.</param>
+        public QueryParamValue(int initialSize)
+        {
+            _Values = new string[initialSize];
+            _Size = initialSize;
+        }
+
+        /// <summary>
+        /// Creates a new instance of a QueryParamValue class.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Paramter 'values' cannot be an array of 0 length.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter 'values' cannot be null.</exception>
+        /// <param name="values">Initialization values for the collection.</param>
+        public QueryParamValue(string[] values)
+        {
+            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(values, "values");
+
+            _Values = new string[values.Length];
+            var position = 0;
+            foreach (var value in values)
+            {
+                if (value != null)
+                {
+                    _Values[position++] = value;
+                }
+            }
+        }
+        #endregion
+
+        #region Methods
+        /// <summary>
+        /// Gets the enumerator for this collection.
+        /// </summary>
+        /// <returns>IEnumerator of type string.</returns>
+        public IEnumerator<string> GetEnumerator()
+        {
+            foreach (var value in _Values)
+            {
+                yield return value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the enumerator for this collection.
+        /// </summary>
+        /// <returns>IEnumerator of type string.</returns>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        /// <summary>
+        /// Returns every value separated by a comma.
+        /// </summary>
+        /// <returns>Every value separated by a comma.</returns>
+        public override string ToString()
+        {
+            return this.ToString(",");
+        }
+
+        /// <summary>
+        /// Returns every value separated by the specified delimiter.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter 'delimiter' cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter 'delimiter' cannot be null.</exception>
+        /// <param name="delimiter">The text used to separate each value.</param>
+        /// <returns>Every value separated by the delimiter.</returns>
+        public string ToString(string delimiter)
+        {
+            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(delimiter, "delimiter");
+            return _Values.Aggregate((a, b) => a + delimiter + b);
+        }
+
+        /// <summary>
+        /// Adds the string value to the collection.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter 'value' cannot be null.</exception>
+        /// <param name="value">Value to add to the collection.</param>
+        public void Add(string value)
+        {
+            Fosol.Common.Validation.Assert.IsNotNull(value, "value");
+
+            // If the array size is too small to accept a new value, increase the array size.
+            if (_Size <= _Count)
+            {
+                // Increase the array size.
+                var values = new string[_Size + _DefaultArrayGrowSize];
+                Array.Copy(_Values, values, _Count);
+                _Values = values;
+                _Size = _Values.Length;
+
+            }
+
+            _Values[_Count++] = value;
+        }
+
+        /// <summary>
+        /// Clears everything out of the collection.
+        /// </summary>
+        public void Clear()
+        {
+            Array.Clear(_Values, 0, _Count);
+            _Count = 0;
+        }
+
+        /// <summary>
+        /// Determines if the collection contains the specified value.
+        /// </summary>
+        /// <param name="value">Value to look for within the collection.</param>
+        /// <returns>True of the value is in the collection.</returns>
+        public bool Contains(string value)
+        {
+            foreach (var v in _Values)
+            {
+                if (value.Equals(v))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Copy this collection into the destination array at the specified array index.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter 'array' cannot be an array with 0 length.</exception>
+        /// <exception cref="System.ArgumentException">Parameter 'array' must be large enough to receive this collection of values.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter 'array' cannot be null.</exception>
+        /// <param name="array">Destination array.</param>
+        /// <param name="arrayIndex">Index position to start copying values into the destination array.</param>
+        public void CopyTo(string[] array, int arrayIndex)
+        {
+            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(array, "array");
+            Fosol.Common.Validation.Enumerables.Assert.IsValidIndexPosition(arrayIndex, array, "arrayIndex");
+            Fosol.Common.Validation.Assert.MaxRange((array.Length - arrayIndex), _Count, "The destination array is not large enough.");
+
+            for (var i = 0; i < _Count; i++)
+            {
+                array[i + arrayIndex] = _Values[i];
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified value (all copies) from the collection.
+        /// </summary>
+        /// <param name="value">Value to remove from the collection.</param>
+        /// <returns>True if the value was removed from the collection.</returns>
+        public bool Remove(string value)
+        {
+            // Copy all other items in the array to a new array.
+            var remove_success = false;
+            for (var i = 0; i < _Count; i++)
+            {
+                if (_Values[i].Equals(value))
+                {
+                    _Values[i] = null;
+                    remove_success = true;
+                }
+            }
+
+            // Resize the array by removing the null values.
+            if (remove_success)
+            {
+                _Values = _Values.Where(v => v != null).ToArray();
+                _Size = _Values.Length;
+                _Count = _Size;
+            }
+
+            return remove_success;
+        }
+        #endregion
+
+        #region Operators
+        #endregion
+
+        #region Events
+        #endregion
+    }
+}
