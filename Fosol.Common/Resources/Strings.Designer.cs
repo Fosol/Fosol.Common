@@ -313,6 +313,15 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; must be a valid index position within the specified array..
+        /// </summary>
+        internal static string Exception_Validation_Assert_Enumerables_IsValidIndexPosition {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Assert_Enumerables_IsValidIndexPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid email..
         /// </summary>
         internal static string Exception_Validation_AssertFormat_IsEmail {
@@ -408,6 +417,15 @@ namespace Fosol.Common.Resources {
         internal static string Exception_Validation_Invalid_Value {
             get {
                 return ResourceManager.GetString("Exception_Validation_Invalid_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; must be equal to the specified validValue..
+        /// </summary>
+        internal static string Exception_Validation_IsEqual {
+            get {
+                return ResourceManager.GetString("Exception_Validation_IsEqual", resourceCulture);
             }
         }
         

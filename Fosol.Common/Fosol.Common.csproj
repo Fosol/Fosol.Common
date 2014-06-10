@@ -65,6 +65,7 @@
     <Compile Include="Caching\WeakCache`.cs" />
     <Compile Include="Collections\FunctorComparer`.cs" />
     <Compile Include="Collections\GenericList`.cs" />
+    <Compile Include="Configuration\Attributes\UriValidatorAttribute.cs" />
     <Compile Include="Configuration\CDataConfigurationElement.cs" />
     <Compile Include="Configuration\CDataConfigurationPropertyAttribute.cs" />
     <Compile Include="Configuration\ConfigurationElementCollection`.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="HashCode.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\RegexHelper.cs" />
+    <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Helpers\WebApplicationHelper.cs" />
     <Compile Include="Parsers\Converters\ElementFormatConverter.cs" />
     <Compile Include="Data\TableName.cs" />
@@ -165,6 +167,8 @@
     <Compile Include="Parsers\IFormat.cs" />
     <Compile Include="Serialization\CData.cs" />
     <Compile Include="Validation\AssertPassword.cs" />
+    <Compile Include="Validation\Enumerables\Assert.cs" />
+    <Compile Include="Validation\UriValidator.cs" />
     <Compile Include="Web\CrossSiteScriptingValidation.cs" />
     <Compile Include="Web\DomainComparer.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
@@ -191,6 +195,10 @@
     <Compile Include="Serialization\XmlHelper.cs" />
     <Compile Include="Validation\Assert.cs" />
     <Compile Include="Validation\AssertFormat.cs" />
+    <Compile Include="Web\QueryParam.cs" />
+    <Compile Include="Web\QueryParamCollection.cs" />
+    <Compile Include="Web\QueryParamValue.cs" />
+    <Compile Include="Web\UriParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Cryptography\Asymmetrical\" />

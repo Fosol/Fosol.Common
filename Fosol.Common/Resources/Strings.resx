@@ -261,4 +261,10 @@
   <data name="Exception_Validation_AssertPassword_IsValid" xml:space="preserve">
     <value>Argument "{0}" is not a valid password.</value>
   </data>
+  <data name="Exception_Validation_Assert_Enumerables_IsValidIndexPosition" xml:space="preserve">
+    <value>Parameter '{0}' must be a valid index position within the specified array.</value>
+  </data>
+  <data name="Exception_Validation_IsEqual" xml:space="preserve">
+    <value>Parameter '{0}' must be equal to the specified validValue.</value>
+  </data>
 </root>
