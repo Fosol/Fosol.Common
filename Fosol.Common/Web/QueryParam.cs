@@ -120,37 +120,56 @@ namespace Fosol.Common.Web
 
         #region Methods
         /// <summary>
-        /// Gets a single string value that represents all the values for this query parameter.
-        /// </summary>
-        /// <param name="delimiter">Delimiter to separate multiple values.  Default delimiter is a comma ','.</param>
-        /// <returns>String value of this query parameter.</returns>
-        public string GetValue(string delimiter = ",")
-        {
-            if (this.IsMultiValue)
-                return _Values.ToString(delimiter);
-            else
-                return _Values[0];
-        }
-
-        /// <summary>
         /// Returns a full query string parameter key value pair (i.e. key=value).
-        /// If the key contains mulitple value it will aggregate them with a comma delimiter (i.e. key=value1,value2,value3).
+        /// If the key contains mulitple value it will aggregate them (i.e. key=value1&key=value2&key=value3).
         /// </summary>
         /// <returns>Query string key value pair.</returns>
         public override string ToString()
         {
-            return this.ToString(",");
+            return _Values.Aggregate((a, b) => String.Format("{0}={1}", this.Name, a) + "&" + (string.Format("{0}={1}", this.Name, b)));
         }
 
         /// <summary>
-        /// Returns a full query string parameter key value pair (i.e. key=value).
-        /// If the key contains mulitple value it will aggregate them with a comma delimiter (i.e. key=value1,value2,value3).
+        /// Add a new value to the query parameter.
         /// </summary>
-        /// <param name="delimiter">Delimiter to use to separate multiple values.</param>
-        /// <returns>Query string key value pair.</returns>
-        public string ToString(string delimiter)
+        /// <param name="value">Value to add.</param>
+        /// <param name="allowDuplicates">Whether or not to allow duplicate values to be added.</param>
+        public void Add(string value, bool allowDuplicates = true)
         {
-            return String.Format("{0}={1}", this.Name, this.GetValue(delimiter));
+            if (allowDuplicates
+                || (!allowDuplicates && !_Values.Contains(value)))
+                _Values.Add(value);
+        }
+
+        /// <summary>
+        /// Add each value in the array to the query parameter.
+        /// </summary>
+        /// <param name="values">Array of values to add.</param>
+        /// <param name="allowDuplicates">Whether or not to allow duplicate values to be added.</param>
+        public void Add(string[] values, bool allowDuplicates = true)
+        {
+            foreach (var value in values)
+            {
+                this.Add(value, allowDuplicates);
+            }
+        }
+
+        /// <summary>
+        /// Removes all copies of the value from the query parameter.
+        /// </summary>
+        /// <param name="value">Value to remove.</param>
+        /// <returns>True if the value was found and removed.</returns>
+        public bool Remove(string value)
+        {
+            return _Values.Remove(value);
+        }
+
+        /// <summary>
+        /// Clears all the values from the query parameter.
+        /// </summary>
+        public void Clear()
+        {
+            _Values.Clear();
         }
         #endregion
 

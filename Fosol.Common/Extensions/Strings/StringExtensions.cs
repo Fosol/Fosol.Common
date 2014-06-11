@@ -339,43 +339,6 @@ namespace Fosol.Common.Extensions.Strings
 
             return results;
         }
-
-        /// <summary>
-        /// Parses a Uri string for the query parameters.
-        /// </summary>
-        /// <exception cref="System.ArgumentNullException">Parameter "uri" cannot be null.</exception>
-        /// <param name="uri">Uri string.</param>
-        /// <returns>NameValueCollection with query string parameters.</returns>
-        public static System.Collections.Specialized.NameValueCollection ParseQueryString(this string uri)
-        {
-            Validation.Assert.IsNotNull(uri, "uri");
-
-            uri = HttpUtility.UrlDecode(uri);
-
-            var parameters = new System.Collections.Specialized.NameValueCollection();
-
-            // remove anything other than query string from url
-            if (uri.Contains("?"))
-            {
-                uri = uri.Substring(uri.IndexOf('?') + 1);
-            }
-
-            foreach (string vp in Regex.Split(uri, "&"))
-            {
-                string[] singlePair = Regex.Split(vp, "=");
-                if (singlePair.Length == 2)
-                {
-                    parameters.Add(singlePair[0], singlePair[1]);
-                }
-                else
-                {
-                    // only one key with no value specified in query string
-                    parameters.Add(singlePair[0], string.Empty);
-                }
-            }
-
-            return parameters;
-        }
 #endif
 
         #region Numbers
