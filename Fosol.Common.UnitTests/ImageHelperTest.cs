@@ -7,6 +7,7 @@ using System.Drawing;
 namespace Fosol.Common.UnitTests
 {
     [TestClass]
+    [DeploymentItem(@"Resources\Images", @"Resources\Images")]
     public class ImageHelperTest
     {
         #region Variables

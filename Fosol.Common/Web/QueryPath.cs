@@ -12,6 +12,7 @@ namespace Fosol.Common.Web
     {
         #region Variables
         private List<QueryPathSegment> _Segments;
+        private bool _IsAbsolute;
         #endregion
 
         #region Properties
@@ -30,6 +31,12 @@ namespace Fosol.Common.Web
         {
             get { return false; }
         }
+
+        public bool IsAbsolute
+        {
+            get { return _IsAbsolute; }
+            set { _IsAbsolute = value; }
+        }
         #endregion
 
         #region Constructors
@@ -41,18 +48,24 @@ namespace Fosol.Common.Web
         public QueryPath(string path)
             : this()
         {
-            if (String.IsNullOrEmpty(path)
-                || path.Equals("/"))
+            if (String.IsNullOrEmpty(path))
                 return;
 
             if (path.StartsWith("//"))
                 throw new UriFormatException("Path has invalid characters.");
 
+            if (path.StartsWith("/"))
+            {
+                _IsAbsolute = true;
+
+                if (path.Length == 1)
+                    return;
+
+                path = path.Substring(1);
+            }
+
             // Replace Whitespace.
             UriBuilder.ReplaceWhitespaces(ref path);
-
-            if (path.StartsWith("/"))
-                path = path.Substring(1);
 
             var split_path = path.Split('/');
 
@@ -100,9 +113,9 @@ namespace Fosol.Common.Web
         public override string ToString()
         {
             if (_Segments.Count == 0)
-                return "/";
+                return (this.IsAbsolute ? "/" : String.Empty);
 
-            return _Segments.Select(s => s.Value).Aggregate((a, b) => a + "/" + b);
+            return (this.IsAbsolute ? "/" : String.Empty) + _Segments.Select(s => s.Value).Aggregate((a, b) => a + "/" + b);
         }
         #endregion
 
