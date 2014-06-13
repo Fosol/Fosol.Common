@@ -12,53 +12,383 @@ namespace Fosol.Common.Web
     /// <summary>
     /// UriBuilder provides a way to parse URI values into logical parts.
     /// - The reason for this class is to provide a clean and simple way to deal with URI values.
-    /// - The current .NET classes and methods do not provide all the desired functionality.
+    /// - The current .NET classes and methods do not provide a decent way to manage query string parameters.
+    /// 
+    /// Contains a number of regex string values to validate the different parts of URI value.
     /// </summary>
+    /// <see cref="http://tools.ietf.org/html/rfc3986"/>
     public sealed class UriBuilder
     {
         #region Variables
-        public const string ReservedGenDelims = @"[:/\?#\[@\]]";
-        public const string ReservedSubDelims = @"[!\$&'\(\)\*\+,;=]";
-        public const string UnreservedCharacters = @"(?i)[a-z0-9-\._~]";
-        public const string ValidSchemeRegex = @"(?i)^[a-z]([a-z0-9\+\-\.])*\Z";
-        public const string ValidUserInfoRegex = UnreservedCharacters + ReservedSubDelims;
+        public const string ReservedGenDelimsRegex = @"[:/\?#\[@\]]";
+        public const string ReservedSubDelimsRegex = @"[!\$&'\(\)\*\+,;=]";
+        public const string UnreservedCharactersRegex = @"(?i)[a-z0-9-\._~]";
+        public const string PercentEncodedRegex = "%(?i)[0-9a-z]{2}";
+        public const string SchemeRegex = @"(?i)([a-z]([a-z0-9\+\-\.])*)";
+        public const string UserInfoRegex = "(" + UnreservedCharactersRegex + "|" + PercentEncodedRegex + "|" + ReservedSubDelimsRegex + ")+";
+        public const string IPv4SegmentRegex = "(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])";
+        public const string IPv4AddressRegex = "(" + IPv4SegmentRegex + @"\.){3,3}" + IPv4SegmentRegex;
+        public const string IPv6SegmentRegex = "(?i)[0-9a-f]{1,4}";
+        public const string IPv6AddressRegex = "("
+                                            + "(" + IPv6SegmentRegex + ":){7,7}" + IPv6SegmentRegex + "|"
+                                            + "(" + IPv6SegmentRegex + ":){1,7}:|"
+                                            + "(" + IPv6SegmentRegex + ":){1,6}:" + IPv6SegmentRegex + "|"
+                                            + "(" + IPv6SegmentRegex + ":){1,5}(:" + IPv6SegmentRegex + "){1,2}|"
+                                            + "(" + IPv6SegmentRegex + ":){1,4}(:" + IPv6SegmentRegex + "){1,3}|"
+                                            + "(" + IPv6SegmentRegex + ":){1,3}(:" + IPv6SegmentRegex + "){1,4}|"
+                                            + "(" + IPv6SegmentRegex + ":){1,2}(:" + IPv6SegmentRegex + "){1,5}|"
+                                            + IPv6SegmentRegex + ":((:" + IPv6SegmentRegex + "){1,6})|"
+                                            + ":((:" + IPv6SegmentRegex + "){1,7}|:)|"
+                                            + ":((:" + IPv6SegmentRegex + "){1,7}|:)|"
+                                            + "fe80:(:" + IPv6SegmentRegex + "){0,4}%(?i)[0-9a-z]{1,}|"
+                                            + "::(ffff(:0{1,4}){0,1}:){0,1}" + IPv4SegmentRegex + "|"
+                                            + "(" + IPv6SegmentRegex + ":){1,4}:" + IPv4SegmentRegex + ""
+                                            + ")";
+        public const string HostRegex = "(" + UnreservedCharactersRegex + "|" + PercentEncodedRegex + "|" + ReservedSubDelimsRegex + ")+";
+        public const string PortRegex = "[0-9]+";
+        public const string PathSegmentRegex = "(" + UnreservedCharactersRegex + "|" + PercentEncodedRegex + "|" + ReservedSubDelimsRegex + "|[:@])+";
+        public const string QueryRegex = "(" + UnreservedCharactersRegex + "|" + PercentEncodedRegex + "|" + ReservedSubDelimsRegex + @"|[:@/\?])+";
+        public const string FragmentRegex = "(" + UnreservedCharactersRegex + "|" + PercentEncodedRegex + "|" + ReservedSubDelimsRegex + @"|[:@/\?])+";
         public const int MaximumURILength = 2048;
         private string _Scheme;
+        private string _Username;
         private string _Host;
-        private int _Port;
-        private string _Path;
-        private QueryParamCollection _Query;
+        private int _Port = 80;
+        private QueryPath _Path;
+        private QueryParameters _Query;
         private string _Fragment;
+        private Uri _Uri;
+        private bool _IsDirty = true;
 
-        private static readonly Regex _SchemeRegex = new Regex(UriBuilder.ValidSchemeRegex, RegexOptions.Compiled);
+        private const string _WhitespaceEncoding = "%20";
+        private const string _FormatBoundary = @"\A({0})\Z";
+        private static readonly Regex _SchemeRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.SchemeRegex), RegexOptions.Compiled);
+        private static readonly Regex _UserInfoRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.UserInfoRegex), RegexOptions.Compiled);
+        private static readonly Regex _IPv4AddressRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.IPv4AddressRegex), RegexOptions.Compiled);
+        private static readonly Regex _IPv6AddressRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.IPv6AddressRegex), RegexOptions.Compiled);
+        private static readonly Regex _HostRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.HostRegex), RegexOptions.Compiled);
+        private static readonly Regex _PortRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.PortRegex), RegexOptions.Compiled);
+        private static readonly Regex _FragmentRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.FragmentRegex), RegexOptions.Compiled);
+        private static readonly Regex _EncodeSpaces = new Regex(@"\s", RegexOptions.Compiled);
         #endregion
 
         #region Properties
+        /// <summary>
+        /// get/set - Uri scheme value. 
+        /// </summary>
+        /// <format>ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )</format>
         public string Scheme
         {
             get { return _Scheme; }
             set
             {
+                if (String.IsNullOrWhiteSpace(value))
+                    throw new UriFormatException("Scheme value has invalid characters.");
+
                 var match = _SchemeRegex.Match(value);
 
                 if (!match.Success)
-                    throw new UriFormatException("Scheme value is not valid.");
+                    throw new UriFormatException("Scheme value has invalid characters.");
 
                 _Scheme = value;
+                _IsDirty = true;
             }
         }
 
+        /// <summary>
+        /// get/set - Uri authority value [userinfo@]host[:port]
+        /// </summary>
+        /// <format>[ userinfo "@" ] host [ ":" port ]</format>
+        public string Authority
+        {
+            get { return String.Format("{0}{1}", _Host, (_Port != 80 ? ":" + _Port : String.Empty)); }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                    this.Host = value;
+
+                // Extract the user information.
+                var index_of_at = value.IndexOf('@');
+                if (index_of_at != -1)
+                {
+                    if (index_of_at + 1 >= value.Length)
+                        throw new UriFormatException("Host value is invalid.");
+
+                    this.Username = value.Substring(0, index_of_at);
+
+                    // Remove the user information from the authority.
+                    value = value.Substring(index_of_at + 1);
+                }
+
+                // This must be an IP address with a port #.
+                if (value.StartsWith("["))
+                {
+                    var index_of_bracket = value.LastIndexOf(']');
+                    if (index_of_bracket != -1)
+                    {
+                        this.Host = value.Substring(1, index_of_bracket - 1);
+
+                        // Check for a port.
+                        var index_of_colon = value.Substring(index_of_bracket + 1).IndexOf(':');
+                        if (index_of_colon != -1)
+                        {
+                            if (index_of_colon + 1 >= value.Length)
+                                throw new UriFormatException("Port value is invalid.");
+
+                            var port = value.Substring(index_of_colon + 1);
+
+                            // Validate port.
+                            var port_match = _PortRegex.Match(port);
+                            if (!port_match.Success)
+                                throw new UriFormatException("Port value has invalid characters.");
+
+                            this.Port = Convert.ToInt32(port);
+                            this.Host = value.Substring(0, index_of_colon);
+                        }
+                    }
+                    else
+                        throw new UriFormatException("Host value has invalid characters.");
+                }
+                else
+                {
+                    // Separate the host from the port.
+                    var index_of_colon = value.LastIndexOf(':');
+                    if (index_of_colon != -1)
+                    {
+                        if (index_of_colon + 1 >= value.Length)
+                            throw new UriFormatException("Port value is invalid.");
+
+                        var port = value.Substring(index_of_colon + 1);
+
+                        // Validate port.
+                        var port_match = _PortRegex.Match(port);
+                        if (!port_match.Success)
+                            throw new UriFormatException("Port value has invalid characters.");
+
+                        this.Port = Convert.ToInt32(port);
+                        this.Host = value.Substring(0, index_of_colon);
+                    }
+                    else
+                    {
+                        this.Host = value;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// get/set - Uri username value.
+        /// </summary>
+        /// <format>*( unreserved / pct-encoded / sub-delims / ":" )</format>
+        public string Username
+        {
+            get { return _Username; }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                {
+                    _Username = value;
+                    _IsDirty = true;
+                    return;
+                }
+
+                var index_of_colon = value.IndexOf(':');
+                if (index_of_colon != -1)
+                {
+                    value = value.Substring(0, index_of_colon);
+                }
+
+                // Validate the characters.
+                var match_userinfo = _UserInfoRegex.Match(value);
+                if (!match_userinfo.Success)
+                    throw new UriFormatException("User information has invalid characters.");
+
+                _Username = value;
+                _IsDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// get/set - Uri host value.
+        /// </summary>
+        /// <format>IP-literal / IPv4address / reg-name</format>
         public string Host
         {
             get { return _Host; }
             set
             {
+                if (String.IsNullOrEmpty(value))
+                {
+                    _Host = value;
+                    _IsDirty = true;
+                    return;
+                }
 
+                var is_ip4 = false;
+                var is_ip6 = false;
+
+                // Check if it's an IPv4 address.
+                var ip4_match = _IPv4AddressRegex.Match(value);
+                if (ip4_match.Success)
+                    is_ip4 = true;
+
+                // Check if it's an IPv6 address.
+                if (!is_ip4)
+                {
+                    var ip6_match = _IPv6AddressRegex.Match(value);
+                    if (ip6_match.Success)
+                        is_ip6 = true;
+                }
+
+                if (!is_ip4 && !is_ip6)
+                {
+                    // Validate host.
+                    var host_match = _HostRegex.Match(value);
+                    if (!host_match.Success)
+                        throw new UriFormatException("Host value has invalid characters.");
+                }
+
+                _Host = value;
+                _IsDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// get/set - Uri port value.
+        /// </summary>
+        /// <format>*DIGIT</format>
+        public int Port
+        {
+            get { return _Port; }
+            set
+            {
+                var port_match = _PortRegex.Match(value.ToString());
+                if (!port_match.Success)
+                    throw new UriFormatException("Port value has invalid characters.");
+
+                _Port = value;
+                _IsDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// get/set - Uri path value.
+        /// </summary>
+        public string Path
+        {
+            get { return _Path; }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                {
+                    _Path = new QueryPath();
+                    _IsDirty = true;
+                    return;
+                }
+
+                _Path = new QueryPath(value);
+                _IsDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// get/set - Uri query value.
+        /// </summary>
+        /// <format>*( pchar / "/" / "?" )</format>
+        public string Query
+        {
+            get { return _Query.ToString(); }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                {
+                    _Query = new QueryParameters();
+                    _IsDirty = true;
+                    return;
+                }
+
+                // Extract the fragment.
+                var index_of_pound = value.IndexOf('#');
+                if (index_of_pound != -1)
+                {
+                    this.Fragment = value.Substring(index_of_pound);
+                    value = value.Substring(0, index_of_pound);
+                }
+
+                _Query = new QueryParameters(value);
+                _IsDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// get/set - Uri fragment value.
+        /// </summary>
+        /// <format>*( pchar / "/" / "?" )</format>
+        public string Fragment
+        {
+            get { return _Fragment; }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                {
+                    _Fragment = null;
+                    _IsDirty = true;
+                    return;
+                }
+
+                // Replace Whitespace.
+                UriBuilder.ReplaceWhitespaces(ref value);
+
+                var index_of_pound = value.IndexOf('#');
+                if (index_of_pound != -1)
+                {
+                    if (index_of_pound + 1 >= value.Length)
+                    {
+                        _Fragment = null;
+                        _IsDirty = true;
+                        return;
+                    }
+                    value = value.Substring(index_of_pound + 1);
+                }
+
+                var match = _FragmentRegex.Match(value);
+
+                if (!match.Success)
+                    throw new UriFormatException("Fragment value has invalid characters.");
+
+                _Fragment = value;
+                _IsDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// get/set - The Uri value created by this UriBuilder.
+        /// </summary>
+        public Uri Uri
+        {
+            get
+            {
+                if (_IsDirty)
+                {
+                    _Uri = new Uri(this.ToString());
+                    _IsDirty = false;
+                    return _Uri;
+                }
+
+                return _Uri;
             }
         }
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of a UriBuilder class.
+        /// </summary>
+        public UriBuilder()
+        {
+            _Query = new QueryParameters();
+        }
+
         /// <summary>
         /// Creates a new instance of a UriBuilder class.
         /// </summary>
@@ -95,13 +425,14 @@ namespace Fosol.Common.Web
             _Scheme = uri.Scheme;
             _Host = uri.Host;
             _Port = uri.Port;
-            _Path = uri.AbsolutePath;
-            _Fragment = uri.Fragment;
+            _Path = new QueryPath(uri.AbsolutePath);
 
             if (uri.Query != null)
-                _Query = new QueryParamCollection(uri.Query);
+                _Query = new QueryParameters(uri.Query);
             else
-                _Query = new QueryParamCollection();
+                _Query = new QueryParameters();
+
+            _Fragment = uri.Fragment;
         }
 
         /// <summary>
@@ -115,125 +446,74 @@ namespace Fosol.Common.Web
                 _Scheme,
                 "://",
                 _Host,
-                (_Port != 80 ? ":" + _Port : String.Empty),
-                (_Host.Length > 0 && _Path.Length != 0 && _Path[0] != '/') ? "/" : String.Empty,
-                _Path,
-                _Query.ToString(),
-                _Fragment
+                _Port != 80 && _Port != -1 ? ":" + _Port : String.Empty,
+                (_Host.Length == 0 && _Path.Count == 0) ? String.Empty : _Path,
+                _Query.Count > 0 ? "?" + _Query.ToString() : String.Empty,
+                !String.IsNullOrEmpty(_Fragment) ? "#" + _Fragment : String.Empty
             });
         }
 
         /// <summary>
-        /// Parse the specified query string into a QueryParamCollection object.
+        /// Get the QueryParameters object.
         /// </summary>
-        /// <param name="queryString">Raw query string value.</param>
-        /// <param name="decode">Whether the key value pairs should be decoded.</param>
-        /// <returns>A new instance of a QueryParamCollection object.</returns>
-        public static QueryParamCollection ParseQueryString(string queryString, bool decode = true)
+        /// <returns>QueryParameters object for this UriBuilder.</returns>
+        public QueryParameters GetQueryParameters()
         {
-            return new QueryParamCollection(queryString, decode);
+            return _Query;
         }
 
         /// <summary>
-        /// Parse the specified query string into a NameValueCollection object.
+        /// Get the QueryPath object.
         /// </summary>
-        /// <param name="queryString">Raw query string value.</param>
-        /// <param name="decode">Whether the key value pairs should be decoded.</param>
-        /// <returns>A new instance of a NameValueCollection object.</returns>
-        public static NameValueCollection ParseQueryStringToNameValueCollection(string queryString, bool decode = true)
+        /// <returns>QueryPath object for this UriBuilder.</returns>
+        public QueryPath GetPath()
         {
-            var result = new NameValueCollection();
-            var values = UriBuilder.ParseQueryStringToKeyValuePair(queryString, decode);
-
-            foreach (var value in values)
-            {
-                result.Add(value.Key, value.Value);
-            }
-
-            return result;
+            return _Path;
         }
 
         /// <summary>
-        /// Parse the specified query string into a collection of KeyValuePair objects.
+        /// Replaces all spaces in uri with the URL encoded value of '%20' (without single-quotes).
         /// </summary>
-        /// <param name="queryString">Raw query string value.</param>
-        /// <param name="decode">Whether the key value pairs should be decoded.</param>
-        /// <returns>A new instance of a Collection of KeyValuePair objects.</returns>
-        public static List<KeyValuePair<string, string>> ParseQueryStringToKeyValuePair(string queryString, bool decode = true)
+        /// <param name="uri">Uri value.</param>
+        /// <returns>Updated uri value with replaced spaces.</returns>
+        public static string ReplaceWhitespaces(string uri)
         {
-            var keys = new List<KeyValuePair<string, string>>();
+            if (String.IsNullOrEmpty(uri))
+                return uri;
 
-            if (String.IsNullOrEmpty(queryString))
-                return keys;
-
-            var index_of_q = queryString.IndexOf('?');
-
-            if (index_of_q > -1)
-            {
-                queryString = queryString.Substring(index_of_q + 1);
-            }
-
-            if (String.IsNullOrEmpty(queryString))
-                return keys;
-
-            var k_start = 0;
-            for (var i = 0; i < queryString.Length; i++)
-            {
-                if (queryString[i] == '&')
-                {
-                    keys.Add(UriBuilder.ParseKeyValuePair(queryString.Substring(k_start, i - k_start), decode));
-
-                    i++;
-                    k_start = i;
-                }
-            }
-
-            // There was only one key value pair.
-            if (k_start == 0
-                && keys.Count == 0)
-                keys.Add(UriBuilder.ParseKeyValuePair(queryString, decode));
-            else if (k_start > 0)
-                // This is the last key value pair in the query string.
-                keys.Add(UriBuilder.ParseKeyValuePair(queryString.Substring(k_start), decode));
-
-            return keys;
+            return _EncodeSpaces.Replace(uri, _WhitespaceEncoding);
         }
 
         /// <summary>
-        /// Parse the key value pair into a KeyValuePair object.
+        /// Replaces all spaces in uri with the URL encoded value of '%20' (without single-quotes).
         /// </summary>
-        /// <param name="keyAndValue">Raw key value pair text value.</param>
-        /// <param name="decode">Whether the key value pair should be URL decoded.</param>
-        /// <returns>A new instance of a KeyValuePair object.</returns>
-        private static KeyValuePair<string, string> ParseKeyValuePair(string keyAndValue, bool decode = true)
+        /// <param name="uri">Uri value.</param>
+        internal static void ReplaceWhitespaces(ref string uri)
         {
-            // This is an empty key value.
-            if (keyAndValue.Equals("="))
-                new KeyValuePair<string, string>(String.Empty, String.Empty);
-
-            for (var i = 0; i < keyAndValue.Length; i++)
+            if (!String.IsNullOrEmpty(uri))
             {
-                // Found the separater for the key value pair.
-                if (keyAndValue[i] == '=')
-                {
-                    // This one has a key value.
-                    if (i > 0)
-                    {
-                        var key = decode ? HttpUtility.UrlDecode(keyAndValue.Substring(0, i)) : keyAndValue.Substring(0, i);
-                        var value = decode ? HttpUtility.UrlDecode(keyAndValue.Substring(i + 1)) : keyAndValue.Substring(i + 1);
-                        return new KeyValuePair<string, string>(key, value);
-                    }
-                    else
-                    {
-                        // This one has no key value.
-                        var value = decode ? HttpUtility.UrlDecode(keyAndValue.Substring(i + 1)) : keyAndValue.Substring(i + 1);
-                        return new KeyValuePair<string, string>(String.Empty, value);
-                    }
-                }
+                uri = UriBuilder.ReplaceWhitespaces(uri);
             }
+        }
 
-            // The whole keyAndValue is only a value.
-            return new KeyValuePair<string, string>(String.Empty, (decode ? HttpUtility.UrlDecode(keyAndValue) : keyAndValue));
+        /// <summary>
+        /// Encodes the URL.
+        /// </summary>
+        /// <param name="url">URL to encode.</param>
+        /// <returns>Encoded URL.</returns>
+        public static string UrlEncode(string url)
+        {
+            return HttpUtility.UrlEncode(url);
+        }
+
+        /// <summary>
+        /// Decodes the URL.
+        /// </summary>
+        /// <param name="url">URL to decode.</param>
+        /// <returns>Decode the URL.</returns>
+        public static string UrlDecode(string url)
+        {
+            return HttpUtility.UrlDecode(url);
         }
         #endregion
 

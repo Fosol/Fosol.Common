@@ -8,22 +8,7 @@ namespace Fosol.Common.UnitTests.Web
     public class UriBuilderTest
     {
         #region Variables
-        private static readonly UriTest[] _TestValues = new UriTest[]
-            {
-                new UriTest("http://www.fosol.ca", 1, new [] { new QueryParamTest("", 1) }),
-                new UriTest("http://www.fosol.ca/index.html", 1, new [] { new QueryParamTest("", 1) }),
-                new UriTest("http://www.fosol.ca/index.html?key1=value1", 1, new [] { new QueryParamTest("key1", 1) }),
-                new UriTest("http://www.fosol.ca/index.html?key1=value1&key2=value2", 2, new [] { new QueryParamTest("key1", 1), new QueryParamTest("key2", 1) }),
-                new UriTest("http://www.fosol.ca/index.html?key1=value1&key1=value2", 2, new [] { new QueryParamTest("key1", 2) }),
-                new UriTest("http://www.fosol.ca/index.html?value1", 1, new [] { new QueryParamTest("", 1) }),
-                new UriTest("http://www.fosol.ca/index.html?key1=", 1, new [] { new QueryParamTest("key1", 1) }),
-                new UriTest("http://www.fosol.ca/index.html?=value1", 1, new [] { new QueryParamTest("", 1) }),
-                new UriTest("http://www.fosol.ca/index.html?=", 1, new [] { new QueryParamTest("", 1) }),
-                new UriTest("http://www.fosol.ca/index.html?key1=value1&amp;&key2=value2", 3, new [] { new QueryParamTest("key1", 1), new QueryParamTest("", 1), new QueryParamTest("key2", 1) }),
-                new UriTest("?key1=value1%26&key2=value2", 2, new [] { new QueryParamTest("key1", 1), new QueryParamTest("key2", 1) }),
-                new UriTest("key1=value1%26&key2=value2", 2, new [] { new QueryParamTest("key1", 1), new QueryParamTest("key2", 1) }),
-                new UriTest("key1=value1%26&key2=value2", 2, new [] { new QueryParamTest("key1", 1), new QueryParamTest("key2", 1) })
-            };
+        static Data.UriTestData _TestData;
         #endregion
 
         #region Properties
@@ -33,29 +18,196 @@ namespace Fosol.Common.UnitTests.Web
         #endregion
 
         #region Methods
-        [TestMethod]
-        public void ParseQueryStringToKeyValuePair_ParameterCount()
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext context)
         {
-            foreach (var value in _TestValues)
-            {
-                var result = Fosol.Common.Web.UriBuilder.ParseQueryStringToKeyValuePair(value.Uri);
+            _TestData = new Data.UriTestData();
+        }
 
-                Assert.IsTrue(result.Count == value.KeyValuePairs, String.Format("UriParser.ParseQueryStringToKeyValuePair returned {0} parameters when it should have returned {1} parameters.", result.Count, value.KeyValuePairs));
+        [TestMethod]
+        public void UrBuilder_Constructor()
+        {
+            foreach (var test in _TestData.Uris)
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder(test.Value);
+
+                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.ToString(),
+                        String.Format("Original value: '{0}'", test.Value));
+                }
+                catch (UriFormatException)
+                {
+                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                }
             }
         }
 
         [TestMethod]
-        public void ParseQueryStringToKeyValuePair_ParameterValues()
+        public void UriBuilder_Scheme()
         {
-            foreach (var test in _TestValues)
+            foreach (var test in _TestData.Schemes)
             {
-                var result = Fosol.Common.Web.UriBuilder.ParseQueryStringToKeyValuePair(test.Uri);
-
-                for (var i = 0; i < test.Parameters.Length; i++)
+                try
                 {
-                    var parameter = result.Where(r => r.Key.Equals(test.Parameters[i].Key)).Count();
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Scheme = test.Value;
 
-                    Assert.AreEqual(test.Parameters[i].NumberOfValues, parameter, String.Format("UriParser.ParseQueryStringToKeyValuePair parameter '{0}' should have {1} values.", test.Parameters[i].Key, test.Parameters[i].NumberOfValues));
+                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Scheme,
+                        String.Format("Original value: '{0}'", test.Value));
+                }
+                catch (UriFormatException)
+                {
+                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                }
+            }
+        }
+
+        [TestMethod]
+        public void UriBuilder_Username()
+        {
+            foreach (var test in _TestData.UserInfos)
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Username = test.Value;
+
+                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Username,
+                        String.Format("Original value: '{0}'", test.Value));
+                }
+                catch (UriFormatException)
+                {
+                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                }
+            }
+        }
+
+        [TestMethod]
+        public void UriBuilder_Authority()
+        {
+            foreach (var test in _TestData.Authorities)
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Authority = test.Value;
+
+                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Authority,
+                        String.Format("Original value: '{0}'", test.Value));
+                }
+                catch (UriFormatException)
+                {
+                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                }
+            }
+        }
+
+        [TestMethod]
+        public void UriBuilder_Host()
+        {
+            foreach (var test in _TestData.Hosts)
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Host = test.Value;
+
+                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Host,
+                        String.Format("Original value: '{0}'", test.Value));
+                }
+                catch (UriFormatException)
+                {
+                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                }
+            }
+        }
+
+        [TestMethod]
+        public void UriBuilder_Path()
+        {
+            foreach (var test in _TestData.Paths)
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Path = test.Value;
+
+                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Path,
+                        String.Format("Original value: '{0}'", test.Value));
+                }
+                catch (UriFormatException)
+                {
+                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                }
+            }
+        }
+
+        [TestMethod]
+        public void UriBuilder_PathSegments()
+        {
+            foreach (var test in _TestData.Paths)
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Path = test.Value;
+
+                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
+                    Assert.AreEqual(test.NumberOfSegments, builder.GetPath().Count,
+                        String.Format("Original value: '{0}'", test.Value));
+                }
+                catch (UriFormatException)
+                {
+                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                }
+            }
+        }
+
+        [TestMethod]
+        public void UriBuilder_Query()
+        {
+            foreach (var test in _TestData.Queries)
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Query = test.Value;
+
+                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Query,
+                        String.Format("Original value: '{0}'", test.Value));
+                }
+                catch (UriFormatException)
+                {
+                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                }
+            }
+        }
+
+        [TestMethod]
+        public void UriBuilder_Fragment()
+        {
+            foreach (var test in _TestData.Fragments)
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Fragment = test.Value;
+
+                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Fragment,
+                        String.Format("Original value: '{0}'", test.Value));
+                }
+                catch (UriFormatException)
+                {
+                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
                 }
             }
         }
@@ -65,68 +217,6 @@ namespace Fosol.Common.UnitTests.Web
         #endregion
 
         #region Events
-        #endregion
-
-        #region Other
-        struct UriTest
-        {
-            #region Variables
-            #endregion
-
-            #region Properties
-            public string Uri;
-            public int KeyValuePairs;
-            public QueryParamTest[] Parameters;
-            #endregion
-
-            #region Constructors
-            public UriTest(string uri, int keyValuePairs, QueryParamTest[] parameters)
-            {
-                this.Uri = uri;
-                this.KeyValuePairs = keyValuePairs;
-                this.Parameters = parameters ?? new QueryParamTest[0];
-            }
-            #endregion
-
-            #region Methods
-
-            #endregion
-
-            #region Operators
-            #endregion
-
-            #region Events
-            #endregion
-        }
-
-        struct QueryParamTest
-        {
-            #region Variables
-            #endregion
-
-            #region Properties
-            public string Key;
-            public int NumberOfValues;
-            #endregion
-
-            #region Constructors
-            public QueryParamTest(string key, int numberOfValues)
-            {
-                this.Key = key;
-                this.NumberOfValues = numberOfValues;
-            }
-            #endregion
-
-            #region Methods
-
-            #endregion
-
-            #region Operators
-            #endregion
-
-            #region Events
-            #endregion
-        }
         #endregion
     }
 }

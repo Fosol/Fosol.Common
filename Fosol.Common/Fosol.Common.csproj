@@ -166,6 +166,10 @@
     <Compile Include="Parsers\Elements\DateTimeElement.cs" />
     <Compile Include="Parsers\IFormat.cs" />
     <Compile Include="Serialization\CData.cs" />
+    <Compile Include="Text\GlobalConstant.cs" />
+    <Compile Include="UnitTests\TestData.cs" />
+    <Compile Include="UnitTests\ValueTestData`.cs" />
+    <Compile Include="UnitTests\ValueTestData.cs" />
     <Compile Include="Validation\AssertPassword.cs" />
     <Compile Include="Validation\Enumerables\Assert.cs" />
     <Compile Include="Validation\UriValidator.cs" />
@@ -196,8 +200,10 @@
     <Compile Include="Validation\Assert.cs" />
     <Compile Include="Validation\AssertFormat.cs" />
     <Compile Include="Web\QueryParam.cs" />
-    <Compile Include="Web\QueryParamCollection.cs" />
+    <Compile Include="Web\QueryParameters.cs" />
     <Compile Include="Web\QueryParamValue.cs" />
+    <Compile Include="Web\QueryPathSegment.cs" />
+    <Compile Include="Web\QueryPath.cs" />
     <Compile Include="Web\UriBuilder.cs" />
   </ItemGroup>
   <ItemGroup>

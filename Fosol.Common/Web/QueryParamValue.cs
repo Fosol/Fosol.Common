@@ -72,6 +72,16 @@ namespace Fosol.Common.Web
         /// <summary>
         /// Creates a new instance of a QueryParamValue class.
         /// </summary>
+        /// <param name="value">Initial query parameter value.</param>
+        public QueryParamValue(string value)
+            : this(new [] { value })
+        {
+
+        }
+
+        /// <summary>
+        /// Creates a new instance of a QueryParamValue class.
+        /// </summary>
         /// <param name="initialSize">Size of the collection.</param>
         public QueryParamValue(int initialSize)
         {
@@ -90,12 +100,14 @@ namespace Fosol.Common.Web
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(values, "values");
 
             _Values = new string[values.Length];
+            _Size = values.Length;
             var position = 0;
             foreach (var value in values)
             {
                 if (value != null)
                 {
                     _Values[position++] = value;
+                    _Count = position;
                 }
             }
         }
@@ -108,8 +120,12 @@ namespace Fosol.Common.Web
         /// <returns>IEnumerator of type string.</returns>
         public IEnumerator<string> GetEnumerator()
         {
+            var index = 0;
             foreach (var value in _Values)
             {
+                if (index++ >= _Count)
+                    break;
+
                 yield return value;
             }
         }

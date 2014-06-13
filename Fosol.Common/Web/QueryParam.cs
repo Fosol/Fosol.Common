@@ -42,7 +42,10 @@ namespace Fosol.Common.Web
         /// </summary>
         public string[] Values
         {
-            get { return _Values.ToArray(); }
+            get 
+            { 
+                return _Values.Select(v => v.ToString()).ToArray(); 
+            }
         }
 
         /// <summary>
@@ -58,44 +61,37 @@ namespace Fosol.Common.Web
         /// <summary>
         /// Creates a new instance of a QueryParam class.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter 'name' cannot be empty or whitespace.</exception>
+        /// <exception cref="System.ArgumentException">Parameter 'name' cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Paramter 'name' cannot be null.</exception>
         /// <param name="name">Name to identify this query parameter.</param>
         public QueryParam(string name)
+            : this(name, String.Empty)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(name, "name");
-            _Name = name;
-            _Values = new QueryParamValue();
-            _Values.Add(String.Empty);
         }
 
         /// <summary>
         /// Creates a new instance of a QueryParam class.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter 'name' cannot be empty or whitespace.</exception>
-        /// <exception cref="System.ArgumentNullException">Paramters 'name' and 'value' cannot be null.</exception>
         /// <param name="name">Name to identify this query parameter.</param>
-        /// <param name="value"></param>
+        /// <param name="value">Initial value of the query parameter.</param>
         public QueryParam(string name, string value)
-            : this(name)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(name, "name");
-            Fosol.Common.Validation.Assert.IsNotNull(value, "value");
-            _Values.Add(value);
+            Fosol.Common.Validation.Assert.IsFalse(String.IsNullOrEmpty(name + value), "name and value", "Parameters 'name' and 'value' both cannot be null or empty.");
+            _Name = name;
+            _Values = new QueryParamValue(value);
         }
 
         /// <summary>
         /// Creates a new instance of a QueryParam class.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter 'name' cannot be empty or whitespace.</exception>
         /// <exception cref="System.ArgumentException">Parameter 'values' cannot be an empty 0 length array.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameters 'name' and 'values' cannot be null.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter 'values' cannot be null.</exception>
         /// <param name="name">Name to identify this query parameter.</param>
         /// <param name="values">Initial array of values for this query parameter.</param>
         public QueryParam(string name, string[] values)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(name, "name");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Fosol.Common.Validation.Assert.IsFalse(String.IsNullOrEmpty(name + values.Aggregate((a, b) => a + b)), "name and values", "Parameters 'name' and 'values' both cannot be null or empty.");
 
             _Name = name;
             _Values = new QueryParamValue(values);
@@ -104,17 +100,15 @@ namespace Fosol.Common.Web
         /// <summary>
         /// Creates a new instance of a QueryParam class.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter 'key' must have a Key property value that is not null, empty or whitespace.</exception>
-        /// <exception cref="Systme.ArgumentNullException">Parameter 'key' cannot be null.</exception>
+        /// <exception cref="Systme.ArgumentNullException">Parameter 'parameter' cannot be null.</exception>
         /// <param name="parameter">KeyValuePair object.</param>
         public QueryParam(KeyValuePair<string, string> parameter)
         {
             Fosol.Common.Validation.Assert.IsNotNull(parameter, "parameter");
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(parameter.Key, "parameter.Key");
+            Fosol.Common.Validation.Assert.IsFalse(String.IsNullOrEmpty(parameter.Key + parameter.Value), "parameter", "Parameter 'parameter' property values 'Key' and 'Value' cannot both be null or empty.");
 
             _Name = parameter.Key;
-            _Values = new QueryParamValue();
-            _Values.Add(parameter.Value);
+            _Values = new QueryParamValue(parameter.Value);
         }
         #endregion
 
@@ -126,7 +120,24 @@ namespace Fosol.Common.Web
         /// <returns>Query string key value pair.</returns>
         public override string ToString()
         {
-            return _Values.Aggregate((a, b) => String.Format("{0}={1}", this.Name, a) + "&" + (string.Format("{0}={1}", this.Name, b)));
+            StringBuilder result = new StringBuilder();
+
+            foreach (var value in _Values)
+            {
+                // Don't add blanks.
+                if (String.IsNullOrEmpty(this.Name)
+                    && String.IsNullOrEmpty(value))
+                    continue;
+
+                if (result.Length > 0)
+                    result.Append("&");
+
+                if (!String.IsNullOrEmpty(value))
+                    result.Append(String.Format("{0}={1}", this.Name, value));
+                else
+                    result.Append(this.Name);
+            }
+            return result.ToString();
         }
 
         /// <summary>

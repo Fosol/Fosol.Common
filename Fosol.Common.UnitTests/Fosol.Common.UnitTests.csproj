@@ -58,7 +58,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ImageHelperTest.cs" />
     <Compile Include="ValidationParameterTest.cs" />
+    <Compile Include="Web\Data\UriAuthorityExample.cs" />
+    <Compile Include="Web\Data\UriExample.cs" />
+    <Compile Include="Web\Data\UriFragmentExample.cs" />
+    <Compile Include="Web\Data\UriHostExample.cs" />
+    <Compile Include="Web\Data\UriQueryExample.cs" />
+    <Compile Include="Web\Data\UriSchemeExample.cs" />
+    <Compile Include="Web\Data\UriUserInfoExample.cs" />
+    <Compile Include="Web\QueryParametersTest.cs" />
     <Compile Include="Web\UriBuilderTest.cs" />
+    <Compile Include="Web\Data\UriTestData.cs" />
+    <Compile Include="Web\Data\UriPathExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Images\Jeremy Foster 2008.jpg">
