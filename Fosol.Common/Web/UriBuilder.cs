@@ -55,7 +55,7 @@ namespace Fosol.Common.Web
         private string _Host;
         private int _Port = 80;
         private UriPath _Path;
-        private QueryParameters _Query;
+        private UriQuery _Query;
         private string _Fragment;
         private Uri _Uri;
         private bool _IsDirty = true;
@@ -302,7 +302,7 @@ namespace Fosol.Common.Web
             {
                 if (String.IsNullOrEmpty(value))
                 {
-                    _Query = new QueryParameters();
+                    _Query = new UriQuery();
                     _IsDirty = true;
                     return;
                 }
@@ -315,7 +315,7 @@ namespace Fosol.Common.Web
                     value = value.Substring(0, index_of_pound);
                 }
 
-                _Query = new QueryParameters(value);
+                _Query = new UriQuery(value);
                 _IsDirty = true;
             }
         }
@@ -386,7 +386,7 @@ namespace Fosol.Common.Web
         /// </summary>
         public UriBuilder()
         {
-            _Query = new QueryParameters();
+            _Query = new UriQuery();
         }
 
         /// <summary>
@@ -428,9 +428,9 @@ namespace Fosol.Common.Web
             _Path = new UriPath(uri.AbsolutePath);
 
             if (uri.Query != null)
-                _Query = new QueryParameters(uri.Query);
+                _Query = new UriQuery(uri.Query);
             else
-                _Query = new QueryParameters();
+                _Query = new UriQuery();
 
             _Fragment = uri.Fragment;
         }
@@ -457,7 +457,7 @@ namespace Fosol.Common.Web
         /// Get the QueryParameters object.
         /// </summary>
         /// <returns>QueryParameters object for this UriBuilder.</returns>
-        public QueryParameters GetQueryParameters()
+        public UriQuery GetQueryParameters()
         {
             return _Query;
         }

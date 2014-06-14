@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Web
 {
     /// <summary>
-    /// QueryParamValue provides a way to maintain multiple values for a single query parameter key.
-    /// 
-    /// Not threadsafe.
+    /// UriQueryParamValue provides a way to maintain multiple values for a single query parameter key.
     /// </summary>
-    public sealed class QueryParamValue
+    public sealed class UriQueryParamValue
         : IEnumerable<string>, ICollection<string>
     {
         #region Variables
@@ -62,40 +60,40 @@ namespace Fosol.Common.Web
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a QueryParamValue class.
+        /// Creates a new instance of a UriQueryParamValue class.
         /// </summary>
-        public QueryParamValue()
+        public UriQueryParamValue()
             : this(_DefaultArraySize)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of a QueryParamValue class.
+        /// Creates a new instance of a UriQueryParamValue class.
         /// </summary>
         /// <param name="value">Initial query parameter value.</param>
-        public QueryParamValue(string value)
+        public UriQueryParamValue(string value)
             : this(new [] { value })
         {
 
         }
 
         /// <summary>
-        /// Creates a new instance of a QueryParamValue class.
+        /// Creates a new instance of a UriQueryParamValue class.
         /// </summary>
         /// <param name="initialSize">Size of the collection.</param>
-        public QueryParamValue(int initialSize)
+        public UriQueryParamValue(int initialSize)
         {
             _Values = new string[initialSize];
             _Size = initialSize;
         }
 
         /// <summary>
-        /// Creates a new instance of a QueryParamValue class.
+        /// Creates a new instance of a UriQueryParamValue class.
         /// </summary>
         /// <exception cref="System.ArgumentException">Paramter 'values' cannot be an array of 0 length.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter 'values' cannot be null.</exception>
         /// <param name="values">Initialization values for the collection.</param>
-        public QueryParamValue(string[] values)
+        public UriQueryParamValue(string[] values)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(values, "values");
 

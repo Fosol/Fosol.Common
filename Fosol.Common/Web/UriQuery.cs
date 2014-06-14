@@ -10,33 +10,33 @@ using System.Web;
 namespace Fosol.Common.Web
 {
     /// <summary>
-    /// QueryParamCollection provides a way to maintain a collection of query string parameters and their values.
+    /// UriQuery provides a way to maintain a collection of query string parameters and their values.
     /// - Handles query parameters that have multiple values.
     /// </summary>
-    public sealed class QueryParameters
-        : IEnumerable<QueryParam>
+    public sealed class UriQuery
+        : IEnumerable<UriQueryParam>
     {
         #region Variables
         private const string _FormatBoundary = @"\A({0})\Z";
         private static readonly Regex _QueryRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.QueryRegex), RegexOptions.Compiled);
-        private readonly Dictionary<string, QueryParam> _Parameters;
+        private readonly Dictionary<string, UriQueryParam> _Parameters;
         #endregion
 
         #region Properties
         /// <summary>
-        /// get - A collection of QueryParam objects that contain the query parameter value.
+        /// get - A collection of UriQueryParam objects that contain the query parameter value.
         /// </summary>
-        public ICollection<QueryParam> Parameters
+        public ICollection<UriQueryParam> Parameters
         {
             get { return _Parameters.Select(v => v.Value).ToList(); }
         }
 
         /// <summary>
-        /// get/set - The QueryParam object with the specified key name.
+        /// get/set - The UriQueryParam object with the specified key name.
         /// </summary>
         /// <param name="key">Name to identify the query parameter.</param>
         /// <returns>QueryParam object for the specified key name.</returns>
-        public QueryParam this[string key]
+        public UriQueryParam this[string key]
         {
             get
             {
@@ -75,22 +75,22 @@ namespace Fosol.Common.Web
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a QueryParamCollection class.
+        /// Creates a new instance of a UriQuery class.
         /// </summary>
-        public QueryParameters()
+        public UriQuery()
         {
-            _Parameters = new Dictionary<string, QueryParam>();
+            _Parameters = new Dictionary<string, UriQueryParam>();
         }
 
         /// <summary>
-        /// Creates a new instance of a QueryParamCollection class.
+        /// Creates a new instance of a UriQuery class.
         /// </summary>
         /// <param name="queryString">Initialize the query string parameters with this value.</param>
         /// <param name="decode">Whether the key value pairs should be URL decoded.</param>
-        public QueryParameters(string queryString, bool decode = false)
+        public UriQuery(string queryString, bool decode = false)
             : this()
         {
-            var values = QueryParameters.ParseQueryStringToKeyValuePair(queryString, decode);
+            var values = UriQuery.ParseQueryStringToKeyValuePair(queryString, decode);
 
             foreach (var kv in values)
             {
@@ -101,10 +101,10 @@ namespace Fosol.Common.Web
 
         #region Methods
         /// <summary>
-        /// Get the enumerator for the collection of QueryParam objects.
+        /// Get the enumerator for the collection of UriQueryParam objects.
         /// </summary>
-        /// <returns>Enumerator for the collection of QueryParam objects.</returns>
-        public IEnumerator<QueryParam> GetEnumerator()
+        /// <returns>Enumerator for the collection of UriQueryParam objects.</returns>
+        public IEnumerator<UriQueryParam> GetEnumerator()
         {
             var parameters = _Parameters.ToArray();
 
@@ -115,20 +115,20 @@ namespace Fosol.Common.Web
         }
 
         /// <summary>
-        /// Get the enumerator for the collection of QueryParam objects.
+        /// Get the enumerator for the collection of UriQueryParam objects.
         /// </summary>
-        /// <returns>Enumerator for the collection of QueryParam objects.</returns>
+        /// <returns>Enumerator for the collection of UriQueryParam objects.</returns>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return _Parameters.GetEnumerator();
         }
 
         /// <summary>
-        /// Add the QueryParam object to the collection.
-        /// If the collection already contains a QueryParam with the specified key name it will be overwritten by this one.
+        /// Add the UriQueryParam object to the collection.
+        /// If the collection already contains a UriQueryParam with the specified key name it will be overwritten by this one.
         /// </summary>
-        /// <param name="item">QueryParam object to add to the collection.</param>
-        public void Add(QueryParam item)
+        /// <param name="item">UriQueryParam object to add to the collection.</param>
+        public void Add(UriQueryParam item)
         {
             Fosol.Common.Validation.Assert.IsNotNull(item, "item");
 
@@ -150,7 +150,7 @@ namespace Fosol.Common.Web
             if (this.ContainsKey(item.Key))
                 this[item.Key].Add(item.Value);
             else
-                _Parameters.Add(item.Key, new QueryParam(item.Key, item.Value));
+                _Parameters.Add(item.Key, new UriQueryParam(item.Key, item.Value));
         }
 
         /// <summary>
@@ -167,11 +167,11 @@ namespace Fosol.Common.Web
             if (this.ContainsKey(key))
                 this[key].Add(value);
             else
-                this.Add(new QueryParam(key, value));
+                this.Add(new UriQueryParam(key, value));
         }
 
         /// <summary>
-        /// Remove the QueryParam that has the specified key name.
+        /// Remove the UriQueryParam that has the specified key name.
         /// </summary>
         /// <param name="key">Name to identify the query parameter.</param>
         /// <returns>True if the item was removed from the collection.</returns>
@@ -184,9 +184,9 @@ namespace Fosol.Common.Web
         /// Attempt to find the query parameter with the specified key name and return it.
         /// </summary>
         /// <param name="key">Name to identify the query parameter.</param>
-        /// <param name="value">QueryParam object with the specified key name.</param>
+        /// <param name="value">UriQueryParam object with the specified key name.</param>
         /// <returns>True if the query parameter was found.</returns>
-        public bool TryGetValue(string key, out QueryParam value)
+        public bool TryGetValue(string key, out UriQueryParam value)
         {
             return _Parameters.TryGetValue(key, out value);
         }
@@ -226,7 +226,7 @@ namespace Fosol.Common.Web
         /// </summary>
         /// <param name="array">Destination array.</param>
         /// <param name="arrayIndex">Index position to start copying within the destination array.</param>
-        public void CopyTo(QueryParam[] array, int arrayIndex)
+        public void CopyTo(UriQueryParam[] array, int arrayIndex)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(array, "array");
             Fosol.Common.Validation.Enumerables.Assert.IsValidIndexPosition(arrayIndex, array, "arrayIndex");
@@ -235,7 +235,7 @@ namespace Fosol.Common.Web
             var index = 0;
             foreach (var value in _Parameters)
             {
-                array[arrayIndex + index++] = new QueryParam(value.Key, value.Value.Values);
+                array[arrayIndex + index++] = new UriQueryParam(value.Key, value.Value.Values);
             }
         }
 
@@ -252,14 +252,14 @@ namespace Fosol.Common.Web
         }
 
         /// <summary>
-        /// Parse the specified query string into a QueryParamCollection object.
+        /// Parse the specified query string into a UriQuery object.
         /// </summary>
         /// <param name="queryString">Raw query string value.</param>
         /// <param name="decode">Whether the key value pairs should be decoded.</param>
         /// <returns>A new instance of a QueryParamCollection object.</returns>
-        public static QueryParameters ParseQueryString(string queryString, bool decode = true)
+        public static UriQuery ParseQueryString(string queryString, bool decode = true)
         {
-            return new QueryParameters(queryString, decode);
+            return new UriQuery(queryString, decode);
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Fosol.Common.Web
         public static NameValueCollection ParseQueryStringToNameValueCollection(string queryString, bool decode = true)
         {
             var result = new NameValueCollection();
-            var values = QueryParameters.ParseQueryStringToKeyValuePair(queryString, decode);
+            var values = UriQuery.ParseQueryStringToKeyValuePair(queryString, decode);
 
             foreach (var value in values)
             {
@@ -329,7 +329,7 @@ namespace Fosol.Common.Web
             {
                 if (queryString[i] == '&')
                 {
-                    keys.Add(QueryParameters.ParseKeyValuePair(queryString.Substring(k_start, i - k_start), decode));
+                    keys.Add(UriQuery.ParseKeyValuePair(queryString.Substring(k_start, i - k_start), decode));
 
                     i++;
                     k_start = i;
@@ -339,10 +339,10 @@ namespace Fosol.Common.Web
             // There was only one key value pair.
             if (k_start == 0
                 && keys.Count == 0)
-                keys.Add(QueryParameters.ParseKeyValuePair(queryString, decode));
+                keys.Add(UriQuery.ParseKeyValuePair(queryString, decode));
             else if (k_start > 0)
                 // This is the last key value pair in the query string.
-                keys.Add(QueryParameters.ParseKeyValuePair(queryString.Substring(k_start), decode));
+                keys.Add(UriQuery.ParseKeyValuePair(queryString.Substring(k_start), decode));
 
             return keys;
         }

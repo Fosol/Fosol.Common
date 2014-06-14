@@ -200,9 +200,9 @@
     <Compile Include="Serialization\XmlHelper.cs" />
     <Compile Include="Validation\Assert.cs" />
     <Compile Include="Validation\AssertFormat.cs" />
-    <Compile Include="Web\QueryParam.cs" />
-    <Compile Include="Web\QueryParameters.cs" />
-    <Compile Include="Web\QueryParamValue.cs" />
+    <Compile Include="Web\UriQueryParam.cs" />
+    <Compile Include="Web\UriQuery.cs" />
+    <Compile Include="Web\UriQueryParamValue.cs" />
     <Compile Include="Web\UriPathSegment.cs" />
     <Compile Include="Web\UriPath.cs" />
     <Compile Include="Web\UriBuilder.cs" />

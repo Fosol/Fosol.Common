@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Web
 {
     /// <summary>
-    /// QueryParam provides a way to manage a single query parameter key and all it's values.
+    /// UriQueryParam provides a way to manage a single query parameter key and all it's values.
     /// </summary>
-    public sealed class QueryParam
+    public sealed class UriQueryParam
     {
         #region Variables
         private string _Name;
-        private QueryParamValue _Values;
+        private UriQueryParamValue _Values;
         #endregion
 
         #region Properties
@@ -59,56 +59,56 @@ namespace Fosol.Common.Web
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a QueryParam class.
+        /// Creates a new instance of a UriQueryParam class.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter 'name' cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Paramter 'name' cannot be null.</exception>
         /// <param name="name">Name to identify this query parameter.</param>
-        public QueryParam(string name)
+        public UriQueryParam(string name)
             : this(name, String.Empty)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of a QueryParam class.
+        /// Creates a new instance of a UriQueryParam class.
         /// </summary>
         /// <param name="name">Name to identify this query parameter.</param>
         /// <param name="value">Initial value of the query parameter.</param>
-        public QueryParam(string name, string value)
+        public UriQueryParam(string name, string value)
         {
             Fosol.Common.Validation.Assert.IsFalse(String.IsNullOrEmpty(name + value), "name and value", "Parameters 'name' and 'value' both cannot be null or empty.");
             _Name = name;
-            _Values = new QueryParamValue(value);
+            _Values = new UriQueryParamValue(value);
         }
 
         /// <summary>
-        /// Creates a new instance of a QueryParam class.
+        /// Creates a new instance of a UriQueryParam class.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter 'values' cannot be an empty 0 length array.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter 'values' cannot be null.</exception>
         /// <param name="name">Name to identify this query parameter.</param>
         /// <param name="values">Initial array of values for this query parameter.</param>
-        public QueryParam(string name, string[] values)
+        public UriQueryParam(string name, string[] values)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(values, "values");
             Fosol.Common.Validation.Assert.IsFalse(String.IsNullOrEmpty(name + values.Aggregate((a, b) => a + b)), "name and values", "Parameters 'name' and 'values' both cannot be null or empty.");
 
             _Name = name;
-            _Values = new QueryParamValue(values);
+            _Values = new UriQueryParamValue(values);
         }
 
         /// <summary>
-        /// Creates a new instance of a QueryParam class.
+        /// Creates a new instance of a UriQueryParam class.
         /// </summary>
         /// <exception cref="Systme.ArgumentNullException">Parameter 'parameter' cannot be null.</exception>
         /// <param name="parameter">KeyValuePair object.</param>
-        public QueryParam(KeyValuePair<string, string> parameter)
+        public UriQueryParam(KeyValuePair<string, string> parameter)
         {
             Fosol.Common.Validation.Assert.IsNotNull(parameter, "parameter");
             Fosol.Common.Validation.Assert.IsFalse(String.IsNullOrEmpty(parameter.Key + parameter.Value), "parameter", "Parameter 'parameter' property values 'Key' and 'Value' cannot both be null or empty.");
 
             _Name = parameter.Key;
-            _Values = new QueryParamValue(parameter.Value);
+            _Values = new UriQueryParamValue(parameter.Value);
         }
         #endregion
 
