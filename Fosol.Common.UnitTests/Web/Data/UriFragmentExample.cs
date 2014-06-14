@@ -25,16 +25,6 @@ namespace Fosol.Common.UnitTests.Web.Data
         {
 
         }
-
-        public UriFragmentExample(bool shouldFail, string fragment)
-            : base(shouldFail, fragment)
-        {
-        }
-
-        public UriFragmentExample(bool shouldFail, string fragment, string expectedResult)
-            : base(shouldFail, fragment, expectedResult)
-        {
-        }
         #endregion
 
         #region Methods

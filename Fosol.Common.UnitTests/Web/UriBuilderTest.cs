@@ -24,193 +24,349 @@ namespace Fosol.Common.UnitTests.Web
             _TestData = new Data.UriTestData();
         }
 
+        #region Pass
         [TestMethod]
-        public void UrBuilder_Constructor()
+        public void Web_UrBuilder_Constructor()
         {
-            foreach (var test in _TestData.Uris)
+            foreach (Data.UriExample test in _TestData.Pass.Where(d => d is Data.UriExample))
             {
                 try
                 {
                     var builder = new Fosol.Common.Web.UriBuilder(test.Value);
 
-                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
-                    Assert.AreEqual(test.ExpectedResult, builder.ToString(),
-                        String.Format("Original value: '{0}'", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.ToString(), "Original value: '{0}'", test.Value);
                 }
-                catch (UriFormatException)
+                catch
                 {
-                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                    Assert.Fail("This test '{0}' should have passed.", test.Value);
                 }
             }
         }
 
         [TestMethod]
-        public void UriBuilder_Scheme()
+        public void Web_UriBuilder_Scheme()
         {
-            foreach (var test in _TestData.Schemes)
+            foreach (Data.UriSchemeExample test in _TestData.Pass.Where(d => d is Data.UriSchemeExample))
             {
                 try
                 {
                     var builder = new Fosol.Common.Web.UriBuilder();
                     builder.Scheme = test.Value;
 
-                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
-                    Assert.AreEqual(test.ExpectedResult, builder.Scheme,
-                        String.Format("Original value: '{0}'", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Scheme, "Original value: '{0}'", test.Value);
                 }
-                catch (UriFormatException)
+                catch
                 {
-                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                    Assert.Fail("This test '{0}' should have passed.", test.Value);
                 }
             }
         }
 
         [TestMethod]
-        public void UriBuilder_Username()
+        public void Web_UriBuilder_Username()
         {
-            foreach (var test in _TestData.UserInfos)
+            foreach (Data.UriUserInfoExample test in _TestData.Pass.Where(d => d is Data.UriUserInfoExample))
             {
                 try
                 {
                     var builder = new Fosol.Common.Web.UriBuilder();
                     builder.Username = test.Value;
 
-                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
-                    Assert.AreEqual(test.ExpectedResult, builder.Username,
-                        String.Format("Original value: '{0}'", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Username, "Original value: '{0}'", test.Value);
                 }
-                catch (UriFormatException)
+                catch
                 {
-                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                    Assert.Fail("This test '{0}' should have passed.", test.Value);
                 }
             }
         }
 
         [TestMethod]
-        public void UriBuilder_Authority()
+        public void Web_UriBuilder_Authority()
         {
-            foreach (var test in _TestData.Authorities)
+            foreach (Data.UriAuthorityExample test in _TestData.Pass.Where(d => d is Data.UriAuthorityExample))
             {
                 try
                 {
                     var builder = new Fosol.Common.Web.UriBuilder();
                     builder.Authority = test.Value;
 
-                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
-                    Assert.AreEqual(test.ExpectedResult, builder.Authority,
-                        String.Format("Original value: '{0}'", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Authority, "Original value: '{0}'", test.Value);
                 }
-                catch (UriFormatException)
+                catch
                 {
-                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                    Assert.Fail("This test '{0}' should have passed.", test.Value);
                 }
             }
         }
 
         [TestMethod]
-        public void UriBuilder_Host()
+        public void Web_UriBuilder_Host()
         {
-            foreach (var test in _TestData.Hosts)
+            foreach (Data.UriHostExample test in _TestData.Pass.Where(d => d is Data.UriHostExample))
             {
                 try
                 {
                     var builder = new Fosol.Common.Web.UriBuilder();
                     builder.Host = test.Value;
 
-                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
-                    Assert.AreEqual(test.ExpectedResult, builder.Host,
-                        String.Format("Original value: '{0}'", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Host, "Original value: '{0}'", test.Value);
                 }
-                catch (UriFormatException)
+                catch
                 {
-                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                    Assert.Fail("This test '{0}' should have passed.", test.Value);
                 }
             }
         }
 
         [TestMethod]
-        public void UriBuilder_Path()
+        public void Web_UriBuilder_Path()
         {
-            foreach (var test in _TestData.Paths)
+            foreach (Data.UriPathExample test in _TestData.Pass.Where(d => d is Data.UriPathExample))
             {
                 try
                 {
                     var builder = new Fosol.Common.Web.UriBuilder();
                     builder.Path = test.Value;
 
-                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
-                    Assert.AreEqual(test.ExpectedResult, builder.Path,
-                        String.Format("Original value: '{0}'", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Path, "Original value: '{0}'", test.Value);
                 }
-                catch (UriFormatException)
+                catch
                 {
-                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                    Assert.Fail("This test '{0}' should have passed.", test.Value);
                 }
             }
         }
 
         [TestMethod]
-        public void UriBuilder_PathSegments()
+        public void Web_UriBuilder_PathSegments()
         {
-            foreach (var test in _TestData.Paths)
+            foreach (Data.UriPathExample test in _TestData.Pass.Where(d => d is Data.UriPathExample))
             {
                 try
                 {
                     var builder = new Fosol.Common.Web.UriBuilder();
                     builder.Path = test.Value;
 
-                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
-                    Assert.AreEqual(test.NumberOfSegments, builder.GetPath().Count,
-                        String.Format("Original value: '{0}'", test.Value));
+                    Assert.AreEqual(test.NumberOfSegments, builder.GetPath().Count, "Original value: '{0}'", test.Value);
                 }
-                catch (UriFormatException)
+                catch
                 {
-                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                    Assert.Fail("This test '{0}' should have passed.", test.Value);
                 }
             }
         }
 
         [TestMethod]
-        public void UriBuilder_Query()
+        public void Web_UriBuilder_Query()
         {
-            foreach (var test in _TestData.Queries)
+            foreach (Data.UriQueryExample test in _TestData.Pass.Where(d => d is Data.UriQueryExample))
             {
                 try
                 {
                     var builder = new Fosol.Common.Web.UriBuilder();
                     builder.Query = test.Value;
 
-                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
-                    Assert.AreEqual(test.ExpectedResult, builder.Query,
-                        String.Format("Original value: '{0}'", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Query, "Original value: '{0}'", test.Value);
                 }
-                catch (UriFormatException)
+                catch
                 {
-                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                    Assert.Fail("This test '{0}' should have passed.", test.Value);
                 }
             }
         }
 
         [TestMethod]
-        public void UriBuilder_Fragment()
+        public void Web_UriBuilder_Fragment()
         {
-            foreach (var test in _TestData.Fragments)
+            foreach (Data.UriFragmentExample test in _TestData.Pass.Where(d => d is Data.UriFragmentExample))
             {
                 try
                 {
                     var builder = new Fosol.Common.Web.UriBuilder();
                     builder.Fragment = test.Value;
 
-                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
-                    Assert.AreEqual(test.ExpectedResult, builder.Fragment,
-                        String.Format("Original value: '{0}'", test.Value));
+                    Assert.AreEqual(test.ExpectedResult, builder.Fragment, "Original value: '{0}'", test.Value);
                 }
-                catch (UriFormatException)
+                catch
                 {
-                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                    Assert.Fail("This test '{0}' should have passed.", test.Value);
                 }
             }
         }
+        #endregion
+
+        #region Fail
+        [TestMethod]
+        public void Web_UrBuilder_Constructor_Fail()
+        {
+            foreach (Data.UriExample test in _TestData.Fail.Where(d => d is Data.UriExample))
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder(test.Value);
+
+                    Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsInstanceOfType(ex, typeof(UriFormatException), "Test value: '{0}'", test.Value);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Web_UriBuilder_Scheme_Fail()
+        {
+            foreach (Data.UriSchemeExample test in _TestData.Fail.Where(d => d is Data.UriSchemeExample))
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Scheme = test.Value;
+
+                    Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsInstanceOfType(ex, typeof(UriFormatException), "Test value: '{0}'", test.Value);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Web_UriBuilder_Username_Fail()
+        {
+            foreach (Data.UriUserInfoExample test in _TestData.Fail.Where(d => d is Data.UriUserInfoExample))
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Username = test.Value;
+
+                    Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsInstanceOfType(ex, typeof(UriFormatException), "Test value: '{0}'", test.Value);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Web_UriBuilder_Authority_Fail()
+        {
+            foreach (Data.UriAuthorityExample test in _TestData.Fail.Where(d => d is Data.UriAuthorityExample))
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Authority = test.Value;
+
+                    Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsInstanceOfType(ex, typeof(UriFormatException), "Test value: '{0}'", test.Value);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Web_UriBuilder_Host_Fail()
+        {
+            foreach (Data.UriHostExample test in _TestData.Fail.Where(d => d is Data.UriHostExample))
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Host = test.Value;
+
+                    Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsInstanceOfType(ex, typeof(UriFormatException), "Test value: '{0}'", test.Value);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Web_UriBuilder_Path_Fail()
+        {
+            foreach (Data.UriPathExample test in _TestData.Fail.Where(d => d is Data.UriPathExample))
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Path = test.Value;
+
+                    Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsInstanceOfType(ex, typeof(UriFormatException), "Test value: '{0}'", test.Value);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Web_UriBuilder_PathSegments_Fail()
+        {
+            foreach (Data.UriPathExample test in _TestData.Fail.Where(d => d is Data.UriPathExample))
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Path = test.Value;
+
+                    Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsInstanceOfType(ex, typeof(UriFormatException), "Test value: '{0}'", test.Value);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Web_UriBuilder_Query_Fail()
+        {
+            foreach (Data.UriQueryExample test in _TestData.Fail.Where(d => d is Data.UriQueryExample))
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Query = test.Value;
+
+                    Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsInstanceOfType(ex, typeof(UriFormatException), "Test value: '{0}'", test.Value);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Web_UriBuilder_Fragment_Fail()
+        {
+            foreach (Data.UriFragmentExample test in _TestData.Fail.Where(d => d is Data.UriFragmentExample))
+            {
+                try
+                {
+                    var builder = new Fosol.Common.Web.UriBuilder();
+                    builder.Fragment = test.Value;
+
+                    Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsInstanceOfType(ex, typeof(UriFormatException), "Test value: '{0}'", test.Value);
+                }
+            }
+        }
+        #endregion
         #endregion
 
         #region Operators

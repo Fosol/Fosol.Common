@@ -54,7 +54,7 @@ namespace Fosol.Common.Web
         private string _Username;
         private string _Host;
         private int _Port = 80;
-        private QueryPath _Path;
+        private UriPath _Path;
         private QueryParameters _Query;
         private string _Fragment;
         private Uri _Uri;
@@ -281,12 +281,12 @@ namespace Fosol.Common.Web
             {
                 if (String.IsNullOrEmpty(value))
                 {
-                    _Path = new QueryPath();
+                    _Path = new UriPath();
                     _IsDirty = true;
                     return;
                 }
 
-                _Path = new QueryPath(value);
+                _Path = new UriPath(value);
                 _IsDirty = true;
             }
         }
@@ -425,7 +425,7 @@ namespace Fosol.Common.Web
             _Scheme = uri.Scheme;
             _Host = uri.Host;
             _Port = uri.Port;
-            _Path = new QueryPath(uri.AbsolutePath);
+            _Path = new UriPath(uri.AbsolutePath);
 
             if (uri.Query != null)
                 _Query = new QueryParameters(uri.Query);
@@ -463,10 +463,10 @@ namespace Fosol.Common.Web
         }
 
         /// <summary>
-        /// Get the QueryPath object.
+        /// Get a reference to the QueryPath object.
         /// </summary>
         /// <returns>QueryPath object for this UriBuilder.</returns>
-        public QueryPath GetPath()
+        public UriPath GetPath()
         {
             return _Path;
         }

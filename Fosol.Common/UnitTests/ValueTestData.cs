@@ -10,7 +10,6 @@ namespace Fosol.Common.UnitTests
     /// ValueTestData class provides a way to test a value and confirm it is equal to the expected result.
     /// </summary>
     public class ValueTestData
-        : TestData
     {
         #region Variables
         #endregion
@@ -33,7 +32,7 @@ namespace Fosol.Common.UnitTests
         /// </summary>
         /// <param name="value">The value to test.</param>
         public ValueTestData(object value)
-            : this(false, value, value)
+            : this(value, value)
         {
         }
 
@@ -43,28 +42,6 @@ namespace Fosol.Common.UnitTests
         /// <param name="value">The value to test.</param>
         /// <param name="expectedResult">The expected result after the test is run.</param>
         public ValueTestData(object value, object expectedResult)
-            : this(false, value, expectedResult)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new instance of a ValueTestData class.
-        /// </summary>
-        /// <param name="shouldFail">Whether this test should fail.</param>
-        /// <param name="value">The value to test.</param>
-        public ValueTestData(bool shouldFail, object value)
-            : this(shouldFail, value, value)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new instance of a ValueTestData class.
-        /// </summary>
-        /// <param name="shouldFail">Whether this test should fail.</param>
-        /// <param name="value">The value to test.</param>
-        /// <param name="expectedResult">The expected result after the test is run.</param>
-        public ValueTestData(bool shouldFail, object value, object expectedResult)
-            : base(shouldFail)
         {
             this.Value = value;
             this.ExpectedResult = expectedResult;

@@ -25,16 +25,6 @@ namespace Fosol.Common.UnitTests.Web.Data
             : base(scheme, expectedResult)
         {
         }
-
-        public UriSchemeExample(bool shouldFail, string scheme)
-            : base(shouldFail, scheme)
-        {
-        }
-
-        public UriSchemeExample(bool shouldFail, string scheme, string expectedResult)
-            : base(shouldFail, scheme, expectedResult)
-        {
-        }
         #endregion
 
         #region Methods

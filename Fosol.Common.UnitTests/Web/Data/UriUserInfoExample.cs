@@ -24,16 +24,6 @@ namespace Fosol.Common.UnitTests.Web.Data
             : base(userInfo, expectedResult)
         {
         }
-
-        public UriUserInfoExample(bool shouldFail, string userInfo)
-            : base(shouldFail, userInfo)
-        {
-        }
-
-        public UriUserInfoExample(bool shouldFail, string userInfo, string expectedResult)
-            : base(shouldFail, userInfo, expectedResult)
-        {
-        }
         #endregion
 
         #region Methods

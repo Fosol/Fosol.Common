@@ -25,16 +25,6 @@ namespace Fosol.Common.UnitTests.Web.Data
         {
 
         }
-
-        public UriHostExample(bool shouldFail, string host)
-            : base(shouldFail, host)
-        {
-        }
-
-        public UriHostExample(bool shouldFail, string host, string expectedResult)
-            : base(shouldFail, host, expectedResult)
-        {
-        }
         #endregion
 
         #region Methods

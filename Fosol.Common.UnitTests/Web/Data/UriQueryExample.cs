@@ -31,16 +31,6 @@ namespace Fosol.Common.UnitTests.Web.Data
         {
 
         }
-
-        public UriQueryExample(bool shouldFail, string query)
-            : base(shouldFail, query)
-        {
-        }
-
-        public UriQueryExample(bool shouldFail, string query, string expectedResult)
-            : base(shouldFail, query, expectedResult)
-        {
-        }
         #endregion
 
         #region Methods

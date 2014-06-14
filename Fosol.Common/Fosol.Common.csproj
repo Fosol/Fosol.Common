@@ -168,6 +168,7 @@
     <Compile Include="Serialization\CData.cs" />
     <Compile Include="Text\GlobalConstant.cs" />
     <Compile Include="UnitTests\TestData.cs" />
+    <Compile Include="UnitTests\TestDataCollection.cs" />
     <Compile Include="UnitTests\ValueTestData`.cs" />
     <Compile Include="UnitTests\ValueTestData.cs" />
     <Compile Include="Validation\AssertPassword.cs" />
@@ -202,8 +203,8 @@
     <Compile Include="Web\QueryParam.cs" />
     <Compile Include="Web\QueryParameters.cs" />
     <Compile Include="Web\QueryParamValue.cs" />
-    <Compile Include="Web\QueryPathSegment.cs" />
-    <Compile Include="Web\QueryPath.cs" />
+    <Compile Include="Web\UriPathSegment.cs" />
+    <Compile Include="Web\UriPath.cs" />
     <Compile Include="Web\UriBuilder.cs" />
   </ItemGroup>
   <ItemGroup>

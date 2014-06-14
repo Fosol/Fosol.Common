@@ -34,7 +34,7 @@ namespace Fosol.Common.UnitTests
         /// </summary>
         /// <param name="value">The value to test.</param>
         public ValueTestData(T value)
-            : this(false, value, value)
+            : this(value, value)
         {
         }
 
@@ -44,28 +44,6 @@ namespace Fosol.Common.UnitTests
         /// <param name="value">The value to test.</param>
         /// <param name="expectedResult">The expected result after the test is run.</param>
         public ValueTestData(T value, T expectedResult)
-            : this(false, value, expectedResult)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new instance of a ValueTestData class.
-        /// </summary>
-        /// <param name="shouldFail">Whether this test should fail.</param>
-        /// <param name="value">The value to test.</param>
-        public ValueTestData(bool shouldFail, T value)
-            : this(shouldFail, value, value)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new instance of a ValueTestData class.
-        /// </summary>
-        /// <param name="shouldFail">Whether this test should fail.</param>
-        /// <param name="value">The value to test.</param>
-        /// <param name="expectedResult">The expected result after the test is run.</param>
-        public ValueTestData(bool shouldFail, T value, T expectedResult)
-            : base(shouldFail)
         {
             this.Value = value;
             this.ExpectedResult = expectedResult;

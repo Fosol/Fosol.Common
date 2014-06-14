@@ -64,10 +64,10 @@
     <Compile Include="Web\Data\UriHostExample.cs" />
     <Compile Include="Web\Data\UriQueryExample.cs" />
     <Compile Include="Web\Data\UriSchemeExample.cs" />
+    <Compile Include="Web\Data\UriTestData.cs" />
     <Compile Include="Web\Data\UriUserInfoExample.cs" />
     <Compile Include="Web\QueryParametersTest.cs" />
     <Compile Include="Web\UriBuilderTest.cs" />
-    <Compile Include="Web\Data\UriTestData.cs" />
     <Compile Include="Web\Data\UriPathExample.cs" />
   </ItemGroup>
   <ItemGroup>

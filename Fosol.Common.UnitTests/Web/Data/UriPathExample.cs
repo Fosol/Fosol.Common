@@ -18,22 +18,12 @@ namespace Fosol.Common.UnitTests.Web.Data
 
         #region Constructors
         public UriPathExample(string path)
-            : this(false, path, path)
+            : base(path)
         {
         }
 
         public UriPathExample(string path, string expectedResult)
-            : this(false, path, expectedResult)
-        {
-        }
-
-        public UriPathExample(bool shouldFail, string path)
-            : this(shouldFail, path, path)
-        {
-        }
-
-        public UriPathExample(bool shouldFail, string path, string expectedResult)
-            : base(shouldFail, path, expectedResult)
+            : base(path, expectedResult)
         {
         }
         #endregion

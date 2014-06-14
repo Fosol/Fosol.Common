@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Fosol.Common.UnitTests.Web.Data
 {
     class UriTestData
+        : Fosol.Common.UnitTests.TestDataCollection
     {
         #region Variables
         public const string ReservedGeneralDelims = ":/?#[]@";
@@ -15,20 +16,20 @@ namespace Fosol.Common.UnitTests.Web.Data
         #endregion
 
         #region Properties
-        public UriSchemeExample[] Schemes { get; set; }
-        public UriUserInfoExample[] UserInfos { get; set; }
-        public UriAuthorityExample[] Authorities { get; set; }
-        public UriHostExample[] Hosts { get; set; }
-        public UriPathExample[] Paths { get; set; }
-        public UriQueryExample[] Queries { get; set; }
-        public UriFragmentExample[] Fragments { get; set; }
-        public UriExample[] Uris { get; set; }
         #endregion
 
         #region Constructors
         public UriTestData()
         {
-            this.Schemes = new UriSchemeExample[]
+            InitializePass();
+            InitializeFail();
+        }
+        #endregion
+
+        #region Methods
+        private void InitializePass()
+        {
+            this.Pass.AddRange(new UriSchemeExample[]
             {
                 new UriSchemeExample(Fosol.Common.Text.GlobalConstant.Letter + Fosol.Common.Text.GlobalConstant.Alphanumeric + "+-."),
                 new UriSchemeExample("http"),
@@ -38,25 +39,18 @@ namespace Fosol.Common.UnitTests.Web.Data
                 new UriSchemeExample("abcdefghijklmnopqrstuvwxyz"),
                 new UriSchemeExample("ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
                 new UriSchemeExample("a0123456789"),
-                new UriSchemeExample("a+-."),
-                new UriSchemeExample(true, null),
-                new UriSchemeExample(true, ""),
-                new UriSchemeExample(true, " "),
-                new UriSchemeExample(true, "%20"),
-                new UriSchemeExample(true, "0123456789")
-            };
+                new UriSchemeExample("a+-.")
+            });
 
-            this.UserInfos = new UriUserInfoExample[]
+            this.Pass.AddRange(new UriUserInfoExample[]
             {
                 new UriUserInfoExample("user"),
                 new UriUserInfoExample("user:pwd", "user"),
                 new UriUserInfoExample("user:pwd:stuff", "user"),
-                new UriUserInfoExample(Unreserved + "%20" + ReservedSubsetDelims + ":", Unreserved + "%20" + ReservedSubsetDelims),
-                new UriUserInfoExample(true, ":"),
-                new UriUserInfoExample(true, ReservedGeneralDelims)
-            };
+                new UriUserInfoExample(Unreserved + "%20" + ReservedSubsetDelims + ":", Unreserved + "%20" + ReservedSubsetDelims)
+            });
 
-            this.Authorities = new UriAuthorityExample[]
+            this.Pass.AddRange(new UriAuthorityExample[]
             {
                 new UriAuthorityExample("www.fosol.ca"),
                 new UriAuthorityExample("www.fosol.ca:12345"),
@@ -69,21 +63,18 @@ namespace Fosol.Common.UnitTests.Web.Data
                 new UriAuthorityExample("1.1.1.1"),
                 new UriAuthorityExample("1.1.1.1:1234"),
                 new UriAuthorityExample("~")
-            };
+            });
 
-            this.Hosts = new UriHostExample[]
+            this.Pass.AddRange(new UriHostExample[]
             {
                 new UriHostExample("www.fosol.ca"),
                 new UriHostExample(Unreserved),
                 new UriHostExample("%40"),
                 new UriHostExample(ReservedSubsetDelims),
-                new UriHostExample("test"),
-                new UriHostExample(true, "www.fosol.ca:12345"),
-                new UriHostExample(true, "www.fosol.ca:"),
-                new UriHostExample(true, "@")
-            };
+                new UriHostExample("test")
+            });
 
-            this.Paths = new UriPathExample[]
+            this.Pass.AddRange(new UriPathExample[]
             {
                 new UriPathExample("/path1/path2") { NumberOfSegments = 2 },
                 new UriPathExample("path1/path2") { NumberOfSegments = 2 },
@@ -99,16 +90,10 @@ namespace Fosol.Common.UnitTests.Web.Data
                 new UriPathExample("._~!$&'()*+,;=:@") { NumberOfSegments = 1 },
                 new UriPathExample("0123456789") { NumberOfSegments = 1 },
                 new UriPathExample("abcdefghijklmnopqrstuvwxyz") { NumberOfSegments = 1 },
-                new UriPathExample("ABCDEFGHIJKLMNOPQRSTUVWXYZ") { NumberOfSegments = 1 },
-                new UriPathExample(true, "//"),
-                new UriPathExample(true, @"\"),
-                new UriPathExample(true, "{"),
-                new UriPathExample(true, "}"),
-                new UriPathExample(true, "["),
-                new UriPathExample(true, "]")
-            };
+                new UriPathExample("ABCDEFGHIJKLMNOPQRSTUVWXYZ") { NumberOfSegments = 1 }
+            });
 
-            this.Queries = new UriQueryExample[]
+            this.Pass.AddRange(new UriQueryExample[]
             {
                 new UriQueryExample("key1=http://www.fosol.ca/index.html%3Fkey1=val1") { QueryParameters = new [] { new KeyValuePair<string, string[]>("key1", new [] { "http://www.fosol.ca/index.html%3Fkey1=val1" } ) } },
                 new UriQueryExample("key1=http://www.fosol.ca/index.html?key1=val1", "key1=val1") { QueryParameters = new [] { new KeyValuePair<string, string[]>("key1", new [] { "val1" } ) } },
@@ -140,19 +125,17 @@ namespace Fosol.Common.UnitTests.Web.Data
                 new UriQueryExample("http://www.fosol.ca/index.html?key1=value1&amp;&key2=value2", "key1=value1&amp;&key2=value2") { QueryParameters = new [] { new KeyValuePair<string, string[]>("key1", new [] { "value1" } ), new KeyValuePair<string, string[]>("amp;", new [] { "" } ), new KeyValuePair<string, string[]>("key2", new [] { "value2" } ) }  },
                 new UriQueryExample("?key1=value1%26&key2=value2", "key1=value1%26&key2=value2") { QueryParameters = new [] { new KeyValuePair<string, string[]>("key1", new [] { "value1%26" } ), new KeyValuePair<string, string[]>("key2", new [] { "value2" } ) }  },
                 new UriQueryExample("key1=value1%26&key2=value2") { QueryParameters = new [] { new KeyValuePair<string, string[]>("key1", new [] { "value1%26" } ), new KeyValuePair<string, string[]>("key2", new [] { "value2" } ) }  },
-                new UriQueryExample("#", ""),
-                new UriQueryExample(true, @"\")
-            };
+                new UriQueryExample("#", "")
+            });
 
-            this.Fragments = new UriFragmentExample[]
+            this.Pass.AddRange(new UriFragmentExample[]
             {
                 new UriFragmentExample("test"),
                 new UriFragmentExample("#test", "test"),
-                new UriFragmentExample("#", null),
-                new UriFragmentExample(true, @"\")
-            };
+                new UriFragmentExample("#", null)
+            });
 
-            this.Uris = new UriExample[]
+            this.Pass.AddRange(new UriExample[]
             {
                 new UriExample("test:", "test://"),
                 new UriExample("http://www.fosol.ca", "http://www.fosol.ca/"),
@@ -164,16 +147,65 @@ namespace Fosol.Common.UnitTests.Web.Data
                 new UriExample("http://www.fosol.ca/index.html?key1=", "http://www.fosol.ca/index.html?key1") { QueryParameters = new [] { new KeyValuePair<string, string[]>("key1", new [] { "" } ) }  },
                 new UriExample("http://www.fosol.ca/index.html?=value1") { QueryParameters = new [] { new KeyValuePair<string, string[]>("", new [] { "value1" } ) }  },
                 new UriExample("http://www.fosol.ca/index.html?=") { QueryParameters = new [] { new KeyValuePair<string, string[]>("=", new [] { "" } ) }  },
-                new UriExample("http://www.fosol.ca/index.html?key1=value1&amp;&key2=value2"),
-                new UriExample(true, "?key1=value1%26&key2=value2"),
-                new UriExample(true, "key1=value1%26&key2=value2"),
-                new UriExample(true, "#")
-            };
+                new UriExample("http://www.fosol.ca/index.html?key1=value1&amp;&key2=value2")
+            });
         }
-        #endregion
 
-        #region Methods
+        private void InitializeFail()
+        {
+            this.Fail.AddRange(new UriSchemeExample[]
+            {
+                new UriSchemeExample(null),
+                new UriSchemeExample(""),
+                new UriSchemeExample(" "),
+                new UriSchemeExample("%20"),
+                new UriSchemeExample("0123456789")
+            });
 
+            this.Fail.AddRange(new UriUserInfoExample[]
+            {
+                new UriUserInfoExample(":"),
+                new UriUserInfoExample(ReservedGeneralDelims)
+            });
+
+            this.Fail.AddRange(new UriAuthorityExample[]
+            {
+            });
+
+            this.Fail.AddRange(new UriHostExample[]
+            {
+                new UriHostExample("www.fosol.ca:12345"),
+                new UriHostExample("www.fosol.ca:"),
+                new UriHostExample("@")
+            });
+
+            this.Fail.AddRange(new UriPathExample[]
+            {
+                new UriPathExample("//"),
+                new UriPathExample(@"\"),
+                new UriPathExample("{"),
+                new UriPathExample("}"),
+                new UriPathExample("["),
+                new UriPathExample("]")
+            });
+
+            this.Fail.AddRange(new UriQueryExample[]
+            {
+                new UriQueryExample(@"\")
+            });
+
+            this.Fail.AddRange(new UriFragmentExample[]
+            {
+                new UriFragmentExample(@"\")
+            });
+
+            this.Fail.AddRange(new UriExample[]
+            {
+                new UriExample("?key1=value1%26&key2=value2"),
+                new UriExample("key1=value1%26&key2=value2"),
+                new UriExample("#")
+            });
+        }
         #endregion
 
         #region Operators

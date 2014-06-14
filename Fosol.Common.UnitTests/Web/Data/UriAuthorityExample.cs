@@ -25,16 +25,6 @@ namespace Fosol.Common.UnitTests.Web.Data
         {
 
         }
-
-        public UriAuthorityExample(bool shouldFail, string authority)
-            : base(shouldFail, authority)
-        {
-        }
-
-        public UriAuthorityExample(bool shouldFail, string authority, string expectedResult)
-            : base(shouldFail, authority, expectedResult)
-        {
-        }
         #endregion
 
         #region Methods

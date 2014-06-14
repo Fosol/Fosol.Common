@@ -8,7 +8,7 @@ namespace Fosol.Common.UnitTests.Web
     class QueryParametersTest
     {
         #region Variables
-        static Data.UriTestData _TestData;
+        static Fosol.Common.UnitTests.TestDataCollection _TestData;
         #endregion
 
         #region Properties
@@ -24,10 +24,11 @@ namespace Fosol.Common.UnitTests.Web
             _TestData = new Data.UriTestData();
         }
 
+        #region Pass
         [TestMethod]
-        public void QueryParameters_ParseQueryStringToKeyValuePair_ParameterCount()
+        public void Web_QueryParameters_ParseQueryStringToKeyValuePair_ParameterCount()
         {
-            foreach (var test in _TestData.Queries)
+            foreach (Data.UriQueryExample test in _TestData.Pass.Where(d => d is Data.UriQueryExample))
             {
                 try
                 {
@@ -41,42 +42,77 @@ namespace Fosol.Common.UnitTests.Web
                         param_count += p.Value.Length;
                     }
 
-                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
-                    Assert.IsTrue(result.Count == param_count,
-                        String.Format("Original value: '{0}'", test.Value));
+                    Assert.IsTrue(result.Count == param_count, "Original value: '{0}'", test.Value);
                 }
-                catch (UriFormatException)
+                catch
                 {
-                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                    Assert.Fail("This test '{0}' should have passed.", test.Value);
                 }
             }
         }
 
         [TestMethod]
-        public void QueryParameters_ParseQueryStringToKeyValuePair_ParameterValueCount()
+        public void Web_QueryParameters_ParseQueryStringToKeyValuePair_ParameterValueCount()
         {
-            foreach (var test in _TestData.Queries)
+            foreach (Data.UriQueryExample test in _TestData.Pass.Where(d => d is Data.UriQueryExample))
             {
                 try
                 {
                     var result = Fosol.Common.Web.QueryParameters.ParseQueryStringToKeyValuePair(test.Value);
 
-                    Assert.IsFalse(test.ShouldFail, String.Format("This test should have failed. {0}", test.Value));
                     foreach (var p in test.QueryParameters)
                     {
                         // Fetch all the query parameters with the specified key and count them.
                         var value_count = result.Where(r => r.Key.Equals(p.Key)).Count();
 
-                        Assert.AreEqual(p.Value.Length, value_count,
-                            String.Format("Original value: '{0}'", test.Value));
+                        Assert.AreEqual(p.Value.Length, value_count, "Original value: '{0}'", test.Value);
                     }
                 }
-                catch (UriFormatException)
+                catch
                 {
-                    Assert.IsTrue(test.ShouldFail, String.Format("This test should have passed. {0}", test.Value));
+                    Assert.Fail("This test '{0}' should have passed.", test.Value);
                 }
             }
         }
+        #endregion
+
+        #region Fail
+        [TestMethod]
+        public void Web_QueryParameters_ParseQueryStringToKeyValuePair_ParameterCount_Fail()
+        {
+            foreach (Data.UriQueryExample test in _TestData.Fail.Where(d => d is Data.UriQueryExample))
+            {
+                try
+                {
+                    var result = Fosol.Common.Web.QueryParameters.ParseQueryStringToKeyValuePair(test.Value);
+
+                    Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsInstanceOfType(ex, typeof(UriFormatException), "Test value: '{0}'", test.Value);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Web_QueryParameters_ParseQueryStringToKeyValuePair_ParameterValueCount_Fail()
+        {
+            foreach (Data.UriQueryExample test in _TestData.Fail.Where(d => d is Data.UriQueryExample))
+            {
+                try
+                {
+                    var result = Fosol.Common.Web.QueryParameters.ParseQueryStringToKeyValuePair(test.Value);
+
+                    Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsInstanceOfType(ex, typeof(UriFormatException), "Test value: '{0}'", test.Value);
+                }
+            }
+        }
+        #endregion
         #endregion
 
         #region Operators
