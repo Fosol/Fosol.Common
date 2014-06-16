@@ -7,15 +7,25 @@ using System.Threading.Tasks;
 namespace Fosol.Common.UnitTests.Web.Data
 {
     class UriTestData
-        : Fosol.Common.UnitTests.TestDataCollection
     {
         #region Variables
         public const string ReservedGeneralDelims = ":/?#[]@";
         public const string ReservedSubsetDelims = "!$&'()*+,;=";
         public const string Unreserved = Fosol.Common.Text.GlobalConstant.Alphanumeric + "-._~";
+        private Fosol.Common.UnitTests.TestDataCollection _Pass;
+        private Fosol.Common.UnitTests.TestDataCollection _Fail;
         #endregion
 
         #region Properties
+        public TestDataCollection Pass
+        {
+            get { return _Pass; }
+        }
+
+        public TestDataCollection Fail
+        {
+            get { return _Fail; }
+        }
         #endregion
 
         #region Constructors
@@ -29,6 +39,8 @@ namespace Fosol.Common.UnitTests.Web.Data
         #region Methods
         private void InitializePass()
         {
+            _Pass = new TestDataCollection();
+
             this.Pass.AddRange(new UriSchemeExample[]
             {
                 new UriSchemeExample(Fosol.Common.Text.GlobalConstant.Letter + Fosol.Common.Text.GlobalConstant.Alphanumeric + "+-."),
@@ -153,6 +165,8 @@ namespace Fosol.Common.UnitTests.Web.Data
 
         private void InitializeFail()
         {
+            _Fail = new TestDataCollection();
+
             this.Fail.AddRange(new UriSchemeExample[]
             {
                 new UriSchemeExample(null),

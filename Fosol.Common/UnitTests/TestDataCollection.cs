@@ -7,45 +7,64 @@ using System.Threading.Tasks;
 namespace Fosol.Common.UnitTests
 {
     /// <summary>
-    /// TestDataCollection provides a central collection to manage valid and invalid testing data.
+    /// TestDataCollection provides a simple add only collection for test data.
     /// </summary>
     public class TestDataCollection
+        : IEnumerable<TestData>
     {
         #region Variables
-        private List<TestData> _Pass;
-        private List<TestData> _Fail;
+        private List<TestData> _Items;
         #endregion
 
         #region Properties
-        /// <summary>
-        /// get - This collection of test data should contain valid data.
-        /// </summary>
-        public List<TestData> Pass
-        {
-            get { return _Pass; }
-            private set { _Pass = value; }
-        }
-
-        /// <summary>
-        /// get - This collection of test data should contain data that will throw exceptions.
-        /// </summary>
-        public List<TestData> Fail
-        {
-            get { return _Fail; }
-            private set { _Fail = value; }
-        }
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of a TestDataCollection class.
+        /// </summary>
         public TestDataCollection()
         {
-            this.Pass = new List<TestData>();
-            this.Fail = new List<TestData>();
+            _Items = new List<TestData>();
         }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Returns the enumerator for this collection.
+        /// </summary>
+        /// <returns>IEnumerator of type TestData.</returns>
+        public IEnumerator<TestData> GetEnumerator()
+        {
+            return _Items.GetEnumerator();
+        }
 
+        /// <summary>
+        /// Returns the enumerator for this collection.
+        /// </summary>
+        /// <returns>IEnumerator</returns>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return _Items.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Add the specified TestData to this collection.
+        /// </summary>
+        /// <param name="item">TestData object.</param>
+        public void Add(TestData item)
+        {
+            _Items.Add(item);
+        }
+
+        /// <summary>
+        /// Add the specified range of items to this collection.
+        /// </summary>
+        /// <param name="items">IEnumerable of type TestData object.</param>
+        public void AddRange(IEnumerable<TestData> items)
+        {
+            _Items.AddRange(items);
+        }
         #endregion
 
         #region Operators

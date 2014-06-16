@@ -8,7 +8,7 @@ namespace Fosol.Common.UnitTests.Web
     class QueryParametersTest
     {
         #region Variables
-        static Fosol.Common.UnitTests.TestDataCollection _TestData;
+        static Data.UriTestData _TestData;
         #endregion
 
         #region Properties
