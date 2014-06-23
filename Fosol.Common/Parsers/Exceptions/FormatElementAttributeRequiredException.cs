@@ -61,7 +61,7 @@ namespace Fosol.Common.Parsers.Exceptions
         /// <param name="keyword">The name of the keyword that cause the error.</param>
         /// <param name="parameter">The name of the paramter that caused the error.</param>
         public FormatElementAttributeRequiredException(string keyword, string parameter)
-            : base(String.Format(Resources.Strings.Exception_FormatElement_Attribute_Required, keyword, parameter))
+            : base(String.Format(Resources.Multilingual.Exception_FormatElement_Attribute_Required, keyword, parameter))
         {
         }
 
@@ -72,7 +72,7 @@ namespace Fosol.Common.Parsers.Exceptions
         /// <param name="parameter">The name of the paramter that caused the error.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public FormatElementAttributeRequiredException(string keyword, string parameter, Exception innerException)
-            : base(String.Format(Resources.Strings.Exception_FormatElement_Attribute_Required, keyword, parameter), innerException)
+            : base(String.Format(Resources.Multilingual.Exception_FormatElement_Attribute_Required, keyword, parameter), innerException)
         {
         }
         #endregion

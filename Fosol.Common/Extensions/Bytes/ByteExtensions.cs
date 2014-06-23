@@ -21,9 +21,15 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>String value.</returns>
         public static string ToStringValue(this byte[] value, Encoding encoding = null)
         {
+#if WINDOWS_APP
+            if (encoding == null)
+                encoding = Encoding.UTF8;
+            return encoding.GetString(value, 0, value.Length);
+#else
             if (encoding == null)
                 encoding = Encoding.Default;
             return encoding.GetString(value);
+#endif
         }
 
         /// <summary>
@@ -39,7 +45,11 @@ namespace Fosol.Common.Extensions.Bytes
             Validation.Assert.IsNotNull(sourceEncoding, "sourceEncoding");
             Validation.Assert.IsNotNull(destEncoding, "destEncoding");
             var buffer = Encoding.Convert(sourceEncoding, destEncoding, value);
+#if WINDOWS_APP
+            return destEncoding.GetString(buffer, 0, value.Length);
+#else
             return destEncoding.GetString(buffer);
+#endif
         }
 
         /// <summary>
@@ -82,7 +92,7 @@ namespace Fosol.Common.Extensions.Bytes
             Validation.Assert.Range(length, 0, data.Length, "length");
 
             if (destination.Length < length + destIndex)
-                throw new ArgumentOutOfRangeException("data", String.Format(Resources.Strings.Exception_Destination_Too_Small, "data"));
+                throw new ArgumentOutOfRangeException("data", String.Format(Resources.Multilingual.Exception_Destination_Too_Small, "data"));
 
             int i;
             for (i = 0; i < length; i++)

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+#if !WINDOWS_APP
 using System.Web;
+#endif
 
 namespace Fosol.Common.Extensions.Strings
 {
@@ -83,7 +86,12 @@ namespace Fosol.Common.Extensions.Strings
         public static byte[] ToByteArray(this string value, Encoding encoding = null)
         {
             Validation.Assert.IsNotNullOrEmpty(value, "value");
-            Initialization.Assert.IsNotDefault<Encoding>(ref encoding, Encoding.Default);
+#if WINDOWS_APP
+            var default_encoding = Encoding.UTF8;
+#else
+            var default_encoding = Encoding.Default;
+#endif
+            Initialization.Assert.IsNotDefault<Encoding>(ref encoding, default_encoding);
             return encoding.GetBytes(value);
         }
 
@@ -218,7 +226,7 @@ namespace Fosol.Common.Extensions.Strings
         public static string RemoveHtml(this string value)
         {
             Validation.Assert.IsNotNull(value, "value");
-            return System.Text.RegularExpressions.Regex.Replace(System.Web.HttpUtility.HtmlDecode(value), @"<(.|\n)*?>", string.Empty);
+            return System.Text.RegularExpressions.Regex.Replace(System.Net.WebUtility.HtmlDecode(value), @"<(.|\n)*?>", string.Empty);
         }
 
         /// <summary>
@@ -242,7 +250,7 @@ namespace Fosol.Common.Extensions.Strings
                 Regex.Replace(
                     Regex.Replace(
                         Regex.Replace(
-                            HttpUtility.HtmlDecode(value),
+                            System.Net.WebUtility.HtmlDecode(value),
                             string.Format("<{0}>\\s?</{0}>", htmlTagName, RegexOptions.IgnoreCase), 
                             string.Empty),
                         @"<" + htmlTagName + ">", 
@@ -272,13 +280,22 @@ namespace Fosol.Common.Extensions.Strings
             Validation.Assert.IsNotNullOrEmpty(delimiter, "delimiter");
 
             int start = 0;
-            var values = new System.Collections.ArrayList();
+#if WINDOWS_APP
+            var values = new List<string>();
+#else
+            var values = new ArrayList();
+#endif
 
             // Loop through each character and look for the delimiter.
             for (int i = 0; i < value.Length - 1; i++)
             {
                 // Delimiter was found
-                if (string.Compare(value.Substring(i, delimiter.Length), delimiter, ignoreCase) == 0)
+#if WINDOWS_APP
+                var string_comparison = StringComparison.CurrentCultureIgnoreCase;
+#else
+                var string_comparison = StringComparison.InvariantCultureIgnoreCase;
+#endif
+                if (string.Compare(value.Substring(i, delimiter.Length), delimiter, string_comparison) == 0)
                 {
                     values.Add(value.Substring(start, i - start));
                     start = i + 1;
@@ -316,7 +333,7 @@ namespace Fosol.Common.Extensions.Strings
 
             var values = value.Split(delimiter, ignoreCase);
 
-            Validation.Assert.MaxRange(values.Length, 2, "value", String.Format(Resources.Strings.Exception_Too_Many_Pairs, "value"));
+            Validation.Assert.MaxRange(values.Length, 2, "value", String.Format(Resources.Multilingual.Exception_Too_Many_Pairs, "value"));
 
             return new KeyValuePair<string, string>(values[0], values.Length == 2 ? values[1] : null);
         }

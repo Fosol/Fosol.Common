@@ -1,6 +1,7 @@
 ﻿using Fosol.Common.Extensions.Strings;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,7 +81,7 @@ namespace Fosol.Common.Extensions.UriBuilders
             return uri.ParseQuery().AsKeyValuePairs();
         }
 
-#if WINDOWS_PHONE
+#if WINDOWS_PHONE || WINDOWS_APP
         /// <summary>
         /// Converts the legacy NameValueCollection into a strongly-typed KeyValuePair sequence.
         /// </summary>
@@ -94,13 +95,20 @@ namespace Fosol.Common.Extensions.UriBuilders
         /// </summary>
         private static Dictionary<string, string> ParseQuery(this UriBuilder uri)
         {
-            return uri.Query.ParseQueryString();
+            var query = uri.Query.SplitToKeyValuePair("&", "=", true);
+            var results = new Dictionary<string, string>(query.Count);
+
+            foreach (var qp in query)
+            {
+                results.Add(qp.Key, qp.Value);
+            }
+            return results;
         }
 #else
         /// <summary>
         /// Converts the legacy NameValueCollection into a strongly-typed KeyValuePair sequence.
         /// </summary>
-        private static IEnumerable<KeyValuePair<string, string>> AsKeyValuePairs(this System.Collections.Specialized.NameValueCollection collection)
+        private static IEnumerable<KeyValuePair<string, string>> AsKeyValuePairs(this NameValueCollection collection)
         {
             foreach (string key in collection.AllKeys)
             {
@@ -111,7 +119,7 @@ namespace Fosol.Common.Extensions.UriBuilders
         /// <summary>
         /// Parses the query string of the URI into a NameValueCollection.
         /// </summary>
-        private static System.Collections.Specialized.NameValueCollection ParseQuery(this UriBuilder uri)
+        private static NameValueCollection ParseQuery(this UriBuilder uri)
         {
             return System.Web.HttpUtility.ParseQueryString(uri.Query);
         }

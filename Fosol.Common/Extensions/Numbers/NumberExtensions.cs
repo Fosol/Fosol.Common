@@ -90,7 +90,6 @@ namespace Fosol.Common.Extensions.Numbers
         }
         #endregion
 
-
         #region short
         /// <summary>
         /// Converts a number into a hex value.

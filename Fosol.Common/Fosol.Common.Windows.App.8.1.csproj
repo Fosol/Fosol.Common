@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{87D40AA1-3F77-4A8D-AEA1-57A886D296A0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fosol.Common</RootNamespace>
+    <AssemblyName>Fosol.Common.Windows.App.8.1</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_APP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_APP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="CenterPoint.cs" />
+    <Compile Include="Collections\FunctorComparer`.cs" />
+    <Compile Include="Collections\NameValueCollection.cs" />
+    <Compile Include="Exceptions\ConfigurationException.cs" />
+    <Compile Include="Extensions\Bytes\ByteExtensions.cs" />
+    <Compile Include="Extensions\Enumerables\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\Events\EventExtensions.cs" />
+    <Compile Include="Extensions\Expressions\ExpressionExtensions.cs" />
+    <Compile Include="Extensions\Expressions\PredicateBuilder.cs" />
+    <Compile Include="Extensions\Numbers\NumberExtensions.cs" />
+    <Compile Include="Extensions\Streams\StreamExtensions.cs" />
+    <Compile Include="Extensions\Strings\StringExtensions.cs" />
+    <Compile Include="Extensions\UriBuilders\UriBuilderExtensions.cs" />
+    <Compile Include="HashCode.cs" />
+    <Compile Include="Helpers\DiagnosticsHelper.cs" />
+    <Compile Include="Helpers\RegexHelper.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Initialization\Assert.cs" />
+    <Compile Include="Mathematics\Formula.cs" />
+    <Compile Include="OffsetRule.cs" />
+    <Compile Include="Optimization\FastDateTime.cs" />
+    <Compile Include="Resources\Multilingual.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Multilingual.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Multilingual.fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Multilingual.fr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Web\CrossSiteScriptingValidation.cs" />
+    <Compile Include="Web\DomainComparer.cs" />
+    <Compile Include="Web\UriBuilder.cs" />
+    <Compile Include="Web\UriPath.cs" />
+    <Compile Include="Web\UriPathSegment.cs" />
+    <Compile Include="Web\UriQuery.cs" />
+    <Compile Include="Web\UriQueryParam.cs" />
+    <Compile Include="Web\UriQueryParamValue.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Multilingual.fr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Multilingual.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Multilingual.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Multilingual.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helpers\IdentityInt.cs" />
+    <Compile Include="Helpers\IdentityLong.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Text\GlobalConstant.cs" />
+    <Compile Include="UnitTests\TestData.cs" />
+    <Compile Include="UnitTests\TestDataCollection.cs" />
+    <Compile Include="UnitTests\ValueTestData.cs" />
+    <Compile Include="UnitTests\ValueTestData`.cs" />
+    <Compile Include="Validation\Assert.cs" />
+    <Compile Include="Validation\AssertFormat.cs" />
+    <Compile Include="Validation\Enumerables\Assert.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\Exceptions\" />
+    <Folder Include="Serialization\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

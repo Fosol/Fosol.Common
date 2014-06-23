@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+#if WINDOWS_APP
+using Windows.Foundation;
+using Windows.UI.Xaml.Shapes;
+#else
 using System.Drawing;
+#endif
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +50,17 @@ namespace Fosol.Common.Mathematics
         public static float Ratio(long val1, long val2)
         {
             return (float)val1 / val2;
+        }
+
+        /// <summary>
+        /// calculates the ratio difference between the two values.
+        /// </summary>
+        /// <param name="val1">Value one.</param>
+        /// <param name="val2">Value two.</param>
+        /// <returns>Ratio difference between two values.</returns>
+        public static double Ratio(double val1, double val2)
+        {
+            return (double)val1 / val2;
         }
         #endregion
 
@@ -171,6 +187,17 @@ namespace Fosol.Common.Mathematics
         /// <param name="ratio">Ratio to use to calculate the new size.</param>
         /// <returns>New size based on ratio.</returns>
         public static double Resize(double value, float ratio)
+        {
+            return (double)(value * ratio);
+        }
+
+        /// <summary>
+        /// Calculate the new size based on the ratio.
+        /// </summary>
+        /// <param name="value">Value to resize.</param>
+        /// <param name="ratio">Ratio to use to calculate the new size.</param>
+        /// <returns>New size based on ratio.</returns>
+        public static double Resize(double value, double ratio)
         {
             return (double)(value * ratio);
         }
@@ -342,7 +369,11 @@ namespace Fosol.Common.Mathematics
         ///     When 'false' the object will fill the new size and crop anything extending beyond the new size.
         /// </param>
         /// <returns>Destination rectangle.</returns>
+#if WINDOWS_APP
+        public static Rect Scale(Size size, Size resize, Fosol.Common.CenterPoint offset, bool allowWhitespace = true)
+#else
         public static Rectangle Scale(Size size, Size resize, Fosol.Common.CenterPoint offset, bool allowWhitespace = true)
+#endif
         {
             return Scale(size, resize, offset.X, offset.Y, allowWhitespace);
         }
@@ -359,14 +390,22 @@ namespace Fosol.Common.Mathematics
         ///     When 'false' the object will fill the new size and crop anything extending beyond the new size.
         /// </param>
         /// <returns>Destination rectangle.</returns>
+#if WINDOWS_APP
+        public static Rect Scale(Size size, Size resize, float xOffset = 0f, float yOffset = 0f, bool allowWhitespace = true)
+#else
         public static Rectangle Scale(Size size, Size resize, float xOffset = 0f, float yOffset = 0f, bool allowWhitespace = true)
+#endif
         {
             Validation.Assert.IsNotNull(size, "size");
             Validation.Assert.IsNotNull(resize, "resize");
             Validation.Assert.Range(xOffset, -1, 1, "hOffset");
             Validation.Assert.Range(yOffset, -1, 1, "yOffset");
 
+#if WINDOWS_APP
+            var dest = new Rect(0, 0, resize.Width, resize.Height);
+#else
             var dest = new Rectangle(0, 0, resize.Width, resize.Height);
+#endif
 
             if (size.Equals(resize))
                 return dest;

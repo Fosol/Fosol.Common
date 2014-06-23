@@ -38,7 +38,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!Helpers.PasswordHelper.IsValid(password, passwordStrengthRegularExpression))
-                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_AssertPassword_IsValid, paramName));
+                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_AssertPassword_IsValid, paramName));
         }
         #endregion
 

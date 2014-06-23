@@ -1,5 +1,7 @@
-﻿using Fosol.Common.Extensions.Attributes;
+﻿#if !WINDOWS_APP
+using Fosol.Common.Extensions.Attributes;
 using Fosol.Common.Extensions.Types;
+#endif
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +32,7 @@ namespace Fosol.Common.Validation
 
             if (!ReferenceEquals(function, validValue)
                 || !ReferenceEquals(function(), validValue))
-                throw new ArgumentException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsEqual, paramName));
+                throw new ArgumentException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_IsEqual, paramName));
         }
 
         /// <summary>
@@ -63,7 +65,7 @@ namespace Fosol.Common.Validation
 
             if (!ReferenceEquals(function, validValue)
                 || !ReferenceEquals(function(), validValue))
-                throw new ArgumentException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsEqual, paramName));
+                throw new ArgumentException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_IsEqual, paramName));
         }
 
         /// <summary>
@@ -95,7 +97,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!ReferenceEquals(value, validValue))
-                throw new ArgumentException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsEqual, paramName));
+                throw new ArgumentException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_IsEqual, paramName));
         }
 
         /// <summary>
@@ -126,7 +128,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!ReferenceEquals(value, validValue))
-                throw new ArgumentException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsEqual, paramName));
+                throw new ArgumentException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_IsEqual, paramName));
         }
 
         /// <summary>
@@ -159,7 +161,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (function == null || function() == null)
-                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsNotNull, paramName));
+                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_IsNotNull, paramName));
         }
 
         /// <summary>
@@ -191,7 +193,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (function == null || function() == null)
-                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsNotNull, paramName));
+                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_IsNotNull, paramName));
         }
 
         /// <summary>
@@ -223,7 +225,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value == null)
-                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsNotNull, paramName));
+                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_IsNotNull, paramName));
         }
 
         /// <summary>
@@ -255,7 +257,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value == null)
-                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_IsNotNull, paramName));
+                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_IsNotNull, paramName));
         }
 
         /// <summary>
@@ -291,7 +293,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value == String.Empty)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName);
         }
 
         /// <summary>
@@ -311,7 +313,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value == String.Empty)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName, innerException);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName, innerException);
         }
 
         /// <summary>
@@ -330,7 +332,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (collection.Count() == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName);
         }
 
         /// <summary>
@@ -350,7 +352,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (collection.Count() == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName, innerException);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName, innerException);
         }
 
         /// <summary>
@@ -369,7 +371,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (collection.Count() == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName);
         }
 
         /// <summary>
@@ -389,7 +391,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (collection.Count() == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName, innerException);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName, innerException);
         }
 
         /// <summary>
@@ -408,7 +410,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (array.Length == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName);
         }
 
         /// <summary>
@@ -428,7 +430,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (array.Length == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName, innerException);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName, innerException);
         }
 
         /// <summary>
@@ -447,7 +449,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (array.Length == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName);
         }
 
         /// <summary>
@@ -467,7 +469,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (array.Length == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName, innerException);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName, innerException);
         }
 
         /// <summary>
@@ -486,7 +488,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (array.Length == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName);
         }
 
         /// <summary>
@@ -506,7 +508,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (array.Length == 0)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName, innerException);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName, innerException);
         }
         #endregion
 
@@ -527,7 +529,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value.Trim() == String.Empty)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName);
         }
 
         /// <summary>
@@ -547,7 +549,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value.Trim() == String.Empty)
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_IsNotEmpty, paramName, innerException);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_IsNotEmpty, paramName, innerException);
         }
         #endregion
 
@@ -2087,7 +2089,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!value.StartsWith(startsWithValue, comparisonType))
-                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_Validation_StartsWith, startsWithValue), paramName);
+                throw new ArgumentException(message ?? string.Format(Resources.Multilingual.Exception_Validation_StartsWith, startsWithValue), paramName);
         }
 
         /// <summary>
@@ -2102,7 +2104,7 @@ namespace Fosol.Common.Validation
         public static void StartsWith(string value, string startsWithValue, StringComparison comparisonType, string message, Exception innerException)
         {
             if (!value.StartsWith(startsWithValue, comparisonType))
-                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_Validation_StartsWith, startsWithValue), innerException);
+                throw new ArgumentException(message ?? string.Format(Resources.Multilingual.Exception_Validation_StartsWith, startsWithValue), innerException);
         }
         #endregion
 
@@ -2122,7 +2124,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!value.EndsWith(endsWithValue, comparisonType))
-                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_Validation_EndsWith, endsWithValue), paramName);
+                throw new ArgumentException(message ?? string.Format(Resources.Multilingual.Exception_Validation_EndsWith, endsWithValue), paramName);
         }
 
         /// <summary>
@@ -2137,7 +2139,7 @@ namespace Fosol.Common.Validation
         public static void EndsWith(string value, string endsWithValue, StringComparison comparisonType, string message, Exception innerException)
         {
             if (!value.EndsWith(endsWithValue, comparisonType))
-                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_Validation_EndsWith, endsWithValue), innerException);
+                throw new ArgumentException(message ?? string.Format(Resources.Multilingual.Exception_Validation_EndsWith, endsWithValue), innerException);
         }
         #endregion
 
@@ -2157,7 +2159,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (validValues.Where(v => string.Compare(v, value, comparisonType) == 0).Count() != 1)
-                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -2174,7 +2176,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!validValues.Contains(value))
-                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -2192,7 +2194,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!value.Equals(validValue))
-                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -2210,7 +2212,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!validValues.Contains(value, comparer))
-                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -2228,7 +2230,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (validValues.Where(v => comparer(v, value)).Count() != 1)
-                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -2247,7 +2249,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!value.Equals(validValue))
-                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
+                throw new ArgumentException(message ?? string.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -2266,7 +2268,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!validValues.Contains(value))
-                throw new ArgumentException(message ?? string.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
+                throw new ArgumentException(message ?? string.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -2285,7 +2287,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (validValues.Where(v => comparer(v, value)).Count() != 1)
-                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
+                throw new ArgumentOutOfRangeException(message ?? string.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName);
         }
         #endregion
 
@@ -2304,7 +2306,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value.Equals(invalidValue))
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_Invalid_Value, paramName);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_Invalid_Value, paramName);
         }
 
         /// <summary>
@@ -2322,83 +2324,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value.Equals(invalidValue))
-                throw new ArgumentException(message ?? Resources.Strings.Exception_Validation_Invalid_Value, paramName);
-        }
-        #endregion
-
-        #region HasAttribute
-        /// <summary>
-        /// Assert that the parameter has an attribute of the specified type defined.
-        /// If not throw System.ArgumentException.
-        /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
-        /// <param name="type">Type to check for the specified attribute.</param>
-        /// <param name="attributeType">Type of attribute to look for.</param>
-        /// <param name="paramName">Name of the parameter.</param>
-        /// <param name="message">Error message to describe the exception.</param>
-        public static void HasAttribute(Type type, Type attributeType, string paramName, string message = null)
-        {
-            if (message != null)
-                message = string.Format(message, paramName);
-
-            if (!type.HasAttribute(attributeType))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Attribute_Required, attributeType.Name), paramName);
-        }
-
-        /// <summary>
-        /// Assert that the parameter has an attribute of the specified type defined.
-        /// If not throw System.ArgumentException.
-        /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
-        /// <param name="type">Type to check for the specified attribute.</param>
-        /// <param name="attributeType">Type of attribute to look for.</param>
-        /// <param name="inherit">If true it will also look in the ancestor objects for the attribute type.</param>
-        /// <param name="paramName">Name of the parameter.</param>
-        /// <param name="message">Error message to describe the exception.</param>
-        public static void HasAttribute(Type type, Type attributeType, bool inherit, string paramName, string message = null)
-        {
-            if (message != null)
-                message = string.Format(message, paramName);
-
-            if (!type.HasAttribute(attributeType, inherit))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Attribute_Required, attributeType.Name), paramName);
-        }
-
-        /// <summary>
-        /// Assert that the parameter has an attribute of the specified type defined.
-        /// If not throw System.ArgumentException.
-        /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
-        /// <param name="element">Element to check for the specified attribute.</param>
-        /// <param name="attributeType">Type of attribute to look for.</param>
-        /// <param name="paramName">Name of the parameter.</param>
-        /// <param name="message">Error message to describe the exception.</param>
-        public static void HasAttribute(object element, Type attributeType, string paramName, string message = null)
-        {
-            if (message != null)
-                message = string.Format(message, paramName);
-
-            if (!element.HasAttribute(attributeType))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Attribute_Required, attributeType.Name), paramName);
-        }
-
-        /// <summary>
-        /// Assert that the parameter has an attribute of the specified type defined.
-        /// If not throw System.ArgumentException.
-        /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
-        /// <param name="element">Element to check for the specified attribute.</param>
-        /// <param name="attributeType">Type of attribute to look for.</param>
-        /// <param name="inherit">If true it will also look in the ancestor objects for the attribute type.</param>
-        /// <param name="paramName">Name of the parameter.</param>
-        /// <param name="message">Error message to describe the exception.</param>
-        public static void HasAttribute(object element, Type attributeType, bool inherit, string paramName, string message = null)
-        {
-            if (message != null)
-                message = string.Format(message, paramName);
-
-            if (!element.HasAttribute(attributeType, inherit))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Attribute_Required, attributeType.Name), paramName);
+                throw new ArgumentException(message ?? Resources.Multilingual.Exception_Validation_Invalid_Value, paramName);
         }
         #endregion
 
@@ -2417,7 +2343,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!value)
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -2435,7 +2361,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!value)
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName, innerException);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName, innerException);
         }
 
         /// <summary>
@@ -2452,7 +2378,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!function())
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -2470,7 +2396,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!function())
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName, innerException);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName, innerException);
         }
         #endregion
 
@@ -2489,7 +2415,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value)
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -2507,7 +2433,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value)
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName, innerException);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName, innerException);
         }
 
         /// <summary>
@@ -2524,7 +2450,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (function())
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName);
         }
 
         /// <summary>
@@ -2542,7 +2468,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (function())
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Value, paramName), paramName, innerException);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Value, paramName), paramName, innerException);
         }
         #endregion
 
@@ -2562,7 +2488,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
             
             if (value.GetType() != validType)
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Type, paramName), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName);
         }
 
         /// <summary>
@@ -2581,7 +2507,84 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (value.GetType() != validType)
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
+        }
+        #endregion
+
+#if !WINDOWS_APP
+        #region HasAttribute
+        /// <summary>
+        /// Assert that the parameter has an attribute of the specified type defined.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <param name="type">Type to check for the specified attribute.</param>
+        /// <param name="attributeType">Type of attribute to look for.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message to describe the exception.</param>
+        public static void HasAttribute(Type type, Type attributeType, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!type.HasAttribute(attributeType))
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Attribute_Required, attributeType.Name), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the parameter has an attribute of the specified type defined.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <param name="type">Type to check for the specified attribute.</param>
+        /// <param name="attributeType">Type of attribute to look for.</param>
+        /// <param name="inherit">If true it will also look in the ancestor objects for the attribute type.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message to describe the exception.</param>
+        public static void HasAttribute(Type type, Type attributeType, bool inherit, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!type.HasAttribute(attributeType, inherit))
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Attribute_Required, attributeType.Name), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the parameter has an attribute of the specified type defined.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <param name="element">Element to check for the specified attribute.</param>
+        /// <param name="attributeType">Type of attribute to look for.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message to describe the exception.</param>
+        public static void HasAttribute(object element, Type attributeType, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!element.HasAttribute(attributeType))
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Attribute_Required, attributeType.Name), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the parameter has an attribute of the specified type defined.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <param name="element">Element to check for the specified attribute.</param>
+        /// <param name="attributeType">Type of attribute to look for.</param>
+        /// <param name="inherit">If true it will also look in the ancestor objects for the attribute type.</param>
+        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="message">Error message to describe the exception.</param>
+        public static void HasAttribute(object element, Type attributeType, bool inherit, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!element.HasAttribute(attributeType, inherit))
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Attribute_Required, attributeType.Name), paramName);
         }
         #endregion
 
@@ -2601,7 +2604,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!validType.IsAssignableFrom(value.GetType()))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Type, paramName), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName);
         }
 
         /// <summary>
@@ -2620,7 +2623,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!validType.IsAssignableFrom(value.GetType()))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
         }
 
         /// <summary>
@@ -2638,7 +2641,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!validType.IsAssignableFrom(valueType))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Type, paramName), paramName);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName);
         }
 
         /// <summary>
@@ -2657,9 +2660,10 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!validType.IsAssignableFrom(valueType))
-                throw new ArgumentException(message ?? String.Format(Resources.Strings.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
         }
         #endregion
+#endif
         #endregion
     }
 }

@@ -133,21 +133,21 @@ namespace Fosol.Common.Configuration
                     // This is pointing to an external System.Configuration file which will contain a section within it.
                     if (!System.IO.File.Exists(this.Filename)
                         || !System.IO.File.Exists(System.IO.Path.Combine(Environment.CurrentDirectory, this.Filename)))
-                        throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.Filename));
+                        throw new ConfigurationErrorsException(string.Format(Resources.Multilingual.Exception_Configuration_Section_Not_Found, this.Filename));
 
                     var file_map = new ConfigurationFileMap(this.Filename);
                     this.Configuration = ConfigurationManager.OpenMappedMachineConfiguration(file_map);
                     this.Section = (T)this.Configuration.GetSection(this.SectionName);
 
                     if (this.Section == null)
-                        throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.SectionName));
+                        throw new ConfigurationErrorsException(string.Format(Resources.Multilingual.Exception_Configuration_Section_Not_Found, this.SectionName));
                 }
                 else if (!string.IsNullOrEmpty(this.SectionName))
                 {
                     this.Section = (T)Configuration.GetSection(this.SectionName);
 
                     if (this.Section == null)
-                        throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.SectionName));
+                        throw new ConfigurationErrorsException(string.Format(Resources.Multilingual.Exception_Configuration_Section_Not_Found, this.SectionName));
 
                     // Set the FilePath if it hasn't already been set.
                     if (string.IsNullOrEmpty(this.Filename))
@@ -164,7 +164,7 @@ namespace Fosol.Common.Configuration
                     this.Section = ConfigurationSectionFileWatcherBase<T>.DeserializeSection(this.Filename);
 
                     if (this.Section == null)
-                        throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Configuration_Section_Not_Found, this.Filename));
+                        throw new ConfigurationErrorsException(string.Format(Resources.Multilingual.Exception_Configuration_Section_Not_Found, this.Filename));
 
                     if (string.IsNullOrEmpty(this.SectionName))
                         this.SectionName = Section.SectionInformation.Name;

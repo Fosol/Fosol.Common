@@ -79,7 +79,7 @@ namespace Fosol.Common.Parsers
                 if (attr.Override)
                     _Cache.Remove(attr.Name);
                 else
-                    throw new InvalidOperationException(string.Format(Resources.Strings.Exception_FormatElement_Already_Exists, attr.Name));
+                    throw new InvalidOperationException(string.Format(Resources.Multilingual.Exception_FormatElement_Already_Exists, attr.Name));
             }
 
             _Cache.Add(attr.Name, type);
@@ -99,7 +99,7 @@ namespace Fosol.Common.Parsers
 
             var assembly = Assembly.Load(assemblyString);
             if (assembly == null)
-                throw new InvalidOperationException(string.Format(Resources.Strings.Exception_Assembly_Is_Invalid, assemblyString));
+                throw new InvalidOperationException(string.Format(Resources.Multilingual.Exception_Assembly_Is_Invalid, assemblyString));
 
             return Add(assembly, nameOrNamespace);
         }
@@ -161,7 +161,7 @@ namespace Fosol.Common.Parsers
                     && type.HasAttribute(typeof(ElementAttribute)))
                     return type;
 
-                throw new InvalidOperationException(string.Format(Resources.Strings.Exception_FormatElement_Is_Not_Valid, fullyQualifiedTypeName));
+                throw new InvalidOperationException(string.Format(Resources.Multilingual.Exception_FormatElement_Is_Not_Valid, fullyQualifiedTypeName));
             }
 
             return null;
@@ -194,7 +194,7 @@ namespace Fosol.Common.Parsers
             if (type == null)
                 type = GetKeywordType(Assembly.GetExecutingAssembly(), name);
             if (type == null)
-                throw new InvalidOperationException(string.Format(Resources.Strings.Exception_FormatElement_Does_Not_Exist, name));
+                throw new InvalidOperationException(string.Format(Resources.Multilingual.Exception_FormatElement_Does_Not_Exist, name));
             return type;
         }
 

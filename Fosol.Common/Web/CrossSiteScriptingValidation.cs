@@ -106,8 +106,14 @@ namespace Fosol.Common.Web
 
             var length = value.Length;
 
-            if ((length > 4 && value.StartsWith("http:", StringComparison.InvariantCultureIgnoreCase))
-                || (length > 5 && value.StartsWith("https:", StringComparison.InvariantCultureIgnoreCase)))
+#if WINDOWS_APP
+            var string_comparison = StringComparison.CurrentCultureIgnoreCase;
+#else
+            var string_comparison = StringComparison.InvariantCultureIgnoreCase;
+#endif
+
+            if ((length > 4 && value.StartsWith("http:", string_comparison))
+                || (length > 5 && value.StartsWith("https:", string_comparison)))
                 return false;
 
             var query_pos = value.IndexOf('?');

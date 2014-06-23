@@ -26,7 +26,7 @@ namespace Fosol.Common.Helpers
             var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(assembly.Location);
 
             if (config == null || config.AppSettings.Settings[key] == null)
-                throw new IndexOutOfRangeException(string.Format(Resources.Strings.Exception_Config_Does_Not_Contain_Key, key));
+                throw new IndexOutOfRangeException(string.Format(Resources.Multilingual.Exception_Config_Does_Not_Contain_Key, key));
 
             return config.AppSettings.Settings[key].Value;
         }

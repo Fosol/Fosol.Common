@@ -20,7 +20,7 @@ namespace Fosol.Common.Validation.Enumerables
         public static void IsValidIndexPosition(int index, int count, string paramName)
         {
             if (index < 0 || index >= count)
-                throw new IndexOutOfRangeException(String.Format(Resources.Strings.Exception_Validation_Assert_Enumerables_IsValidIndexPosition, paramName));
+                throw new IndexOutOfRangeException(String.Format(Resources.Multilingual.Exception_Validation_Assert_Enumerables_IsValidIndexPosition, paramName));
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Fosol.Common.Validation.Enumerables
         public static void IsValidIndexPosition(int index, Array array, string paramName)
         {
             if (index < 0 || index >= array.Length)
-                throw new IndexOutOfRangeException(String.Format(Resources.Strings.Exception_Validation_Assert_Enumerables_IsValidIndexPosition, paramName));
+                throw new IndexOutOfRangeException(String.Format(Resources.Multilingual.Exception_Validation_Assert_Enumerables_IsValidIndexPosition, paramName));
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Fosol.Common.Validation.Enumerables
         public static void IsValidIndexPosition(int index, ICollection collection, string paramName)
         {
             if (index < 0 || index >= collection.Count)
-                throw new IndexOutOfRangeException(String.Format(Resources.Strings.Exception_Validation_Assert_Enumerables_IsValidIndexPosition, paramName));
+                throw new IndexOutOfRangeException(String.Format(Resources.Multilingual.Exception_Validation_Assert_Enumerables_IsValidIndexPosition, paramName));
         }
 
         /// <summary>

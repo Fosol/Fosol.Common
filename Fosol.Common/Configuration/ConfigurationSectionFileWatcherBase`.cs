@@ -257,7 +257,7 @@ namespace Fosol.Common.Configuration
             Validation.Assert.IsNotNull(filename, "filename");
 
             if (!File.Exists(filename))
-                throw new System.IO.FileNotFoundException(String.Format(Resources.Strings.Exception_File_Not_Found, Path.GetFileName(filename)), filename);
+                throw new System.IO.FileNotFoundException(String.Format(Resources.Multilingual.Exception_File_Not_Found, Path.GetFileName(filename)), filename);
 
             using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {

@@ -43,7 +43,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!AssertFormat.IsEmail(value))
-                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_AssertFormat_IsEmail, paramName));
+                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_AssertFormat_IsEmail, paramName));
         }
         #endregion
 
@@ -73,7 +73,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!AssertFormat.IsNumber(value))
-                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_AssertFormat_IsNumber, paramName));
+                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_AssertFormat_IsNumber, paramName));
         }
         #endregion
 
@@ -103,7 +103,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!AssertFormat.IsUri(value, uriKind))
-                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_AssertFormat_IsUri, paramName));
+                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_AssertFormat_IsUri, paramName));
         }
         #endregion
 
@@ -133,7 +133,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!AssertFormat.IsPostalCode(value))
-                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_AssertFormat_IsPostalCode, paramName));
+                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_AssertFormat_IsPostalCode, paramName));
         }
         #endregion
 
@@ -163,7 +163,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!AssertFormat.IsFSA(value))
-                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_AssertFormat_IsFSA, paramName));
+                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_AssertFormat_IsFSA, paramName));
         }
         #endregion
 
@@ -193,7 +193,7 @@ namespace Fosol.Common.Validation
                 message = string.Format(message, paramName);
 
             if (!AssertFormat.IsLDU(value))
-                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Strings.Exception_Validation_AssertFormat_IsLDU, paramName));
+                throw new ArgumentNullException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_AssertFormat_IsLDU, paramName));
         }
         #endregion
     }

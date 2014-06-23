@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+#if WINDOWS_APP
+using Fosol.Common.Collections;
+#else
 using System.Web;
+#endif
 
 namespace Fosol.Common.Web
 {
@@ -18,7 +23,11 @@ namespace Fosol.Common.Web
     {
         #region Variables
         private const string _FormatBoundary = @"\A({0})\Z";
+#if WINDOWS_APP
+        private static readonly Regex _QueryRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.QueryRegex), RegexOptions.None);
+#else
         private static readonly Regex _QueryRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.QueryRegex), RegexOptions.Compiled);
+#endif
         private readonly Dictionary<string, UriQueryParam> _Parameters;
         #endregion
 
@@ -322,7 +331,11 @@ namespace Fosol.Common.Web
             // Validate the queryString.
             var match = _QueryRegex.Match(queryString);
             if (!match.Success)
+#if WINDOWS_APP
+                throw new FormatException("Query string value has invalid characters.");
+#else
                 throw new UriFormatException("Query string value has invalid characters.");
+#endif
 
             var k_start = 0;
             for (var i = 0; i < queryString.Length; i++)
@@ -367,21 +380,21 @@ namespace Fosol.Common.Web
                     // This one has a key value.
                     if (i > 0)
                     {
-                        var key = decode ? HttpUtility.UrlDecode(keyAndValue.Substring(0, i)) : keyAndValue.Substring(0, i);
-                        var value = decode ? HttpUtility.UrlDecode(keyAndValue.Substring(i + 1)) : keyAndValue.Substring(i + 1);
+                        var key = decode ? WebUtility.UrlDecode(keyAndValue.Substring(0, i)) : keyAndValue.Substring(0, i);
+                        var value = decode ? WebUtility.UrlDecode(keyAndValue.Substring(i + 1)) : keyAndValue.Substring(i + 1);
                         return new KeyValuePair<string, string>(key, value);
                     }
                     else
                     {
                         // This one has no key value.
-                        var value = decode ? HttpUtility.UrlDecode(keyAndValue.Substring(i + 1)) : keyAndValue.Substring(i + 1);
+                        var value = decode ? WebUtility.UrlDecode(keyAndValue.Substring(i + 1)) : keyAndValue.Substring(i + 1);
                         return new KeyValuePair<string, string>(String.Empty, value);
                     }
                 }
             }
 
             // The whole keyAndValue is only a key.
-            return new KeyValuePair<string, string>((decode ? HttpUtility.UrlDecode(keyAndValue) : keyAndValue), String.Empty);
+            return new KeyValuePair<string, string>((decode ? WebUtility.UrlDecode(keyAndValue) : keyAndValue), String.Empty);
         }
         #endregion
 

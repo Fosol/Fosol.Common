@@ -35,13 +35,13 @@ namespace Fosol.Common.Configuration
                 var cdata_attributes = GetAttributes<CDataConfigurationPropertyAttribute>(property);
 
                 if (attributes == null || attributes.Length == 0)
-                    throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Validation_Attribute_Required, "ConfigurationPropertyAttribute"));
+                    throw new ConfigurationErrorsException(string.Format(Resources.Multilingual.Exception_Validation_Attribute_Required, "ConfigurationPropertyAttribute"));
                 else if (cdata_attributes == null || cdata_attributes.Length == 0)
-                    throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Validation_Attribute_Required, "CDataConfigurationPropertyAttribute"));
+                    throw new ConfigurationErrorsException(string.Format(Resources.Multilingual.Exception_Validation_Attribute_Required, "CDataConfigurationPropertyAttribute"));
                 else if (cdata_attributes.Length > 1)
-                    throw new ConfigurationErrorsException(string.Format(Resources.Strings.Exception_Too_Many_Of_Attribute, "CDataConfigurationPropertyAttribute"));
+                    throw new ConfigurationErrorsException(string.Format(Resources.Multilingual.Exception_Too_Many_Of_Attribute, "CDataConfigurationPropertyAttribute"));
                 else if (!(property.PropertyType == typeof(string)))
-                    throw new ConfigurationErrorsException(Resources.Strings.Exception_Type_Must_Be_String);
+                    throw new ConfigurationErrorsException(Resources.Multilingual.Exception_Type_Must_Be_String);
                 else
                 {
                     _PropertyName = attributes[0].Name;

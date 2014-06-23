@@ -498,19 +498,19 @@ namespace Fosol.Common.Initialization
             }
             catch (ArgumentNullException)
             {
-                throw new ArgumentNullException(string.Format(message ?? Resources.Strings.Initialization_Convert_ArgumentNullException, paramName), paramName);
+                throw new ArgumentNullException(string.Format(message ?? Resources.Multilingual.Initialization_Convert_ArgumentNullException, paramName), paramName);
             }
             catch (InvalidCastException ex)
             {
-                throw new InvalidCastException(string.Format(message ?? Resources.Strings.Iniitialization_Convert_InvalidCastException, paramName, typeof(T).Name), ex);
+                throw new InvalidCastException(string.Format(message ?? Resources.Multilingual.Iniitialization_Convert_InvalidCastException, paramName, typeof(T).Name), ex);
             }
             catch (OverflowException ex)
             {
-                throw new OverflowException(string.Format(message ?? Resources.Strings.Initialization_Convert_OverflowException, paramName, typeof(T).Name), ex);
+                throw new OverflowException(string.Format(message ?? Resources.Multilingual.Initialization_Convert_OverflowException, paramName, typeof(T).Name), ex);
             }
             catch (FormatException ex)
             {
-                throw new FormatException(string.Format(message ?? Resources.Strings.Initialization_Convert_FormatException, paramName, typeof(T)), ex);
+                throw new FormatException(string.Format(message ?? Resources.Multilingual.Initialization_Convert_FormatException, paramName, typeof(T)), ex);
             }
         }
         #endregion
