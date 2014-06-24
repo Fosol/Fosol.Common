@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common.Utilities
 {
     /// <summary>
     /// Methods to help with Xml related content.
     /// </summary>
-    public static class XmlHelper
+    public static class XmlUtility
     {
         #region Methods
         /// <summary>

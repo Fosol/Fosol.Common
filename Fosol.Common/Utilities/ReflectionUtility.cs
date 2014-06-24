@@ -8,12 +8,12 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common.Utilities
 {
     /// <summary>
     /// Helper methods for PropertyInfo objects.
     /// </summary>
-    public static class ReflectionHelper
+    public static class ReflectionUtility
     {
         #region Methods
         /// <summary>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 #endif
 
-namespace Fosol.Common.Web
+namespace Fosol.Common.Net
 {
     /// <summary>
     /// UriBuilder provides a way to parse URI values into logical parts.

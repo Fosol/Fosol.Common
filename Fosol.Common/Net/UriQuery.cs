@@ -12,7 +12,7 @@ using Fosol.Common.Collections;
 using System.Web;
 #endif
 
-namespace Fosol.Common.Web
+namespace Fosol.Common.Net
 {
     /// <summary>
     /// UriQuery provides a way to maintain a collection of query string parameters and their values.

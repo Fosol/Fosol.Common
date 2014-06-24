@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Web
+namespace Fosol.Common.Net
 {
     /// <summary>
     /// UriQueryParamValue provides a way to maintain multiple values for a single query parameter key.

@@ -6,12 +6,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common.Utilities
 {
     /// <summary>
     /// Utility methods to help with URL values.
     /// </summary>
-    public static class UrlHelper
+    public static class UrlUtility
     {
         #region Methods
         /// <summary>
@@ -57,7 +57,7 @@ namespace Fosol.Common.Helpers
         {
             try
             {
-                absoluteUrl = UrlHelper.ConvertToAbsoluteUrl(url); 
+                absoluteUrl = UrlUtility.ConvertToAbsoluteUrl(url); 
                 return true;
             }
             catch
@@ -83,7 +83,7 @@ namespace Fosol.Common.Helpers
 
             var htmlRegex = new Regex(htmlPattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
             html = htmlRegex.Replace(html, m => 
-                UrlHelper.InternalReplaceRelativeUrlsWithAbsoluteUrls(
+                UrlUtility.InternalReplaceRelativeUrlsWithAbsoluteUrls(
                     htmlRegex.Replace(m.Value, "${attrib}=${delim1}" 
                         + ("~/" + m.Groups["url"].Value)) + "${delim2}")
                 );
@@ -93,7 +93,7 @@ namespace Fosol.Common.Helpers
 
             var cssRegex = new Regex(cssPattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
             html = cssRegex.Replace(html, m => 
-                UrlHelper.InternalReplaceRelativeUrlsWithAbsoluteUrls(
+                UrlUtility.InternalReplaceRelativeUrlsWithAbsoluteUrls(
                     cssRegex.Replace(m.Value, "@import url(" 
                         + ("~/" + m.Groups["url"].Value)) + ")")
                 ); 
@@ -110,7 +110,7 @@ namespace Fosol.Common.Helpers
         private static string InternalReplaceRelativeUrlsWithAbsoluteUrls(string url)
         {
             string absolute_url;
-            if (UrlHelper.TryToConvertToAbsoluteUrl(url, out absolute_url))
+            if (UrlUtility.TryToConvertToAbsoluteUrl(url, out absolute_url))
                 return absolute_url;
 
             return url;

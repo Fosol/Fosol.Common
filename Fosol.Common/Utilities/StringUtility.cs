@@ -5,12 +5,12 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common.Utilities
 {
     /// <summary>
     /// Useful string methods.
     /// </summary>
-    public static class StringHelper
+    public static class StringUtility
     {
         #region Methods
         /// <summary>

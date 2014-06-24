@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Web
+namespace Fosol.Common.Net
 {
     /// <summary>
     /// UriQueryParam provides a way to manage a single query parameter key and all it's values.

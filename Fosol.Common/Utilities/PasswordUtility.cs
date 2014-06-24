@@ -6,14 +6,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common.Utilities
 {
     /// <summary>
     /// PasswordHelper provides methods to assit in password generation and testing.
     /// 
     /// Initialize a new instance of PasswordHelper with your password requirements, then use the Validate() method to validate any password.
     /// </summary>
-    public sealed class PasswordHelper
+    public sealed class PasswordUtility
     {
         #region Variables
         private static readonly char[] _NonalphanumericCharacters = "!@#$%^&*()-+=][{};:>|./?_',".ToCharArray();
@@ -89,8 +89,8 @@ namespace Fosol.Common.Helpers
         /// <param name="minRequiredLowerCaseCharacters">Minimum number of lower-case characters required.</param>
         /// <param name="minRequiredUpperCaseCharacters">Minimum number of upper-case characters required.</param>
         /// <param name="minRequiredDigitCharacters">Minimum number of digit characters required.</param>
-        public PasswordHelper(int minLength, int maxLength, int minRequiredNonalphanumericCharacters, int minRequiredLowerCaseCharacters, int minRequiredUpperCaseCharacters, int minRequiredDigitCharacters)
-            : this(PasswordHelper.CreatePasswordStrengthRegularExpression(minLength, maxLength, minRequiredNonalphanumericCharacters, minRequiredLowerCaseCharacters, minRequiredUpperCaseCharacters, minRequiredDigitCharacters))
+        public PasswordUtility(int minLength, int maxLength, int minRequiredNonalphanumericCharacters, int minRequiredLowerCaseCharacters, int minRequiredUpperCaseCharacters, int minRequiredDigitCharacters)
+            : this(PasswordUtility.CreatePasswordStrengthRegularExpression(minLength, maxLength, minRequiredNonalphanumericCharacters, minRequiredLowerCaseCharacters, minRequiredUpperCaseCharacters, minRequiredDigitCharacters))
         {
             Fosol.Common.Validation.Assert.MinRange(minLength, 0, "minLength");
             Fosol.Common.Validation.Assert.MinRange(maxLength, 0, "maxLength");
@@ -123,7 +123,7 @@ namespace Fosol.Common.Helpers
         /// <exception cref="System.ArgumentException">Parameter 'passwordStrengthRegularExpression' cannot be empty or whitespace.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter 'passwordStrengthRegularExpression' cannot be null.</exception>
         /// <param name="passwordStrengthRegularExpression">Regular expression string to validate the password.</param>
-        public PasswordHelper(string passwordStrengthRegularExpression)
+        public PasswordUtility(string passwordStrengthRegularExpression)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(passwordStrengthRegularExpression, "passwordStrengthRegularExpression");
 
@@ -200,7 +200,7 @@ namespace Fosol.Common.Helpers
             if (minRequiredNonalphanumericCharacters > 0)
             {
                 expression.Append("(?=");
-                var nonalphanumeric = ".*[" + Fosol.Common.Helpers.RegexHelper.EscapeAll(new String(_NonalphanumericCharacters)) + "]";
+                var nonalphanumeric = ".*[" + RegexUtility.EscapeAll(new String(_NonalphanumericCharacters)) + "]";
                 for (var i = 0; i < minRequiredNonalphanumericCharacters; i++)
                     expression.Append(nonalphanumeric);
                 expression.Append(")");
@@ -314,7 +314,7 @@ namespace Fosol.Common.Helpers
                 }
 
                 password = new String(random_characters);
-            } while (Fosol.Common.Web.CrossSiteScriptingValidation.IsDangerousString(password));
+            } while (Fosol.Common.Net.CrossSiteScriptingValidation.IsDangerousString(password));
 
             return password;
         }

@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common.Utilities
 {
     /// <summary>
     /// WebApplicationHelper provides methods to assist with generic application features.
     /// </summary>
-    public static class WebApplicationHelper
+    public static class WebApplicationUtility
     {
         #region Variables
         #endregion

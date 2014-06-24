@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 #endif
 
-namespace Fosol.Common.Web
+namespace Fosol.Common.Net
 {
     /// <summary>
     /// UriPath class provides a way to manage a URI path and all of its segments.

@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common.Utilities
 {
     /// <summary>
     /// Helper methods for configuration settings.
     /// </summary>
-    public static class ConfigurationHelper
+    public static class ConfigurationUtility
     {
         #region Methods
         /// <summary>

@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common.Utilities
 {
     /// <summary>
     /// Diagnostic utility methods.
     /// </summary>
-    public class DiagnosticsHelper
+    public class DiagnosticsUtility
     {
         #region Variables
         #endregion

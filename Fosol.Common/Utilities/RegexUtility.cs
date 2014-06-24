@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common.Utilities
 {
     /// <summary>
     /// RegexHlper provide extension methods for Regex object and related stuff.
     /// </summary>
-    public static class RegexHelper
+    public static class RegexUtility
     {
         #region Variables
         const string _EscapeCharacters = @"\#$^*()+[]{}|.? ";

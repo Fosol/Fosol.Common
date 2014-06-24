@@ -5,22 +5,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common.Threading
 {
     /// <summary>
-    /// An atomic threadsafe way to have a global identity of type long.
+    /// An atomic threadsafe way to have a global identity of type int.
     /// </summary>
-    public sealed class IdentityLong
+    public sealed class IdentityInt
     {
         #region Variables
-        private static long _Id;
+        private static int _Id;
         #endregion
 
         #region Properties
         /// <summary>
         /// get - The current identity value.
         /// </summary>
-        public long Id
+        public int Id
         {
             get { return _Id; }
         }
@@ -34,7 +34,7 @@ namespace Fosol.Common.Helpers
         /// Increment the Id.
         /// </summary>
         /// <returns></returns>
-        public long Increment()
+        public int Increment()
         {
             return Interlocked.Increment(ref _Id);
         }
@@ -43,7 +43,7 @@ namespace Fosol.Common.Helpers
         /// Decrement the Id.
         /// </summary>
         /// <returns></returns>
-        public long Decrement()
+        public int Decrement()
         {
             return Interlocked.Decrement(ref _Id);
         }
@@ -53,7 +53,7 @@ namespace Fosol.Common.Helpers
         /// </summary>
         /// <param name="value"></param>
         /// <returns>Id property value.</returns>
-        public static implicit operator long(IdentityLong value)
+        public static implicit operator int(IdentityInt value)
         {
             return value.Id;
         }
@@ -71,10 +71,10 @@ namespace Fosol.Common.Helpers
             if (object.ReferenceEquals(this, obj))
                 return true;
 
-            if (obj.GetType() != typeof(IdentityLong))
+            if (obj.GetType() != typeof(IdentityInt))
                 return false;
 
-            return this.Id == ((IdentityLong)obj).Id;
+            return this.Id == ((IdentityInt)obj).Id;
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Fosol.Common.Helpers
         /// </summary>
         /// <param name="obj">Object to compare.</param>
         /// <returns>True if the Id property values are equal.</returns>
-        public bool Equals(IdentityLong obj)
+        public bool Equals(IdentityInt obj)
         {
             if (obj == null)
                 return false;
