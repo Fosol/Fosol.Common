@@ -4,19 +4,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+#if WINDOWS_PHONE_APP
+using Windows.Storage;
+using Windows.Storage.Streams;
+#endif
 
 namespace Fosol.Common.Serialization
 {
     /// <summary>
-    /// Utility methods to serialize DataContract Json data.
+    /// Utility methods to serialize DataContract data.
     /// </summary>
-    public static class DataContractJsonHelper
+    public static class DataContractUtility
     {
         #region Variables
-        private static IDictionary<Type, DataContractJsonSerializer> _CachedJsonSerializers = new Dictionary<Type, DataContractJsonSerializer>();
+        private static IDictionary<Type, DataContractSerializer> _CachedSerializers = new Dictionary<Type, DataContractSerializer>();
         #endregion
 
         #region Methods
@@ -35,14 +38,16 @@ namespace Fosol.Common.Serialization
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameter "classType" cannot be null.</exception>
         /// <param name="classType">Type of class being serialized.</param>
-        /// <returns>DataContractJsonSerializer object.</returns>
-        public static DataContractJsonSerializer GetSerializer(Type classType)
+        /// <returns>DataContractSerializer object.</returns>
+        public static DataContractSerializer GetSerializer(Type classType)
         {
-            if (!_CachedJsonSerializers.ContainsKey(classType))
+            Validation.Assert.IsNotNull(classType, "classType");
+
+            if (!_CachedSerializers.ContainsKey(classType))
             {
-                _CachedJsonSerializers.Add(classType, new DataContractJsonSerializer(classType));
+                _CachedSerializers.Add(classType, new DataContractSerializer(classType));
             }
-            return _CachedJsonSerializers[classType];
+            return _CachedSerializers[classType];
         }
 
         /// <summary>
@@ -55,7 +60,10 @@ namespace Fosol.Common.Serialization
         public static string Serialize(object data)
         {
             Validation.Assert.IsNotNull(data, "data");
+
+#if !WINDOWS_PHONE_APP
             Validation.Assert.HasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
+#endif
 
             using (var stream = new MemoryStream())
             {
@@ -66,26 +74,34 @@ namespace Fosol.Common.Serialization
 
         /// <summary>
         /// Converts a DataContract object into a stream.
-        /// The object must be defined with the DataContractJsonSerializer.
+        /// The object must be defined with the DataContractAttribute.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "data" must be defined with a DataContractAttribute.</exception>
         /// <exception cref="System.ArgumentNullException">Parameters "data", and "stream" cannot be null.</exception>
         /// <param name="data">DataContract object to serialize to stream.</param>
         /// <param name="stream">Stream to write object to.</param>
-        public static void ToStream(object data, Stream stream)
+        /// <param name="resetPosition">Whether the position in the stream should be reset to where it began before writing.</param>
+        public static void ToStream(object data, Stream stream, bool resetPosition = true)
         {
             Validation.Assert.IsNotNull(data, "data");
+#if !WINDOWS_PHONE_APP
             Validation.Assert.HasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
+#endif
             Validation.Assert.IsNotNull(stream, "stream");
+            Validation.Assert.IsTrue(stream.CanWrite, "stream", "Parameter 'stream' must be writable.");
+
+            var position = stream.Position;
 
             var serializer = GetSerializer(data.GetType());
             serializer.WriteObject(stream, data);
-            stream.Position = 0;
+
+            // Set the position to the beginning of the stream after writing to it.
+            if (resetPosition)
+                stream.Position = position;
         }
 
         /// <summary>
         /// Deserialize the stream into the specified object.
-        /// Uses the DataContractJsonSerializer object to deserialize.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameter "stream" cannot be null.</exception>
         /// <typeparam name="T">Type of object to create from the serialized stream.</typeparam>
@@ -101,7 +117,7 @@ namespace Fosol.Common.Serialization
 
         /// <summary>
         /// Deserialize the string value into an object of the specified type.
-        /// Uses the DataContractJsonSerializer object to deserialize.
+        /// Uses the DataContractSerializer object to deserialize.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "data" cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
@@ -121,9 +137,118 @@ namespace Fosol.Common.Serialization
             }
         }
 
+#if WINDOWS_PHONE_APP
         /// <summary>
         /// Serialize object and save the data as a file at the specified location.
-        /// Uses the DataContractJsonSerializer object to deserialize.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "path" cannot be null.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
+        /// <param name="data">Object to serialize and save.</param>
+        /// <param name="path">Path and filename of the location you want to save the data.</param>
+        /// <param name="collisionOption">What to do if the file already exists.</param>
+        public static void SerializeToFile(object data, string path, CreationCollisionOption collisionOption = CreationCollisionOption.FailIfExists)
+        {
+            Validation.Assert.IsNotNull(data, "data");
+            Validation.Assert.IsNotNullOrEmpty(path, "path");
+
+            using (MemoryStream data_in_stream = new MemoryStream())
+            {
+                ToStream(data, data_in_stream);
+
+                // Get an output stream for the SessionState file and write the state asynchronously
+                StorageFile file = ApplicationData.Current.LocalFolder.CreateFileAsync(path, collisionOption).GetResults();
+                using (Stream stream = file.OpenStreamForWriteAsync().Result)
+                {
+                    data_in_stream.CopyToAsync(stream);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Serialize object and save the data as a file at the specified location.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "path" cannot be null.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
+        /// <param name="data">Object to serialize and save.</param>
+        /// <param name="path">Path and filename of the location you want to save the data.</param>
+        /// <param name="collisionOption">What to do if the file already exists.</param>
+        public async static void SerializeToFileAsync(object data, string path, CreationCollisionOption collisionOption = CreationCollisionOption.FailIfExists)
+        {
+            Validation.Assert.IsNotNull(data, "data");
+            Validation.Assert.IsNotNullOrEmpty(path, "path");
+
+            using (MemoryStream data_in_stream = new MemoryStream())
+            {
+                ToStream(data, data_in_stream);
+
+                // Get an output stream for the SessionState file and write the state asynchronously
+                StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(path, collisionOption);
+                using (Stream stream = await file.OpenStreamForWriteAsync())
+                {
+                    await data_in_stream.CopyToAsync(stream);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserialize the file an create an object of the specified type.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "path" cannot be null.</exception>
+        /// <typeparam name="T">Type of object to create.</typeparam>
+        /// <param name="path">Path and filename of the location you want to deserialize.</param>
+        /// <returns>Object of type T.</returns>
+        public static T DeserializeFromFile<T>(string path)
+        {
+            Validation.Assert.IsNotNullOrEmpty(path, "path");
+
+            StorageFile file = ApplicationData.Current.LocalFolder.GetFileAsync(path).GetResults();
+
+            using (IInputStream stream = file.OpenSequentialReadAsync().GetResults())
+            {
+                return Deserialize<T>(stream);
+            }
+        }
+
+        /// <summary>
+        /// Deserialize the file an create an object of the specified type.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "path" cannot be null.</exception>
+        /// <typeparam name="T">Type of object to create.</typeparam>
+        /// <param name="path">Path and filename of the location you want to deserialize.</param>
+        /// <returns>Object of type T.</returns>
+        public async static Task<T> DeserializeFromFileAsync<T>(string path)
+        {
+            Validation.Assert.IsNotNullOrEmpty(path, "path");
+
+            StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(path);
+
+            using (IInputStream stream = await file.OpenSequentialReadAsync())
+            {
+                return Deserialize<T>(stream);
+            }
+        }
+
+        /// <summary>
+        /// Deserialize object from isolated storage with the DataContractSerializer.
+        /// </summary>
+        /// <typeparam name="T">Type of object being deserialized.</typeparam>
+        /// <param name="stream">IInputStream object.</param>
+        /// <returns>Object of type T.</returns>
+        public static T Deserialize<T>(IInputStream stream)
+        {
+            Validation.Assert.IsNotNull(stream, "stream");
+            
+            var deserializer = GetSerializer(typeof(T));
+            return (T)deserializer.ReadObject(stream.AsStreamForRead());
+        }
+#else
+
+        /// <summary>
+        /// Serialize object and save the data as a file at the specified location.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter "path" cannot be null.</exception>
@@ -146,7 +271,6 @@ namespace Fosol.Common.Serialization
 
         /// <summary>
         /// Deserialize the file an create an object of the specified type.
-        /// Uses the DataContractJsonSerializer object to deserialize.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter "path" cannot be null.</exception>
@@ -163,9 +287,11 @@ namespace Fosol.Common.Serialization
                 return (T)reader.ReadObject(stream);
             }
         }
+#endif
 
+#if WINDOWS_PHONE
         /// <summary>
-        /// Deserialize object from isolated storage with the DataContractJsonSerializer.
+        /// Deserialize object from isolated storage with the DataContractSerializer.
         /// </summary>
         /// <typeparam name="T">Type of object being deserialized.</typeparam>
         /// <param name="stream">IsolatedStorageFileStream object.</param>
@@ -177,6 +303,7 @@ namespace Fosol.Common.Serialization
             var deserializer = GetSerializer(typeof(T));
             return (T)deserializer.ReadObject(stream);
         }
+#endif
         #endregion
     }
 }

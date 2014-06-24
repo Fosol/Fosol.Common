@@ -109,7 +109,7 @@ namespace Fosol.Common.Utilities
         {
             using (Stream stream = assembly.GetManifestResourceStream(name))
             {
-                return Serialization.XmlHelper.Deserialize<T>(stream);
+                return Serialization.XmlUtility.Deserialize<T>(stream);
             }
         }
 
@@ -121,7 +121,7 @@ namespace Fosol.Common.Utilities
         /// <returns>Deserialized object.</returns>
         public static T Open<T>(Stream stream)
         {
-            return Serialization.XmlHelper.Deserialize<T>(stream);
+            return Serialization.XmlUtility.Deserialize<T>(stream);
         }
         #endregion
     }

@@ -12,7 +12,7 @@ namespace Fosol.Common.Serialization
     /// <summary>
     /// Utility methods to serialize data.
     /// </summary>
-    public static class BinaryHelper
+    public static class BinaryUtility
     {
         #region Methods
         /// <summary>

@@ -90,6 +90,7 @@
     <Compile Include="Extensions\Strings\StringExtensions.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Initialization\Assert.cs" />
+    <Compile Include="Managers\SessionManager.cs" />
     <Compile Include="Mathematics\Formula.cs" />
     <Compile Include="Net\CrossSiteScriptingValidation.cs" />
     <Compile Include="Net\DomainComparer.cs" />
@@ -111,6 +112,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Multilingual.fr.resx</DependentUpon>
     </Compile>
+    <Compile Include="Serialization\DataContractUtility.cs" />
     <Compile Include="Text\GlobalConstant.cs" />
     <Compile Include="Threading\IdentityInt.cs" />
     <Compile Include="Threading\IdentityLong.cs" />

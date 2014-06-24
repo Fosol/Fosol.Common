@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Fosol.Common.Serialization
 {
     /// <summary>
-    /// Utility methods to serialize DataContract data.
+    /// Utility methods to serialize DataContract Json data.
     /// </summary>
-    public static class DataContractHelper
+    public static class DataContractJsonUtility
     {
         #region Variables
-        private static IDictionary<Type, DataContractSerializer> _CachedSerializers = new Dictionary<Type, DataContractSerializer>();
+        private static IDictionary<Type, DataContractJsonSerializer> _CachedJsonSerializers = new Dictionary<Type, DataContractJsonSerializer>();
         #endregion
 
         #region Methods
@@ -34,16 +35,14 @@ namespace Fosol.Common.Serialization
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameter "classType" cannot be null.</exception>
         /// <param name="classType">Type of class being serialized.</param>
-        /// <returns>DataContractSerializer object.</returns>
-        public static DataContractSerializer GetSerializer(Type classType)
+        /// <returns>DataContractJsonSerializer object.</returns>
+        public static DataContractJsonSerializer GetSerializer(Type classType)
         {
-            Validation.Assert.IsNotNull(classType, "classType");
-
-            if (!_CachedSerializers.ContainsKey(classType))
+            if (!_CachedJsonSerializers.ContainsKey(classType))
             {
-                _CachedSerializers.Add(classType, new DataContractSerializer(classType));
+                _CachedJsonSerializers.Add(classType, new DataContractJsonSerializer(classType));
             }
-            return _CachedSerializers[classType];
+            return _CachedJsonSerializers[classType];
         }
 
         /// <summary>
@@ -67,7 +66,7 @@ namespace Fosol.Common.Serialization
 
         /// <summary>
         /// Converts a DataContract object into a stream.
-        /// The object must be defined with the DataContractAttribute.
+        /// The object must be defined with the DataContractJsonSerializer.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "data" must be defined with a DataContractAttribute.</exception>
         /// <exception cref="System.ArgumentNullException">Parameters "data", and "stream" cannot be null.</exception>
@@ -86,6 +85,7 @@ namespace Fosol.Common.Serialization
 
         /// <summary>
         /// Deserialize the stream into the specified object.
+        /// Uses the DataContractJsonSerializer object to deserialize.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameter "stream" cannot be null.</exception>
         /// <typeparam name="T">Type of object to create from the serialized stream.</typeparam>
@@ -101,7 +101,7 @@ namespace Fosol.Common.Serialization
 
         /// <summary>
         /// Deserialize the string value into an object of the specified type.
-        /// Uses the DataContractSerializer object to deserialize.
+        /// Uses the DataContractJsonSerializer object to deserialize.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "data" cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
@@ -123,6 +123,7 @@ namespace Fosol.Common.Serialization
 
         /// <summary>
         /// Serialize object and save the data as a file at the specified location.
+        /// Uses the DataContractJsonSerializer object to deserialize.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter "path" cannot be null.</exception>
@@ -145,6 +146,7 @@ namespace Fosol.Common.Serialization
 
         /// <summary>
         /// Deserialize the file an create an object of the specified type.
+        /// Uses the DataContractJsonSerializer object to deserialize.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
         /// <exception cref="System.ArgumentNullException">Parameter "path" cannot be null.</exception>
@@ -163,7 +165,7 @@ namespace Fosol.Common.Serialization
         }
 
         /// <summary>
-        /// Deserialize object from isolated storage with the DataContractSerializer.
+        /// Deserialize object from isolated storage with the DataContractJsonSerializer.
         /// </summary>
         /// <typeparam name="T">Type of object being deserialized.</typeparam>
         /// <param name="stream">IsolatedStorageFileStream object.</param>

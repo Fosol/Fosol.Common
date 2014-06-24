@@ -13,7 +13,7 @@ namespace Fosol.Common.Serialization
     /// <summary>
     /// Utility methods to serialize Xml data.
     /// </summary>
-    public static class XmlHelper
+    public static class XmlUtility
     {
         #region Methods
         /// <summary>
