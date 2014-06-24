@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
 using Windows.Foundation;
 using Windows.UI.Xaml.Shapes;
 #else
@@ -369,7 +369,7 @@ namespace Fosol.Common.Mathematics
         ///     When 'false' the object will fill the new size and crop anything extending beyond the new size.
         /// </param>
         /// <returns>Destination rectangle.</returns>
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         public static Rect Scale(Size size, Size resize, Fosol.Common.CenterPoint offset, bool allowWhitespace = true)
 #else
         public static Rectangle Scale(Size size, Size resize, Fosol.Common.CenterPoint offset, bool allowWhitespace = true)
@@ -390,7 +390,7 @@ namespace Fosol.Common.Mathematics
         ///     When 'false' the object will fill the new size and crop anything extending beyond the new size.
         /// </param>
         /// <returns>Destination rectangle.</returns>
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         public static Rect Scale(Size size, Size resize, float xOffset = 0f, float yOffset = 0f, bool allowWhitespace = true)
 #else
         public static Rectangle Scale(Size size, Size resize, float xOffset = 0f, float yOffset = 0f, bool allowWhitespace = true)
@@ -401,7 +401,7 @@ namespace Fosol.Common.Mathematics
             Validation.Assert.Range(xOffset, -1, 1, "hOffset");
             Validation.Assert.Range(yOffset, -1, 1, "yOffset");
 
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
             var dest = new Rect(0, 0, resize.Width, resize.Height);
 #else
             var dest = new Rectangle(0, 0, resize.Width, resize.Height);

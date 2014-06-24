@@ -14,7 +14,7 @@ namespace Fosol.Common.Net
     {
         #region Variables
         private const string _FormatBoundary = @"\A({0})\Z";
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         private static readonly Regex _PathSegmentRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.PathSegmentRegex), RegexOptions.None);
 #else
         private static readonly Regex _PathSegmentRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.PathSegmentRegex), RegexOptions.Compiled);
@@ -26,7 +26,7 @@ namespace Fosol.Common.Net
         /// <summary>
         /// get/set - The path segment value.
         /// </summary>
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         /// <exception cref="System.FormatException">Property cannot contain invalid characters.</exception>
 #else
         /// <exception cref="System.UriFormatException">Property cannot contain invalid characters.</exception>
@@ -44,7 +44,7 @@ namespace Fosol.Common.Net
 
                 var match = _PathSegmentRegex.Match(value);
                 if (!match.Success)
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                     throw new FormatException("Path segment value has invalid characters.");
 #else
                     throw new UriFormatException("Path segment value has invalid characters.");

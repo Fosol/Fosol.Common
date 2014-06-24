@@ -32,7 +32,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder(test.Value);
+                    var builder = new Fosol.Common.Net.UriBuilder(test.Value);
 
                     Assert.AreEqual(test.ExpectedResult, builder.ToString(), "Original value: '{0}'", test.Value);
                 }
@@ -50,7 +50,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Scheme = test.Value;
 
                     Assert.AreEqual(test.ExpectedResult, builder.Scheme, "Original value: '{0}'", test.Value);
@@ -69,7 +69,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Username = test.Value;
 
                     Assert.AreEqual(test.ExpectedResult, builder.Username, "Original value: '{0}'", test.Value);
@@ -88,7 +88,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Authority = test.Value;
 
                     Assert.AreEqual(test.ExpectedResult, builder.Authority, "Original value: '{0}'", test.Value);
@@ -107,7 +107,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Host = test.Value;
 
                     Assert.AreEqual(test.ExpectedResult, builder.Host, "Original value: '{0}'", test.Value);
@@ -126,7 +126,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Path = test.Value;
 
                     Assert.AreEqual(test.ExpectedResult, builder.Path, "Original value: '{0}'", test.Value);
@@ -145,7 +145,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Path = test.Value;
 
                     Assert.AreEqual(test.NumberOfSegments, builder.GetPath().Count, "Original value: '{0}'", test.Value);
@@ -164,7 +164,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Query = test.Value;
 
                     Assert.AreEqual(test.ExpectedResult, builder.Query, "Original value: '{0}'", test.Value);
@@ -183,7 +183,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Fragment = test.Value;
 
                     Assert.AreEqual(test.ExpectedResult, builder.Fragment, "Original value: '{0}'", test.Value);
@@ -204,7 +204,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder(test.Value);
+                    var builder = new Fosol.Common.Net.UriBuilder(test.Value);
 
                     Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
                 }
@@ -222,7 +222,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Scheme = test.Value;
 
                     Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
@@ -241,7 +241,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Username = test.Value;
 
                     Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
@@ -260,7 +260,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Authority = test.Value;
 
                     Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
@@ -279,7 +279,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Host = test.Value;
 
                     Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
@@ -298,7 +298,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Path = test.Value;
 
                     Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
@@ -317,7 +317,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Path = test.Value;
 
                     Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
@@ -336,7 +336,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Query = test.Value;
 
                     Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
@@ -355,7 +355,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var builder = new Fosol.Common.Web.UriBuilder();
+                    var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Fragment = test.Value;
 
                     Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);

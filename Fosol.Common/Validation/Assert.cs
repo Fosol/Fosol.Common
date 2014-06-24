@@ -1,4 +1,4 @@
-﻿#if !WINDOWS_APP
+﻿#if !WINDOWS_APP && !WINDOWS_PHONE_APP
 using Fosol.Common.Extensions.Attributes;
 using Fosol.Common.Extensions.Types;
 #endif
@@ -2511,7 +2511,7 @@ namespace Fosol.Common.Validation
         }
         #endregion
 
-#if !WINDOWS_APP
+#if !WINDOWS_APP && !WINDOWS_PHONE_APP
         #region HasAttribute
         /// <summary>
         /// Assert that the parameter has an attribute of the specified type defined.

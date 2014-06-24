@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-#if !WINDOWS_APP
+#if !WINDOWS_APP && !WINDOWS_PHONE_APP
 using System.Web;
 #endif
 
@@ -86,7 +86,7 @@ namespace Fosol.Common.Extensions.Strings
         public static byte[] ToByteArray(this string value, Encoding encoding = null)
         {
             Validation.Assert.IsNotNullOrEmpty(value, "value");
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
             var default_encoding = Encoding.UTF8;
 #else
             var default_encoding = Encoding.Default;
@@ -280,7 +280,7 @@ namespace Fosol.Common.Extensions.Strings
             Validation.Assert.IsNotNullOrEmpty(delimiter, "delimiter");
 
             int start = 0;
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
             var values = new List<string>();
 #else
             var values = new ArrayList();
@@ -290,7 +290,7 @@ namespace Fosol.Common.Extensions.Strings
             for (int i = 0; i < value.Length - 1; i++)
             {
                 // Delimiter was found
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                 var string_comparison = StringComparison.CurrentCultureIgnoreCase;
 #else
                 var string_comparison = StringComparison.InvariantCultureIgnoreCase;

@@ -106,7 +106,7 @@ namespace Fosol.Common.Net
 
             var length = value.Length;
 
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
             var string_comparison = StringComparison.CurrentCultureIgnoreCase;
 #else
             var string_comparison = StringComparison.InvariantCultureIgnoreCase;

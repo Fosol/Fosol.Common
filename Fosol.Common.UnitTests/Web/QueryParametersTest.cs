@@ -32,7 +32,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var result = Fosol.Common.Web.UriQuery.ParseQueryStringToKeyValuePair(test.Value);
+                    var result = Fosol.Common.Net.UriQuery.ParseQueryStringToKeyValuePair(test.Value);
 
                     // Count the number of individual values for each query parameter.
                     // This will give you the distinct number of key value pairs.
@@ -58,7 +58,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var result = Fosol.Common.Web.UriQuery.ParseQueryStringToKeyValuePair(test.Value);
+                    var result = Fosol.Common.Net.UriQuery.ParseQueryStringToKeyValuePair(test.Value);
 
                     foreach (var p in test.QueryParameters)
                     {
@@ -84,7 +84,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var result = Fosol.Common.Web.UriQuery.ParseQueryStringToKeyValuePair(test.Value);
+                    var result = Fosol.Common.Net.UriQuery.ParseQueryStringToKeyValuePair(test.Value);
 
                     Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
                 }
@@ -102,7 +102,7 @@ namespace Fosol.Common.UnitTests.Web
             {
                 try
                 {
-                    var result = Fosol.Common.Web.UriQuery.ParseQueryStringToKeyValuePair(test.Value);
+                    var result = Fosol.Common.Net.UriQuery.ParseQueryStringToKeyValuePair(test.Value);
 
                     Assert.Fail("This test '{0}' should have thrown an exception.", test.Value);
                 }

@@ -38,7 +38,7 @@ namespace Fosol.Common.Resources {
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                 var assembly = System.Reflection.Assembly.Load(new System.Reflection.AssemblyName(typeof(Multilingual).AssemblyQualifiedName));
 #else
                 var assembly = typeof(Multilingual).Assembly;

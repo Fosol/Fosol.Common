@@ -6,7 +6,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
 using Fosol.Common.Collections;
 #else
 using System.Web;
@@ -23,7 +23,7 @@ namespace Fosol.Common.Net
     {
         #region Variables
         private const string _FormatBoundary = @"\A({0})\Z";
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         private static readonly Regex _QueryRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.QueryRegex), RegexOptions.None);
 #else
         private static readonly Regex _QueryRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.QueryRegex), RegexOptions.Compiled);
@@ -331,7 +331,7 @@ namespace Fosol.Common.Net
             // Validate the queryString.
             var match = _QueryRegex.Match(queryString);
             if (!match.Success)
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                 throw new FormatException("Query string value has invalid characters.");
 #else
                 throw new UriFormatException("Query string value has invalid characters.");

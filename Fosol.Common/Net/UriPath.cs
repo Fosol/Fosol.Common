@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-#if !WINDOWS_APP
+#if !WINDOWS_APP && !WINDOWS_PHONE_APP
 using System.Web;
 #endif
 
@@ -71,7 +71,7 @@ namespace Fosol.Common.Net
         /// <summary>
         /// Creates a new instance of a UriPath class.
         /// </summary>
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         /// <exception cref="System.FormatException">Parameter 'path' cannot start with "//" (without double quotes).</exception>
 #else
         /// <exception cref="System.UriFormatException">Parameter 'path' cannot start with "//" (without double quotes).</exception>
@@ -84,7 +84,7 @@ namespace Fosol.Common.Net
                 return;
 
             if (path.StartsWith("//"))
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                 throw new FormatException("Path has invalid characters.");
 #else
                 throw new UriFormatException("Path has invalid characters.");

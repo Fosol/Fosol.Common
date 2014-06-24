@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-#if !WINDOWS_APP
+#if !WINDOWS_APP && !WINDOWS_PHONE_APP
 using System.Web;
 #endif
 
@@ -64,7 +64,7 @@ namespace Fosol.Common.Net
 
         private const string _WhitespaceEncoding = "%20";
         private const string _FormatBoundary = @"\A({0})\Z";
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         private static readonly Regex _SchemeRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.SchemeRegex), RegexOptions.None);
         private static readonly Regex _UserInfoRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.UserInfoRegex), RegexOptions.None);
         private static readonly Regex _IPv4AddressRegex = new Regex(String.Format(_FormatBoundary, UriBuilder.IPv4AddressRegex), RegexOptions.None);
@@ -101,7 +101,7 @@ namespace Fosol.Common.Net
             set
             {
                 if (String.IsNullOrWhiteSpace(value))
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                     throw new FormatException("Scheme value has invalid characters.");
 #else
                     throw new UriFormatException("Scheme value has invalid characters.");
@@ -110,7 +110,7 @@ namespace Fosol.Common.Net
                 var match = _SchemeRegex.Match(value);
 
                 if (!match.Success)
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                     throw new FormatException("Scheme value has invalid characters.");
 #else
                     throw new UriFormatException("Scheme value has invalid characters.");
@@ -125,7 +125,7 @@ namespace Fosol.Common.Net
         /// get/set - Uri authority value [userinfo@]host[:port]
         /// </summary>
         /// <format>[ userinfo "@" ] host [ ":" port ]</format>
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         /// <exception cref="System.FormatException">Property cannot contain invalid characters.</exception>
 #else
         /// <exception cref="System.UriFormatException">Property cannot contain invalid characters.</exception>
@@ -143,7 +143,7 @@ namespace Fosol.Common.Net
                 if (index_of_at != -1)
                 {
                     if (index_of_at + 1 >= value.Length)
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                         throw new FormatException("Host value is invalid.");
 #else
                         throw new UriFormatException("Host value is invalid.");
@@ -168,7 +168,7 @@ namespace Fosol.Common.Net
                         if (index_of_colon != -1)
                         {
                             if (index_of_colon + 1 >= value.Length)
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                                 throw new FormatException("Port value is invalid.");
 #else
                                 throw new UriFormatException("Port value is invalid.");
@@ -179,7 +179,7 @@ namespace Fosol.Common.Net
                             // Validate port.
                             var port_match = _PortRegex.Match(port);
                             if (!port_match.Success)
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                                 throw new FormatException("Port value has invalid characters.");
 #else
                                 throw new UriFormatException("Port value has invalid characters.");
@@ -190,7 +190,7 @@ namespace Fosol.Common.Net
                         }
                     }
                     else
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                         throw new FormatException("Host value has invalid characters.");
 #else
                         throw new UriFormatException("Host value has invalid characters.");
@@ -203,7 +203,7 @@ namespace Fosol.Common.Net
                     if (index_of_colon != -1)
                     {
                         if (index_of_colon + 1 >= value.Length)
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                             throw new FormatException("Port value is invalid.");
 #else
                             throw new UriFormatException("Port value is invalid.");
@@ -214,7 +214,7 @@ namespace Fosol.Common.Net
                         // Validate port.
                         var port_match = _PortRegex.Match(port);
                         if (!port_match.Success)
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                             throw new FormatException("Port value has invalid characters.");
 #else
                             throw new UriFormatException("Port value has invalid characters.");
@@ -235,7 +235,7 @@ namespace Fosol.Common.Net
         /// get/set - Uri username value.
         /// </summary>
         /// <format>*( unreserved / pct-encoded / sub-delims / ":" )</format>
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         /// <exception cref="System.FormatException">Property cannot contain invalid characters.</exception>
 #else
         /// <exception cref="System.UriFormatException">Property cannot contain invalid characters.</exception>
@@ -261,7 +261,7 @@ namespace Fosol.Common.Net
                 // Validate the characters.
                 var match_userinfo = _UserInfoRegex.Match(value);
                 if (!match_userinfo.Success)
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                     throw new FormatException("User information has invalid characters.");
 #else
                     throw new UriFormatException("User information has invalid characters.");
@@ -276,7 +276,7 @@ namespace Fosol.Common.Net
         /// get/set - Uri host value.
         /// </summary>
         /// <format>IP-literal / IPv4address / reg-name</format>
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         /// <exception cref="System.FormatException">Property cannot contain invalid characters.</exception>
 #else
         /// <exception cref="System.UriFormatException">Property cannot contain invalid characters.</exception>
@@ -314,7 +314,7 @@ namespace Fosol.Common.Net
                     // Validate host.
                     var host_match = _HostRegex.Match(value);
                     if (!host_match.Success)
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                         throw new FormatException("Host value has invalid characters.");
 #else
                         throw new UriFormatException("Host value has invalid characters.");
@@ -330,7 +330,7 @@ namespace Fosol.Common.Net
         /// get/set - Uri port value.
         /// </summary>
         /// <format>*DIGIT</format>
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         /// <exception cref="System.FormatException">Property cannot contain invalid characters.</exception>
 #else
         /// <exception cref="System.UriFormatException">Property cannot contain invalid characters.</exception>
@@ -342,7 +342,7 @@ namespace Fosol.Common.Net
             {
                 var port_match = _PortRegex.Match(value.ToString());
                 if (!port_match.Success)
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                     throw new FormatException("Port value has invalid characters.");
 #else
                     throw new UriFormatException("Port value has invalid characters.");
@@ -406,7 +406,7 @@ namespace Fosol.Common.Net
         /// get/set - Uri fragment value.
         /// </summary>
         /// <format>*( pchar / "/" / "?" )</format>
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         /// <exception cref="System.FormatException">Property cannot contain invalid characters.</exception>
 #else
         /// <exception cref="System.UriFormatException">Property cannot contain invalid characters.</exception>
@@ -441,7 +441,7 @@ namespace Fosol.Common.Net
                 var match = _FragmentRegex.Match(value);
 
                 if (!match.Success)
-#if WINDOWS_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
                     throw new FormatException("Fragment value has invalid characters.");
 #else
                     throw new UriFormatException("Fragment value has invalid characters.");
