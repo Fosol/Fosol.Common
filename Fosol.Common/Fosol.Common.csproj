@@ -65,6 +65,7 @@
     <Compile Include="Caching\WeakCache`.cs" />
     <Compile Include="Collections\FunctorComparer`.cs" />
     <Compile Include="Collections\GenericList`.cs" />
+    <Compile Include="Collections\StateDictionary.cs" />
     <Compile Include="Configuration\Attributes\UriValidatorAttribute.cs" />
     <Compile Include="Configuration\CDataConfigurationElement.cs" />
     <Compile Include="Configuration\CDataConfigurationPropertyAttribute.cs" />
@@ -94,6 +95,8 @@
     </Compile>
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="HashCode.cs" />
+    <Compile Include="Helpers\ApplicationState.cs" />
+    <Compile Include="Helpers\SavedState.cs" />
     <Compile Include="Serialization\DataContractJsonUtility.cs" />
     <Compile Include="Serialization\DataContractUtility.cs" />
     <Compile Include="Serialization\XmlUtility.cs" />

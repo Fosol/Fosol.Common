@@ -152,7 +152,7 @@ namespace Fosol.Common.Validation
         /// If it is null it will throw System.ArgumentNullException.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameter "function" return value is null.</exception>
-        /// <param name="value">The value to check.</param>
+        /// <param name="function">The function to execute.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception.</param>
         public static void IsNotNull(Func<object> function, string paramName, string message = null)
@@ -169,7 +169,7 @@ namespace Fosol.Common.Validation
         /// If it is null it will throw System.ArgumentNullException.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameter "function" return value is null.</exception>
-        /// <param name="value">The value to check.</param>
+        /// <param name="function">The function to execute.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNull(Func<object> function, string message, Exception innerException)
@@ -183,8 +183,8 @@ namespace Fosol.Common.Validation
         /// If it is null it will throw System.ArgumentNullException.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameter "function" return value is null.</exception>
-        /// <typeparam name="T">Type of the value.</typeparam>
-        /// <param name="value">The value to check.</param>
+        /// <typeparam name="T">Type of the value the function returns.</typeparam>
+        /// <param name="function">The function to execute.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">A message to describe the exception.</param>
         public static void IsNotNull<T>(Func<T> function, string paramName, string message = null)
@@ -201,8 +201,8 @@ namespace Fosol.Common.Validation
         /// If it is null it will throw System.ArgumentNullException.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">Parameter "function" return value is null.</exception>
-        /// <typeparam name="T">Type of the value.</typeparam>
-        /// <param name="value">The value to check.</param>
+        /// <typeparam name="T">Type of the value the function returns.</typeparam>
+        /// <param name="function">The function to execute.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNull<T>(Func<T> function, string message, Exception innerException)
@@ -2508,6 +2508,62 @@ namespace Fosol.Common.Validation
 
             if (value.GetType() != validType)
                 throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
+        }
+        #endregion
+
+        #region IsValidOperation
+        /// <summary>
+        /// Asserts that the result of the function is not null or false.
+        /// If it is null it will throw System.InvalidOperationException.
+        /// </summary>
+        /// <exception cref="System.InvalidOperationException">Parameter "function" must return true.</exception>
+        /// <param name="function">The function to execute.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        public static void IsValidOperation(Func<bool> function, string message)
+        {
+            if (function == null || function() == false)
+                throw new InvalidOperationException(message);
+        }
+
+        /// <summary>
+        /// Asserts that the result of the function is not null or false.
+        /// If it is null it will throw System.InvalidOperationException.
+        /// </summary>
+        /// <exception cref="System.InvalidOperationException">Parameter "function" must return true.</exception>
+        /// <param name="function">The function to execute.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        /// <param name="innerException">The exception that caused this exception.</param>
+        public static void IsValidOperation(Func<bool> function, string message, Exception innerException)
+        {
+            if (function == null || function() == false)
+                throw new InvalidOperationException(message, innerException);
+        }
+
+        /// <summary>
+        /// Asserts that the value it true.
+        /// If it is null it will throw System.InvalidOperationException.
+        /// </summary>
+        /// <exception cref="System.InvalidOperationException">Parameter "value" must return true.</exception>
+        /// <param name="value">The value to check.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        public static void IsValidOperation(bool value, string message)
+        {
+            if (!value)
+                throw new InvalidOperationException(message);
+        }
+
+        /// <summary>
+        /// Asserts that the value it true.
+        /// If it is null it will throw System.InvalidOperationException.
+        /// </summary>
+        /// <exception cref="System.InvalidOperationException">Parameter "value" must return true.</exception>
+        /// <param name="value">The value to check.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        /// <param name="innerException">The exception that caused this exception.</param>
+        public static void IsValidOperation(bool value, string message, Exception innerException)
+        {
+            if (!value)
+                throw new InvalidOperationException(message, innerException);
         }
         #endregion
 

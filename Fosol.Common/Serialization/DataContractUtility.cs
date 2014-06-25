@@ -89,7 +89,7 @@ namespace Fosol.Common.Serialization
 #endif
             Validation.Assert.IsNotNull(stream, "stream");
             Validation.Assert.IsTrue(stream.CanWrite, "stream", "Parameter 'stream' must be writable.");
-
+            
             var position = stream.Position;
 
             var serializer = GetSerializer(data.GetType());
@@ -174,7 +174,7 @@ namespace Fosol.Common.Serialization
         /// <param name="data">Object to serialize and save.</param>
         /// <param name="path">Path and filename of the location you want to save the data.</param>
         /// <param name="collisionOption">What to do if the file already exists.</param>
-        public async static void SerializeToFileAsync(object data, string path, CreationCollisionOption collisionOption = CreationCollisionOption.FailIfExists)
+        public async static Task SerializeToFileAsync(object data, string path, CreationCollisionOption collisionOption = CreationCollisionOption.FailIfExists)
         {
             Validation.Assert.IsNotNull(data, "data");
             Validation.Assert.IsNotNullOrEmpty(path, "path");
@@ -270,6 +270,31 @@ namespace Fosol.Common.Serialization
         }
 
         /// <summary>
+        /// Serialize object and save the data as a file at the specified location.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "path" cannot be null.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "data" cannot be null.</exception>
+        /// <param name="data">Object to serialize and save.</param>
+        /// <param name="path">Path and filename of the location you want to save the data.</param>
+        /// <param name="fileMode">File mode control.</param>
+        /// <param name="fileAccess">File access control.</param>
+        /// <param name="fileShare">File share control.</param>
+        public async static Task SerializeToFileAsync(object data, string path, FileMode fileMode = FileMode.CreateNew, FileAccess fileAccess = FileAccess.Write, FileShare fileShare = FileShare.None)
+        {
+            Validation.Assert.IsNotNull(data, "data");
+            Validation.Assert.IsNotNullOrEmpty(path, "path");
+
+            await Task.Run(() => 
+            {
+                using (Stream stream = File.Open(path, fileMode, fileAccess, fileShare))
+                {
+                    ToStream(data, stream);
+                }
+            });
+        }
+
+        /// <summary>
         /// Deserialize the file an create an object of the specified type.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
@@ -286,6 +311,28 @@ namespace Fosol.Common.Serialization
                 var reader = GetSerializer(typeof(T));
                 return (T)reader.ReadObject(stream);
             }
+        }
+
+        /// <summary>
+        /// Deserialize the file an create an object of the specified type.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "path" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Parameter "path" cannot be null.</exception>
+        /// <typeparam name="T">Type of object to create.</typeparam>
+        /// <param name="path">Path and filename of the location you want to deserialize.</param>
+        /// <returns>Object of type T.</returns>
+        public async static Task<T> DeserializeFromFileAsync<T>(string path)
+        {
+            Validation.Assert.IsNotNullOrEmpty(path, "path");
+
+            return await Task.Run(() =>
+            {
+                using (var stream = File.OpenRead(path))
+                {
+                    var reader = GetSerializer(typeof(T));
+                    return (T)reader.ReadObject(stream);
+                }
+            });
         }
 #endif
 

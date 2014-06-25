@@ -81,6 +81,11 @@
   <ItemGroup>
     <Compile Include="CenterPoint.cs" />
     <Compile Include="Collections\NameValueCollection.cs" />
+    <Compile Include="Collections\StateDictionary%27.cs" />
+    <Compile Include="Collections\StateDictionary.cs" />
+    <Compile Include="Helpers\ApplicationState.cs" />
+    <Compile Include="Helpers\SavedState%27.cs" />
+    <Compile Include="Helpers\SavedState.cs" />
     <Compile Include="Extensions\Bytes\ByteExtensions.cs" />
     <Compile Include="Extensions\Enumerables\EnumerableExtensions.cs" />
     <Compile Include="Extensions\Events\EventExtensions.cs" />
@@ -90,7 +95,7 @@
     <Compile Include="Extensions\Strings\StringExtensions.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Initialization\Assert.cs" />
-    <Compile Include="Managers\SessionManager.cs" />
+    <Compile Include="Managers\ControlStateManager.cs" />
     <Compile Include="Mathematics\Formula.cs" />
     <Compile Include="Net\CrossSiteScriptingValidation.cs" />
     <Compile Include="Net\DomainComparer.cs" />
@@ -112,7 +117,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Multilingual.fr.resx</DependentUpon>
     </Compile>
+    <Compile Include="Serialization\DataContractJsonUtility.cs" />
     <Compile Include="Serialization\DataContractUtility.cs" />
+    <Compile Include="Serialization\FormatOption.cs" />
     <Compile Include="Text\GlobalConstant.cs" />
     <Compile Include="Threading\IdentityInt.cs" />
     <Compile Include="Threading\IdentityLong.cs" />
@@ -123,6 +130,7 @@
     <Compile Include="Utilities\DiagnosticsUtility.cs" />
     <Compile Include="Utilities\RegexUtility.cs" />
     <Compile Include="Utilities\StringUtility.cs" />
+    <Compile Include="Utilities\WindowsAppUtility.cs" />
     <Compile Include="Validation\Assert.cs" />
     <Compile Include="Validation\AssertFormat.cs" />
     <Compile Include="Validation\Enumerables\Assert.cs" />

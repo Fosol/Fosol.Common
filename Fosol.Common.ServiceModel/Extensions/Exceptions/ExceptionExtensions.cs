@@ -62,9 +62,9 @@ namespace Fosol.Common.ServiceModel.Extensions.Exceptions
                             try
                             {
                                 if (web_exception.Response.ContentType.Contains("application/json"))
-                                    fault = (TServiceFault)DataContractJsonHelper.GetSerializer(typeof(TServiceFault)).ReadObject(response_stream);
+                                    fault = (TServiceFault)DataContractJsonUtility.GetSerializer(typeof(TServiceFault)).ReadObject(response_stream);
                                 else
-                                    fault = (TServiceFault)DataContractHelper.GetSerializer(typeof(TServiceFault)).ReadObject(response_stream);
+                                    fault = (TServiceFault)DataContractUtility.GetSerializer(typeof(TServiceFault)).ReadObject(response_stream);
 
                                 if (fault != null)
                                     throw new WebFaultException<TServiceFault>(fault, status);
@@ -132,9 +132,9 @@ namespace Fosol.Common.ServiceModel.Extensions.Exceptions
                             // Try to deserialize the returned XML to the expected result type (TServiceResult) 
                             TServiceResult response;
                             if (web_exception.Response.ContentType.Contains("application/json"))
-                                response = (TServiceResult)Serialization.DataContractJsonHelper.GetSerializer(typeof(TServiceResult)).ReadObject(response_stream);
+                                response = (TServiceResult)Serialization.DataContractJsonUtility.GetSerializer(typeof(TServiceResult)).ReadObject(response_stream);
                             else
-                                response = (TServiceResult)Serialization.DataContractHelper.GetSerializer(typeof(TServiceResult)).ReadObject(response_stream);
+                                response = (TServiceResult)Serialization.DataContractUtility.GetSerializer(typeof(TServiceResult)).ReadObject(response_stream);
                             serviceResultHandler(response);
                             serviceResultOrServiceFaultHandled = true;
                         }
@@ -149,9 +149,9 @@ namespace Fosol.Common.ServiceModel.Extensions.Exceptions
 
                             TServiceFault serviceFault;
                             if (web_exception.Response.ContentType.Contains("application/json"))
-                                serviceFault = (TServiceFault)Serialization.DataContractJsonHelper.GetSerializer(typeof(TServiceFault)).ReadObject(response_stream);
+                                serviceFault = (TServiceFault)Serialization.DataContractJsonUtility.GetSerializer(typeof(TServiceFault)).ReadObject(response_stream);
                             else
-                                serviceFault = (TServiceFault)Serialization.DataContractHelper.GetSerializer(typeof(TServiceFault)).ReadObject(response_stream);
+                                serviceFault = (TServiceFault)Serialization.DataContractUtility.GetSerializer(typeof(TServiceFault)).ReadObject(response_stream);
 
                             if (serviceFaultHandler != null && serviceFault != null)
                             {
