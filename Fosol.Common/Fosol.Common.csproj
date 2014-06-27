@@ -65,6 +65,7 @@
     <Compile Include="Caching\WeakCache`.cs" />
     <Compile Include="Collections\FunctorComparer`.cs" />
     <Compile Include="Collections\GenericList`.cs" />
+    <Compile Include="Collections\StateDictionary%27.cs" />
     <Compile Include="Collections\StateDictionary.cs" />
     <Compile Include="Configuration\Attributes\UriValidatorAttribute.cs" />
     <Compile Include="Configuration\CDataConfigurationElement.cs" />
@@ -95,10 +96,11 @@
     </Compile>
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="HashCode.cs" />
-    <Compile Include="Helpers\ApplicationState.cs" />
-    <Compile Include="Helpers\SavedState.cs" />
+    <Compile Include="IO\SavedState%27.cs" />
+    <Compile Include="IO\SavedState.cs" />
     <Compile Include="Serialization\DataContractJsonUtility.cs" />
     <Compile Include="Serialization\DataContractUtility.cs" />
+    <Compile Include="Serialization\FormatOption.cs" />
     <Compile Include="Serialization\XmlUtility.cs" />
     <Compile Include="Utilities\PasswordUtility.cs" />
     <Compile Include="Utilities\RegexUtility.cs" />
@@ -212,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Cryptography\Asymmetrical\" />
+    <Folder Include="Managers\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Multilingual.fr.resx">

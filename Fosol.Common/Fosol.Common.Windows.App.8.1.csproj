@@ -37,6 +37,8 @@
     <Compile Include="CenterPoint.cs" />
     <Compile Include="Collections\FunctorComparer`.cs" />
     <Compile Include="Collections\NameValueCollection.cs" />
+    <Compile Include="Collections\StateDictionary%27.cs" />
+    <Compile Include="Collections\StateDictionary.cs" />
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="Extensions\Bytes\ByteExtensions.cs" />
     <Compile Include="Extensions\Enumerables\EnumerableExtensions.cs" />
@@ -50,6 +52,11 @@
     <Compile Include="Extensions\UriBuilders\UriBuilderExtensions.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Initialization\Assert.cs" />
+    <Compile Include="IO\SavedState%27.cs" />
+    <Compile Include="IO\SavedState.cs" />
+    <Compile Include="Managers\ApplicationStateManager.cs" />
+    <Compile Include="Managers\ControlState.cs" />
+    <Compile Include="Managers\ControlStateManager.cs" />
     <Compile Include="Mathematics\Formula.cs" />
     <Compile Include="Net\CrossSiteScriptingValidation.cs" />
     <Compile Include="Net\DomainComparer.cs" />
@@ -84,6 +91,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\DataContractJsonUtility.cs" />
+    <Compile Include="Serialization\DataContractUtility.cs" />
     <Compile Include="Text\GlobalConstant.cs" />
     <Compile Include="Threading\IdentityInt.cs" />
     <Compile Include="Threading\IdentityLong.cs" />
@@ -98,10 +107,7 @@
     <Compile Include="Validation\AssertFormat.cs" />
     <Compile Include="Validation\Enumerables\Assert.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="IO\" />
-    <Folder Include="Serialization\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

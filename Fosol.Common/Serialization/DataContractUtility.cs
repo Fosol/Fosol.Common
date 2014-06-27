@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-#if WINDOWS_PHONE_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
 using Windows.Storage;
 using Windows.Storage.Streams;
 #endif
@@ -61,7 +61,7 @@ namespace Fosol.Common.Serialization
         {
             Validation.Assert.IsNotNull(data, "data");
 
-#if !WINDOWS_PHONE_APP
+#if !WINDOWS_APP && !WINDOWS_PHONE_APP
             Validation.Assert.HasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
 #endif
 
@@ -84,7 +84,7 @@ namespace Fosol.Common.Serialization
         public static void ToStream(object data, Stream stream, bool resetPosition = true)
         {
             Validation.Assert.IsNotNull(data, "data");
-#if !WINDOWS_PHONE_APP
+#if !WINDOWS_APP && !WINDOWS_PHONE_APP
             Validation.Assert.HasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
 #endif
             Validation.Assert.IsNotNull(stream, "stream");
@@ -137,7 +137,7 @@ namespace Fosol.Common.Serialization
             }
         }
 
-#if WINDOWS_PHONE_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         /// <summary>
         /// Serialize object and save the data as a file at the specified location.
         /// </summary>
@@ -156,8 +156,12 @@ namespace Fosol.Common.Serialization
             {
                 ToStream(data, data_in_stream);
 
-                // Get an output stream for the SessionState file and write the state asynchronously
-                StorageFile file = ApplicationData.Current.LocalFolder.CreateFileAsync(path, collisionOption).GetResults();
+                var file_task = Task.Run(async () =>
+                    {
+                        return await ApplicationData.Current.LocalFolder.CreateFileAsync(path, collisionOption);
+                    });
+                var file = file_task.Result;
+
                 using (Stream stream = file.OpenStreamForWriteAsync().Result)
                 {
                     data_in_stream.CopyToAsync(stream);
@@ -204,11 +208,21 @@ namespace Fosol.Common.Serialization
         {
             Validation.Assert.IsNotNullOrEmpty(path, "path");
 
-            StorageFile file = ApplicationData.Current.LocalFolder.GetFileAsync(path).GetResults();
+            var file_task = Task.Run(async () =>
+                {
+                    return await ApplicationData.Current.LocalFolder.GetFileAsync(path);
+                });
+            var file = file_task.Result;
 
-            using (IInputStream stream = file.OpenSequentialReadAsync().GetResults())
+            var read_task = Task.Run(async () =>
+                {
+                    return await file.OpenSequentialReadAsync();
+                });
+
+            using (IInputStream stream = read_task.Result)
             {
-                return Deserialize<T>(stream);
+                var file_stream = stream.AsStreamForRead();
+                return Deserialize<T>(file_stream);
             }
         }
 
@@ -225,25 +239,11 @@ namespace Fosol.Common.Serialization
             Validation.Assert.IsNotNullOrEmpty(path, "path");
 
             StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(path);
-
             using (IInputStream stream = await file.OpenSequentialReadAsync())
             {
-                return Deserialize<T>(stream);
+                var file_stream = stream.AsStreamForRead();
+                return Deserialize<T>(file_stream);
             }
-        }
-
-        /// <summary>
-        /// Deserialize object from isolated storage with the DataContractSerializer.
-        /// </summary>
-        /// <typeparam name="T">Type of object being deserialized.</typeparam>
-        /// <param name="stream">IInputStream object.</param>
-        /// <returns>Object of type T.</returns>
-        public static T Deserialize<T>(IInputStream stream)
-        {
-            Validation.Assert.IsNotNull(stream, "stream");
-            
-            var deserializer = GetSerializer(typeof(T));
-            return (T)deserializer.ReadObject(stream.AsStreamForRead());
         }
 #else
 

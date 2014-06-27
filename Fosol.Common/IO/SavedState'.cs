@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common.IO
 {
     /// <summary>
     /// SavedState class provides a dictionary for storing state and information for Windows Store and Windows Phone apps.
@@ -126,7 +126,7 @@ namespace Fosol.Common.Helpers
         /// <summary>
         /// Save the state to the file system.
         /// </summary>
-        public async void SaveAsync()
+        public async Task SaveAsync()
         {
 #if WINDOWS_APP || WINDOWS_PHONE_APP
             await Serialization.DataContractUtility.SerializeToFileAsync(_Items, _FilePath, Windows.Storage.CreationCollisionOption.ReplaceExisting);

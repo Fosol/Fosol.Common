@@ -22,7 +22,6 @@ namespace Fosol.Common.Collections
         #endregion
 
         #region Methods
-
         #endregion
 
         #region Operators

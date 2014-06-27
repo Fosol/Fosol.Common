@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
-#if WINDOWS_PHONE_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
 using Windows.Storage;
 using Windows.Storage.Streams;
 #endif
@@ -59,7 +59,7 @@ namespace Fosol.Common.Serialization
         public static string Serialize(object data)
         {
             Validation.Assert.IsNotNull(data, "data");
-#if !WINDOWS_PHONE_APP
+#if !WINDOWS_APP && !WINDOWS_PHONE_APP
             Validation.Assert.HasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
 #endif
 
@@ -81,7 +81,7 @@ namespace Fosol.Common.Serialization
         public static void ToStream(object data, Stream stream)
         {
             Validation.Assert.IsNotNull(data, "data");
-#if !WINDOWS_PHONE_APP
+#if !WINDOWS_APP && !WINDOWS_PHONE_APP
             Validation.Assert.HasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
 #endif
             Validation.Assert.IsNotNull(stream, "stream");
@@ -129,7 +129,7 @@ namespace Fosol.Common.Serialization
             }
         }
 
-#if WINDOWS_PHONE_APP
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         /// <summary>
         /// Serialize object and save the data as a file at the specified location.
         /// </summary>
