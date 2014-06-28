@@ -89,7 +89,7 @@ namespace Fosol.Common.IO
         /// </summary>
         /// <param name="filePath">Path and filename for the saved state.</param>
         /// <param name="restoreIfFileExists">Attempt to restore the prior state if the file exists.</param>
-        internal SavedState(string filePath, bool restoreIfFileExists = true)
+        public SavedState(string filePath, bool restoreIfFileExists = true)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(filePath, "filePath");
 
@@ -104,14 +104,14 @@ namespace Fosol.Common.IO
                     {
                         try
                         {
-                            return await SavedState.RestoreAsync(filePath);
+                            await this.RestoreAsync();
                         }
                         catch
                         {
-                            return new Collections.StateDictionary();
+                            _Items = new Collections.StateDictionary();
                         }
                     });
-                    _Items = task.Result;
+                    task.Wait();
                 }
                 catch
                 {
@@ -180,27 +180,19 @@ namespace Fosol.Common.IO
         /// </summary>
         public async void Clear()
         {
-            _SlimLock.EnterWriteLock();
-            try
-            {
-                _Items.Clear();
+            _Items.Clear();
 
 #if WINDOWS_APP || WINDOWS_PHONE_APP
-                try
-                {
-                    var file = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(this.FilePath) as Windows.Storage.StorageFile;
-                    await file.DeleteAsync(Windows.Storage.StorageDeleteOption.PermanentDelete);
-                }
-                catch
-                {
-
-                }
-#endif
-            }
-            finally
+            try
             {
-                _SlimLock.ExitWriteLock();
+                var file = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(this.FilePath) as Windows.Storage.StorageFile;
+                await file.DeleteAsync(Windows.Storage.StorageDeleteOption.PermanentDelete);
             }
+            catch (FileNotFoundException)
+            {
+                // Ignore error if the file was not found.  Currently there is no way to see if a file exists.
+            }
+#endif
         }
 
         /// <summary>
@@ -228,39 +220,11 @@ namespace Fosol.Common.IO
         /// </summary>
         public async Task SaveAsync()
         {
-            _SlimLock.EnterWriteLock();
-            try
-            {
 #if WINDOWS_APP || WINDOWS_PHONE_APP
-                await Serialization.DataContractUtility.SerializeToFileAsync(_Items, _FilePath, Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            await Serialization.DataContractUtility.SerializeToFileAsync(_Items, _FilePath, Windows.Storage.CreationCollisionOption.ReplaceExisting);
 #else
-                await Serialization.DataContractUtility.SerializeToFileAsync(_Items, _FilePath, FileMode.Create, FileAccess.Write, FileShare.Inheritable);
+            await Serialization.DataContractUtility.SerializeToFileAsync(_Items, _FilePath, FileMode.Create, FileAccess.Write, FileShare.Inheritable);
 #endif
-            }
-            finally
-            {
-                _SlimLock.ExitWriteLock();
-            }
-        }
-
-        /// <summary>
-        /// Restore the state from the file system.
-        /// </summary>
-        /// <param name="path">Path to file.</param>
-        /// <returns>StateDictionary object.</returns>
-        private static Collections.StateDictionary Restore(string path)
-        {
-            return Serialization.DataContractUtility.DeserializeFromFile<Collections.StateDictionary>(path);
-        }
-
-        /// <summary>
-        /// Restore the state from the file system.
-        /// </summary>
-        /// <param name="path">Path to file.</param>
-        /// <returns>StateDictionary object.</returns>
-        private async static Task<Collections.StateDictionary> RestoreAsync(string path)
-        {
-            return await Serialization.DataContractUtility.DeserializeFromFileAsync<Collections.StateDictionary>(path);
         }
 
         /// <summary>
@@ -271,7 +235,7 @@ namespace Fosol.Common.IO
             _SlimLock.EnterWriteLock();
             try
             {
-                _Items = SavedState.Restore(_FilePath);
+                _Items = Serialization.DataContractUtility.DeserializeFromFile<Collections.StateDictionary>(_FilePath);
             }
             finally
             {
@@ -284,15 +248,7 @@ namespace Fosol.Common.IO
         /// </summary>
         public async Task RestoreAsync()
         {
-            _SlimLock.EnterWriteLock();
-            try
-            {
-                _Items = await SavedState.RestoreAsync(_FilePath);
-            }
-            finally
-            {
-                _SlimLock.ExitWriteLock();
-            }
+            _Items = await Serialization.DataContractUtility.DeserializeFromFileAsync<Collections.StateDictionary>(_FilePath);
         }
         #endregion
 

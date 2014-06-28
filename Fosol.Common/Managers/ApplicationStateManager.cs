@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 #if WINDOWS_APP || WINDOWS_PHONE_APP
 using Windows.UI.Xaml;
 using Windows.ApplicationModel.Activation;
+using System.IO;
 #endif
 
 namespace Fosol.Common.Managers
@@ -97,7 +98,7 @@ namespace Fosol.Common.Managers
             _GlobalApplicationState = this;
             base.Suspending += this.OnSuspending;
             base.Resuming += this.OnResuming;
-            base.UnhandledException += OnUnhandledException;
+            base.UnhandledException += this.OnUnhandledException;
         }
         #endregion
 
@@ -116,16 +117,39 @@ namespace Fosol.Common.Managers
         #endregion
 
         #region Events
-        public new event EventHandler<object> Resuming;
-        public new event SuspendingEventHandler Suspending;
-        public new event UnhandledExceptionEventHandler UnhandledException;
+        public delegate void LaunchedEventHandler(LaunchActivatedEventArgs e);
+        public event LaunchedEventHandler Launched;
 
-        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            await _SavedState.RestoreAsync();
+            // If the application is being launched for the first time, or a fresh launch do not restore state from the saved file.
+            if (e.Kind == ActivationKind.Launch
+                && e.PreviousExecutionState != ApplicationExecutionState.ClosedByUser
+                && e.PreviousExecutionState != ApplicationExecutionState.NotRunning
+                && e.PreviousExecutionState != ApplicationExecutionState.Terminated)
+            {
+                try
+                {
+                    var task = Task.Run(async () => { await _SavedState.RestoreAsync(); });
+                    task.Wait();
+                }
+                catch (FileNotFoundException)
+                {
+                    // Ignore error if the file was not found.  Currently there is no way to see if a file exists.
+                }
+                catch
+                {
+                    // Something bad happened.
+                }
+            }
 
-            base.OnLaunched(args);
+            if (this.Launched != null)
+                this.Launched(e);
+
+            base.OnLaunched(e);
         }
+
+        public new EventHandler<object> Resuming;
 
         /// <summary>
         /// Restore the application state by loading the saved file.
@@ -138,6 +162,8 @@ namespace Fosol.Common.Managers
                 this.Resuming(sender, e);
         }
 
+        public new SuspendingEventHandler Suspending;
+
         /// <summary>
         /// Save the current application state to a file.
         /// </summary>
@@ -147,15 +173,15 @@ namespace Fosol.Common.Managers
         protected virtual async void OnSuspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
+
+            if (this.Suspending != null)
+                this.Suspending(sender, e);
 #else
         protected virtual async void OnSuspending(object sender, object e)
         {
 #endif
 
             await _SavedState.SaveAsync();
-
-            if (this.Suspending != null)
-                this.Suspending(sender, e);
             
 #if WINDOWS_APP || WINDOWS_PHONE_APP
             // TODO: Save application state and stop any background activity
@@ -165,8 +191,6 @@ namespace Fosol.Common.Managers
 
         protected virtual void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if (this.UnhandledException != null)
-                this.UnhandledException(sender, e);
         }
         #endregion
     }

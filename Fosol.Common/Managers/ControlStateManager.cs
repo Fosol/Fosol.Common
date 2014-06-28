@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -102,7 +103,7 @@ namespace Fosol.Common.Managers
         /// SavedStateProperty is a dependency property that will hold the state dictionary.
         /// </summary>
         private static DependencyProperty SavedStateProperty
-            = DependencyProperty.RegisterAttached("_ControlSavedState", typeof(Collections.StateDictionary), typeof(ControlStateManager), null);
+            = DependencyProperty.RegisterAttached("_ControlState", typeof(Collections.StateDictionary), typeof(ControlStateManager), null);
         #endregion
 
         #region Constructors
@@ -132,14 +133,17 @@ namespace Fosol.Common.Managers
             }
             else
             {
+                // Register this control state dictionary with the application state manager.
                 _Items = new Collections.StateDictionary();
+                app_state_manager.SavedState[key] = _Items;
             }
             this.State = ControlState.Unaltered;
             this.RegisterPropertyWithControl(control);
 
             // Listen to suspend and resume events so that the control can be informed.
-            app_state_manager.Suspending += this.OnSuspending;
+            app_state_manager.Launched += this.OnLaunched;
             app_state_manager.Resuming += this.OnResuming;
+            app_state_manager.Suspending += this.OnSuspending;
         }
         #endregion
 
@@ -151,105 +155,11 @@ namespace Fosol.Common.Managers
         /// <param name="control">Control object this ControlStateManager will manage state for.</param>
         private void RegisterPropertyWithControl(Control control)
         {
-            var control_state = control.GetValue(ControlStateManager.SavedStateProperty) as ControlStateManager;
+            var control_state = control.GetValue(ControlStateManager.SavedStateProperty) as Collections.StateDictionary;
 
             Fosol.Common.Validation.Assert.IsValidOperation(control_state == null, "Control can only register the state dependency property once.");
 
-            control.SetValue(ControlStateManager.SavedStateProperty, this);
-        }
-
-        /// <summary>
-        /// Save the state to a file.
-        /// </summary>
-        public void Save()
-        {
-            var app_state = Managers.ApplicationStateManager.Current;
-
-            // Only need to add it the first time you save.
-            if (!app_state.SavedState.ContainsKey(_Key))
-                app_state.SavedState.Add(_Key, _Items);
-
-            if (this.State == ControlState.Altered)
-            {
-                _SlimLock.EnterWriteLock();
-                try
-                {
-                    app_state.SavedState.Save();
-                    this.State = ControlState.Unaltered;
-                }
-                finally
-                {
-                    _SlimLock.ExitWriteLock();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Save the state to a file.
-        /// </summary>
-        /// <returns>Task object.</returns>
-        public async Task SaveAsync()
-        {
-            var app_state = Managers.ApplicationStateManager.Current;
-
-            // Only need to add it the first time you save.
-            if (!app_state.SavedState.ContainsKey(_Key))
-                app_state.SavedState.Add(_Key, _Items);
-            
-            if (this.State == ControlState.Altered)
-            {
-                _SlimLock.EnterWriteLock();
-                try
-                {
-                    await app_state.SavedState.SaveAsync();
-                    this.State = ControlState.Unaltered;
-                }
-                finally
-                {
-                    _SlimLock.ExitWriteLock();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Restore the state from a file.
-        /// </summary>
-        public void Restore()
-        {
-            var app_state = Managers.ApplicationStateManager.Current;
-            app_state.SavedState.Restore();
-            
-            _SlimLock.EnterWriteLock();
-            try
-            {
-                _Items = app_state.SavedState[_Key] as Collections.StateDictionary;
-                this.State = ControlState.Unaltered;
-            }
-            finally
-            {
-                _SlimLock.ExitWriteLock();
-            }
-        }
-
-        /// <summary>
-        /// Restore the state from a file.
-        /// </summary>
-        /// <returns>Task object.</returns>
-        public async Task RestoreAsync()
-        {
-            var app_state = Managers.ApplicationStateManager.Current;
-            await app_state.SavedState.RestoreAsync();
-
-            _SlimLock.EnterWriteLock();
-            try
-            {
-                _Items = app_state.SavedState[_Key] as Collections.StateDictionary;
-                this.State = ControlState.Unaltered;
-            }
-            finally
-            {
-                _SlimLock.ExitWriteLock();
-            }
+            control.SetValue(ControlStateManager.SavedStateProperty, this.Items);
         }
         #endregion
 
@@ -257,22 +167,29 @@ namespace Fosol.Common.Managers
         #endregion
 
         #region Events
-        public delegate void ResumingEventHandler(object sender, object e);
-        public event ResumingEventHandler Resuming;
+        public delegate void LaunchedEventHandler(LaunchActivatedEventArgs e);
+        public event LaunchedEventHandler Launched;
 
-        public delegate void SuspendingEventHandler(object sender, Windows.ApplicationModel.SuspendingEventArgs e);
-        public event SuspendingEventHandler Suspending;
-
-        protected void OnSuspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
+        private void OnLaunched(LaunchActivatedEventArgs e)
         {
-            if (this.Suspending != null)
-                this.Suspending(sender, e);
+            if (this.Launched != null)
+                this.Launched(e);
         }
 
-        protected void OnResuming(object sender, object e)
+        public EventHandler<object> Resuming;
+
+        private void OnResuming(object sender, object e)
         {
             if (this.Resuming != null)
                 this.Resuming(sender, e);
+        }
+
+        public event SuspendingEventHandler Suspending;
+
+        private void OnSuspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
+        {
+            if (this.Suspending != null)
+                this.Suspending(sender, e);
         }
         #endregion
     }
