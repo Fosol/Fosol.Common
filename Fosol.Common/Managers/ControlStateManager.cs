@@ -103,7 +103,7 @@ namespace Fosol.Common.Managers
         /// SavedStateProperty is a dependency property that will hold the state dictionary.
         /// </summary>
         private static DependencyProperty SavedStateProperty
-            = DependencyProperty.RegisterAttached("_ControlState", typeof(Collections.StateDictionary), typeof(ControlStateManager), null);
+            = DependencyProperty.RegisterAttached("_PageState", typeof(Collections.StateDictionary), typeof(ControlStateManager), null);
         #endregion
 
         #region Constructors
@@ -114,11 +114,11 @@ namespace Fosol.Common.Managers
         /// <exception cref="System.ArgumentNullException">Parameters 'key' and 'control' cannot be null.</exception>
         /// <exception cref="System.InvalidOperationException">ApplicationState must be initialized first and the key must be unique.</exception>
         /// <param name="key">Unique key name to identify the control.</param>
-        /// <param name="control">Control object that will gain state management.</param>
-        public ControlStateManager(string key, Control control)
+        /// <param name="page">Page object that will gain state management.</param>
+        public ControlStateManager(string key, Page page)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(key, "key");
-            Fosol.Common.Validation.Assert.IsNotNull(control, "control");
+            Fosol.Common.Validation.Assert.IsNotNull(page, "page");
 
             var app_state_manager = Managers.ApplicationStateManager.Current;
             Fosol.Common.Validation.Assert.IsValidOperation(app_state_manager != null, "Before creating an instance of a ControlStateManager you must intialize the ApplicationState.");
@@ -138,12 +138,12 @@ namespace Fosol.Common.Managers
                 app_state_manager.SavedState[key] = _Items;
             }
             this.State = ControlState.Unaltered;
-            this.RegisterPropertyWithControl(control);
+            this.RegisterPropertyWithPage(page);
 
-            // Listen to suspend and resume events so that the control can be informed.
-            app_state_manager.Launched += this.OnLaunched;
-            app_state_manager.Resuming += this.OnResuming;
-            app_state_manager.Suspending += this.OnSuspending;
+            // Listen to application state manager events so that the control can be informed.
+            app_state_manager.SavingState += this.OnSavingState;
+            app_state_manager.RestoringState += this.OnRestoringState;
+            page
         }
         #endregion
 
@@ -152,14 +152,14 @@ namespace Fosol.Common.Managers
         /// Register the dependecy property with the control.
         /// This will add a dependency property on the control and reference the this.State property.
         /// </summary>
-        /// <param name="control">Control object this ControlStateManager will manage state for.</param>
-        private void RegisterPropertyWithControl(Control control)
+        /// <param name="page">Page object this ControlStateManager will manage state for.</param>
+        private void RegisterPropertyWithPage(Page page)
         {
-            var control_state = control.GetValue(ControlStateManager.SavedStateProperty) as Collections.StateDictionary;
+            var state = page.GetValue(ControlStateManager.SavedStateProperty) as Collections.StateDictionary;
 
-            Fosol.Common.Validation.Assert.IsValidOperation(control_state == null, "Control can only register the state dependency property once.");
+            Fosol.Common.Validation.Assert.IsValidOperation(state == null, "Control can only register the state dependency property once.");
 
-            control.SetValue(ControlStateManager.SavedStateProperty, this.Items);
+            page.SetValue(ControlStateManager.SavedStateProperty, this.Items);
         }
         #endregion
 
@@ -167,29 +167,20 @@ namespace Fosol.Common.Managers
         #endregion
 
         #region Events
-        public delegate void LaunchedEventHandler(LaunchActivatedEventArgs e);
-        public event LaunchedEventHandler Launched;
+        public EventHandler<Events.SavingStateEventArgs> SavingState;
 
-        private void OnLaunched(LaunchActivatedEventArgs e)
+        protected void OnSavingState(object sender, Events.SavingStateEventArgs e)
         {
-            if (this.Launched != null)
-                this.Launched(e);
+            if (this.SavingState != null)
+                this.SavingState(sender, e);
         }
 
-        public EventHandler<object> Resuming;
+        public EventHandler<Events.RestoringStateEventArgs> RestoringState;
 
-        private void OnResuming(object sender, object e)
+        protected void OnRestoringState(object sender, Events.RestoringStateEventArgs e)
         {
-            if (this.Resuming != null)
-                this.Resuming(sender, e);
-        }
-
-        public event SuspendingEventHandler Suspending;
-
-        private void OnSuspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
-        {
-            if (this.Suspending != null)
-                this.Suspending(sender, e);
+            if (this.RestoringState != null)
+                this.RestoringState(sender, e);
         }
         #endregion
     }

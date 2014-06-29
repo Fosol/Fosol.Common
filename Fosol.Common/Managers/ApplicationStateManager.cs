@@ -117,31 +117,44 @@ namespace Fosol.Common.Managers
         #endregion
 
         #region Events
+        public EventHandler<Events.RestoringStateEventArgs> RestoringState;
+
+        protected virtual void OnRestoringState(object sender, Events.RestoringStateEventArgs e)
+        {
+            try
+            {
+                var task = Task.Run(async () => { await _SavedState.RestoreAsync(); });
+                task.Wait();
+            }
+            catch (FileNotFoundException)
+            {
+                // Ignore error if the file was not found.  Currently there is no way to see if a file exists.
+            }
+            catch
+            {
+                // Something bad happened and the file most likely is in an incorrect saved state.
+            }
+
+            if (this.RestoringState != null)
+                this.RestoringState(sender, e);
+        }
+
+        public EventHandler<Events.SavingStateEventArgs> SavingState;
+
+        protected virtual async void OnSavingState(object sender, Events.SavingStateEventArgs e)
+        {
+            if (this.SavingState != null)
+                this.SavingState(sender, e);
+
+            await _SavedState.SaveAsync();
+        }
+
         public delegate void LaunchedEventHandler(LaunchActivatedEventArgs e);
         public event LaunchedEventHandler Launched;
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            // If the application is being launched for the first time, or a fresh launch do not restore state from the saved file.
-            if (e.Kind == ActivationKind.Launch
-                && e.PreviousExecutionState != ApplicationExecutionState.ClosedByUser
-                && e.PreviousExecutionState != ApplicationExecutionState.NotRunning
-                && e.PreviousExecutionState != ApplicationExecutionState.Terminated)
-            {
-                try
-                {
-                    var task = Task.Run(async () => { await _SavedState.RestoreAsync(); });
-                    task.Wait();
-                }
-                catch (FileNotFoundException)
-                {
-                    // Ignore error if the file was not found.  Currently there is no way to see if a file exists.
-                }
-                catch
-                {
-                    // Something bad happened.
-                }
-            }
+            this.OnRestoringState(this, new Events.RestoringStateEventArgs(e.PreviousExecutionState));
 
             if (this.Launched != null)
                 this.Launched(e);
@@ -158,6 +171,8 @@ namespace Fosol.Common.Managers
         /// <param name="e">Object contain event arguments.</param>
         protected virtual void OnResuming(object sender, object e)
         {
+            this.OnRestoringState(sender, new Events.RestoringStateEventArgs(ApplicationExecutionState.Suspended, e));
+
             if (this.Resuming != null)
                 this.Resuming(sender, e);
         }
@@ -170,18 +185,18 @@ namespace Fosol.Common.Managers
         /// <param name="sender">Object which sent this event.</param>
         /// <param name="e">SuspendingEventArgs object.</param>
 #if WINDOWS_APP || WINDOWS_PHONE_APP
-        protected virtual async void OnSuspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
+        protected virtual void OnSuspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-
-            if (this.Suspending != null)
-                this.Suspending(sender, e);
 #else
         protected virtual async void OnSuspending(object sender, object e)
         {
 #endif
 
-            await _SavedState.SaveAsync();
+            if (this.Suspending != null)
+                this.Suspending(sender, e);
+
+            this.OnSavingState(sender, new Events.SavingStateEventArgs());
             
 #if WINDOWS_APP || WINDOWS_PHONE_APP
             // TODO: Save application state and stop any background activity
@@ -189,8 +204,12 @@ namespace Fosol.Common.Managers
 #endif
         }
 
+        public new UnhandledExceptionEventHandler UnhandledException;
+
         protected virtual void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            if (this.UnhandledException != null)
+                this.UnhandledException(sender, e);
         }
         #endregion
     }

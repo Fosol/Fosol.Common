@@ -97,6 +97,8 @@
     <Compile Include="Initialization\Assert.cs" />
     <Compile Include="Managers\ControlStateManager.cs" />
     <Compile Include="Managers\ControlState.cs" />
+    <Compile Include="Managers\Events\RestoringStateEventArgs.cs" />
+    <Compile Include="Managers\Events\SavingStateEventArgs.cs" />
     <Compile Include="Mathematics\Formula.cs" />
     <Compile Include="Net\CrossSiteScriptingValidation.cs" />
     <Compile Include="Net\DomainComparer.cs" />
