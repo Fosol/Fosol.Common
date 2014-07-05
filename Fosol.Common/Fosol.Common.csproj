@@ -96,6 +96,8 @@
     </Compile>
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="HashCode.cs" />
+    <Compile Include="Helpers\SetOnce`.cs" />
+    <Compile Include="Helpers\SpecialEnum.cs" />
     <Compile Include="IO\SavedState%27.cs" />
     <Compile Include="IO\SavedState.cs" />
     <Compile Include="Serialization\DataContractJsonUtility.cs" />
@@ -214,7 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Cryptography\Asymmetrical\" />
-    <Folder Include="Managers\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Multilingual.fr.resx">

@@ -2541,7 +2541,7 @@ namespace Fosol.Common.Validation
 
         /// <summary>
         /// Asserts that the value it true.
-        /// If it is null it will throw System.InvalidOperationException.
+        /// If it is false it will throw System.InvalidOperationException.
         /// </summary>
         /// <exception cref="System.InvalidOperationException">Parameter "value" must return true.</exception>
         /// <param name="value">The value to check.</param>

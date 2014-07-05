@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Managers
+namespace Fosol.Common.UI.Xaml.Controls
 {
     /// <summary>
-    /// ControlState enum provides a way to determine whether the state information has changed or not.
+    /// StateStatus enum provides a way to determine whether the state information has changed or not.
     /// </summary>
-    public enum ControlState
+    public enum StateStatus
     {
         /// <summary>
         /// Unaltered means the state information has not changed; it is has been saved.

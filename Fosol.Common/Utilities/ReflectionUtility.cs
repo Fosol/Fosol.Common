@@ -1,8 +1,12 @@
-﻿using Fosol.Common.Extensions.Types;
+﻿#if !WINDOWS_APP && !WINDOWS_PHONE_APP
+using Fosol.Common.Extensions.Types;
+#endif
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+#if !WINDOWS_APP && !WINDOWS_PHONE_APP
 using System.Configuration;
+#endif
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -16,6 +20,31 @@ namespace Fosol.Common.Utilities
     public static class ReflectionUtility
     {
         #region Methods
+#if WINDOWS_APP || WINDOWS_PHONE_APP
+        /// <summary>
+        /// Creates an instance of the specified type.
+        /// </summary>
+        /// <param name="type">Type of object to create an instance of.</param>
+        /// <param name="args">Constructor arguments to include when creating the object.</param>
+        /// <returns>New instance of the type specified.</returns>
+        public static object CreateInstance(this Type type, params object[] args)
+        {
+            Fosol.Common.Validation.Assert.IsNotNull(type, "type");
+            return Activator.CreateInstance(type, args);
+        }
+
+        /// <summary>
+        /// Creates an instance of the specified type.
+        /// </summary>
+        /// <typeparam name="T">Type of object to create.</typeparam>
+        /// <param name="type">Type of object to create an instance of.</param>
+        /// <returns>New instance of the type specified.</returns>
+        public static T CreateInstance<T>(this Type type)
+        {
+            Fosol.Common.Validation.Assert.IsNotNull(type, "type");
+            return Activator.CreateInstance<T>();
+        }
+#else
         /// <summary>
         /// Try to convert the value to the specified conversionType.
         /// </summary>
@@ -238,6 +267,7 @@ namespace Fosol.Common.Utilities
             Validation.Assert.IsNotNull(type, "typeName");
             return ConstructObject<T>(type, args);
         }
+#endif
         #endregion
     }
 }

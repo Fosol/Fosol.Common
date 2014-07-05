@@ -51,14 +51,10 @@
     <Compile Include="Extensions\Strings\StringExtensions.cs" />
     <Compile Include="Extensions\UriBuilders\UriBuilderExtensions.cs" />
     <Compile Include="HashCode.cs" />
+    <Compile Include="Helpers\SetOnce`.cs" />
     <Compile Include="Initialization\Assert.cs" />
     <Compile Include="IO\SavedState%27.cs" />
     <Compile Include="IO\SavedState.cs" />
-    <Compile Include="Managers\ApplicationStateManager.cs" />
-    <Compile Include="Managers\ControlState.cs" />
-    <Compile Include="Managers\ControlStateManager.cs" />
-    <Compile Include="Managers\Events\RestoringStateEventArgs.cs" />
-    <Compile Include="Managers\Events\SavingStateEventArgs.cs" />
     <Compile Include="Mathematics\Formula.cs" />
     <Compile Include="Net\CrossSiteScriptingValidation.cs" />
     <Compile Include="Net\DomainComparer.cs" />
@@ -98,6 +94,12 @@
     <Compile Include="Text\GlobalConstant.cs" />
     <Compile Include="Threading\IdentityInt.cs" />
     <Compile Include="Threading\IdentityLong.cs" />
+    <Compile Include="UI\Xaml\Controls\StatePage.cs" />
+    <Compile Include="UI\Xaml\Controls\StateStatus.cs" />
+    <Compile Include="UI\Xaml\Events\RestoringStateEventArgs.cs" />
+    <Compile Include="UI\Xaml\Events\RetrievingStateEventArgs.cs" />
+    <Compile Include="UI\Xaml\Events\SavingStateEventArgs.cs" />
+    <Compile Include="UI\Xaml\StateApplication.cs" />
     <Compile Include="UnitTests\TestData.cs" />
     <Compile Include="UnitTests\TestDataCollection.cs" />
     <Compile Include="UnitTests\ValueTestData.cs" />
@@ -109,7 +111,9 @@
     <Compile Include="Validation\AssertFormat.cs" />
     <Compile Include="Validation\Enumerables\Assert.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Managers\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

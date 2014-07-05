@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace Fosol.Common.Managers.Events
+namespace Fosol.Common.UI.Xaml.Events
 {
-    public sealed class RestoringStateEventArgs
+    public sealed class RetrievingStateEventArgs
         : EventArgs
     {
         #region Variables
@@ -30,7 +30,7 @@ namespace Fosol.Common.Managers.Events
         #endregion
 
         #region Constructors
-        public RestoringStateEventArgs(ApplicationExecutionState previousExecutionState, object data = null)
+        public RetrievingStateEventArgs(ApplicationExecutionState previousExecutionState, object data = null)
         {
             this.PreviousExecutionState = previousExecutionState;
             this.Data = data;

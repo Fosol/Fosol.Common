@@ -83,7 +83,7 @@
     <Compile Include="Collections\NameValueCollection.cs" />
     <Compile Include="Collections\StateDictionary%27.cs" />
     <Compile Include="Collections\StateDictionary.cs" />
-    <Compile Include="Managers\ApplicationStateManager.cs" />
+    <Compile Include="Helpers\SetOnce`.cs" />
     <Compile Include="IO\SavedState%27.cs" />
     <Compile Include="IO\SavedState.cs" />
     <Compile Include="Extensions\Bytes\ByteExtensions.cs" />
@@ -95,10 +95,6 @@
     <Compile Include="Extensions\Strings\StringExtensions.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Initialization\Assert.cs" />
-    <Compile Include="Managers\ControlStateManager.cs" />
-    <Compile Include="Managers\ControlState.cs" />
-    <Compile Include="Managers\Events\RestoringStateEventArgs.cs" />
-    <Compile Include="Managers\Events\SavingStateEventArgs.cs" />
     <Compile Include="Mathematics\Formula.cs" />
     <Compile Include="Net\CrossSiteScriptingValidation.cs" />
     <Compile Include="Net\DomainComparer.cs" />
@@ -126,11 +122,18 @@
     <Compile Include="Text\GlobalConstant.cs" />
     <Compile Include="Threading\IdentityInt.cs" />
     <Compile Include="Threading\IdentityLong.cs" />
+    <Compile Include="UI\Xaml\Controls\StateStatus.cs" />
+    <Compile Include="UI\Xaml\Events\RetrievingStateEventArgs.cs" />
+    <Compile Include="UI\Xaml\Events\RestoringStateEventArgs.cs" />
+    <Compile Include="UI\Xaml\Events\SavingStateEventArgs.cs" />
+    <Compile Include="UI\Xaml\StateApplication.cs" />
+    <Compile Include="UI\Xaml\Controls\StatePage.cs" />
     <Compile Include="UnitTests\TestData.cs" />
     <Compile Include="UnitTests\TestDataCollection.cs" />
     <Compile Include="UnitTests\ValueTestData.cs" />
     <Compile Include="UnitTests\ValueTestData`.cs" />
     <Compile Include="Utilities\DiagnosticsUtility.cs" />
+    <Compile Include="Utilities\ReflectionUtility.cs" />
     <Compile Include="Utilities\RegexUtility.cs" />
     <Compile Include="Utilities\StringUtility.cs" />
     <Compile Include="Utilities\WindowsAppUtility.cs" />
@@ -151,9 +154,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>

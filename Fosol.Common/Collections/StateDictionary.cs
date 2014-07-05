@@ -16,6 +16,25 @@ namespace Fosol.Common.Collections
         #endregion
 
         #region Properties
+        /// <summary>
+        /// get/set - The value for the specified key.
+        /// </summary>
+        /// <param name="key">Key name to identify the value.</param>
+        /// <returns>Value for the specified key, or default() if the key does not exist.</returns>
+        public new object this[string key]
+        {
+            get
+            {
+                if (this.ContainsKey(key))
+                    return base[key];
+
+                return default(object);
+            }
+            set
+            {
+                base[key] = value;
+            }
+        }
         #endregion
 
         #region Constructors

@@ -178,11 +178,11 @@ namespace Fosol.Common.IO
         /// <summary>
         /// Clear all items from SavedState.
         /// </summary>
+#if WINDOWS_APP || WINDOWS_PHONE_APP
         public async void Clear()
         {
             _Items.Clear();
 
-#if WINDOWS_APP || WINDOWS_PHONE_APP
             try
             {
                 var file = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(this.FilePath) as Windows.Storage.StorageFile;
@@ -192,8 +192,14 @@ namespace Fosol.Common.IO
             {
                 // Ignore error if the file was not found.  Currently there is no way to see if a file exists.
             }
-#endif
         }
+#else
+        public void Clear()
+        {
+            _Items.Clear();
+            System.IO.File.Delete(this.FilePath);
+        }
+#endif
 
         /// <summary>
         /// Save the state to the file system.

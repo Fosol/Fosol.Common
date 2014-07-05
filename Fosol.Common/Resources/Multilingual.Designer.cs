@@ -10,6 +10,7 @@
 
 namespace Fosol.Common.Resources {
     using System;
+    using System.Reflection;
     
     
     /// <summary>
@@ -38,19 +39,14 @@ namespace Fosol.Common.Resources {
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
-#if WINDOWS_APP || WINDOWS_PHONE_APP
-                var assembly = System.Reflection.Assembly.Load(new System.Reflection.AssemblyName(typeof(Multilingual).AssemblyQualifiedName));
-#else
-                var assembly = typeof(Multilingual).Assembly;
-#endif
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fosol.Common.Resources.Multilingual", assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fosol.Common.Resources.Multilingual", typeof(Multilingual).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -260,6 +256,24 @@ namespace Fosol.Common.Resources {
         internal static string Exception_Invalid_Size {
             get {
                 return ResourceManager.GetString("Exception_Invalid_Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property value has already been set and can only be initialized once..
+        /// </summary>
+        internal static string Exception_SetOnce_AlreadySet {
+            get {
+                return ResourceManager.GetString("Exception_SetOnce_AlreadySet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property value must be set before it can be retrieved..
+        /// </summary>
+        internal static string Exception_SetOnce_NotSet {
+            get {
+                return ResourceManager.GetString("Exception_SetOnce_NotSet", resourceCulture);
             }
         }
         

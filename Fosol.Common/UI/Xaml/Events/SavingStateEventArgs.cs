@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Managers.Events
+namespace Fosol.Common.UI.Xaml.Events
 {
     public sealed class SavingStateEventArgs
         : EventArgs
