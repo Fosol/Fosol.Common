@@ -122,6 +122,8 @@
     <Compile Include="Text\GlobalConstant.cs" />
     <Compile Include="Threading\IdentityInt.cs" />
     <Compile Include="Threading\IdentityLong.cs" />
+    <Compile Include="UI\Xaml\Extensions\StateRestoreExtensions.cs" />
+    <Compile Include="UI\Xaml\StateRestoreOption.cs" />
     <Compile Include="UI\Xaml\Controls\StateStatus.cs" />
     <Compile Include="UI\Xaml\Events\RetrievingStateEventArgs.cs" />
     <Compile Include="UI\Xaml\Events\RestoringStateEventArgs.cs" />

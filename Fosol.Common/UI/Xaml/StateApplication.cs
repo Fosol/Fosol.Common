@@ -1,17 +1,16 @@
 ﻿using Fosol.Common.Extensions.Events;
+using Fosol.Common.UI.Xaml.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-#if WINDOWS_APP || WINDOWS_PHONE_APP
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-#endif
 
 namespace Fosol.Common.UI.Xaml
 {
@@ -32,6 +31,7 @@ namespace Fosol.Common.UI.Xaml
         private IO.SavedState _State;
         private int _CacheSize = 1;
         private Type _DefaultPageType;
+        private StateRestoreOption _StateRestoreOption;
 
 #if WINDOWS_PHONE_APP
         private TransitionCollection transitions;
@@ -97,6 +97,15 @@ namespace Fosol.Common.UI.Xaml
                 _DefaultPageType = value; 
             }
         }
+
+        /// <summary>
+        /// get/set - Under what conditions will state be restored.
+        /// </summary>
+        public StateRestoreOption StateRestoreOption
+        {
+            get { return _StateRestoreOption; }
+            set { _StateRestoreOption = value; }
+        }
         #endregion
 
         #region Constructors
@@ -123,6 +132,7 @@ namespace Fosol.Common.UI.Xaml
             _AppName = appName;
             _State = new IO.SavedState(String.Format(StateApplication.SavedStateFileNameFormat, appName), false);
             _Current = this;
+            _StateRestoreOption = StateRestoreOption.Terminated;
             base.Suspending += this.OnSuspending;
             base.Resuming += this.OnResuming;
             base.UnhandledException += this.OnUnhandledException;
@@ -241,7 +251,8 @@ namespace Fosol.Common.UI.Xaml
         /// <param name="e"></param>
         private void OnRetrievingState(object sender, Events.RetrievingStateEventArgs e)
         {
-            if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            // Only restore state if the specified StateRestoreOption contains the pervious execution state.
+            if (this.StateRestoreOption.HasFlag(e.PreviousExecutionState))
             {
                 try
                 {

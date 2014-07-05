@@ -99,7 +99,9 @@
     <Compile Include="UI\Xaml\Events\RestoringStateEventArgs.cs" />
     <Compile Include="UI\Xaml\Events\RetrievingStateEventArgs.cs" />
     <Compile Include="UI\Xaml\Events\SavingStateEventArgs.cs" />
+    <Compile Include="UI\Xaml\Extensions\StateRestoreExtensions.cs" />
     <Compile Include="UI\Xaml\StateApplication.cs" />
+    <Compile Include="UI\Xaml\StateRestoreOption.cs" />
     <Compile Include="UnitTests\TestData.cs" />
     <Compile Include="UnitTests\TestDataCollection.cs" />
     <Compile Include="UnitTests\ValueTestData.cs" />
