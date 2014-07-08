@@ -5,40 +5,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Fosol.Common.UI.Xaml.Controls
 {
-    public class StatePage
+    /// <summary>
+    /// StatePage is an abstract class which provides built in state management for pages.
+    /// </summary>
+    public abstract class StatePage
         : Page
     {
         #region Variables
         private readonly System.Threading.ReaderWriterLockSlim _SlimLock = new System.Threading.ReaderWriterLockSlim();
-        private Helpers.SetOnce<string> _StateKey;
-        private StateStatus _Status;
+        
+        private static readonly DependencyProperty StateKeyProperty
+            = DependencyProperty.Register("StateKey", typeof(string), typeof(StatePage), new PropertyMetadata(string.Empty));
+        private static readonly DependencyProperty SavedStateProperty
+            = DependencyProperty.Register("State", typeof(Collections.StateDictionary), typeof(StatePage), new PropertyMetadata(new StateDictionary()));
 
-        /// <summary>
-        /// SavedStateProperty is a dependency property that will hold the state dictionary.
-        /// </summary>
-        private DependencyProperty SavedStateProperty
-            = DependencyProperty.RegisterAttached("_PageState", typeof(Collections.StateDictionary), typeof(StatePage), new PropertyMetadata(new StateDictionary()));
-
-        private DependencyProperty StateKeyProperty
-            = DependencyProperty.RegisterAttached("_StateKey", typeof(SetOnce<string>), typeof(StatePage), new PropertyMetadata(new SetOnce<string>()));
         #endregion
 
         #region Properties
-        /// <summary>
-        /// get - Current status of the information saved.
-        /// </summary>
-        public StateStatus Status
-        {
-            get { return _Status; }
-            protected set { _Status = value; }
-        }
-
         /// <summary>
         /// get - A unique key name to identify this pages state dictionary.
         /// </summary>
@@ -46,17 +36,17 @@ namespace Fosol.Common.UI.Xaml.Controls
         {
             get 
             {
-                var key = this.GetValue(this.StateKeyProperty) as SetOnce<string>;
+                var key = this.GetValue(StatePage.StateKeyProperty) as string;
 
-                if (!key.HasValue)
+                if (String.IsNullOrEmpty(key))
                 {
                     // Create an unique key for this page when it is navigated to so that it can save it's state.
                     var name = Fosol.Common.Initialization.Assert.IsNotDefaultOrEmptyOrWhitespace(this.Name, "Fosol.StatePage");
-                    key.Value = key.HasValue ? key.Value : String.Format("{0}_{1}", name, this.Frame.BackStackDepth);
-                    this.SetValue(this.StateKeyProperty, key);
+                    key = String.Format("{0}_{1}", name, this.Frame.BackStackDepth);
+                    this.SetValue(StatePage.StateKeyProperty, key);
                 }
 
-                return key.Value;
+                return key;
             }
         }
 
@@ -65,8 +55,8 @@ namespace Fosol.Common.UI.Xaml.Controls
         /// </summary>
         public Collections.StateDictionary State
         {
-            get { return this.GetValue(this.SavedStateProperty) as StateDictionary; }
-            private set { this.SetValue(this.SavedStateProperty, value); }
+            get { return this.GetValue(StatePage.SavedStateProperty) as StateDictionary; }
+            private set { this.SetValue(StatePage.SavedStateProperty, value); }
         }
         #endregion
 
@@ -76,10 +66,11 @@ namespace Fosol.Common.UI.Xaml.Controls
         /// </summary>
         public StatePage()
         {
-            var app = StateApplication.Current;
-            Fosol.Common.Validation.Assert.IsValidOperation(app != null, "Before creating an instance of a StatePage you must intialize the StateApplication.");
-
-            _StateKey = new Helpers.SetOnce<string>();
+            if (!DesignMode.DesignModeEnabled)
+            {
+                var app = StateApplication.Current;
+                Fosol.Common.Validation.Assert.IsValidOperation(app != null, "Before creating an instance of a StatePage you must intialize the StateApplication.");
+            }
 
             this.Loaded += StatePage_Loaded;
             this.Unloaded += StatePage_Unloaded;
@@ -87,6 +78,33 @@ namespace Fosol.Common.UI.Xaml.Controls
         #endregion
 
         #region Methods
+        /// <summary>
+        /// InitializeState provides a way to initialize the specified state keys so that databinding will work.
+        /// If you use this method the initial value of the state value will be null.
+        /// </summary>
+        /// <param name="keys">Key names.</param>
+        protected void InitializeState(params string[] keys)
+        {
+            foreach (var key in keys)
+            {
+                if (!this.State.ContainsKey(key))
+                    this.State[key] = null;
+            }
+        }
+
+        /// <summary>
+        /// InitializeState provides a way to initialize the specified state keys with the specified values so that databinding will work.
+        /// </summary>
+        /// <param name="items">KeyValuePair objects.</param>
+        protected void InitializeState(params KeyValuePair<string, object>[] items)
+        {
+            foreach (var item in items)
+            {
+                if (!this.State.ContainsKey(item.Key))
+                    this.State[item.Key] = item.Value;
+            }
+        }
+
         /// <summary>
         /// Apply page state to the application state so that it can be serialized and saved to a state file.
         /// Calls the OnCachingState event method.

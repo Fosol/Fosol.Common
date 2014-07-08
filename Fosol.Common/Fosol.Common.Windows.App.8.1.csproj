@@ -96,7 +96,6 @@
     <Compile Include="Threading\IdentityInt.cs" />
     <Compile Include="Threading\IdentityLong.cs" />
     <Compile Include="UI\Xaml\Controls\StatePage.cs" />
-    <Compile Include="UI\Xaml\Controls\StateStatus.cs" />
     <Compile Include="UI\Xaml\Events\CachingStateEventArgs.cs" />
     <Compile Include="UI\Xaml\Events\RestoringStateEventArgs.cs" />
     <Compile Include="UI\Xaml\Events\RetrievingStateEventArgs.cs" />
