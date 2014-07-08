@@ -51,7 +51,7 @@ namespace Fosol.Common.UI.Xaml.Extensions
         /// <param name="option">StateRestoreOption value.</param>
         /// <param name="previousExecutionState">ApplicationExecutionState value.</param>
         /// <returns>True if the StateRestoreOption contains the specified ApplicationExecutionState value.</returns>
-        public static bool HasFlag(this StateRestoreOption option, ApplicationExecutionState previousExecutionState)
+        public static bool Contains(this StateRestoreOption option, ApplicationExecutionState previousExecutionState)
         {
             var pes = previousExecutionState.Convert();
             if (option.HasFlag(pes))

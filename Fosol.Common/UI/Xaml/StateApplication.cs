@@ -16,8 +16,8 @@ namespace Fosol.Common.UI.Xaml
 {
     /// <summary>
     /// StateApplication class provides a singleton object to manage application state information.
-    /// You can use the StateApplication class to manage various global variables.
-    /// StateApplication also provides methods to serialize and save state values to the filesystem so that when it is initialize it will first check for the file and reestablish prior state.
+    /// StateApplication provides a way to serialize and save state values to the filesystem.
+    /// By default StateApplication will only save the specified number (CacheSize) of values into state cache.
     /// </summary>
     public class StateApplication
         : Windows.UI.Xaml.Application, IDisposable
@@ -28,8 +28,7 @@ namespace Fosol.Common.UI.Xaml
         private const string SavedStateFileNameFormat = "{0}.SavedState.xml";
         private static string _AppName;
         private static StateApplication _Current;
-        private IO.SavedState _State;
-        private int _CacheSize = 1;
+        private IO.ApplicationState _State;
         private Type _DefaultPageType;
         private StateRestoreOption _StateRestoreOption;
 
@@ -74,15 +73,18 @@ namespace Fosol.Common.UI.Xaml
         /// <summary>
         /// get - SavedState object.
         /// </summary>
-        public IO.SavedState State
+        public IO.ApplicationState State
         {
             get { return _State; }
         }
 
+        /// <summary>
+        /// get/set - The number of pages that can have state saved.
+        /// </summary>
         public int CacheSize
         {
-            get { return _CacheSize; }
-            set { _CacheSize = value; }
+            get { return this.State.CacheSize; }
+            set { this.State.CacheSize = value; }
         }
 
         /// <summary>
@@ -130,12 +132,12 @@ namespace Fosol.Common.UI.Xaml
             Fosol.Common.Validation.Assert.IsValidOperation(String.IsNullOrEmpty(StateApplication.AppName), "The StateApplication object has already been initialized, you can only have one instance.");
             Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(appName, "appName");
             _AppName = appName;
-            _State = new IO.SavedState(String.Format(StateApplication.SavedStateFileNameFormat, appName), false);
+            _State = new IO.ApplicationState(String.Format(StateApplication.SavedStateFileNameFormat, appName), false);
             _Current = this;
             _StateRestoreOption = StateRestoreOption.Terminated;
-            base.Suspending += this.OnSuspending;
-            base.Resuming += this.OnResuming;
-            base.UnhandledException += this.OnUnhandledException;
+            base.Suspending += this._OnSuspending;
+            base.Resuming += this._OnResuming;
+            base.UnhandledException += this._OnUnhandledException;
         }
         #endregion
 
@@ -150,12 +152,75 @@ namespace Fosol.Common.UI.Xaml
         }
 
         /// <summary>
+        /// Call the OnRetrievingState event method.
+        /// Fire the RetrievingState event.
+        /// If RetrievingStateEventArgs.Cancel property is false then attempt to load and deserialize the saved state file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RetrieveState(object sender, Events.RetrievingStateEventArgs e)
+        {
+            this.OnRetrievingState(sender, e);
+
+            if (this.RetrievingState != null)
+                this.RetrievingState(sender, e);
+
+            // Only restore state if the specified StateRestoreOption contains the pervious execution state.
+            if (this.StateRestoreOption.Contains(e.PreviousExecutionState))
+            {
+                try
+                {
+                    var task = Task.Run(async () => { await _State.RestoreAsync(); });
+                    task.Wait();
+                    e.HasState = true;
+                }
+                catch (FileNotFoundException ex)
+                {
+                    // Ignore error if the file was not found.  Currently there is no way to see if a file exists.
+                    e.Exception = ex;
+                }
+                catch (Exception ex)
+                {
+                    // Something bad happened and the file most likely is in an incorrect saved state.
+                    e.Exception = ex;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Call the OnRestoringState event method.
+        /// Fire the RestoringState event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void RestoreState(object sender, Events.RestoringStateEventArgs args)
+        {
+            this.OnRestoringState(sender, args);
+
+            if (!args.Cancel 
+                && this.RestoringState != null)
+                this.RestoringState(sender, args);
+        }
+
+        /// <summary>
         /// Forces state information to be serialized and saved to the file system.
         /// Fires the SavingState event.
+        /// If you don't want to save the state file set the SavingStateEventArgs.Cancel to 'true'.
         /// </summary>
-        public void SaveState()
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        public void SaveState(object sender, Events.SavingStateEventArgs args)
         {
-            this.OnSavingState(this, new Events.SavingStateEventArgs());
+            this.OnSavingState(this, args);
+
+            if (this.SavingState != null)
+                this.SavingState(this, args);
+
+            if (!args.Cancel)
+            {
+                var task = Task.Run(async () => { await _State.SaveAsync(); });
+                task.Wait();
+            }
         }
         #endregion
 
@@ -191,7 +256,8 @@ namespace Fosol.Common.UI.Xaml
             base.OnLaunched(e);
 
             // Deserialize the saved state and place it into memory.
-            this.OnRetrievingState(this, new Events.RetrievingStateEventArgs(e.PreviousExecutionState));
+            var retrieving_state_event_args = new Events.RetrievingStateEventArgs(e.PreviousExecutionState);
+            this.RetrieveState(this, retrieving_state_event_args);
 
             var root_frame = Window.Current.Content as Frame;
 
@@ -236,7 +302,7 @@ namespace Fosol.Common.UI.Xaml
             // Ensure the current window is active
             Window.Current.Activate();
 
-            this.OnRestoringState(this, new Events.RestoringStateEventArgs(e.PreviousExecutionState));
+            this.RestoreState(this, new Events.RestoringStateEventArgs(retrieving_state_event_args));
         }
 
         /// <summary>
@@ -245,32 +311,12 @@ namespace Fosol.Common.UI.Xaml
         public EventHandler<Events.RetrievingStateEventArgs> RetrievingState;
 
         /// <summary>
-        /// OnRetrievingState loads the saved state from a file into memory.
+        /// OnRetrievingState is called before an attempt to load and deserialize the saved state file.
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnRetrievingState(object sender, Events.RetrievingStateEventArgs e)
+        /// <param name="e">RetrievingStateEventArgs object.</param>
+        protected virtual void OnRetrievingState(object sender, Events.RetrievingStateEventArgs e)
         {
-            // Only restore state if the specified StateRestoreOption contains the pervious execution state.
-            if (this.StateRestoreOption.HasFlag(e.PreviousExecutionState))
-            {
-                try
-                {
-                    var task = Task.Run(async () => { await _State.RestoreAsync(); });
-                    task.Wait();
-                }
-                catch (FileNotFoundException)
-                {
-                    // Ignore error if the file was not found.  Currently there is no way to see if a file exists.
-                }
-                catch
-                {
-                    // Something bad happened and the file most likely is in an incorrect saved state.
-                }
-            }
-
-            if (this.RetrievingState != null)
-                this.RetrievingState(sender, e);
         }
 
         /// <summary>
@@ -279,15 +325,13 @@ namespace Fosol.Common.UI.Xaml
         public EventHandler<Events.RestoringStateEventArgs> RestoringState;
 
         /// <summary>
-        /// OnRestoringState provides an event that occurs after state has been retrieving and placed into memory.
-        /// Fires the RestoringState event.
+        /// OnRestoringState is called before any other restoring event is fired.
+        /// If you want to stop the RestoringState event from being fired change the RestoringStateEventArgs.Cancel to 'true'.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnRestoringState(object sender, Events.RestoringStateEventArgs e)
+        public virtual void OnRestoringState(object sender, Events.RestoringStateEventArgs e)
         {
-            if (this.RestoringState != null)
-                this.RestoringState(sender, e);
         }
 
         /// <summary>
@@ -301,16 +345,13 @@ namespace Fosol.Common.UI.Xaml
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void OnSavingState(object sender, Events.SavingStateEventArgs e)
+        protected virtual void OnSavingState(object sender, Events.SavingStateEventArgs e)
         {
-            if (this.SavingState != null)
-                this.SavingState(sender, e);
-
-            await _State.SaveAsync();
         }
 
         /// <summary>
         /// The Resuming event is fired from the OnResuming method.
+        /// The event hides the base event because we want to ensure state is restored before informing anything else that we are resuming.
         /// </summary>
         public new EventHandler<object> Resuming;
 
@@ -321,16 +362,30 @@ namespace Fosol.Common.UI.Xaml
         /// </summary>
         /// <param name="sender">Object which sent this event.</param>
         /// <param name="e">Object contain event arguments.</param>
-        protected virtual void OnResuming(object sender, object e)
+        private void _OnResuming(object sender, object e)
         {
-            this.OnRestoringState(sender, new Events.RestoringStateEventArgs(ApplicationExecutionState.Suspended, e));
+            var restoring_state_event_args = new Events.RestoringStateEventArgs(ApplicationExecutionState.Suspended);
+            this.RestoreState(sender, restoring_state_event_args);
+
+            this.OnResuming(sender, e);
 
             if (this.Resuming != null)
                 this.Resuming(sender, e);
         }
 
         /// <summary>
+        /// OnResuming event method is called before the Resuming event is fired.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void OnResuming(object sender, object e)
+        {
+
+        }
+
+        /// <summary>
         /// The Suspending event is fired from the OnSuspending method.
+        /// This event hides the base class Suspending event because we need to ensure state is saved before suspending the application.
         /// </summary>
         public new SuspendingEventHandler Suspending;
 
@@ -339,20 +394,33 @@ namespace Fosol.Common.UI.Xaml
         /// </summary>
         /// <param name="sender">Object which sent this event.</param>
         /// <param name="e">SuspendingEventArgs object.</param>
-        protected virtual void OnSuspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
+        private void _OnSuspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
+
+            this.OnSuspending(sender, e);
 
             if (this.Suspending != null)
                 this.Suspending(sender, e);
 
-            this.OnSavingState(sender, new Events.SavingStateEventArgs());
+            this.SaveState(sender, new Events.SavingStateEventArgs(e));
             
             deferral.Complete();
         }
 
         /// <summary>
+        /// OnSuspending event method is called before the Suspending event is fired.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void OnSuspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
+        {
+
+        }
+
+        /// <summary>
         /// The UnhandledException event is fired from the OnUnhandledException method.
+        /// This event hides the base event because we want to call the OnUnhandledException event method.
         /// </summary>
         public new UnhandledExceptionEventHandler UnhandledException;
 
@@ -361,10 +429,21 @@ namespace Fosol.Common.UI.Xaml
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected virtual void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private void _OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            this.OnUnhandledException(sender, e);
+
             if (this.UnhandledException != null)
                 this.UnhandledException(sender, e);
+        }
+
+        /// <summary>
+        /// OnUnhandledException event method is called before the UnhandledException event is fired.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
         }
 
 #if WINDOWS_PHONE_APP

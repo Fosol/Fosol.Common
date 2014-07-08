@@ -192,6 +192,7 @@ namespace Fosol.Common.Serialization
                 using (Stream stream = await file.OpenStreamForWriteAsync())
                 {
                     await data_in_stream.CopyToAsync(stream);
+                    await stream.FlushAsync();
                 }
             }
         }

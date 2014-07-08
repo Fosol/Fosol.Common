@@ -1,4 +1,5 @@
 ﻿using Fosol.Common.Collections;
+using Fosol.Common.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace Fosol.Common.UI.Xaml.Controls
 {
@@ -20,8 +22,11 @@ namespace Fosol.Common.UI.Xaml.Controls
         /// <summary>
         /// SavedStateProperty is a dependency property that will hold the state dictionary.
         /// </summary>
-        private static DependencyProperty SavedStateProperty
-            = DependencyProperty.RegisterAttached("_PageState", typeof(Collections.StateDictionary), typeof(StatePage), null);
+        private DependencyProperty SavedStateProperty
+            = DependencyProperty.RegisterAttached("_PageState", typeof(Collections.StateDictionary), typeof(StatePage), new PropertyMetadata(new StateDictionary()));
+
+        private DependencyProperty StateKeyProperty
+            = DependencyProperty.RegisterAttached("_StateKey", typeof(SetOnce<string>), typeof(StatePage), new PropertyMetadata(new SetOnce<string>()));
         #endregion
 
         #region Properties
@@ -41,14 +46,17 @@ namespace Fosol.Common.UI.Xaml.Controls
         {
             get 
             {
-                if (!_StateKey.HasValue)
+                var key = this.GetValue(this.StateKeyProperty) as SetOnce<string>;
+
+                if (!key.HasValue)
                 {
                     // Create an unique key for this page when it is navigated to so that it can save it's state.
                     var name = Fosol.Common.Initialization.Assert.IsNotDefaultOrEmptyOrWhitespace(this.Name, "Fosol.StatePage");
-                    _StateKey.Value = _StateKey.HasValue ? this.StateKey : String.Format("{0}_{1}", name, this.Frame.BackStackDepth);
+                    key.Value = key.HasValue ? key.Value : String.Format("{0}_{1}", name, this.Frame.BackStackDepth);
+                    this.SetValue(this.StateKeyProperty, key);
                 }
 
-                return _StateKey.Value;
+                return key.Value;
             }
         }
 
@@ -57,8 +65,8 @@ namespace Fosol.Common.UI.Xaml.Controls
         /// </summary>
         public Collections.StateDictionary State
         {
-            get { return this.GetValue(StatePage.SavedStateProperty) as StateDictionary; }
-            private set { this.SetValue(StatePage.SavedStateProperty, value); }
+            get { return this.GetValue(this.SavedStateProperty) as StateDictionary; }
+            private set { this.SetValue(this.SavedStateProperty, value); }
         }
         #endregion
 
@@ -72,7 +80,6 @@ namespace Fosol.Common.UI.Xaml.Controls
             Fosol.Common.Validation.Assert.IsValidOperation(app != null, "Before creating an instance of a StatePage you must intialize the StateApplication.");
 
             _StateKey = new Helpers.SetOnce<string>();
-            this.State = new Collections.StateDictionary();
 
             this.Loaded += StatePage_Loaded;
             this.Unloaded += StatePage_Unloaded;
@@ -80,27 +87,49 @@ namespace Fosol.Common.UI.Xaml.Controls
         #endregion
 
         #region Methods
-
-        private void InitializePageState()
+        /// <summary>
+        /// Apply page state to the application state so that it can be serialized and saved to a state file.
+        /// Calls the OnCachingState event method.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void CacheState(object sender, Events.CachingStateEventArgs args)
         {
             var app = StateApplication.Current;
             if (app.State.ContainsKey(this.StateKey))
-                this.State = app.State[this.StateKey] as StateDictionary;
+                app.State[this.StateKey] = this.State;
             else
                 app.State.Add(this.StateKey, this.State);
 
-            //var state = this.GetValue(StatePage.SavedStateProperty) as Collections.StateDictionary;
-            //Fosol.Common.Validation.Assert.IsValidOperation(state == null, "Control can only register the state dependency property once.");
-            //this.SetValue(StatePage.SavedStateProperty, this.State);
+            this.OnCachingState(sender, args);
         }
 
         /// <summary>
-        /// Save the state information to the file system.
+        /// Calls the CacheState method which will call the OnCachingState event method.
         /// </summary>
-        public void SaveState()
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void SavingState(object sender, Events.SavingStateEventArgs args)
+        {
+            this.CacheState(sender, new Events.CachingStateEventArgs());
+        }
+
+        /// <summary>
+        /// If the StateApplication.Current contains state for this page it will apply it and call the OnRestoringState event method.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RestoringState(object sender, Events.RestoringStateEventArgs e)
         {
             var app = StateApplication.Current;
-            app.SaveState();
+            if (app.State.ContainsKey(this.StateKey))
+            {
+                this.State = app.State[this.StateKey] as StateDictionary;
+                e.HasState = true;
+                this.OnRestoringState(sender, e);
+            }
+            else if (this.State == null)
+                this.State = new StateDictionary();
         }
         #endregion
 
@@ -116,11 +145,14 @@ namespace Fosol.Common.UI.Xaml.Controls
         void StatePage_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             var app = StateApplication.Current;
-            app.SavingState += this.OnSavingState;
-            app.RestoringState += this.OnRestoringState;
+            app.SavingState += this.SavingState;
+            app.RestoringState += this.RestoringState;
 
-            InitializePageState();
-            this.OnRestoringState(this, new Events.RestoringStateEventArgs(Windows.ApplicationModel.Activation.ApplicationExecutionState.Running));
+            //var state = this.GetValue(StatePage.SavedStateProperty) as Collections.StateDictionary;
+            //Fosol.Common.Validation.Assert.IsValidOperation(state == null, "Control can only register the state dependency property once.");
+            //this.SetValue(StatePage.SavedStateProperty, this.State);
+
+            this.RestoringState(sender, new Events.RestoringStateEventArgs(Windows.ApplicationModel.Activation.ApplicationExecutionState.Running));
         }
 
         /// <summary>
@@ -131,13 +163,8 @@ namespace Fosol.Common.UI.Xaml.Controls
         void StatePage_Unloaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             var app = StateApplication.Current;
-            app.SavingState -= this.OnSavingState;
-            app.RestoringState -= this.OnRestoringState;
-        }
-
-        protected override void OnNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
+            app.SavingState -= this.SavingState;
+            app.RestoringState -= this.RestoringState;
         }
 
         /// <summary>
@@ -147,8 +174,8 @@ namespace Fosol.Common.UI.Xaml.Controls
         /// <param name="e"></param>
         protected override void OnNavigatingFrom(Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e)
         {
-            this.SaveState();
-            base.OnNavigatingFrom(e);
+            if (e.NavigationMode == NavigationMode.New)
+                this.CacheState(this, new Events.CachingStateEventArgs());
         }
 
         /// <summary>
@@ -156,7 +183,7 @@ namespace Fosol.Common.UI.Xaml.Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected virtual void OnSavingState(object sender, Events.SavingStateEventArgs e)
+        protected virtual void OnCachingState(object sender, Events.CachingStateEventArgs e)
         {
         }
 

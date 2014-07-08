@@ -108,22 +108,33 @@ namespace Fosol.Common.IO
                         }
                         catch
                         {
-                            _Items = new Collections.StateDictionary();
+                            Initialize(new Collections.StateDictionary());
                         }
                     });
                     task.Wait();
                 }
                 catch
                 {
-                    _Items = new Collections.StateDictionary();
+                    Initialize(new Collections.StateDictionary());
                 }
             }
             else
-                _Items = new Collections.StateDictionary();
+                Initialize(new Collections.StateDictionary());
         }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Initialize the state collection with the specified StateDictionary.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameter 'state' cannot be null.</exception>
+        /// <param name="state">StateDictionary object to intialize state with.</param>
+        protected virtual void Initialize(Collections.StateDictionary state)
+        {
+            Fosol.Common.Validation.Assert.IsNotNull(state, "state");
+            _Items = state;
+        }
+
         /// <summary>
         /// Checks if the collection has the specified key.
         /// </summary>
@@ -176,7 +187,7 @@ namespace Fosol.Common.IO
         }
 
         /// <summary>
-        /// Clear all items from SavedState.
+        /// Clear all values in SavedState.
         /// </summary>
 #if WINDOWS_APP || WINDOWS_PHONE_APP
         public async void Clear()
@@ -236,12 +247,13 @@ namespace Fosol.Common.IO
         /// <summary>
         /// Restores this SavedState information by fetching the saved state file.
         /// </summary>
-        public void Restore()
+        public virtual void Restore()
         {
             _SlimLock.EnterWriteLock();
             try
             {
-                _Items = Serialization.DataContractUtility.DeserializeFromFile<Collections.StateDictionary>(_FilePath);
+                var items = Serialization.DataContractUtility.DeserializeFromFile<Collections.StateDictionary>(_FilePath);
+                this.Initialize(items);
             }
             finally
             {
@@ -254,7 +266,8 @@ namespace Fosol.Common.IO
         /// </summary>
         public async Task RestoreAsync()
         {
-            _Items = await Serialization.DataContractUtility.DeserializeFromFileAsync<Collections.StateDictionary>(_FilePath);
+            var items = await Serialization.DataContractUtility.DeserializeFromFileAsync<Collections.StateDictionary>(_FilePath);
+            this.Initialize(items);
         }
         #endregion
 

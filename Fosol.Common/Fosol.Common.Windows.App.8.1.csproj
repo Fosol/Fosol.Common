@@ -53,6 +53,7 @@
     <Compile Include="HashCode.cs" />
     <Compile Include="Helpers\SetOnce`.cs" />
     <Compile Include="Initialization\Assert.cs" />
+    <Compile Include="IO\ApplicationState.cs" />
     <Compile Include="IO\SavedState%27.cs" />
     <Compile Include="IO\SavedState.cs" />
     <Compile Include="Mathematics\Formula.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Threading\IdentityLong.cs" />
     <Compile Include="UI\Xaml\Controls\StatePage.cs" />
     <Compile Include="UI\Xaml\Controls\StateStatus.cs" />
+    <Compile Include="UI\Xaml\Events\CachingStateEventArgs.cs" />
     <Compile Include="UI\Xaml\Events\RestoringStateEventArgs.cs" />
     <Compile Include="UI\Xaml\Events\RetrievingStateEventArgs.cs" />
     <Compile Include="UI\Xaml\Events\SavingStateEventArgs.cs" />

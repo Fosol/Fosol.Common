@@ -7,33 +7,65 @@ using Windows.ApplicationModel.Activation;
 
 namespace Fosol.Common.UI.Xaml.Events
 {
+    /// <summary>
+    /// RestoringStateEventArgs class 
+    /// </summary>
     public sealed class RestoringStateEventArgs
         : EventArgs
     {
         #region Variables
-        private object _Data;
         private ApplicationExecutionState _PreviousExecutionState;
+        private bool _HasState;
+        private bool _Cancel;
         #endregion
 
         #region Properties
+        /// <summary>
+        /// get - Previous execution state value.
+        /// </summary>
         public ApplicationExecutionState PreviousExecutionState
         {
             get { return _PreviousExecutionState; }
             private set { _PreviousExecutionState = value; }
         }
 
-        public object Data
+        /// <summary>
+        /// get - Whether there is currently any state information available.
+        /// </summary>
+        public bool HasState
         {
-            get { return _Data; }
-            private set { _Data = value; }
+            get { return _HasState; }
+            internal set { _HasState = value; }
+        }
+
+        /// <summary>
+        /// get/set - Whether to cancel restoring state.
+        /// </summary>
+        public bool Cancel
+        {
+            get { return _Cancel; }
+            set { _Cancel = value; }
         }
         #endregion
 
         #region Constructors
-        public RestoringStateEventArgs(ApplicationExecutionState previousExecutionState, object data = null)
+        /// <summary>
+        /// Creates a new instance of a RestoringStateEventArgs class.
+        /// </summary>
+        /// <param name="previousExecutionState">ApplicationExecutionState object.</param>
+        public RestoringStateEventArgs(ApplicationExecutionState previousExecutionState)
         {
             this.PreviousExecutionState = previousExecutionState;
-            this.Data = data;
+        }
+
+        /// <summary>
+        /// Creates a new instance of a RestoringStateEventArgs class.
+        /// </summary>
+        /// <param name="retrievingStateEventArgs">RetrievingStateEventArgs object</param>
+        internal RestoringStateEventArgs(RetrievingStateEventArgs retrievingStateEventArgs)
+        {
+            this.PreviousExecutionState = retrievingStateEventArgs.PreviousExecutionState;
+            this.HasState = retrievingStateEventArgs.HasState;
         }
         #endregion
 

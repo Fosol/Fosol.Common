@@ -80,6 +80,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CenterPoint.cs" />
+    <Compile Include="IO\ApplicationState.cs" />
     <Compile Include="Collections\NameValueCollection.cs" />
     <Compile Include="Collections\StateDictionary%27.cs" />
     <Compile Include="Collections\StateDictionary.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Text\GlobalConstant.cs" />
     <Compile Include="Threading\IdentityInt.cs" />
     <Compile Include="Threading\IdentityLong.cs" />
+    <Compile Include="UI\Xaml\Events\CachingStateEventArgs.cs" />
     <Compile Include="UI\Xaml\Extensions\StateRestoreExtensions.cs" />
     <Compile Include="UI\Xaml\StateRestoreOption.cs" />
     <Compile Include="UI\Xaml\Controls\StateStatus.cs" />
