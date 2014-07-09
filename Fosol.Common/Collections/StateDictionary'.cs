@@ -42,7 +42,18 @@ namespace Fosol.Common.Collections
         #endregion
 
         #region Methods
-
+        /// <summary>
+        /// Copies the items in this StateDictionary into the destination StateDictionary.
+        /// </summary>
+        /// <param name="destination">StateDictionary destination.</param>
+        public void CopyTo(StateDictionary<T> destination)
+        {
+            Fosol.Common.Validation.Assert.IsNotNull(destination, "destination");
+            foreach (string key in this.Keys)
+            {
+                destination[key] = this[key];
+            }
+        }
         #endregion
 
         #region Operators

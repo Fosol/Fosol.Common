@@ -22,10 +22,9 @@ namespace Fosol.Common.UI.Xaml.Controls
         private readonly System.Threading.ReaderWriterLockSlim _SlimLock = new System.Threading.ReaderWriterLockSlim();
         
         private static readonly DependencyProperty StateKeyProperty
-            = DependencyProperty.Register("StateKey", typeof(string), typeof(StatePage), new PropertyMetadata(string.Empty));
-        private static readonly DependencyProperty SavedStateProperty
-            = DependencyProperty.Register("State", typeof(Collections.StateDictionary), typeof(StatePage), new PropertyMetadata(new StateDictionary()));
-
+            = DependencyProperty.Register("StateKey", typeof(string), typeof(StatePage), new PropertyMetadata(string.Empty, StateKeyPropertyChanged));
+        private static readonly DependencyProperty StateProperty
+            = DependencyProperty.Register("State", typeof(Collections.StateDictionary), typeof(StatePage), new PropertyMetadata(new StateDictionary(), StatePropertyChanged));
         #endregion
 
         #region Properties
@@ -43,10 +42,15 @@ namespace Fosol.Common.UI.Xaml.Controls
                     // Create an unique key for this page when it is navigated to so that it can save it's state.
                     var name = Fosol.Common.Initialization.Assert.IsNotDefaultOrEmptyOrWhitespace(this.Name, "Fosol.StatePage");
                     key = String.Format("{0}_{1}", name, this.Frame.BackStackDepth);
-                    this.SetValue(StatePage.StateKeyProperty, key);
+                    this.StateKey = key;
                 }
 
                 return key;
+            }
+            protected set
+            {
+                Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(value, "StateKey");
+                this.SetValue(StatePage.StateKeyProperty, value);
             }
         }
 
@@ -55,8 +59,8 @@ namespace Fosol.Common.UI.Xaml.Controls
         /// </summary>
         public Collections.StateDictionary State
         {
-            get { return this.GetValue(StatePage.SavedStateProperty) as StateDictionary; }
-            private set { this.SetValue(StatePage.SavedStateProperty, value); }
+            get { return this.GetValue(StatePage.StateProperty) as StateDictionary; }
+            private set { this.SetValue(StatePage.StateProperty, value); }
         }
         #endregion
 
@@ -72,6 +76,10 @@ namespace Fosol.Common.UI.Xaml.Controls
                 Fosol.Common.Validation.Assert.IsValidOperation(app != null, "Before creating an instance of a StatePage you must intialize the StateApplication.");
             }
 
+            // For some reason the State DependencyProperty is being shared with all child classes so this needs to initialize the property so that it isn't shared.
+            /// It's ugly and I hate it but sometimes you just have to do what works.
+            this.State = new StateDictionary();
+
             this.Loaded += StatePage_Loaded;
             this.Unloaded += StatePage_Unloaded;
         }
@@ -81,6 +89,7 @@ namespace Fosol.Common.UI.Xaml.Controls
         /// <summary>
         /// InitializeState provides a way to initialize the specified state keys so that databinding will work.
         /// If you use this method the initial value of the state value will be null.
+        /// It's ugly and I hate it but sometimes you just have to do what works.
         /// </summary>
         /// <param name="keys">Key names.</param>
         protected void InitializeState(params string[] keys)
@@ -94,6 +103,7 @@ namespace Fosol.Common.UI.Xaml.Controls
 
         /// <summary>
         /// InitializeState provides a way to initialize the specified state keys with the specified values so that databinding will work.
+        /// It's ugly and I hate it but sometimes you just have to do what works.
         /// </summary>
         /// <param name="items">KeyValuePair objects.</param>
         protected void InitializeState(params KeyValuePair<string, object>[] items)
@@ -137,11 +147,12 @@ namespace Fosol.Common.UI.Xaml.Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RestoringState(object sender, Events.RestoringStateEventArgs e)
+        private void RestoreState(object sender, Events.RestoringStateEventArgs e)
         {
             var app = StateApplication.Current;
             if (app.State.ContainsKey(this.StateKey))
             {
+                // Copy each value into the local state.
                 this.State = app.State[this.StateKey] as StateDictionary;
                 e.HasState = true;
                 this.OnRestoringState(sender, e);
@@ -164,13 +175,13 @@ namespace Fosol.Common.UI.Xaml.Controls
         {
             var app = StateApplication.Current;
             app.SavingState += this.SavingState;
-            app.RestoringState += this.RestoringState;
+            app.RestoringState += this.RestoreState;
 
             //var state = this.GetValue(StatePage.SavedStateProperty) as Collections.StateDictionary;
             //Fosol.Common.Validation.Assert.IsValidOperation(state == null, "Control can only register the state dependency property once.");
             //this.SetValue(StatePage.SavedStateProperty, this.State);
 
-            this.RestoringState(sender, new Events.RestoringStateEventArgs(Windows.ApplicationModel.Activation.ApplicationExecutionState.Running));
+            this.RestoreState(sender, new Events.RestoringStateEventArgs(Windows.ApplicationModel.Activation.ApplicationExecutionState.Running));
         }
 
         /// <summary>
@@ -182,7 +193,7 @@ namespace Fosol.Common.UI.Xaml.Controls
         {
             var app = StateApplication.Current;
             app.SavingState -= this.SavingState;
-            app.RestoringState -= this.RestoringState;
+            app.RestoringState -= this.RestoreState;
         }
 
         /// <summary>
@@ -213,6 +224,16 @@ namespace Fosol.Common.UI.Xaml.Controls
         /// <param name="e"></param>
         protected virtual void OnRestoringState(object sender, Events.RestoringStateEventArgs e)
         {
+        }
+
+        private static void StateKeyPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+
+        private static void StatePropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+
         }
         #endregion
     }
