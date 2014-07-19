@@ -34,6 +34,18 @@ namespace Fosol.Common.Utilities
         {
             return @"\" + match.Value;
         }
+
+        /// <summary>
+        /// Counts the number of words in the specified text.
+        /// </summary>
+        /// <param name="text">Text value to count.</param>
+        /// <returns>Number of words in the specified text.</returns>
+        public static int WordCount(string text)
+        {
+            var words = text.Split(new char[] { '.', '?', '!', ' ', ';', ':', ',', '(', ')' }, StringSplitOptions.RemoveEmptyEntries);
+
+            return words.Length;
+        }
         #endregion
     }
 }

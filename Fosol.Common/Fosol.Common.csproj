@@ -70,10 +70,13 @@
     <Compile Include="Configuration\Attributes\UriValidatorAttribute.cs" />
     <Compile Include="Configuration\CDataConfigurationElement.cs" />
     <Compile Include="Configuration\CDataConfigurationPropertyAttribute.cs" />
+    <Compile Include="Configuration\ConfigurationElementAttribute.cs" />
     <Compile Include="Configuration\ConfigurationElementCollection`.cs" />
     <Compile Include="Configuration\ConfigurationSectionFileWatcher`.cs" />
     <Compile Include="Configuration\ConfigurationSectionFileWatcherBase`.cs" />
     <Compile Include="Configuration\Events\ConfigurationSectionErrorEventArgs.cs" />
+    <Compile Include="Configuration\SpecialConfigurationElementCollection.cs" />
+    <Compile Include="Configuration\SpecialConfigurationElementType.cs" />
     <Compile Include="Configuration\TypeElement`.cs" />
     <Compile Include="Configuration\TypeElement.cs" />
     <Compile Include="Converters\EnumConverter`.cs" />
@@ -100,6 +103,7 @@
     <Compile Include="Helpers\SpecialEnum.cs" />
     <Compile Include="IO\SavedState%27.cs" />
     <Compile Include="IO\SavedState.cs" />
+    <Compile Include="Linq\PredicateBuilder.cs" />
     <Compile Include="Serialization\DataContractJsonUtility.cs" />
     <Compile Include="Serialization\DataContractUtility.cs" />
     <Compile Include="Serialization\FormatOption.cs" />

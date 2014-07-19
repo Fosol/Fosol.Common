@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <Choose>
@@ -52,6 +53,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Configuration\TestConfigurationCollection.cs" />
+    <Compile Include="Configuration\TestSection.cs" />
+    <Compile Include="Configuration\OneElement.cs" />
+    <Compile Include="Configuration\SpecialConfigurationCollectionTest.cs" />
+    <Compile Include="Configuration\SpecialConfigurationElementTypes.cs" />
+    <Compile Include="Configuration\TwoElement.cs" />
     <Compile Include="Cryptography\AESTest.cs" />
     <Compile Include="Cryptography\CryptographyTest.cs" />
     <Compile Include="ElementParserTest.cs" />
@@ -86,6 +93,11 @@
       <Project>{61d8cac1-6f1b-48fc-b94c-0601f1ce78d5}</Project>
       <Name>Fosol.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Configuration\App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

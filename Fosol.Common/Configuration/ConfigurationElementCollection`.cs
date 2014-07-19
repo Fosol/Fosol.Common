@@ -99,7 +99,7 @@ namespace Fosol.Common.Configuration
         /// <returns>Key name of element</returns>
         protected override object GetElementKey(ConfigurationElement element)
         {
-            var properties = typeof(T).GetProperties();
+            var properties = element.GetType().GetProperties();
             var key_properties = new List<PropertyInfo>();
 
             foreach (PropertyInfo property in properties)
