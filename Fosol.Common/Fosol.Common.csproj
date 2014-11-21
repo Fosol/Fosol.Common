@@ -108,8 +108,10 @@
     <Compile Include="Serialization\DataContractUtility.cs" />
     <Compile Include="Serialization\FormatOption.cs" />
     <Compile Include="Serialization\XmlUtility.cs" />
+    <Compile Include="Utilities\PasswordStrength.cs" />
     <Compile Include="Utilities\PasswordUtility.cs" />
     <Compile Include="Utilities\RegexUtility.cs" />
+    <Compile Include="Utilities\SqlUtility.cs" />
     <Compile Include="Utilities\UrlUtility.cs" />
     <Compile Include="Utilities\WebApplicationUtility.cs" />
     <Compile Include="Parsers\Converters\ElementFormatConverter.cs" />
