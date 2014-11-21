@@ -104,6 +104,8 @@
     <Compile Include="IO\SavedState%27.cs" />
     <Compile Include="IO\SavedState.cs" />
     <Compile Include="Linq\PredicateBuilder.cs" />
+    <Compile Include="Security\PasswordStrength.cs" />
+    <Compile Include="Security\PasswordUtility.cs" />
     <Compile Include="Serialization\DataContractJsonUtility.cs" />
     <Compile Include="Serialization\DataContractUtility.cs" />
     <Compile Include="Serialization\FormatOption.cs" />

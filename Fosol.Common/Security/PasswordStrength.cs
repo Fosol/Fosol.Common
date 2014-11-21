@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Utilities
+namespace Fosol.Common.Security
 {
     /// <summary>
     /// PasswordStrength provides a way to define how strong a given password is.
     /// </summary>
-    public sealed class PasswordStrength
+    public class PasswordStrength
     {
         #region Variables
         #endregion
@@ -49,58 +49,67 @@ namespace Fosol.Common.Utilities
         /// get - Number of lowercase characters.
         /// </summary>
         public int LowercaseCharacters { get; private set; }
+
+        /// <summary>
+        /// get - An arbitrary (inherited classes may provide a viable statistic) measurement which reflects the strength of the password as a percentage.
+        /// </summary>
+        public int Strength { get; private set; }
         #endregion
 
         #region Constructors
-        internal PasswordStrength()
-        {
-        }
-        #endregion
-
-        #region Methods
         /// <summary>
-        /// Evaluates the specified password and returns a new instance of a PasswordStrength object which provides the strength of the password.
+        /// Creates a new instance of a PasswordStrength object.
         /// </summary>
-        /// <param name="password">Password to evaluate.</param>
-        /// <returns>New instance of a PasswordStrength object.</returns>
-        public static PasswordStrength Evaluate(string password)
+        /// <param name="password">Password to evaluate the strength of.  The password is not stored.</param>
+        public PasswordStrength(string password)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(password, "password");
-
-            int nonalpha = 0;
-            int nonalphadigit = 0;
-            int alpha = 0;
-            int digit = 0;
-            int upper = 0;
-            int lower = 0;
 
             // Check each character and increment the various strength indicators.
             foreach (var c in password.ToArray())
             {
                 if (Char.IsLetter(c))
-                    alpha++;
+                    this.AlphaCharacters++;
                 else
-                    nonalpha++;
+                    this.NonalphaCharacters++;
                 if (Char.IsDigit(c))
-                    digit++;
+                    this.DigitCharacters++;
                 if (Char.IsLower(c))
-                    lower++;
+                    this.LowercaseCharacters++;
                 if (Char.IsUpper(c))
-                    upper++;
+                    this.UppercaseCharacters++;
                 if (!Char.IsLetterOrDigit(c))
-                    nonalphadigit++;
+                    this.NonalphaDigitCharacters++;
             }
 
-            return new PasswordStrength()
-            {
-                Length = password.Length,
-                NonalphaCharacters = nonalpha,
-                NonalphaDigitCharacters = nonalphadigit,
-                AlphaCharacters = alpha,
-                DigitCharacters = digit,
-                UppercaseCharacters = upper,
-                LowercaseCharacters = lower
-            };
+            // Determine the strength of the password.
+            this.Strength = this.Evaluate();
+        }
+        #endregion
+
+        #region Methods
+        /// <summary>
+        /// Evaluates this PasswordStrength object and returns a percentage that represents the strength of the given password.
+        /// This is a arbitrary result and is mostly meaningless.
+        /// In reality attributing a percentage to represent a password strength is meaningless without the context of a comparing metric.
+        /// This method should also check for dictionary and commong passwords to determine strength.
+        /// </summary>
+        /// <returns>Percentage to represent the strength of this password.</returns>
+        protected int Evaluate()
+        {
+            var base_strength = 0;
+
+            base_strength += this.Length * 5;
+
+            base_strength += this.NonalphaDigitCharacters * 5;
+
+            if (this.NonalphaDigitCharacters > 0 && this.AlphaCharacters > 0)
+                base_strength += Math.Abs(this.NonalphaDigitCharacters / this.AlphaCharacters) * 5;
+
+            if (this.UppercaseCharacters > 0 && this.LowercaseCharacters > 0)
+                base_strength += Math.Abs(this.UppercaseCharacters / this.LowercaseCharacters) * 5;
+
+            return base_strength > 100 ? 100 : base_strength;
         }
         #endregion
 

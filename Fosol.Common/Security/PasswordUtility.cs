@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Utilities
+namespace Fosol.Common.Security
 {
     /// <summary>
     /// PasswordHelper provides methods to assit in password generation and testing.
@@ -158,7 +158,7 @@ namespace Fosol.Common.Utilities
             if (_Validator != null)
                 return _Validator.IsMatch(password);
 
-            return this.Validate(PasswordStrength.Evaluate(password));
+            return this.Validate(new PasswordStrength(password));
         }
 
         /// <summary>
