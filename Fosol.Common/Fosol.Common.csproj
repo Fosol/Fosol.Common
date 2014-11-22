@@ -85,18 +85,12 @@
     <Compile Include="Converters\SqlDbTypeConverter.cs" />
     <Compile Include="Converters\AssemblyTypeConverter.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
-    <Compile Include="Cryptography\SymmetricalFactory.cs" />
-    <Compile Include="Cryptography\Symmetrical\AESHelper.cs" />
-    <Compile Include="Cryptography\Symmetrical\DESHelper.cs" />
-    <Compile Include="Cryptography\Symmetrical\RC2Helper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Cryptography\Symmetrical\RijndaelHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Cryptography\Symmetrical\TripleDESHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Cryptography\SymmetricFactory.cs" />
+    <Compile Include="Cryptography\Symmetric\AESHelper.cs" />
+    <Compile Include="Cryptography\Symmetric\DESHelper.cs" />
+    <Compile Include="Cryptography\Symmetric\RC2Helper.cs" />
+    <Compile Include="Cryptography\Symmetric\RijndaelHelper.cs" />
+    <Compile Include="Cryptography\Symmetric\TripleDESHelper.cs" />
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Helpers\SetOnce`.cs" />
@@ -220,9 +214,7 @@
     <Compile Include="Net\UriPath.cs" />
     <Compile Include="Net\UriBuilder.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Cryptography\Asymmetrical\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\Multilingual.fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>

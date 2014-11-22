@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Cryptography
 {
     public sealed class DESHelper
-        : SymmetricalFactory
+        : SymmetricFactory
     {
         #region Variables
         #endregion

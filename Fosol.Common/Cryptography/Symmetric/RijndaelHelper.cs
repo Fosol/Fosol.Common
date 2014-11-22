@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Fosol.Common.Cryptography
 {
-    public sealed class TripleDESHelper
-        : SymmetricalFactory
+    public sealed class RijndaelHelper
+        : SymmetricFactory
     {
         #region Variables
         #endregion
@@ -17,8 +18,8 @@ namespace Fosol.Common.Cryptography
         #endregion
 
         #region Constructors
-        public TripleDESHelper()
-            : base(new TripleDESCryptoServiceProvider())
+        public RijndaelHelper()
+            : base(Rijndael.Create())
         {
         }
         #endregion
@@ -30,6 +31,6 @@ namespace Fosol.Common.Cryptography
         #endregion
 
         #region Events
-        #endregion   
+        #endregion
     }
 }

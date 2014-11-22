@@ -8,8 +8,12 @@ using System.Threading.Tasks;
 
 namespace Fosol.Common.Cryptography
 {
+    /// <summary>
+    /// AESHelper class uses the AesManaged symmetric algorithm for encryption.
+    /// Generally Aes is used for data privacy.
+    /// </summary>
     public sealed class AESHelper
-        : SymmetricalFactory
+        : SymmetricFactory
     {
         #region Variables
         #endregion

@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Cryptography
 {
     /// <summary>
-    /// CyrptographyFactory provides a simple inteface to encrypt data with any SymmetricAlgorithm objects.
+    /// SymmetricFactory class provides a base for encrypting and decrypting data with a symmetric algorithm.
     /// </summary>
-    public abstract class SymmetricalFactory
+    public abstract class SymmetricFactory
         : CryptographyFactory
     {
         #region Variables
@@ -20,6 +20,9 @@ namespace Fosol.Common.Cryptography
         #endregion
 
         #region Properties
+        /// <summary>
+        /// get - The SymmetricAlgorithm used for encryption.
+        /// </summary>
         protected SymmetricAlgorithm Algorithm
         {
             get { return _Algorithm; }
@@ -28,10 +31,10 @@ namespace Fosol.Common.Cryptography
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a SymmetricalFactory object.
+        /// Creates a new instance of a SymmetricFactory object.
         /// </summary>
         /// <param name="algorithm">SymmetricAlgorithm object.</param>
-        public SymmetricalFactory(SymmetricAlgorithm algorithm)
+        public SymmetricFactory(SymmetricAlgorithm algorithm)
         {
             Fosol.Common.Validation.Assert.IsNotNull(algorithm, "algorithm");
             _Algorithm = algorithm;
@@ -41,7 +44,7 @@ namespace Fosol.Common.Cryptography
         #region Methods
         /// <summary>
         /// Encrypt the data.
-        /// Uses Rfc2898DeriveBytes object to generate an algorithm hash.
+        /// Uses Rfc2898DeriveBytes object to generate an algorithm hash key.
         /// </summary>
         /// <param name="data">Data to be encrypted.</param>
         /// <param name="password">Password used to encrypt data.</param>

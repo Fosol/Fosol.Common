@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Cryptography
 {
     public sealed class RC2Helper
-        : SymmetricalFactory
+        : SymmetricFactory
     {
         #region Variables
         #endregion
