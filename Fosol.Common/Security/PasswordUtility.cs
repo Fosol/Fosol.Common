@@ -124,6 +124,7 @@ namespace Fosol.Common.Security
             _MinLength = minLength;
             _MaxLength = maxLength;
             _MinRequiredNonalphaDigitCharacters = minRequiredNonalphaDigitCharacters;
+            _MinRequiredNonalphaCharacters = minRequiredNonalphaCharacter;
             _MinRequiredLowerCaseCharacters = minRequiredLowerCaseCharacters;
             _MinRequiredUpperCaseCharacters = minRequiredUpperCaseCharacters;
             _MinRequiredDigitCharacters = minRequiredDigitCharacters;

@@ -17,6 +17,9 @@ namespace Fosol.Common.Cryptography
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of RC2Helper class.
+        /// </summary>
         public RC2Helper()
             : base(new RC2CryptoServiceProvider())
         {

@@ -18,6 +18,9 @@ namespace Fosol.Common.Cryptography
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of a RijndaelHelper class.
+        /// </summary>
         public RijndaelHelper()
             : base(Rijndael.Create())
         {

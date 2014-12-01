@@ -17,6 +17,9 @@ namespace Fosol.Common.Cryptography
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of a TripleDESHelper class.
+        /// </summary>
         public TripleDESHelper()
             : base(new TripleDESCryptoServiceProvider())
         {

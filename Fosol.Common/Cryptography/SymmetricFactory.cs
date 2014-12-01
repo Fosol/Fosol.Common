@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fosol.Common.Extensions.Bytes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,15 +18,59 @@ namespace Fosol.Common.Cryptography
     {
         #region Variables
         private SymmetricAlgorithm _Algorithm;
+        private byte[] _Key;
+        private byte[] _IV;
+        private bool _NeedKeyReset = true;
+        private bool _NeedIVReset = true;
         #endregion
 
         #region Properties
         /// <summary>
-        /// get - The SymmetricAlgorithm used for encryption.
+        /// set - The key that will be used to encrypt and decrypt.
         /// </summary>
-        protected SymmetricAlgorithm Algorithm
+        public byte[] Key
         {
-            get { return _Algorithm; }
+            set
+            {
+                Fosol.Common.Validation.Assert.IsNotNull(value, "Key");
+
+                byte[] val = new byte[value.Length];
+                Buffer.BlockCopy(value, 0, val, 0, value.Length);
+
+                if (!this.ValidKeySize(val))
+                    throw new ArgumentOutOfRangeException("The key value specified is not a valid size.");
+
+                // Only reset the value if it has changed.
+                if (!val.IsMatch(_Key, 0))
+                {
+                    _Key = val;
+                    _NeedKeyReset = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// set - The initialization vector the symmetric algorithm will use.
+        /// </summary>
+        public byte[] IV
+        {
+            set
+            {
+                Fosol.Common.Validation.Assert.IsNotNull(value, "IV");
+
+                byte[] val = new byte[value.Length];
+                Buffer.BlockCopy(value, 0, val, 0, value.Length);
+
+                if (!this.ValidIVSize(val))
+                    throw new ArgumentOutOfRangeException("The IV value specified is not a valid size.");
+
+                // Only reset the value if it has changed.
+                if (!val.IsMatch(_IV, 0))
+                {
+                    _IV = val;
+                    _NeedIVReset = false;
+                }
+            }
         }
         #endregion
 
@@ -34,7 +79,9 @@ namespace Fosol.Common.Cryptography
         /// Creates a new instance of a SymmetricFactory object.
         /// </summary>
         /// <param name="algorithm">SymmetricAlgorithm object.</param>
-        public SymmetricFactory(SymmetricAlgorithm algorithm)
+        /// <param name="isSingleUse">Whether the encrypt and decrypt methods can be used only once before the key and IV values being reset.</param>
+        public SymmetricFactory(SymmetricAlgorithm algorithm, bool isSingleUse = true)
+            : base(isSingleUse)
         {
             Fosol.Common.Validation.Assert.IsNotNull(algorithm, "algorithm");
             _Algorithm = algorithm;
@@ -42,6 +89,39 @@ namespace Fosol.Common.Cryptography
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Encrypt the data.
+        /// This method uses the Key and IV properties.
+        /// </summary>
+        /// <exception cref="System.InvalidOperationException">If this SymmetricFactory is single use you will only be able to call this method once before reseting those values.</exception>
+        /// <param name="data">Data to be encrypted.</param>
+        /// <returns>Encrypted data.</returns>
+        public override byte[] Encrypt(byte[] data)
+        {
+            if (this.IsSingleUse && (_NeedKeyReset || _NeedIVReset))
+                throw new InvalidOperationException("This SymmetricFactory instance is single use.  Reset the Key and IV values before encrypting.");
+
+            var result = this.Encrypt(data, _Key, _IV);
+            _NeedKeyReset = true;
+            return result;
+        }
+
+        /// <summary>
+        /// Decrypt the data.
+        /// </summary>
+        /// <exception cref="System.InvalidOperationException">If this SymmetricFactory is single use you will only be able to call this method once before reseting those values.</exception>
+        /// <param name="data">Data to be decrypted.</param>
+        /// <returns>Decrypted data.</returns>
+        public override byte[] Decrypt(byte[] data)
+        {
+            if (this.IsSingleUse && (_NeedKeyReset || _NeedIVReset))
+                throw new InvalidOperationException("This SymmetricFactory instance is single use.  Reset the Key and IV values before decrypting.");
+
+            var result = this.Decrypt(data, _Key, _IV);
+            _NeedIVReset = true;
+            return result;
+        }
+
         /// <summary>
         /// Encrypt the data.
         /// Uses Rfc2898DeriveBytes object to generate an algorithm hash key.
@@ -52,7 +132,7 @@ namespace Fosol.Common.Cryptography
         /// <param name="keySize">Size in bytes of the key.</param>
         /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Encrypted data.</returns>
-        public override byte[] Encrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16)
+        public virtual byte[] Encrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(password, "password");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
@@ -69,7 +149,7 @@ namespace Fosol.Common.Cryptography
         /// <param name="keySize">Size in bytes of the key.</param>
         /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Encrypted data.</returns>
-        public override byte[] Encrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16)
+        public virtual byte[] Encrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
             Fosol.Common.Validation.Assert.IsNotNull(generator, "generator");
@@ -87,26 +167,14 @@ namespace Fosol.Common.Cryptography
         /// <param name="key">Algorithm key.</param>
         /// <param name="iv">Algorithm initialization vector.</param>
         /// <returns>Encrypted data.</returns>
-        public override byte[] Encrypt(byte[] data, byte[] key, byte[] iv)
+        public virtual byte[] Encrypt(byte[] data, byte[] key, byte[] iv)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(key, "key");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(iv, "iv");
 
-            Fosol.Common.Validation.Assert.IsTrue(_Algorithm.ValidKeySize(key.Length * 8), "key", "Parameter 'key' size is invalid.");
-
-            var legal_block_sizes = _Algorithm.LegalBlockSizes;
-            var valid_iv_size = false;
-            foreach (var bs in legal_block_sizes)
-            {
-                // Apparently a legal IV size is the same as a BlockSize divided by 8.
-                if (iv.Length >= (bs.MinSize / 8) && iv.Length <= (bs.MaxSize / 8))
-                {
-                    valid_iv_size = true;
-                    break;
-                }
-            }
-            Fosol.Common.Validation.Assert.IsTrue(valid_iv_size, "iv.Length", "Parameter 'iv' length is not a legal initialization vector size.");
+            Fosol.Common.Validation.Assert.IsTrue(this.ValidKeySize(key), "key", "Parameter 'key' size is invalid.");
+            Fosol.Common.Validation.Assert.IsTrue(this.ValidIVSize(iv), "iv.Length", "Parameter 'iv' length is not a legal initialization vector size.");
 
             try
             {
@@ -130,6 +198,63 @@ namespace Fosol.Common.Cryptography
         }
 
         /// <summary>
+        /// Validate the IV size for the cryptography algorithm.
+        /// </summary>
+        /// <param name="iv">Initialization vector value.</param>
+        /// <returns>True if the IV is a valid size.</returns>
+        public bool ValidIVSize(byte[] iv)
+        {
+            return SymmetricFactory.ValidIVSize(_Algorithm, iv);
+        }
+
+        /// <summary>
+        /// Validate the IV size for the specified SymmetricAlgorithm.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">Parameters 'algorithm' and 'iv' cannot be null.</exception>
+        /// <param name="algorithm">SymmetricAlgorithm object.</param>
+        /// <param name="iv">Initialization vector value.</param>
+        /// <returns>True if the IV is a valid size.</returns>
+        public static bool ValidIVSize(SymmetricAlgorithm algorithm, byte[] iv)
+        {
+            Fosol.Common.Validation.Assert.IsNotNull(algorithm, "algorithm");
+            Fosol.Common.Validation.Assert.IsNotNull(iv, "iv");
+
+            var legal_block_sizes = algorithm.LegalBlockSizes;
+            foreach (var bs in legal_block_sizes)
+            {
+                // Apparently a legal IV size is the same as a BlockSize divided by 8.
+                if (iv.Length >= (bs.MinSize / 8) && iv.Length <= (bs.MaxSize / 8))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Validate the key size for the cryptography algorithm.
+        /// </summary>
+        /// <param name="key">Key value.</param>
+        /// <returns>True if the key is a valid size.</returns>
+        public bool ValidKeySize(byte[] key)
+        {
+            return SymmetricFactory.ValidKeySize(_Algorithm, key);
+        }
+
+        /// <summary>
+        /// Validate the key size for the SymmetricAlgorithm.
+        /// </summary>
+        /// <param name="algorithm">SymmetricAlgorithm object.</param>
+        /// <param name="key">Key value.</param>
+        /// <returns>True if the key is a valid size.</returns>
+        public static bool ValidKeySize(SymmetricAlgorithm algorithm, byte[] key)
+        {
+            Fosol.Common.Validation.Assert.IsNotNull(algorithm, "algorithm");
+            Fosol.Common.Validation.Assert.IsNotNull(key, "key");
+            return algorithm.ValidKeySize(key.Length * 8);
+        }
+
+        /// <summary>
         /// Decrypt the data.
         /// Uses Rfc2898DeriveBytes object to generate an algorithm hash.
         /// </summary>
@@ -139,7 +264,7 @@ namespace Fosol.Common.Cryptography
         /// <param name="keySize">Size in bytes of the key.</param>
         /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Decrypted data.</returns>
-        public override byte[] Decrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16)
+        public virtual byte[] Decrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(password, "password");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
@@ -156,7 +281,7 @@ namespace Fosol.Common.Cryptography
         /// <param name="keySize">Size in bytes of the key.</param>
         /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Decrypted data.</returns>
-        public override byte[] Decrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16)
+        public virtual byte[] Decrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
             Fosol.Common.Validation.Assert.IsNotNull(generator, "generator");
@@ -174,7 +299,7 @@ namespace Fosol.Common.Cryptography
         /// <param name="key">Algorithm key.</param>
         /// <param name="iv">Algorithm initialization vector.</param>
         /// <returns>Decrypted data.</returns>
-        public override byte[] Decrypt(byte[] data, byte[] key, byte[] iv)
+        public virtual byte[] Decrypt(byte[] data, byte[] key, byte[] iv)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(key, "key");

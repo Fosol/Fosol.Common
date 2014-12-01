@@ -17,6 +17,9 @@ namespace Fosol.Common.Cryptography
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of a DESHelper class.
+        /// </summary>
         public DESHelper()
             : base(new DESCryptoServiceProvider())
         {

@@ -22,6 +22,9 @@ namespace Fosol.Common.Cryptography
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of an AESHelper class.
+        /// </summary>
         public AESHelper()
             : base(new AesManaged())
         {

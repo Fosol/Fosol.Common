@@ -13,15 +13,31 @@ namespace Fosol.Common.Cryptography
     /// CyrptographyFactory provides a simple inteface to encrypt data with any SymmetricAlgorithm objects.
     /// </summary>
     public abstract class CryptographyFactory
-        : IDisposable
+        : IDisposable, ICryptography
     {
         #region Variables
+        private bool _IsSingleUse;
         #endregion
 
         #region Properties
+        /// <summary>
+        /// get - Whether this instance can only perform a single encryption/decryption before being reset.
+        /// </summary>
+        public bool IsSingleUse
+        {
+            get { return _IsSingleUse; }
+        }
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of a CryptographyFactory.
+        /// </summary>
+        /// <param name="isSingleUse">Whether the encrypt and decrypt methods are single use.</param>
+        public CryptographyFactory(bool isSingleUse = true)
+        {
+            _IsSingleUse = isSingleUse;
+        }
         #endregion
 
         #region Methods
@@ -29,61 +45,15 @@ namespace Fosol.Common.Cryptography
         /// Encrypt the data.
         /// </summary>
         /// <param name="data">Data to be encrypted.</param>
-        /// <param name="password">Password used to encrypt data.</param>
-        /// <param name="salt">Salt to use for encrypting data.</param>
-        /// <param name="keySize">Size in bytes of the key.</param>
-        /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Encrypted data.</returns>
-        public abstract byte[] Encrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16);
-
-        /// <summary>
-        /// Encrypt the data.
-        /// </summary>
-        /// <param name="data">Data to be encrypted.</param>
-        /// <param name="generator">DeriveBytes object used to populate the algorithm.</param>
-        /// <param name="keySize">Size in bytes of the key.</param>
-        /// <param name="ivSize">Size in bytes of the initialization vector.</param>
-        /// <returns>Encrypted data.</returns>
-        public abstract byte[] Encrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16);
-
-        /// <summary>
-        /// Encrypt data.
-        /// </summary>
-        /// <param name="data">Data to be encrypted.</param>
-        /// <param name="key">Algorithm key.</param>
-        /// <param name="iv">Algorithm initialization vector.</param>
-        /// <returns>Encrypted data.</returns>
-        public abstract byte[] Encrypt(byte[] data, byte[] key, byte[] iv);
+        public abstract byte[] Encrypt(byte[] data);
 
         /// <summary>
         /// Decrypt the data.
         /// </summary>
         /// <param name="data">Data to be decrypted.</param>
-        /// <param name="password">Password used to decrypt data.</param>
-        /// <param name="salt">Salt to use for decrypting data.</param>
-        /// <param name="keySize">Size in bytes of the key.</param>
-        /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Decrypted data.</returns>
-        public abstract byte[] Decrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16);
-
-        /// <summary>
-        /// Decrypt the data.
-        /// </summary>
-        /// <param name="data">Data to be decrypted.</param>
-        /// <param name="generator">DeriveBytes object used to populate the algorithm.</param>
-        /// <param name="keySize">Size in bytes of the key.</param>
-        /// <param name="ivSize">Size in bytes of the initialization vector.</param>
-        /// <returns>Decrypted data.</returns>
-        public abstract byte[] Decrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16);
-
-        /// <summary>
-        /// Decrypt the data.
-        /// </summary>
-        /// <param name="data">Data to be decrypted.</param>
-        /// <param name="key">Algorithm key.</param>
-        /// <param name="iv">Algorithm initialization vector.</param>
-        /// <returns>Decrypted data.</returns>
-        public abstract byte[] Decrypt(byte[] data, byte[] key, byte[] iv);
+        public abstract byte[] Decrypt(byte[] data);
 
         /// <summary>
         /// Clear that SymmetricAlgorithm.
