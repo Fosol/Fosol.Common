@@ -103,15 +103,14 @@ namespace Fosol.Common.Cryptography
         /// <param name="data">Byte array containing data to hash.</param>
         /// <param name="salt">Byte array containg salt.</param>
         /// <returns>Hashed byte array.</returns>
-        public byte[] ComputeHash(byte[] data, byte[] salt, int hashSize = 32)
+        public byte[] ComputeHash(byte[] data, byte[] salt)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
             Fosol.Common.Validation.Assert.MinRange(salt.Length, 16, "salt.Length");
-            Fosol.Common.Validation.Assert.MinRange(hashSize, 16, "hashSize");
 
             var generator = (DeriveBytes)Fosol.Common.Utilities.ReflectionUtility.ConstructObject(_GeneratorType, new object[] { data, salt, this.Iterations });
-            var key = generator.GetBytes(hashSize);
+            var key = generator.GetBytes(data.Length + salt.Length);
             return _Algorithm.ComputeHash(key);
         }
         #endregion
