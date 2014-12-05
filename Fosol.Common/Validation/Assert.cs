@@ -2488,7 +2488,7 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
             
-            if (validType.IsAssignableFrom(value.GetType()))
+            if (!validType.IsAssignableFrom(value.GetType()))
                 throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName);
         }
 
@@ -2507,7 +2507,7 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (validType.IsAssignableFrom(value.GetType()))
+            if (!validType.IsAssignableFrom(value.GetType()))
                 throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
         }
 
