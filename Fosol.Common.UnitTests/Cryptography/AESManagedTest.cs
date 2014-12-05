@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 namespace Fosol.Common.UnitTests.Cryptography
 {
     [TestClass]
-    public class AESTest
+    public class AESManagedTest
     {
         #region Variables
         private const string _Text = "This is a sentence to test encryption.";
@@ -24,9 +24,9 @@ namespace Fosol.Common.UnitTests.Cryptography
         #region Methods
         #region Functionality
         [TestMethod]
-        public void CryptographyAesEncryptAndDecrypt256()
+        public void CryptographyAesManagedEncryptAndDecrypt256()
         {
-            var factory = new Fosol.Common.Cryptography.SymmetricFactory(Aes.Create());
+            var factory = new Fosol.Common.Cryptography.SymmetricFactory(new AesManaged());
             var text_data = Encoding.UTF8.GetBytes(_Text);
             var key_data = Encoding.UTF8.GetBytes(_Key);
             var salt = Fosol.Common.Cryptography.RandomFactory.GenerateSalt(_SaltSize);
@@ -40,9 +40,9 @@ namespace Fosol.Common.UnitTests.Cryptography
         }
 
         [TestMethod]
-        public void CryptographyAesEncryptAndDecrypt256Overload()
+        public void CryptographyAesManagedEncryptAndDecrypt256Overload()
         {
-            var factory = new Fosol.Common.Cryptography.SymmetricFactory(Aes.Create());
+            var factory = new Fosol.Common.Cryptography.SymmetricFactory(new AesManaged());
             var text_data = Encoding.UTF8.GetBytes(_Text);
             var key_data = Encoding.UTF8.GetBytes(_Key);
             var salt = Fosol.Common.Cryptography.RandomFactory.GenerateSalt(_SaltSize);
@@ -56,9 +56,9 @@ namespace Fosol.Common.UnitTests.Cryptography
         }
 
         [TestMethod]
-        public void CryptographyAesEncryptAndDecrypt192()
+        public void CryptographyAesManagedEncryptAndDecrypt192()
         {
-            var factory = new Fosol.Common.Cryptography.SymmetricFactory(Aes.Create());
+            var factory = new Fosol.Common.Cryptography.SymmetricFactory(new AesManaged());
             var text_data = Encoding.UTF8.GetBytes(_Text);
             var key_data = Encoding.UTF8.GetBytes(_Key);
             var salt = Fosol.Common.Cryptography.RandomFactory.GenerateSalt(_SaltSize);
@@ -72,9 +72,9 @@ namespace Fosol.Common.UnitTests.Cryptography
         }
 
         [TestMethod]
-        public void CryptographyAesEncryptAndDecrypt128()
+        public void CryptographyAesManagedEncryptAndDecrypt128()
         {
-            var factory = new Fosol.Common.Cryptography.SymmetricFactory(Aes.Create());
+            var factory = new Fosol.Common.Cryptography.SymmetricFactory(new AesManaged());
             var text_data = Encoding.UTF8.GetBytes(_Text);
             var key_data = Encoding.UTF8.GetBytes(_Key);
             var salt = Fosol.Common.Cryptography.RandomFactory.GenerateSalt(_SaltSize);
@@ -88,9 +88,9 @@ namespace Fosol.Common.UnitTests.Cryptography
         }
 
         [TestMethod]
-        public void CryptographyAesEncryptAndDecryptDerivedBytes()
+        public void CryptographyAesManagedEncryptAndDecryptDerivedBytes()
         {
-            var factory = new Fosol.Common.Cryptography.SymmetricFactory(Aes.Create());
+            var factory = new Fosol.Common.Cryptography.SymmetricFactory(new AesManaged());
             var text_data = Encoding.UTF8.GetBytes(_Text);
             var key_data = Encoding.UTF8.GetBytes(_Key);
             var salt = Fosol.Common.Cryptography.RandomFactory.GenerateSalt(_SaltSize);
@@ -106,9 +106,9 @@ namespace Fosol.Common.UnitTests.Cryptography
         }
 
         [TestMethod]
-        public void CryptographyAesEncryptAndDecryptDerivedBytesOverload()
+        public void CryptographyAesManagedEncryptAndDecryptDerivedBytesOverload()
         {
-            var factory = new Fosol.Common.Cryptography.SymmetricFactory(Aes.Create());
+            var factory = new Fosol.Common.Cryptography.SymmetricFactory(new AesManaged());
             var text_data = Encoding.UTF8.GetBytes(_Text);
             var key_data = Encoding.UTF8.GetBytes(_Key);
             var salt = Fosol.Common.Cryptography.RandomFactory.GenerateSalt(_SaltSize);
@@ -126,9 +126,9 @@ namespace Fosol.Common.UnitTests.Cryptography
 
         #region Validation
         [TestMethod]
-        public void CryptographyAesEncryptAndDecryptInvalidKeySize()
+        public void CryptographyAesManagedEncryptAndDecryptInvalidKeySize()
         {
-            var factory = new Fosol.Common.Cryptography.SymmetricFactory(Aes.Create());
+            var factory = new Fosol.Common.Cryptography.SymmetricFactory(new AesManaged());
             var text_data = Encoding.UTF8.GetBytes(_Text);
             var key_data = Encoding.UTF8.GetBytes(_Key);
             var salt = Fosol.Common.Cryptography.RandomFactory.GenerateSalt(_SaltSize);
@@ -144,9 +144,9 @@ namespace Fosol.Common.UnitTests.Cryptography
         }
 
         [TestMethod]
-        public void CryptographyAesEncryptAndDecryptInvalidKeySize1()
+        public void CryptographyAesManagedEncryptAndDecryptInvalidKeySize1()
         {
-            var factory = new Fosol.Common.Cryptography.SymmetricFactory(Aes.Create());
+            var factory = new Fosol.Common.Cryptography.SymmetricFactory(new AesManaged());
             var text_data = Encoding.UTF8.GetBytes(_Text);
             var key_data = Encoding.UTF8.GetBytes(_Key);
             var salt = Fosol.Common.Cryptography.RandomFactory.GenerateSalt(_SaltSize);
@@ -162,9 +162,9 @@ namespace Fosol.Common.UnitTests.Cryptography
         }
 
         [TestMethod]
-        public void CryptographyAesEncryptAndDecryptInvalidKeySize2()
+        public void CryptographyAesManagedEncryptAndDecryptInvalidKeySize2()
         {
-            var factory = new Fosol.Common.Cryptography.SymmetricFactory(Aes.Create());
+            var factory = new Fosol.Common.Cryptography.SymmetricFactory(new AesManaged());
             var text_data = Encoding.UTF8.GetBytes(_Text);
             var key_data = Encoding.UTF8.GetBytes(_Key);
             var salt = Fosol.Common.Cryptography.RandomFactory.GenerateSalt(_SaltSize);
@@ -180,9 +180,9 @@ namespace Fosol.Common.UnitTests.Cryptography
         }
 
         [TestMethod]
-        public void CryptographyAesEncryptAndDecryptInvalidIVSize()
+        public void CryptographyAesManagedEncryptAndDecryptInvalidIVSize()
         {
-            var factory = new Fosol.Common.Cryptography.SymmetricFactory(Aes.Create());
+            var factory = new Fosol.Common.Cryptography.SymmetricFactory(new AesManaged());
             var text_data = Encoding.UTF8.GetBytes(_Text);
             var key_data = Encoding.UTF8.GetBytes(_Key);
             var salt = Fosol.Common.Cryptography.RandomFactory.GenerateSalt(_SaltSize);

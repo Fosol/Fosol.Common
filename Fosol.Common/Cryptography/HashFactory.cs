@@ -10,7 +10,7 @@ namespace Fosol.Common.Cryptography
     public sealed class HashFactory
     {
         #region Variables
-        private readonly HashAlgorithm _Hash;
+        private readonly HashAlgorithm _Algorithm;
         private readonly Type _GeneratorType;
         private int _Iterations;
         #endregion
@@ -19,9 +19,9 @@ namespace Fosol.Common.Cryptography
         /// <summary>
         /// get - The HashAlgorithm used for hashing data.
         /// </summary>
-        public HashAlgorithm Hash
+        public HashAlgorithm Algorithm
         {
-            get { return _Hash; }
+            get { return _Algorithm; }
         }
 
         /// <summary>
@@ -83,13 +83,13 @@ namespace Fosol.Common.Cryptography
         /// PasswordDerviedBytes
         /// Rfc2898DeriveBytes
         /// </summary>
-        /// <param name="hash">HashAlgorithm object to use for hashing.</param>
+        /// <param name="algorithm">HashAlgorithm object to use for hashing.</param>
         /// <param name="derivedBytes">Type of DerivedBytes object to use to generate a key.</param>
-        public HashFactory(HashAlgorithm hash, Type derivedBytes)
+        public HashFactory(HashAlgorithm algorithm, Type derivedBytes)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(hash, "hash");
+            Fosol.Common.Validation.Assert.IsNotNull(algorithm, "algorithm");
             Fosol.Common.Validation.Assert.IsType(derivedBytes, typeof(DeriveBytes), "derivedBytes");
-            _Hash = hash;
+            _Algorithm = algorithm;
             _GeneratorType = derivedBytes;
             _Iterations = 1000;
         }
@@ -112,7 +112,7 @@ namespace Fosol.Common.Cryptography
 
             var generator = (DeriveBytes)Fosol.Common.Utilities.ReflectionUtility.ConstructObject(_GeneratorType, new object[] { data, salt, this.Iterations });
             var key = generator.GetBytes(hashSize);
-            return _Hash.ComputeHash(key);
+            return _Algorithm.ComputeHash(key);
         }
         #endregion
 

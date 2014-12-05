@@ -59,8 +59,11 @@
     <Compile Include="Configuration\SpecialConfigurationCollectionTest.cs" />
     <Compile Include="Configuration\SpecialConfigurationElementTypes.cs" />
     <Compile Include="Configuration\TwoElement.cs" />
+    <Compile Include="Cryptography\AESManagedTest.cs" />
     <Compile Include="Cryptography\AESTest.cs" />
+    <Compile Include="Cryptography\RandomFactoryTest.cs" />
     <Compile Include="Cryptography\CryptographyTest.cs" />
+    <Compile Include="Cryptography\HashFactoryTest.cs" />
     <Compile Include="ElementParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ImageHelperTest.cs" />

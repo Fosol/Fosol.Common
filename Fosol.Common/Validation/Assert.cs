@@ -5,6 +5,7 @@ using Fosol.Common.Extensions.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -2487,7 +2488,7 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
             
-            if (value.GetType() != validType)
+            if (validType.IsAssignableFrom(value.GetType()))
                 throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName);
         }
 
@@ -2506,7 +2507,46 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (value.GetType() != validType)
+            if (validType.IsAssignableFrom(value.GetType()))
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
+        }
+
+        /// <summary>
+        /// Assert that the parameter is of the specified type.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
+        /// <param name="type">Parameter type.</param>
+        /// <param name="validType">Valid type.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        public static void IsType(Type type, Type validType, string paramName, string message = null)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!type.IsSubclassOf(validType)
+                && type == validType)
+                throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName);
+        }
+
+        /// <summary>
+        /// Assert that the parameter is of the specified type.
+        /// If not throw System.ArgumentException.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
+        /// <param name="type">Parameter value.</param>
+        /// <param name="validType">Valid type.</param>
+        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="message">Error message describing the exception</param>
+        /// <param name="innerException">Exception that occured that caused this exception.</param>
+        public static void IsType(Type type, Type validType, string paramName, string message, Exception innerException)
+        {
+            if (message != null)
+                message = string.Format(message, paramName);
+
+            if (!type.IsSubclassOf(validType)
+                && type == validType)
                 throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
         }
         #endregion
