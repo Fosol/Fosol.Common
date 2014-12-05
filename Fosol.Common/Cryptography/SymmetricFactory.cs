@@ -13,7 +13,7 @@ namespace Fosol.Common.Cryptography
     /// <summary>
     /// SymmetricFactory class provides a base for encrypting and decrypting data with a symmetric algorithm.
     /// </summary>
-    public abstract class SymmetricFactory
+    public sealed class SymmetricFactory
         : CryptographyFactory
     {
         #region Variables
@@ -77,6 +77,19 @@ namespace Fosol.Common.Cryptography
         #region Constructors
         /// <summary>
         /// Creates a new instance of a SymmetricFactory object.
+        /// 
+        /// Prebuild SymmetricAlgorithms;
+        /// Aes
+        /// AesManaged
+        /// AesCryptoServiceProvider
+        /// DES
+        /// DESCryptoServiceProvider
+        /// RC2
+        /// RC2CryptoServiceProvider
+        /// Rijndael
+        /// RijndaelManaged
+        /// TripleDES
+        /// TripleDESCryptoServiceProvider
         /// </summary>
         /// <param name="algorithm">SymmetricAlgorithm object.</param>
         /// <param name="isSingleUse">Whether the encrypt and decrypt methods can be used only once before the key and IV values being reset.</param>
@@ -132,7 +145,7 @@ namespace Fosol.Common.Cryptography
         /// <param name="keySize">Size in bytes of the key.</param>
         /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Encrypted data.</returns>
-        public virtual byte[] Encrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16)
+        public byte[] Encrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(password, "password");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
@@ -149,7 +162,7 @@ namespace Fosol.Common.Cryptography
         /// <param name="keySize">Size in bytes of the key.</param>
         /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Encrypted data.</returns>
-        public virtual byte[] Encrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16)
+        public byte[] Encrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
             Fosol.Common.Validation.Assert.IsNotNull(generator, "generator");
@@ -167,7 +180,7 @@ namespace Fosol.Common.Cryptography
         /// <param name="key">Algorithm key.</param>
         /// <param name="iv">Algorithm initialization vector.</param>
         /// <returns>Encrypted data.</returns>
-        public virtual byte[] Encrypt(byte[] data, byte[] key, byte[] iv)
+        public byte[] Encrypt(byte[] data, byte[] key, byte[] iv)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(key, "key");
@@ -264,7 +277,7 @@ namespace Fosol.Common.Cryptography
         /// <param name="keySize">Size in bytes of the key.</param>
         /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Decrypted data.</returns>
-        public virtual byte[] Decrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16)
+        public byte[] Decrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(password, "password");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
@@ -281,7 +294,7 @@ namespace Fosol.Common.Cryptography
         /// <param name="keySize">Size in bytes of the key.</param>
         /// <param name="ivSize">Size in bytes of the initialization vector.</param>
         /// <returns>Decrypted data.</returns>
-        public virtual byte[] Decrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16)
+        public byte[] Decrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
             Fosol.Common.Validation.Assert.IsNotNull(generator, "generator");
@@ -299,7 +312,7 @@ namespace Fosol.Common.Cryptography
         /// <param name="key">Algorithm key.</param>
         /// <param name="iv">Algorithm initialization vector.</param>
         /// <returns>Decrypted data.</returns>
-        public virtual byte[] Decrypt(byte[] data, byte[] key, byte[] iv)
+        public byte[] Decrypt(byte[] data, byte[] key, byte[] iv)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(key, "key");

@@ -85,13 +85,9 @@
     <Compile Include="Converters\SqlDbTypeConverter.cs" />
     <Compile Include="Converters\AssemblyTypeConverter.cs" />
     <Compile Include="Cryptography\CryptographyFactory.cs" />
+    <Compile Include="Cryptography\HashFactory.cs" />
     <Compile Include="Cryptography\ICryptography.cs" />
     <Compile Include="Cryptography\SymmetricFactory.cs" />
-    <Compile Include="Cryptography\Symmetric\AESHelper.cs" />
-    <Compile Include="Cryptography\Symmetric\DESHelper.cs" />
-    <Compile Include="Cryptography\Symmetric\RC2Helper.cs" />
-    <Compile Include="Cryptography\Symmetric\RijndaelHelper.cs" />
-    <Compile Include="Cryptography\Symmetric\TripleDESHelper.cs" />
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Helpers\SetOnce`.cs" />
@@ -103,6 +99,8 @@
     <Compile Include="Security\PasswordUtility.cs" />
     <Compile Include="Serialization\DataContractJsonUtility.cs" />
     <Compile Include="Serialization\DataContractUtility.cs" />
+    <Compile Include="Serialization\XmlSchemaDataType.cs" />
+    <Compile Include="Serialization\XmlSchemaDataTypeAttribute.cs" />
     <Compile Include="Serialization\FormatOption.cs" />
     <Compile Include="Serialization\XmlUtility.cs" />
     <Compile Include="Utilities\RegexUtility.cs" />
@@ -182,6 +180,7 @@
     <Compile Include="UnitTests\TestDataCollection.cs" />
     <Compile Include="UnitTests\ValueTestData`.cs" />
     <Compile Include="UnitTests\ValueTestData.cs" />
+    <Compile Include="Cryptography\RandomFactory.cs" />
     <Compile Include="Validation\AssertPassword.cs" />
     <Compile Include="Validation\Enumerables\Assert.cs" />
     <Compile Include="Validation\UriValidator.cs" />

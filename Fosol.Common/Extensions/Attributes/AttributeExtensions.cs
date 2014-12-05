@@ -42,10 +42,9 @@ namespace Fosol.Common.Extensions.Attributes
         /// </summary>
         /// <typeparam name="T">Type of attribute.</typeparam>
         /// <param name="element">Object to fetch attribute from.</param>
-        /// <param name="attributeType">Type of attribute to look for.</param>
         /// <param name="inherit">If true it will search ancestors of the object for the attribute.</param>
         /// <returns>An array of Attribute.</returns>
-        public static T GetCustomAttribute<T>(this object element, T attributeType, bool inherit = false)
+        public static T GetCustomAttribute<T>(this object element, bool inherit = false)
             where T : Attribute
         {
             return (T)Attribute.GetCustomAttribute(element.GetType(), typeof(T), inherit);

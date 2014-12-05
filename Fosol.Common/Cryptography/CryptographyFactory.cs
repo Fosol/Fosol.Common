@@ -59,21 +59,6 @@ namespace Fosol.Common.Cryptography
         /// Clear that SymmetricAlgorithm.
         /// </summary>
         public abstract void Dispose();
-
-        /// <summary>
-        /// Generates a random salt value to use.
-        /// Uses RNGCryptoServiceProvider formula to create the salt.
-        /// Use Convert.ToBase64String() method to convert the byte array to a string.
-        /// </summary>
-        /// <param name="size">Size of the salt.</param>
-        /// <returns>A new salt value.</returns>
-        public static byte[] GenerateSalt(int size = 16)
-        {
-            var array = new byte[size];
-            var generator = new RNGCryptoServiceProvider();
-            generator.GetBytes(array);
-            return array;
-        }
         #endregion
 
         #region Operators
