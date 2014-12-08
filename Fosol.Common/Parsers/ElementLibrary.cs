@@ -70,7 +70,7 @@ namespace Fosol.Common.Parsers
         public static int Add(Type type)
         {
             Common.Validation.Assert.IsNotNull(type, "type");
-            Common.Validation.Assert.IsAssignableFromType(type, typeof(FormatElement), "type");
+            Common.Validation.Assert.IsAssignable(type, typeof(FormatElement), "type");
             Common.Validation.Assert.HasAttribute(type, typeof(ElementAttribute), "type");
 
             var attr = type.GetCustomAttribute(typeof(ElementAttribute)) as ElementAttribute;

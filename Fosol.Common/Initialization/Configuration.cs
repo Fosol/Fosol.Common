@@ -225,9 +225,32 @@ namespace Fosol.Common.Initialization
         /// <typeparam name="T">Type of value you want.</typeparam>
         /// <param name="config">NameValueCollection containing configuration information.</param>
         /// <param name="key">Key name to identify the configuration value.</param>
+        /// <returns>The value for the specified key.</returns>
+        public static T GetValue<T>(this NameValueCollection config, string key)
+        {
+            var value = config[key];
+
+            if (value == null)
+                return default(T);
+
+            T result = default(T);
+
+            if (Utilities.ReflectionUtility.TryConvert<T>(value, ref result))
+                return result;
+
+            throw new Exceptions.ConfigurationException(string.Format("The value of key '{0}' cannot be converted to type '{1}'", key, typeof(T).Name));
+        }
+
+        /// <summary>
+        /// Get the value for the specified key and convert it into the appropriate type.
+        /// </summary>
+        /// <exception cref="Exceptions.ConfigurationException">The configuration value for the specified key is not valid.</exception>
+        /// <typeparam name="T">Type of value you want.</typeparam>
+        /// <param name="config">NameValueCollection containing configuration information.</param>
+        /// <param name="key">Key name to identify the configuration value.</param>
         /// <param name="defaultValue">Default value if one is not specified in the configuration.</param>
         /// <returns>The value for the specified key.</returns>
-        public static T GetValue<T>(NameValueCollection config, string key, T defaultValue)
+        public static T GetValue<T>(this NameValueCollection config, string key, T defaultValue)
         {
             var value = config[key];
 
@@ -252,7 +275,7 @@ namespace Fosol.Common.Initialization
         /// <param name="key">Key name to identify the configuration value.</param>
         /// <param name="defaultValueMethod">A method that will return a default value.</param>
         /// <returns>The value for the specified key.</returns>
-        public static T GetValue<T>(NameValueCollection config, string key, DefaultValueMethod<T> defaultValueMethod)
+        public static T GetValue<T>(this NameValueCollection config, string key, DefaultValueMethod<T> defaultValueMethod)
         {
             var value = config[key];
 
@@ -278,7 +301,7 @@ namespace Fosol.Common.Initialization
         /// <param name="minimum">The minimum value the key can be configured with.</param>
         /// <param name="maximum">The maximum value the key can be configured with.</param>
         /// <returns>The value for the specified key.</returns>
-        public static int GetValue(NameValueCollection config, string key, int defaultValue, int? minimum, int? maximum)
+        public static int GetValue(this NameValueCollection config, string key, int defaultValue, int? minimum, int? maximum)
         {
             var value = GetValue(config, key, defaultValue);
 
@@ -302,7 +325,7 @@ namespace Fosol.Common.Initialization
         /// <param name="minimum">The minimum value the key can be configured with.</param>
         /// <param name="maximum">The maximum value the key can be configured with.</param>
         /// <returns>The value for the specified key.</returns>
-        public static int GetValue(NameValueCollection config, string key, DefaultValueMethod<int> defaultValueMethod, int? minimum, int? maximum)
+        public static int GetValue(this NameValueCollection config, string key, DefaultValueMethod<int> defaultValueMethod, int? minimum, int? maximum)
         {
             var value = GetValue(config, key, defaultValueMethod);
 

@@ -88,7 +88,7 @@ namespace Fosol.Common.Cryptography
         public HashFactory(HashAlgorithm algorithm, Type derivedBytes)
         {
             Fosol.Common.Validation.Assert.IsNotNull(algorithm, "algorithm");
-            Fosol.Common.Validation.Assert.IsType(derivedBytes, typeof(DeriveBytes), "derivedBytes");
+            Fosol.Common.Validation.Assert.IsAssignable(derivedBytes, typeof(DeriveBytes), "derivedBytes");
             _Algorithm = algorithm;
             _GeneratorType = derivedBytes;
             _Iterations = 1000;

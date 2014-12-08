@@ -159,7 +159,7 @@ namespace Fosol.Common.Security
             if (_Validator != null)
                 return _Validator.IsMatch(password);
 
-            return this.Validate(new PasswordStrength(password));
+            return this.Validate(new PasswordComposition(password));
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Fosol.Common.Security
         /// </summary>
         /// <param name="strength">Strength of the password being validated.</param>
         /// <returns>True if the password strength is valid.</returns>
-        private bool Validate(PasswordStrength strength)
+        private bool Validate(PasswordComposition strength)
         {
             return this.MinLength <= strength.Length
                 && this.MaxLength >= strength.Length

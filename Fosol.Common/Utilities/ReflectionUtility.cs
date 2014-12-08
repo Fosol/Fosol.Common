@@ -258,7 +258,7 @@ namespace Fosol.Common.Utilities
             where T : class
         {
             Validation.Assert.IsNotNull(type, "type");
-            Validation.Assert.IsAssignableFromType(type, typeof(T), "baseType");
+            Validation.Assert.IsAssignable(type, typeof(T), "baseType");
 
             T result = null;
             Exception exception = null;
@@ -370,7 +370,7 @@ namespace Fosol.Common.Utilities
         {
             Validation.Assert.IsNotNullOrEmpty(typeName, "typeName");
             var type = Type.GetType(typeName);
-            Validation.Assert.IsNotNull(type, "typeName");
+            Validation.Assert.IsNotNull(type, "typeName", "This is not a valid type.");
             return ConstructObject<T>(type, args);
         }
 #endif

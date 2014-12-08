@@ -30,7 +30,7 @@ namespace Fosol.Common.Configuration
             foreach (var cet in configurationElementType)
             {
                 // Make sure that each type is a ConfigurationElement.
-                Fosol.Common.Validation.Assert.IsAssignableFromType(cet, typeof(ConfigurationElement), "configurationElementType");
+                Fosol.Common.Validation.Assert.IsAssignable(cet, typeof(ConfigurationElement), "configurationElementType");
 
                 // Check if they have a ConfigurationElementAttribute.
                 var attr = cet.GetCustomAttributes(typeof(ConfigurationElementAttribute), false).FirstOrDefault() as ConfigurationElementAttribute;

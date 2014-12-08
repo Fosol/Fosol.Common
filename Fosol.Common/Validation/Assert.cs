@@ -2487,8 +2487,8 @@ namespace Fosol.Common.Validation
         {
             if (message != null)
                 message = string.Format(message, paramName);
-            
-            if (!validType.IsAssignableFrom(value.GetType()))
+
+            if (!(value.GetType() == validType))
                 throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName);
         }
 
@@ -2507,7 +2507,7 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (!validType.IsAssignableFrom(value.GetType()))
+            if (!(value.GetType() == validType))
                 throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
         }
 
@@ -2525,8 +2525,7 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (!type.IsSubclassOf(validType)
-                && type == validType)
+            if (!(type == validType))
                 throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName);
         }
 
@@ -2545,8 +2544,7 @@ namespace Fosol.Common.Validation
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (!type.IsSubclassOf(validType)
-                && type == validType)
+            if (!(type == validType))
                 throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
         }
         #endregion
@@ -2684,9 +2682,9 @@ namespace Fosol.Common.Validation
         }
         #endregion
 
-        #region IsAssignableFromType
+        #region IsAssignable
         /// <summary>
-        /// Assert that the parameter is assignable from the specified type.
+        /// Assert that the parameter is of the specified type.
         /// If not throw System.ArgumentException.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
@@ -2694,7 +2692,7 @@ namespace Fosol.Common.Validation
         /// <param name="validType">Valid type.</param>
         /// <param name="paramName">Name of the parameter being tested.</param>
         /// <param name="message">Error message describing the exception</param>
-        public static void IsAssignableFromType(object value, Type validType, string paramName, string message = null)
+        public static void IsAssignable(object value, Type validType, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -2704,7 +2702,7 @@ namespace Fosol.Common.Validation
         }
 
         /// <summary>
-        /// Assert that the parameter is assignable from the specified type.
+        /// Assert that the parameter is of the specified type.
         /// If not throw System.ArgumentException.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
@@ -2713,7 +2711,7 @@ namespace Fosol.Common.Validation
         /// <param name="paramName">Name of the parameter being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">Exception that occured that caused this exception.</param>
-        public static void IsAssignableFromType(object value, Type validType, string paramName, string message, Exception innerException)
+        public static void IsAssignable(object value, Type validType, string paramName, string message, Exception innerException)
         {
             if (message != null)
                 message = string.Format(message, paramName);
@@ -2723,39 +2721,41 @@ namespace Fosol.Common.Validation
         }
 
         /// <summary>
-        /// Assert that the parameter is assignable from the specified type.
+        /// Assert that the parameter is of the specified type.
         /// If not throw System.ArgumentException.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
-        /// <param name="valueType">Parameter value type.</param>
+        /// <param name="type">Parameter type.</param>
         /// <param name="validType">Valid type.</param>
         /// <param name="paramName">Name of the parameter being tested.</param>
         /// <param name="message">Error message describing the exception</param>
-        public static void IsAssignableFromType(Type valueType, Type validType, string paramName, string message = null)
+        public static void IsAssignable(Type type, Type validType, string paramName, string message = null)
         {
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (!validType.IsAssignableFrom(valueType))
+            if (!type.IsSubclassOf(validType)
+                && type == validType)
                 throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName);
         }
 
         /// <summary>
-        /// Assert that the parameter is assignable from the specified type.
+        /// Assert that the parameter is of the specified type.
         /// If not throw System.ArgumentException.
         /// </summary>
         /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
-        /// <param name="valueType">Parameter value type.</param>
+        /// <param name="type">Parameter value.</param>
         /// <param name="validType">Valid type.</param>
         /// <param name="paramName">Name of the parameter being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">Exception that occured that caused this exception.</param>
-        public static void IsAssignableFromType(Type valueType, Type validType, string paramName, string message, Exception innerException)
+        public static void IsAssignable(Type type, Type validType, string paramName, string message, Exception innerException)
         {
             if (message != null)
                 message = string.Format(message, paramName);
 
-            if (!validType.IsAssignableFrom(valueType))
+            if (!type.IsSubclassOf(validType)
+                && type == validType)
                 throw new ArgumentException(message ?? String.Format(Resources.Multilingual.Exception_Validation_Invalid_Type, paramName), paramName, innerException);
         }
         #endregion

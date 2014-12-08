@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 namespace Fosol.Common.Security
 {
     /// <summary>
-    /// PasswordStrength provides a way to define how strong a given password is.
+    /// PasswordComposition class provides a way to catalog the composition of a given password.
+    /// This provides a way to determine the strength of the password.
     /// </summary>
-    public class PasswordStrength
+    public class PasswordComposition
     {
         #region Variables
         #endregion
@@ -61,7 +62,7 @@ namespace Fosol.Common.Security
         /// Creates a new instance of a PasswordStrength object.
         /// </summary>
         /// <param name="password">Password to evaluate the strength of.  The password is not stored.</param>
-        public PasswordStrength(string password)
+        public PasswordComposition(string password)
         {
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(password, "password");
 
@@ -110,6 +111,16 @@ namespace Fosol.Common.Security
                 base_strength += Math.Abs(this.UppercaseCharacters / this.LowercaseCharacters) * 5;
 
             return base_strength > 100 ? 100 : base_strength;
+        }
+
+        /// <summary>
+        /// Creates a new instance of a PasswordComposition class for the specified password.
+        /// </summary>
+        /// <param name="password">Password to evaluate.</param>
+        /// <returns>New instance of a PasswordComposition class.</returns>
+        public static PasswordComposition Evaluate(string password)
+        {
+            return new PasswordComposition(password);
         }
         #endregion
 
