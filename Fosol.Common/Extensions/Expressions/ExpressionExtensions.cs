@@ -146,22 +146,18 @@ namespace Fosol.Common.Extensions.Expressions
         {
             var new_expression = (expression.Expression != null) ? expression.Expression.ReplaceParameter(oldParameter, newParameter) : null;
 
-            // This will probably not work for more complicated lambda expressions.
-            if (expression.Member.ReflectedType == oldParameter.Type)
+            var m = new_expression.Type;
+
+            if (new_expression.Type == newParameter.Type)
             {
-                System.Reflection.MemberInfo mi;
-                switch (expression.Member.MemberType)
-                {
-                    case (System.Reflection.MemberTypes.Property):
-                        mi = newParameter.Type.GetProperty(expression.Member.Name);
-                        break;
-                    case (System.Reflection.MemberTypes.Field):
-                        mi = newParameter.Type.GetField(expression.Member.Name);
-                        break;
-                    default:
-                        mi = expression.Member;
-                        break;
-                }
+                // If the new expression is of the new parameter type we need to use the method information for the new expression.
+                var mi = newParameter.Type.GetMember(expression.Member.Name).First();
+                return Expression.MakeMemberAccess(new_expression, mi);
+            }
+            else if (new_expression.Type != expression.Member.ReflectedType)
+            {
+                // If the new expression has a different type than the old expression we need to update the method info with the new expression type.
+                var mi = new_expression.Type.GetMember(expression.Member.Name).First();
                 return Expression.MakeMemberAccess(new_expression, mi);
             }
 

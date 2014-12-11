@@ -105,6 +105,7 @@
     <Compile Include="Serialization\XmlSchemaDataTypeAttribute.cs" />
     <Compile Include="Serialization\FormatOption.cs" />
     <Compile Include="Serialization\XmlUtility.cs" />
+    <Compile Include="UnitTests\TestDataCollection%27.cs" />
     <Compile Include="Utilities\RegexUtility.cs" />
     <Compile Include="Utilities\SqlUtility.cs" />
     <Compile Include="Utilities\UrlUtility.cs" />
