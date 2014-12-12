@@ -10,10 +10,10 @@ namespace Fosol.Common.UnitTests
     /// TestDataCollection provides a simple add only collection for test data.
     /// </summary>
     public class TestDataCollection
-        : IEnumerable<TestData>
+        : IEnumerable<ITestData>
     {
         #region Variables
-        private List<TestData> _Items;
+        private List<ITestData> _Items;
         #endregion
 
         #region Properties
@@ -25,7 +25,7 @@ namespace Fosol.Common.UnitTests
         /// </summary>
         public TestDataCollection()
         {
-            _Items = new List<TestData>();
+            _Items = new List<ITestData>();
         }
         #endregion
 
@@ -34,7 +34,7 @@ namespace Fosol.Common.UnitTests
         /// Returns the enumerator for this collection.
         /// </summary>
         /// <returns>IEnumerator of type TestData.</returns>
-        public IEnumerator<TestData> GetEnumerator()
+        public IEnumerator<ITestData> GetEnumerator()
         {
             return _Items.GetEnumerator();
         }
@@ -52,7 +52,7 @@ namespace Fosol.Common.UnitTests
         /// Add the specified TestData to this collection.
         /// </summary>
         /// <param name="item">TestData object.</param>
-        public void Add(TestData item)
+        public void Add(ITestData item)
         {
             _Items.Add(item);
         }
@@ -61,7 +61,7 @@ namespace Fosol.Common.UnitTests
         /// Add the specified range of items to this collection.
         /// </summary>
         /// <param name="items">IEnumerable of type TestData object.</param>
-        public void AddRange(IEnumerable<TestData> items)
+        public void AddRange(IEnumerable<ITestData> items)
         {
             _Items.AddRange(items);
         }

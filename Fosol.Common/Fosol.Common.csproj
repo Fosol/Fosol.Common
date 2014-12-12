@@ -105,6 +105,8 @@
     <Compile Include="Serialization\XmlSchemaDataTypeAttribute.cs" />
     <Compile Include="Serialization\FormatOption.cs" />
     <Compile Include="Serialization\XmlUtility.cs" />
+    <Compile Include="UnitTests\ITestData.cs" />
+    <Compile Include="UnitTests\TestData%27.cs" />
     <Compile Include="UnitTests\TestDataCollection%27.cs" />
     <Compile Include="Utilities\RegexUtility.cs" />
     <Compile Include="Utilities\SqlUtility.cs" />
@@ -178,10 +180,9 @@
     <Compile Include="Parsers\IFormat.cs" />
     <Compile Include="Serialization\CData.cs" />
     <Compile Include="Text\GlobalConstant.cs" />
-    <Compile Include="UnitTests\TestData.cs" />
     <Compile Include="UnitTests\TestDataCollection.cs" />
-    <Compile Include="UnitTests\ValueTestData`.cs" />
-    <Compile Include="UnitTests\ValueTestData.cs" />
+    <Compile Include="UnitTests\CompareTestData%27.cs" />
+    <Compile Include="UnitTests\CompareTestData.cs" />
     <Compile Include="Cryptography\RandomFactory.cs" />
     <Compile Include="Validation\AssertPassword.cs" />
     <Compile Include="Validation\Enumerables\Assert.cs" />

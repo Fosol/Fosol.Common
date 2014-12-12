@@ -7,25 +7,20 @@ using System.Threading.Tasks;
 namespace Fosol.Common.UnitTests
 {
     /// <summary>
-    /// ValueTestData class provides a generic way to test a value and confirm it is equal to the expected result.
+    /// CompareTestData class provides a generic way to test a value and confirm it is equal to the expected result.
     /// </summary>
     /// <typeparam name="T">Type of value to test.</typeparam>
-    public class ValueTestData<T>
-        : TestData
+    public class CompareTestData<T>
+        : TestData<T>
     {
         #region Variables
         #endregion
 
         #region Properties
         /// <summary>
-        /// get/set - The value to test.
-        /// </summary>
-        public T Value { get; set; }
-
-        /// <summary>
         /// get/set - The expected result after the test is run.
         /// </summary>
-        public T ExpectedResult { get; set; }
+        public T ExpectedValue { get; set; }
         #endregion
 
         #region Constructors
@@ -33,7 +28,7 @@ namespace Fosol.Common.UnitTests
         /// Creates a new instance of a ValueTestData class.
         /// </summary>
         /// <param name="value">The value to test.</param>
-        public ValueTestData(T value)
+        public CompareTestData(T value)
             : this(value, value)
         {
         }
@@ -42,16 +37,24 @@ namespace Fosol.Common.UnitTests
         /// Creates a new instance of a ValueTestData class.
         /// </summary>
         /// <param name="value">The value to test.</param>
-        /// <param name="expectedResult">The expected result after the test is run.</param>
-        public ValueTestData(T value, T expectedResult)
+        /// <param name="expectedValue">The expected result after the test is run.</param>
+        public CompareTestData(T value, T expectedValue)
+            : base(value)
         {
-            this.Value = value;
-            this.ExpectedResult = expectedResult;
+            this.ExpectedValue = expectedValue;
         }
         #endregion
 
         #region Methods
+        public bool AreEqual(Func<T, T> func)
+        {
+            return func(this.Value).Equals(this.ExpectedValue);
+        }
 
+        public bool AreEqual(T value)
+        {
+            return value.Equals(this.ExpectedValue);
+        }
         #endregion
 
         #region Operators

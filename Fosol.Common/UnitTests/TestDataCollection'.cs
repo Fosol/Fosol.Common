@@ -11,7 +11,7 @@ namespace Fosol.Common.UnitTests
     /// </summary>
     public class TestDataCollection<T>
         : IEnumerable<T>
-        where T: TestData
+        where T: ITestData
     {
         #region Variables
         private List<T> _Items;
