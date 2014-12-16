@@ -6,7 +6,7 @@ using System.Text;
 namespace Fosol.Common.UnitTests.Web.Data
 {
     class UriAuthorityExample
-        : Fosol.Common.UnitTests.ValueTestData<string>
+        : Fosol.Common.UnitTests.CompareTestData<string>
     {
         #region Variables
         #endregion
@@ -20,8 +20,8 @@ namespace Fosol.Common.UnitTests.Web.Data
         {
         }
 
-        public UriAuthorityExample(string authority, string expectedResult)
-            : base(authority, expectedResult)
+        public UriAuthorityExample(string authority, string ExpectedValue)
+            : base(authority, ExpectedValue)
         {
 
         }

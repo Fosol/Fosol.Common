@@ -34,7 +34,7 @@ namespace Fosol.Common.UnitTests.Web
                 {
                     var builder = new Fosol.Common.Net.UriBuilder(test.Value);
 
-                    Assert.AreEqual(test.ExpectedResult, builder.ToString(), "Original value: '{0}'", test.Value);
+                    Assert.AreEqual(test.ExpectedValue, builder.ToString(), "Original value: '{0}'", test.Value);
                 }
                 catch
                 {
@@ -53,7 +53,7 @@ namespace Fosol.Common.UnitTests.Web
                     var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Scheme = test.Value;
 
-                    Assert.AreEqual(test.ExpectedResult, builder.Scheme, "Original value: '{0}'", test.Value);
+                    Assert.AreEqual(test.ExpectedValue, builder.Scheme, "Original value: '{0}'", test.Value);
                 }
                 catch
                 {
@@ -72,7 +72,7 @@ namespace Fosol.Common.UnitTests.Web
                     var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Username = test.Value;
 
-                    Assert.AreEqual(test.ExpectedResult, builder.Username, "Original value: '{0}'", test.Value);
+                    Assert.AreEqual(test.ExpectedValue, builder.Username, "Original value: '{0}'", test.Value);
                 }
                 catch
                 {
@@ -91,7 +91,7 @@ namespace Fosol.Common.UnitTests.Web
                     var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Authority = test.Value;
 
-                    Assert.AreEqual(test.ExpectedResult, builder.Authority, "Original value: '{0}'", test.Value);
+                    Assert.AreEqual(test.ExpectedValue, builder.Authority, "Original value: '{0}'", test.Value);
                 }
                 catch
                 {
@@ -110,7 +110,7 @@ namespace Fosol.Common.UnitTests.Web
                     var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Host = test.Value;
 
-                    Assert.AreEqual(test.ExpectedResult, builder.Host, "Original value: '{0}'", test.Value);
+                    Assert.AreEqual(test.ExpectedValue, builder.Host, "Original value: '{0}'", test.Value);
                 }
                 catch
                 {
@@ -129,7 +129,7 @@ namespace Fosol.Common.UnitTests.Web
                     var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Path = test.Value;
 
-                    Assert.AreEqual(test.ExpectedResult, builder.Path, "Original value: '{0}'", test.Value);
+                    Assert.AreEqual(test.ExpectedValue, builder.Path, "Original value: '{0}'", test.Value);
                 }
                 catch
                 {
@@ -167,7 +167,7 @@ namespace Fosol.Common.UnitTests.Web
                     var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Query = test.Value;
 
-                    Assert.AreEqual(test.ExpectedResult, builder.Query, "Original value: '{0}'", test.Value);
+                    Assert.AreEqual(test.ExpectedValue, builder.Query, "Original value: '{0}'", test.Value);
                 }
                 catch
                 {
@@ -186,7 +186,7 @@ namespace Fosol.Common.UnitTests.Web
                     var builder = new Fosol.Common.Net.UriBuilder();
                     builder.Fragment = test.Value;
 
-                    Assert.AreEqual(test.ExpectedResult, builder.Fragment, "Original value: '{0}'", test.Value);
+                    Assert.AreEqual(test.ExpectedValue, builder.Fragment, "Original value: '{0}'", test.Value);
                 }
                 catch
                 {

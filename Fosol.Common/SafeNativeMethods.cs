@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common
 {
     /// <summary>
     /// A number of safe native methods.

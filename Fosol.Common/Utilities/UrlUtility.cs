@@ -114,7 +114,7 @@ namespace Fosol.Common.Utilities
             if (relative[relative.Length - 1] == '/')
                 relative = relative.Substring(0, relative.Length - 1);
 
-            return virtual_domain_path + "/" + relative;
+            return virtual_domain_path + (relative[0] != '/' ? "/" : string.Empty) + relative;
         }
 
         /// <summary>

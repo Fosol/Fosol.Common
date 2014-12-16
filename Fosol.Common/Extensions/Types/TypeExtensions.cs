@@ -12,6 +12,20 @@ namespace Fosol.Common.Extensions.Types
     /// </summary>
     public static class TypeExtensions
     {
+
+#if WINDOWS_APP || WINDOWS_PHONE_APP
+        #region Methods
+        public static bool IsSubclassOf(this Type type, Type subclassType)
+        {
+            return type.GetTypeInfo().IsSubclassOf(subclassType);
+        }
+
+        public static MemberInfo[] GetMember(this Type type, string name)
+        {
+            return type.GetTypeInfo().DeclaredMembers.Where(m => m.Name == name).ToArray();
+        }
+        #endregion
+#else
         #region Methods
         /// <summary>
         /// Checks to see if the Type has a empty constructor.
@@ -187,5 +201,6 @@ namespace Fosol.Common.Extensions.Types
             return type.IsAbstract && type.IsSealed;
         }
         #endregion
+#endif
     }
 }

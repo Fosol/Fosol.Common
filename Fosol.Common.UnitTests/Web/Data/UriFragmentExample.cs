@@ -6,7 +6,7 @@ using System.Text;
 namespace Fosol.Common.UnitTests.Web.Data
 {
     class UriFragmentExample
-        : Fosol.Common.UnitTests.ValueTestData<string>
+        : Fosol.Common.UnitTests.CompareTestData<string>
     {
         #region Variables
         #endregion
@@ -20,8 +20,8 @@ namespace Fosol.Common.UnitTests.Web.Data
         {
         }
 
-        public UriFragmentExample(string fragment, string expectedResult)
-            : base(fragment, expectedResult)
+        public UriFragmentExample(string fragment, string ExpectedValue)
+            : base(fragment, ExpectedValue)
         {
 
         }

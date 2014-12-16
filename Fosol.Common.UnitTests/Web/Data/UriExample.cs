@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Fosol.Common.UnitTests.Web.Data
 {
     class UriExample
-        : Fosol.Common.UnitTests.ValueTestData<string>
+        : Fosol.Common.UnitTests.CompareTestData<string>
     {
         #region Variables
         private KeyValuePair<string, string[]>[] _QueryParameters = new KeyValuePair<string, string[]>[0];
@@ -27,8 +27,8 @@ namespace Fosol.Common.UnitTests.Web.Data
         {
         }
 
-        public UriExample(string uri, string expectedResult)
-            : base(uri, expectedResult)
+        public UriExample(string uri, string ExpectedValue)
+            : base(uri, ExpectedValue)
         {
         }
         #endregion

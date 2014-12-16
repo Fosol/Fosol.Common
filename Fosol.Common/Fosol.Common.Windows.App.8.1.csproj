@@ -49,6 +49,7 @@
     <Compile Include="Extensions\Numbers\NumberExtensions.cs" />
     <Compile Include="Extensions\Streams\StreamExtensions.cs" />
     <Compile Include="Extensions\Strings\StringExtensions.cs" />
+    <Compile Include="Extensions\Types\TypeExtensions.cs" />
     <Compile Include="Extensions\UriBuilders\UriBuilderExtensions.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Helpers\SetOnce`.cs" />
@@ -103,10 +104,12 @@
     <Compile Include="UI\Xaml\Extensions\StateRestoreExtensions.cs" />
     <Compile Include="UI\Xaml\StateApplication.cs" />
     <Compile Include="UI\Xaml\StateRestoreOption.cs" />
-    <Compile Include="UnitTests\TestData.cs" />
+    <Compile Include="UnitTests\CompareTestData%27.cs" />
+    <Compile Include="UnitTests\CompareTestData.cs" />
+    <Compile Include="UnitTests\ITestData.cs" />
+    <Compile Include="UnitTests\TestData%27.cs" />
+    <Compile Include="UnitTests\TestDataCollection%27.cs" />
     <Compile Include="UnitTests\TestDataCollection.cs" />
-    <Compile Include="UnitTests\ValueTestData.cs" />
-    <Compile Include="UnitTests\ValueTestData`.cs" />
     <Compile Include="Utilities\DiagnosticsUtility.cs" />
     <Compile Include="Utilities\RegexUtility.cs" />
     <Compile Include="Utilities\StringUtility.cs" />

@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common
 {
     /// <summary>
     /// SpecialEnum abstract class provides a way to handle complex Enum operations.

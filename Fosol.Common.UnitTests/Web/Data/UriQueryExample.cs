@@ -6,7 +6,7 @@ using System.Text;
 namespace Fosol.Common.UnitTests.Web.Data
 {
     class UriQueryExample
-        : Fosol.Common.UnitTests.ValueTestData<string>
+        : Fosol.Common.UnitTests.CompareTestData<string>
     {
         #region Variables
         private KeyValuePair<string, string[]>[] _QueryParameters = new KeyValuePair<string, string[]>[0];
@@ -26,8 +26,8 @@ namespace Fosol.Common.UnitTests.Web.Data
         {
         }
 
-        public UriQueryExample(string query, string expectedResult)
-            : base(query, expectedResult)
+        public UriQueryExample(string query, string ExpectedValue)
+            : base(query, ExpectedValue)
         {
 
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Helpers
+namespace Fosol.Common
 {
     /// <summary>
     /// SetOnce class provides a way to ensure a value is only initialized one time.

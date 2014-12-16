@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+#if WINDOWS_APP || WINDOWS_PHONE_APP
+using Fosol.Common.Extensions.Types;
+#endif
 
 namespace Fosol.Common.Extensions.Expressions
 {
@@ -154,7 +157,7 @@ namespace Fosol.Common.Extensions.Expressions
                 var mi = newParameter.Type.GetMember(expression.Member.Name).First();
                 return Expression.MakeMemberAccess(new_expression, mi);
             }
-            else if (new_expression.Type != expression.Member.ReflectedType)
+            else if (new_expression.Type != expression.Member.DeclaringType)
             {
                 // If the new expression has a different type than the old expression we need to update the method info with the new expression type.
                 var mi = new_expression.Type.GetMember(expression.Member.Name).First();

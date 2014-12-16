@@ -6,7 +6,7 @@ using System.Text;
 namespace Fosol.Common.UnitTests.Web.Data
 {
     class UriHostExample
-        : Fosol.Common.UnitTests.ValueTestData<string>
+        : Fosol.Common.UnitTests.CompareTestData<string>
     {
         #region Variables
         #endregion
@@ -20,8 +20,8 @@ namespace Fosol.Common.UnitTests.Web.Data
         {
         }
 
-        public UriHostExample(string host, string expectedResult)
-            : base(host, expectedResult)
+        public UriHostExample(string host, string ExpectedValue)
+            : base(host, ExpectedValue)
         {
 
         }

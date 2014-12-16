@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Fosol.Common.UnitTests.Web.Data
 {
     class UriPathExample
-        : Fosol.Common.UnitTests.ValueTestData<string>
+        : Fosol.Common.UnitTests.CompareTestData<string>
     {
         #region Variables
         #endregion
@@ -22,8 +22,8 @@ namespace Fosol.Common.UnitTests.Web.Data
         {
         }
 
-        public UriPathExample(string path, string expectedResult)
-            : base(path, expectedResult)
+        public UriPathExample(string path, string ExpectedValue)
+            : base(path, ExpectedValue)
         {
         }
         #endregion
