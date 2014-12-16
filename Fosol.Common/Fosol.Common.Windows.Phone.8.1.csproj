@@ -83,11 +83,14 @@
     <Compile Include="Extensions\Expressions\ExpressionExtensions.cs" />
     <Compile Include="Extensions\Expressions\PredicateBuilder.cs" />
     <Compile Include="Extensions\Types\TypeExtensions.cs" />
+    <Compile Include="Helpers\ReflectionHelper.cs" />
+    <Compile Include="Helpers\RegexHelper.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Helpers\WindowsAppHelper.cs" />
     <Compile Include="IO\ApplicationState.cs" />
     <Compile Include="Collections\NameValueCollection.cs" />
     <Compile Include="Collections\StateDictionary%27.cs" />
     <Compile Include="Collections\StateDictionary.cs" />
-    <Compile Include="Helpers\SetOnce`.cs" />
     <Compile Include="IO\SavedState%27.cs" />
     <Compile Include="IO\SavedState.cs" />
     <Compile Include="Extensions\Bytes\ByteExtensions.cs" />
@@ -123,6 +126,7 @@
     <Compile Include="Serialization\DataContractJsonUtility.cs" />
     <Compile Include="Serialization\DataContractUtility.cs" />
     <Compile Include="Serialization\FormatOption.cs" />
+    <Compile Include="SetOnce`.cs" />
     <Compile Include="Text\GlobalConstant.cs" />
     <Compile Include="Threading\IdentityInt.cs" />
     <Compile Include="Threading\IdentityLong.cs" />
@@ -141,10 +145,6 @@
     <Compile Include="UnitTests\TestDataCollection%27.cs" />
     <Compile Include="UnitTests\TestDataCollection.cs" />
     <Compile Include="Utilities\DiagnosticsUtility.cs" />
-    <Compile Include="Utilities\ReflectionUtility.cs" />
-    <Compile Include="Utilities\RegexUtility.cs" />
-    <Compile Include="Utilities\StringUtility.cs" />
-    <Compile Include="Utilities\WindowsAppUtility.cs" />
     <Compile Include="Validation\Assert.cs" />
     <Compile Include="Validation\AssertFormat.cs" />
     <Compile Include="Validation\Enumerables\Assert.cs" />

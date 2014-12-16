@@ -12,12 +12,12 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Utilities
+namespace Fosol.Common.Helpers
 {
     /// <summary>
     /// Helper methods for PropertyInfo objects.
     /// </summary>
-    public static class ReflectionUtility
+    public static class ReflectionHelper
     {
         #region Methods
 #if WINDOWS_APP || WINDOWS_PHONE_APP

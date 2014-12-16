@@ -109,7 +109,7 @@ namespace Fosol.Common.Cryptography
             Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
             Fosol.Common.Validation.Assert.MinRange(salt.Length, 16, "salt.Length");
 
-            var generator = (DeriveBytes)Fosol.Common.Utilities.ReflectionUtility.ConstructObject(_GeneratorType, new object[] { data, salt, this.Iterations });
+            var generator = (DeriveBytes)Fosol.Common.Helpers.ReflectionHelper.ConstructObject(_GeneratorType, new object[] { data, salt, this.Iterations });
             var key = generator.GetBytes(data.Length + salt.Length);
             return _Algorithm.ComputeHash(key);
         }

@@ -78,7 +78,7 @@ namespace Fosol.Common.Configuration
         protected object BaseConstructObject()
         {
             if (_RuntimeObject != null)
-                _RuntimeObject = Utilities.ReflectionUtility.ConstructObject<object>(this.TypeName, _BaseType, this.InitData);
+                _RuntimeObject = Helpers.ReflectionHelper.ConstructObject<object>(this.TypeName, _BaseType, this.InitData);
 
             return _RuntimeObject;
         }

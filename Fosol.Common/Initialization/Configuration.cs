@@ -235,7 +235,7 @@ namespace Fosol.Common.Initialization
 
             T result = default(T);
 
-            if (Utilities.ReflectionUtility.TryConvert<T>(value, ref result))
+            if (Helpers.ReflectionHelper.TryConvert<T>(value, ref result))
                 return result;
 
             throw new Exceptions.ConfigurationException(string.Format("The value of key '{0}' cannot be converted to type '{1}'", key, typeof(T).Name));
@@ -259,7 +259,7 @@ namespace Fosol.Common.Initialization
 
             T result = default(T);
 
-            if (Utilities.ReflectionUtility.TryConvert<T>(value, ref result))
+            if (Helpers.ReflectionHelper.TryConvert<T>(value, ref result))
                 return result;
 
             throw new Exceptions.ConfigurationException(string.Format("The value of key '{0}' cannot be converted to type '{1}'", key, typeof(T).Name));
@@ -284,7 +284,7 @@ namespace Fosol.Common.Initialization
 
             T result = default(T);
 
-            if (Utilities.ReflectionUtility.TryConvert<T>(value, ref result))
+            if (Helpers.ReflectionHelper.TryConvert<T>(value, ref result))
                 return result;
 
             throw new Exceptions.ConfigurationException(string.Format("The value of key '{0}' cannot be converted to type '{1}'", key, typeof(T).Name));

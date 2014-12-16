@@ -34,7 +34,7 @@ namespace Fosol.Common.Configuration
         #region Constructors
         public SpecialConfigurationElementCollection()
         {
-            _ElementTypes = Fosol.Common.Utilities.ReflectionUtility.ConstructObject<T>(typeof(T));
+            _ElementTypes = Fosol.Common.Helpers.ReflectionHelper.ConstructObject<T>(typeof(T));
         }
         #endregion
 
@@ -48,7 +48,7 @@ namespace Fosol.Common.Configuration
         {
             var element_type = _ElementTypes[elementName];
 
-            return Fosol.Common.Utilities.ReflectionUtility.ConstructObject<ConfigurationElement>(element_type);
+            return Fosol.Common.Helpers.ReflectionHelper.ConstructObject<ConfigurationElement>(element_type);
         }
 
         protected override object GetElementKey(ConfigurationElement element)

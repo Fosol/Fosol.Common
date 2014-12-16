@@ -8,12 +8,12 @@ using System.Windows;
 using System.Windows.Resources;
 #endif
 
-namespace Fosol.Common.Utilities
+namespace Fosol.Common.Helpers
 {
     /// <summary>
     /// Provides utility methods to load Assembly Resource Dictionary.
     /// </summary>
-    public static class AssemblyResourceUtility
+    public static class AssemblyResourceHelper
     {
         #region Methods
         #region WP7

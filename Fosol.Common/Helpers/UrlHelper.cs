@@ -6,12 +6,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Fosol.Common.Utilities
+namespace Fosol.Common.Helpers
 {
     /// <summary>
     /// Utility methods to help with URL values.
     /// </summary>
-    public static class UrlUtility
+    public static class UrlHelper
     {
         #region Methods
         /// <summary>
@@ -23,7 +23,7 @@ namespace Fosol.Common.Utilities
         {
             Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(url, "url");
 
-            return !UrlUtility.HasSchema(url) && !UrlUtility.IsRooted(url);
+            return !UrlHelper.HasSchema(url) && !UrlHelper.IsRooted(url);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Fosol.Common.Utilities
         /// <returns>Absolute URL.</returns>
         public static string ToAbsolute(string relative)
         {
-            return UrlUtility.ToAbsolute(HttpContext.Current, relative);
+            return UrlHelper.ToAbsolute(HttpContext.Current, relative);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Fosol.Common.Utilities
         {
             try
             {
-                absolute = UrlUtility.ToAbsolute(relative); 
+                absolute = UrlHelper.ToAbsolute(relative); 
                 return true;
             }
             catch
@@ -152,8 +152,8 @@ namespace Fosol.Common.Utilities
                 + "/(?<url>[^\"'>\\\\]+)(?<delim2>[\"'\\\\]{0,2})"; 
 
             var htmlRegex = new Regex(htmlPattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
-            html = htmlRegex.Replace(html, m => 
-                UrlUtility.InternalReplaceRelativeWithAbsolute(
+            html = htmlRegex.Replace(html, m =>
+                UrlHelper.InternalReplaceRelativeWithAbsolute(
                     htmlRegex.Replace(m.Value, "${attrib}=${delim1}" 
                         + ("~/" + m.Groups["url"].Value)) + "${delim2}")
                 );
@@ -163,7 +163,7 @@ namespace Fosol.Common.Utilities
 
             var cssRegex = new Regex(cssPattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
             html = cssRegex.Replace(html, m =>
-                UrlUtility.InternalReplaceRelativeWithAbsolute(
+                UrlHelper.InternalReplaceRelativeWithAbsolute(
                     cssRegex.Replace(m.Value, "@import url(" 
                         + ("~/" + m.Groups["url"].Value)) + ")")
                 ); 
@@ -180,7 +180,7 @@ namespace Fosol.Common.Utilities
         private static string InternalReplaceRelativeWithAbsolute(string relative)
         {
             string absolute_url;
-            if (UrlUtility.TryToConvertToAbsolute(relative, out absolute_url))
+            if (UrlHelper.TryToConvertToAbsolute(relative, out absolute_url))
                 return absolute_url;
 
             return relative;
