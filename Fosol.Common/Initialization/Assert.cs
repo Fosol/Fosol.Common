@@ -521,14 +521,14 @@ namespace Fosol.Common.Initialization
         #endregion
 
         #region Value Methods
-        #region IsNotDefault
+        #region IsNotNull
         /// <summary>
         /// Assert that if the value is null that it is instead the defaultValue.
         /// Use this method if the object is automatically passed by reference.
         /// </summary>
         /// <param name="value">The parameter value to set to the default value if it's null.</param>
         /// <param name="defaultValue">Default value to use if the original value is null.</param>
-        public static object IsNotDefault(object value, object defaultValue)
+        public static object IsNotNull(object value, object defaultValue)
         {
             if (value == null)
                 return defaultValue;
@@ -543,14 +543,16 @@ namespace Fosol.Common.Initialization
         /// <typeparam name="T">Type of object value.</typeparam>
         /// <param name="value">The parameter value to set to the default value if it's null.</param>
         /// <param name="defaultValue">Default value to use if the original value is null.</param>
-        public static T IsNotDefault<T>(T value, T defaultValue)
+        public static T IsNotNull<T>(T value, T defaultValue)
         {
             if (value == null)
                 return defaultValue;
 
             return value;
         }
+        #endregion
 
+        #region IsNotDefault
         /// <summary>
         /// Assert that if the value is default(decimal) then it should be set to the defaultValue.
         /// </summary>
@@ -685,14 +687,14 @@ namespace Fosol.Common.Initialization
         }
         #endregion
 
-        #region IsNotDefaultOrEmpty
+        #region IsNotNullOrEmpty
         /// <summary>
         /// Assert that if the value is null or empty that it is instead the defaultValue.
         /// Use this method if the object is automatically passed by reference.
         /// </summary>
         /// <param name="value">The parameter value to set to the default value if it's null.</param>
         /// <param name="defaultValue">Default value to use if the original value is null.</param>
-        public static string IsNotDefaultOrEmpty(string value, string defaultValue)
+        public static string IsNotNullOrEmpty(string value, string defaultValue)
         {
             if (String.IsNullOrEmpty(value))
                 return defaultValue;
@@ -701,14 +703,14 @@ namespace Fosol.Common.Initialization
         }
         #endregion
 
-        #region IsNotDefaultOrEmptyOrWhitespace
+        #region IsNotNullOrEmptyOrWhitespace
         /// <summary>
         /// Assert that if the value is null, empty or whitespace that it is instead the defaultValue.
         /// Use this method if the object is automatically passed by reference.
         /// </summary>
         /// <param name="value">The parameter value to set to the default value if it's null.</param>
         /// <param name="defaultValue">Default value to use if the original value is null.</param>
-        public static string IsNotDefaultOrEmptyOrWhitespace(string value, string defaultValue)
+        public static string IsNotNullOrEmptyOrWhitespace(string value, string defaultValue)
         {
             if (String.IsNullOrWhiteSpace(value))
                 return defaultValue;

@@ -40,7 +40,7 @@ namespace Fosol.Common.UI.Xaml.Controls
                 if (String.IsNullOrEmpty(key))
                 {
                     // Create an unique key for this page when it is navigated to so that it can save it's state.
-                    var name = Fosol.Common.Initialization.Assert.IsNotDefaultOrEmptyOrWhitespace(this.Name, "Fosol.StatePage");
+                    var name = Fosol.Common.Initialization.Assert.IsNotNullOrEmptyOrWhitespace(this.Name, "Fosol.StatePage");
                     key = String.Format("{0}_{1}", name, this.Frame.BackStackDepth);
                     this.StateKey = key;
                 }
