@@ -48,7 +48,7 @@ namespace Fosol.Common.Configuration
         public ConfigurationSectionFileWatcher(string sectionNameOrFilename)
             : base()
         {
-            Validation.Assert.IsNotNullOrEmpty(sectionNameOrFilename, "sectionNameOrFilename");
+            Validation.Argument.Assert.IsNotNullOrEmpty(sectionNameOrFilename, "sectionNameOrFilename");
 
             var full_path = System.IO.Path.Combine(Environment.CurrentDirectory, sectionNameOrFilename);
 
@@ -71,8 +71,8 @@ namespace Fosol.Common.Configuration
         /// <param name="sectionName">Name of the custom section within the configuraiton file.</param>
         public ConfigurationSectionFileWatcher(string externalConfigFilename, string sectionName)
         {
-            Validation.Assert.IsNotNullOrEmpty(externalConfigFilename, "externalConfigFilename");
-            Validation.Assert.IsNotNullOrEmpty(sectionName, "sectionName");
+            Validation.Argument.Assert.IsNotNullOrEmpty(externalConfigFilename, "externalConfigFilename");
+            Validation.Argument.Assert.IsNotNullOrEmpty(sectionName, "sectionName");
 
             var full_path = System.IO.Path.Combine(Environment.CurrentDirectory, externalConfigFilename);
             if (System.IO.File.Exists(externalConfigFilename))

@@ -33,8 +33,8 @@ namespace Fosol.Common.Utilities
         /// <returns>The number of rows affected by the script.</returns>
         public static int ExecuteScript(System.Data.IDbConnection connection, string path, int commandTimeout = 0)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(connection, "connection");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(path, "path");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(connection, "connection");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(path, "path");
 
             var script = File.ReadAllText(path);
 

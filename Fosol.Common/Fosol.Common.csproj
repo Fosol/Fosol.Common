@@ -88,6 +88,12 @@
     <Compile Include="Cryptography\HashFactory.cs" />
     <Compile Include="Cryptography\ICryptography.cs" />
     <Compile Include="Cryptography\SymmetricFactory.cs" />
+    <Compile Include="Exceptions\PropertyOutOfRangeException.cs" />
+    <Compile Include="Exceptions\PropertyNullException.cs" />
+    <Compile Include="Exceptions\PropertyException.cs" />
+    <Compile Include="Exceptions\ValueOutOfRangeException.cs" />
+    <Compile Include="Exceptions\ValueNullException.cs" />
+    <Compile Include="Exceptions\ValueException.cs" />
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="Extensions\Expressions\ExpressionExtensions.cs" />
     <Compile Include="HashCode.cs" />
@@ -185,9 +191,9 @@
     <Compile Include="UnitTests\CompareTestData%27.cs" />
     <Compile Include="UnitTests\CompareTestData.cs" />
     <Compile Include="Cryptography\RandomFactory.cs" />
-    <Compile Include="Validation\AssertPassword.cs" />
-    <Compile Include="Validation\Enumerables\Assert.cs" />
-    <Compile Include="Validation\UriValidator.cs" />
+    <Compile Include="Validation\Argument\AssertPassword.cs" />
+    <Compile Include="Validation\AssertFormat.cs" />
+    <Compile Include="Configuration\Validators\UriValidator.cs" />
     <Compile Include="Net\CrossSiteScriptingValidation.cs" />
     <Compile Include="Net\DomainComparer.cs" />
     <Compile Include="Initialization\Configuration.cs" />
@@ -208,14 +214,17 @@
     <Compile Include="Threading\IdentityInt.cs" />
     <Compile Include="Threading\IdentityLong.cs" />
     <Compile Include="Utilities\DiagnosticsUtility.cs" />
-    <Compile Include="Validation\Assert.cs" />
-    <Compile Include="Validation\AssertFormat.cs" />
+    <Compile Include="Validation\Argument\Assert.cs" />
+    <Compile Include="Validation\Argument\AssertFormat.cs" />
     <Compile Include="Net\UriQueryParam.cs" />
     <Compile Include="Net\UriQuery.cs" />
     <Compile Include="Net\UriQueryParamValue.cs" />
     <Compile Include="Net\UriPathSegment.cs" />
     <Compile Include="Net\UriPath.cs" />
     <Compile Include="Net\UriBuilder.cs" />
+    <Compile Include="Validation\Value\Assert.cs" />
+    <Compile Include="Validation\Value\AssertFormat.cs" />
+    <Compile Include="Validation\Value\AssertPassword.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

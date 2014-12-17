@@ -20,7 +20,7 @@ namespace Fosol.Common.Configuration
         #region Constructors
         public ConfigurationElementAttribute(string addName)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(addName, "addName");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(addName, "addName");
             this.AddName = addName;
         }
         #endregion

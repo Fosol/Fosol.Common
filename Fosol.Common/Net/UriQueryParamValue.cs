@@ -31,12 +31,12 @@ namespace Fosol.Common.Net
         {
             get 
             {
-                Fosol.Common.Validation.Enumerables.Assert.IsValidIndexPosition(index, _Count, "index");
+                Fosol.Common.Validation.Argument.Assert.IsValidIndexPosition(index, _Count, "index");
                 return _Values[index]; 
             }
             set
             {
-                Fosol.Common.Validation.Enumerables.Assert.IsValidIndexPosition(index, _Count, "index");
+                Fosol.Common.Validation.Argument.Assert.IsValidIndexPosition(index, _Count, "index");
                 _Values[index] = value; 
             }
         }
@@ -95,7 +95,7 @@ namespace Fosol.Common.Net
         /// <param name="values">Initialization values for the collection.</param>
         public UriQueryParamValue(string[] values)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
 
             _Values = new string[values.Length];
             _Size = values.Length;
@@ -155,7 +155,7 @@ namespace Fosol.Common.Net
         /// <returns>Every value separated by the delimiter.</returns>
         public string ToString(string delimiter)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(delimiter, "delimiter");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(delimiter, "delimiter");
             return _Values.Aggregate((a, b) => a + delimiter + b);
         }
 
@@ -166,7 +166,7 @@ namespace Fosol.Common.Net
         /// <param name="value">Value to add to the collection.</param>
         public void Add(string value)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(value, "value");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(value, "value");
 
             // If the array size is too small to accept a new value, increase the array size.
             if (_Size <= _Count)
@@ -219,9 +219,9 @@ namespace Fosol.Common.Net
         /// <param name="arrayIndex">Index position to start copying values into the destination array.</param>
         public void CopyTo(string[] array, int arrayIndex)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(array, "array");
-            Fosol.Common.Validation.Enumerables.Assert.IsValidIndexPosition(arrayIndex, array, "arrayIndex");
-            Fosol.Common.Validation.Assert.MaxRange((array.Length - arrayIndex), _Count, "The destination array is not large enough.");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(array, "array");
+            Fosol.Common.Validation.Argument.Assert.IsValidIndexPosition(arrayIndex, array, "arrayIndex");
+            Fosol.Common.Validation.Argument.Assert.MaxRange((array.Length - arrayIndex), _Count, "The destination array is not large enough.");
 
             for (var i = 0; i < _Count; i++)
             {

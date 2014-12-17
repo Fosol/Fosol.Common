@@ -22,7 +22,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Byte array.</returns>
         public static byte[] Serialize(object data)
         {
-            Validation.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNull(data, "data");
 
             var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
             using (var stream = new MemoryStream())
@@ -42,7 +42,7 @@ namespace Fosol.Common.Serialization
         /// <returns>A new instance of an object.</returns>
         public static object Deserialize(byte[] data)
         {
-            Validation.Assert.IsNotNullOrEmpty(data, "data");
+            Validation.Argument.Assert.IsNotNullOrEmpty(data, "data");
 
             var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
             using (var stream = new System.IO.MemoryStream(data))
@@ -78,8 +78,8 @@ namespace Fosol.Common.Serialization
         /// <param name="fileShare">Control the access to the file.</param>
         public static void SerializetoFile(object data, string path, FileMode fileMode = FileMode.CreateNew, FileAccess fileAccess = FileAccess.Write, FileShare fileShare = FileShare.None)
         {
-            Validation.Assert.IsNotNull(data, "data");
-            Validation.Assert.IsNotNullOrEmpty(path, "path");
+            Validation.Argument.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNullOrEmpty(path, "path");
 
             using (var stream = File.Open(path, fileMode, fileAccess, fileShare))
             {
@@ -105,7 +105,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of specified type.</returns>
         public static T DeserializeFromFile<T>(string path)
         {
-            Validation.Assert.IsNotNullOrEmpty(path, "path");
+            Validation.Argument.Assert.IsNotNullOrEmpty(path, "path");
 
             using (var stream = File.OpenRead(path))
             {

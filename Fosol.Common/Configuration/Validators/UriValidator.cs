@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Fosol.Common.Validation
+namespace Fosol.Common.Configuration.Validators
 {
     /// <summary>
     /// UriValidator provides a way to validate a URI string value.
@@ -53,10 +49,10 @@ namespace Fosol.Common.Validation
         /// <param name="value">Value to validate.</param>
         public override void Validate(object value)
         {
-            Validation.Assert.IsType(value, typeof(string), "value");
+            Validation.Argument.Assert.IsType(value, typeof(string), "value");
             var url = value as string;
-            Validation.Assert.IsNotNullOrWhiteSpace(url, "value");
-            Validation.Assert.MaxRange(url.Length, UriValidator.UriMaxLength, "value.Length");
+            Validation.Argument.Assert.IsNotNullOrWhiteSpace(url, "value");
+            Validation.Argument.Assert.MaxRange(url.Length, UriValidator.UriMaxLength, "value.Length");
 
             Uri uri;
             if (!Uri.TryCreate(url, _UriKind, out uri))

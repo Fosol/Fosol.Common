@@ -91,7 +91,7 @@ namespace Fosol.Common.IO
         /// <param name="restoreIfFileExists">Attempt to restore the prior state if the file exists.</param>
         public SavedState(string filePath, bool restoreIfFileExists = true)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(filePath, "filePath");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(filePath, "filePath");
 
             _FilePath = filePath;
 
@@ -131,7 +131,7 @@ namespace Fosol.Common.IO
         /// <param name="state">StateDictionary object to intialize state with.</param>
         protected virtual void Initialize(Collections.StateDictionary state)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(state, "state");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(state, "state");
             _Items = state;
         }
 
@@ -152,8 +152,8 @@ namespace Fosol.Common.IO
         /// <param name="value">Value to save.</param>
         public void Add(string key, object value)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(key, "key");
-            Fosol.Common.Validation.Assert.IsNotNull(value, "value");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(key, "key");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(value, "value");
 
             _SlimLock.EnterWriteLock();
             try
@@ -173,7 +173,7 @@ namespace Fosol.Common.IO
         /// <returns>True if the key was removed.</returns>
         public bool Remove(string key)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(key, "key");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(key, "key");
 
             _SlimLock.EnterWriteLock();
             try

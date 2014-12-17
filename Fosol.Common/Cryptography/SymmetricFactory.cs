@@ -32,7 +32,7 @@ namespace Fosol.Common.Cryptography
         {
             set
             {
-                Fosol.Common.Validation.Assert.IsNotNull(value, "Key");
+                Fosol.Common.Validation.Argument.Assert.IsNotNull(value, "Key");
 
                 byte[] val = new byte[value.Length];
                 Buffer.BlockCopy(value, 0, val, 0, value.Length);
@@ -56,7 +56,7 @@ namespace Fosol.Common.Cryptography
         {
             set
             {
-                Fosol.Common.Validation.Assert.IsNotNull(value, "IV");
+                Fosol.Common.Validation.Argument.Assert.IsNotNull(value, "IV");
 
                 byte[] val = new byte[value.Length];
                 Buffer.BlockCopy(value, 0, val, 0, value.Length);
@@ -96,7 +96,7 @@ namespace Fosol.Common.Cryptography
         public SymmetricFactory(SymmetricAlgorithm algorithm, bool isSingleUse = true)
             : base(isSingleUse)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(algorithm, "algorithm");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(algorithm, "algorithm");
             _Algorithm = algorithm;
         }
         #endregion
@@ -147,9 +147,9 @@ namespace Fosol.Common.Cryptography
         /// <returns>Encrypted data.</returns>
         public byte[] Encrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(password, "password");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
-            Fosol.Common.Validation.Assert.MinRange(salt.Length, 8, "Parameter 'salt' must be at least 8 bytes.");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(password, "password");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(salt, "salt");
+            Fosol.Common.Validation.Argument.Assert.MinRange(salt.Length, 8, "Parameter 'salt' must be at least 8 bytes.");
 
             return Encrypt(data, new Rfc2898DeriveBytes(password, salt), keySize, ivSize);
         }
@@ -164,8 +164,8 @@ namespace Fosol.Common.Cryptography
         /// <returns>Encrypted data.</returns>
         public byte[] Encrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
-            Fosol.Common.Validation.Assert.IsNotNull(generator, "generator");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(data, "data");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(generator, "generator");
 
             var key = generator.GetBytes(keySize);
             var iv = generator.GetBytes(ivSize);
@@ -182,12 +182,12 @@ namespace Fosol.Common.Cryptography
         /// <returns>Encrypted data.</returns>
         public byte[] Encrypt(byte[] data, byte[] key, byte[] iv)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(key, "key");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(iv, "iv");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(data, "data");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(iv, "iv");
 
-            Fosol.Common.Validation.Assert.IsTrue(this.ValidKeySize(key), "key", "Parameter 'key' size is invalid.");
-            Fosol.Common.Validation.Assert.IsTrue(this.ValidIVSize(iv), "iv.Length", "Parameter 'iv' length is not a legal initialization vector size.");
+            Fosol.Common.Validation.Argument.Assert.IsTrue(this.ValidKeySize(key), "key", "Parameter 'key' size is invalid.");
+            Fosol.Common.Validation.Argument.Assert.IsTrue(this.ValidIVSize(iv), "iv.Length", "Parameter 'iv' length is not a legal initialization vector size.");
 
             try
             {
@@ -229,8 +229,8 @@ namespace Fosol.Common.Cryptography
         /// <returns>True if the IV is a valid size.</returns>
         public static bool ValidIVSize(SymmetricAlgorithm algorithm, byte[] iv)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(algorithm, "algorithm");
-            Fosol.Common.Validation.Assert.IsNotNull(iv, "iv");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(algorithm, "algorithm");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(iv, "iv");
 
             var legal_block_sizes = algorithm.LegalBlockSizes;
             foreach (var bs in legal_block_sizes)
@@ -262,8 +262,8 @@ namespace Fosol.Common.Cryptography
         /// <returns>True if the key is a valid size.</returns>
         public static bool ValidKeySize(SymmetricAlgorithm algorithm, byte[] key)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(algorithm, "algorithm");
-            Fosol.Common.Validation.Assert.IsNotNull(key, "key");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(algorithm, "algorithm");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(key, "key");
             return algorithm.ValidKeySize(key.Length * 8);
         }
 
@@ -279,9 +279,9 @@ namespace Fosol.Common.Cryptography
         /// <returns>Decrypted data.</returns>
         public byte[] Decrypt(byte[] data, string password, byte[] salt, int keySize = 32, int ivSize = 16)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(password, "password");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
-            Fosol.Common.Validation.Assert.MinRange(salt.Length, 8, "Parameter 'salt' must be at least 8 bytes.");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(password, "password");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(salt, "salt");
+            Fosol.Common.Validation.Argument.Assert.MinRange(salt.Length, 8, "Parameter 'salt' must be at least 8 bytes.");
 
             return Decrypt(data, new Rfc2898DeriveBytes(password, salt), keySize, ivSize);
         }
@@ -296,8 +296,8 @@ namespace Fosol.Common.Cryptography
         /// <returns>Decrypted data.</returns>
         public byte[] Decrypt(byte[] data, DeriveBytes generator, int keySize = 32, int ivSize = 16)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
-            Fosol.Common.Validation.Assert.IsNotNull(generator, "generator");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(data, "data");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(generator, "generator");
 
             var key = generator.GetBytes(keySize);
             var iv = generator.GetBytes(ivSize);
@@ -314,11 +314,11 @@ namespace Fosol.Common.Cryptography
         /// <returns>Decrypted data.</returns>
         public byte[] Decrypt(byte[] data, byte[] key, byte[] iv)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(key, "key");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(iv, "iv");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(data, "data");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(iv, "iv");
 
-            Fosol.Common.Validation.Assert.IsTrue(_Algorithm.ValidKeySize(key.Length * 8), "key", "Parameter 'key' size is invalid.");
+            Fosol.Common.Validation.Argument.Assert.IsTrue(_Algorithm.ValidKeySize(key.Length * 8), "key", "Parameter 'key' size is invalid.");
 
             var legal_block_sizes = _Algorithm.LegalBlockSizes;
             var valid_iv_size = false;
@@ -332,7 +332,7 @@ namespace Fosol.Common.Cryptography
                     break;
                 }
             }
-            Fosol.Common.Validation.Assert.IsTrue(valid_iv_size, "iv.Length", "Parameter 'iv' length is not a legal initialization vector size.");
+            Fosol.Common.Validation.Argument.Assert.IsTrue(valid_iv_size, "iv.Length", "Parameter 'iv' length is not a legal initialization vector size.");
 
             try
             {

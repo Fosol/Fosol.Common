@@ -10,7 +10,6 @@
 
 namespace Fosol.Common.Resources {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -40,7 +39,7 @@ namespace Fosol.Common.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fosol.Common.Resources.Multilingual", typeof(Multilingual).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fosol.Common.Resources.Multilingual", typeof(Multilingual).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -332,146 +331,434 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; must be a valid index position within the specified array..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; value must end with &quot;{1}&quot;..
         /// </summary>
-        internal static string Exception_Validation_Assert_Enumerables_IsValidIndexPosition {
+        internal static string Exception_Validation_Argument_EndsWith {
             get {
-                return ResourceManager.GetString("Exception_Validation_Assert_Enumerables_IsValidIndexPosition", resourceCulture);
+                return ResourceManager.GetString("Exception_Validation_Argument_EndsWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must have an attribute of type &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Argument_HasAttribute {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_HasAttribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be assignable to type &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Argument_IsAssignable {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_IsAssignable", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid email..
         /// </summary>
-        internal static string Exception_Validation_AssertFormat_IsEmail {
+        internal static string Exception_Validation_Argument_IsEmail {
             get {
-                return ResourceManager.GetString("Exception_Validation_AssertFormat_IsEmail", resourceCulture);
+                return ResourceManager.GetString("Exception_Validation_Argument_IsEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &apos;{0}&apos; must be equal to the specified validValue..
+        /// </summary>
+        internal static string Exception_Validation_Argument_IsEqual {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_IsEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be false..
+        /// </summary>
+        internal static string Exception_Validation_Argument_IsFalse {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_IsFalse", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid FSA..
         /// </summary>
-        internal static string Exception_Validation_AssertFormat_IsFSA {
+        internal static string Exception_Validation_Argument_IsFSA {
             get {
-                return ResourceManager.GetString("Exception_Validation_AssertFormat_IsFSA", resourceCulture);
+                return ResourceManager.GetString("Exception_Validation_Argument_IsFSA", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid LDU..
         /// </summary>
-        internal static string Exception_Validation_AssertFormat_IsLDU {
+        internal static string Exception_Validation_Argument_IsLDU {
             get {
-                return ResourceManager.GetString("Exception_Validation_AssertFormat_IsLDU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid number..
-        /// </summary>
-        internal static string Exception_Validation_AssertFormat_IsNumber {
-            get {
-                return ResourceManager.GetString("Exception_Validation_AssertFormat_IsNumber", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid postal code..
-        /// </summary>
-        internal static string Exception_Validation_AssertFormat_IsPostalCode {
-            get {
-                return ResourceManager.GetString("Exception_Validation_AssertFormat_IsPostalCode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid URI..
-        /// </summary>
-        internal static string Exception_Validation_AssertFormat_IsUri {
-            get {
-                return ResourceManager.GetString("Exception_Validation_AssertFormat_IsUri", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid password..
-        /// </summary>
-        internal static string Exception_Validation_AssertPassword_IsValid {
-            get {
-                return ResourceManager.GetString("Exception_Validation_AssertPassword_IsValid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Attribute &quot;{0}&quot; is required..
-        /// </summary>
-        internal static string Exception_Validation_Attribute_Required {
-            get {
-                return ResourceManager.GetString("Exception_Validation_Attribute_Required", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Argument value must end with &quot;{0}&quot;..
-        /// </summary>
-        internal static string Exception_Validation_EndsWith {
-            get {
-                return ResourceManager.GetString("Exception_Validation_EndsWith", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid type..
-        /// </summary>
-        internal static string Exception_Validation_Invalid_Type {
-            get {
-                return ResourceManager.GetString("Exception_Validation_Invalid_Type", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Argument &quot;{0}&quot; has an invalid value..
-        /// </summary>
-        internal static string Exception_Validation_Invalid_Value {
-            get {
-                return ResourceManager.GetString("Exception_Validation_Invalid_Value", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; must be equal to the specified validValue..
-        /// </summary>
-        internal static string Exception_Validation_IsEqual {
-            get {
-                return ResourceManager.GetString("Exception_Validation_IsEqual", resourceCulture);
+                return ResourceManager.GetString("Exception_Validation_Argument_IsLDU", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Argument &quot;{0}&quot; cannot be empty..
         /// </summary>
-        internal static string Exception_Validation_IsNotEmpty {
+        internal static string Exception_Validation_Argument_IsNotEmpty {
             get {
-                return ResourceManager.GetString("Exception_Validation_IsNotEmpty", resourceCulture);
+                return ResourceManager.GetString("Exception_Validation_Argument_IsNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; cannot be null, empty or whitespace..
+        /// </summary>
+        internal static string Exception_Validation_Argument_IsNotEmptyOrWhitespace {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_IsNotEmptyOrWhitespace", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Argument &quot;{0}&quot; cannot be null..
         /// </summary>
-        internal static string Exception_Validation_IsNotNull {
+        internal static string Exception_Validation_Argument_IsNotNull {
             get {
-                return ResourceManager.GetString("Exception_Validation_IsNotNull", resourceCulture);
+                return ResourceManager.GetString("Exception_Validation_Argument_IsNotNull", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Argument value must start with &quot;{0}&quot;..
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; cannot be null or empty..
         /// </summary>
-        internal static string Exception_Validation_StartsWith {
+        internal static string Exception_Validation_Argument_IsNotNullOrEmpty {
             get {
-                return ResourceManager.GetString("Exception_Validation_StartsWith", resourceCulture);
+                return ResourceManager.GetString("Exception_Validation_Argument_IsNotNullOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid value..
+        /// </summary>
+        internal static string Exception_Validation_Argument_IsNotValue {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_IsNotValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid number..
+        /// </summary>
+        internal static string Exception_Validation_Argument_IsNumber {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_IsNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid postal code..
+        /// </summary>
+        internal static string Exception_Validation_Argument_IsPostalCode {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_IsPostalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be true..
+        /// </summary>
+        internal static string Exception_Validation_Argument_IsTrue {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_IsTrue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be of type &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Argument_IsType {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_IsType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid URI..
+        /// </summary>
+        internal static string Exception_Validation_Argument_IsUri {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_IsUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &apos;{0}&apos; must be a valid index position..
+        /// </summary>
+        internal static string Exception_Validation_Argument_IsValidIndexPosition {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_IsValidIndexPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; is not a valid password..
+        /// </summary>
+        internal static string Exception_Validation_Argument_IsValidPassword {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_IsValidPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; has an invalid value..
+        /// </summary>
+        internal static string Exception_Validation_Argument_IsValue {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_IsValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be less than or equal to &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Argument_MaxRange {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_MaxRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be greater than or equal to &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Argument_MinRange {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_MinRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; must be greater than or equal to &quot;{1}&quot; and less than or equal to &quot;{2}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Argument_Range {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_Range", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument &quot;{0}&quot; value must start with &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Argument_StartsWith {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_StartsWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must end with &quot;{0}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Value_EndsWith {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_EndsWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must have an attribute of type &quot;{0}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Value_HasAttribute {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_HasAttribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value type must be assignable from type &quot;{0}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsAssignable {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsAssignable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value &quot;[0}&quot; is not a valid email..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsEmail {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value is not equal..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsEqual {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be false..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsFalse {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsFalse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value &quot;{0}&quot; is not a valid FSA..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsFSA {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsFSA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value &quot;{0}&quot; is not a valid LDU..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsLDU {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsLDU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value cannot be null, empty or whitespace..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsNotEmptyOrWhitespace {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsNotEmptyOrWhitespace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value cannot be null..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsNotNull {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsNotNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value cannot be null or empty..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsNotNullOrEmpty {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsNotNullOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value cannot be equal to &quot;{0}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsNotValue {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsNotValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value &quot;{0}&quot; is not a number..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsNumber {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value &quot;{0}&quot; is not a valid postal code..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsPostalCode {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsPostalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be true..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsTrue {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsTrue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be of type &quot;{0}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsType {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value &quot;{0}&quot; is not a valid URI..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsUri {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value does meet the password strength requirements..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsValidPassword {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsValidPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value &quot;{0}&quot; is not valid..
+        /// </summary>
+        internal static string Exception_Validation_Value_IsValue {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_IsValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be less than or equal to &quot;{0}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Value_MaxRange {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_MaxRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be greater than or equal to &quot;{0}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Value_MinRange {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_MinRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be greater than or equal to &quot;{0}&quot; and less than or equal to &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Value_Range {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_Range", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must start with &quot;{0}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Value_StartsWith {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Value_StartsWith", resourceCulture);
             }
         }
         
@@ -485,7 +772,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; must be a valid &apos;{1}&apos; value..
+        ///   Looks up a localized string similar to Argument &apos;{0}&apos; must be a valid &apos;{1}&apos; value..
         /// </summary>
         internal static string Iniitialization_Convert_InvalidCastException {
             get {
@@ -494,7 +781,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; cannot be null..
+        ///   Looks up a localized string similar to Argument &apos;{0}&apos; cannot be null..
         /// </summary>
         internal static string Initialization_Convert_ArgumentNullException {
             get {
@@ -503,7 +790,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; must be a valid format to convert to the desired &apos;{1}&apos; type..
+        ///   Looks up a localized string similar to Argument &apos;{0}&apos; must be a valid format to convert to the desired &apos;{1}&apos; type..
         /// </summary>
         internal static string Initialization_Convert_FormatException {
             get {
@@ -512,7 +799,7 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; must be a valid &apos;{1}&apos; value..
+        ///   Looks up a localized string similar to Argument &apos;{0}&apos; must be a valid &apos;{1}&apos; value..
         /// </summary>
         internal static string Initialization_Convert_OverflowException {
             get {

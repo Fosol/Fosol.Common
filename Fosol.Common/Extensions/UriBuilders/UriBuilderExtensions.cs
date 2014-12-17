@@ -26,7 +26,7 @@ namespace Fosol.Common.Extensions.UriBuilders
         /// <returns>Updated UriBuilder object.</returns>
         public static UriBuilder SetQueryParam(this UriBuilder uri, string key, string value)
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
 
             var collection = uri.ParseQuery();
 
@@ -52,7 +52,7 @@ namespace Fosol.Common.Extensions.UriBuilders
         /// <returns>Updated UriBuilder object.</returns>
         public static UriBuilder RemoveQueryParam(this UriBuilder uri, string key)
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
 
             var collection = uri.ParseQuery();
 
@@ -77,7 +77,7 @@ namespace Fosol.Common.Extensions.UriBuilders
         /// <returns>Enumeration of KeyValuePairs.</returns>
         public static IEnumerable<KeyValuePair<string, string>> GetQueryParams(this UriBuilder uri)
         {
-            Validation.Assert.IsNotNull(uri, "uri");
+            Validation.Argument.Assert.IsNotNull(uri, "uri");
             return uri.ParseQuery().AsKeyValuePairs();
         }
 

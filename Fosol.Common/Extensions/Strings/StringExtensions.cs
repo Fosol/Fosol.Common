@@ -85,7 +85,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Array of byte.</returns>
         public static byte[] ToByteArray(this string value, Encoding encoding = null)
         {
-            Validation.Assert.IsNotNullOrEmpty(value, "value");
+            Validation.Argument.Assert.IsNotNullOrEmpty(value, "value");
 #if WINDOWS_APP || WINDOWS_PHONE_APP
             var default_encoding = Encoding.UTF8;
 #else
@@ -128,9 +128,9 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Replacement string value.</returns>
         public static string Replace(this string original, string pattern, string replacement, StringComparison comparisonType = StringComparison.CurrentCulture, int stringBuilderInitialSize = -1)
         {
-            Validation.Assert.IsNotNullOrEmpty(original, "original");
-            Validation.Assert.IsNotNullOrEmpty(pattern, "pattern");
-            Validation.Assert.IsNotNull(replacement, "replacement");
+            Validation.Argument.Assert.IsNotNullOrEmpty(original, "original");
+            Validation.Argument.Assert.IsNotNullOrEmpty(pattern, "pattern");
+            Validation.Argument.Assert.IsNotNull(replacement, "replacement");
 
             if (original == null)
                 return null;
@@ -173,7 +173,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>A string with no control characters or entities above 0x00FD.</returns> 
         public static string RemoveInvalidUTF8Characters(this string value)
         {
-            Validation.Assert.IsNotNull(value, "value");
+            Validation.Argument.Assert.IsNotNull(value, "value");
 
             StringBuilder newString = new StringBuilder();
             char ch;
@@ -211,7 +211,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>HTML encoded string.</returns>
         public static string HtmlEncode(this string value)
         {
-            Validation.Assert.IsNotNull(value, "value");
+            Validation.Argument.Assert.IsNotNull(value, "value");
 
             return string.Join("", value.ToCharArray().Select(c => (int)c > 127 ? "&#" + (int)c + ";" : c.ToString()).ToArray());
         }
@@ -225,7 +225,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>String value without HTML tags</returns>
         public static string RemoveHtml(this string value)
         {
-            Validation.Assert.IsNotNull(value, "value");
+            Validation.Argument.Assert.IsNotNull(value, "value");
             return System.Text.RegularExpressions.Regex.Replace(System.Net.WebUtility.HtmlDecode(value), @"<(.|\n)*?>", string.Empty);
         }
 
@@ -243,8 +243,8 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>String value with tag replaced with specified text</returns>
         public static string ReplaceTagsWith(this string value, string htmlTagName, string text)
         {
-            Validation.Assert.IsNotNull(value, "value");
-            Validation.Assert.IsNotNullOrEmpty(htmlTagName, "htmlTag");
+            Validation.Argument.Assert.IsNotNull(value, "value");
+            Validation.Argument.Assert.IsNotNullOrEmpty(htmlTagName, "htmlTag");
 
             return Regex.Replace(
                 Regex.Replace(
@@ -276,8 +276,8 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>String array of split values.</returns>
         public static string[] Split(this string value, string delimiter, bool ignoreCase = false)
         {
-            Validation.Assert.IsNotNull(value, "value");
-            Validation.Assert.IsNotNullOrEmpty(delimiter, "delimiter");
+            Validation.Argument.Assert.IsNotNull(value, "value");
+            Validation.Argument.Assert.IsNotNullOrEmpty(delimiter, "delimiter");
 
             int start = 0;
 #if WINDOWS_APP || WINDOWS_PHONE_APP
@@ -328,12 +328,12 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>KeyValuePair object.</returns>
         public static KeyValuePair<string, string> ToKeyValuePair(this string value, string delimiter, bool ignoreCase = false)
         {
-            Validation.Assert.IsNotNull(value, "value");
-            Validation.Assert.IsNotNullOrEmpty(delimiter, "delimiter");
+            Validation.Argument.Assert.IsNotNull(value, "value");
+            Validation.Argument.Assert.IsNotNullOrEmpty(delimiter, "delimiter");
 
             var values = value.Split(delimiter, ignoreCase);
 
-            Validation.Assert.MaxRange(values.Length, 2, "value", String.Format(Resources.Multilingual.Exception_Too_Many_Pairs, "value"));
+            Validation.Argument.Assert.MaxRange(values.Length, 2, "value", String.Format(Resources.Multilingual.Exception_Too_Many_Pairs, "value"));
 
             return new KeyValuePair<string, string>(values[0], values.Length == 2 ? values[1] : null);
         }
@@ -368,7 +368,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Value as an number.</returns>
         public static decimal ToDecimal(this string value)
         {
-            Validation.Assert.IsNotNullOrEmpty(value, "value");
+            Validation.Argument.Assert.IsNotNullOrEmpty(value, "value");
             decimal result = 0;
             if (!decimal.TryParse(value, out result))
                 throw new ArgumentOutOfRangeException("value");
@@ -383,7 +383,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Array of numbers.</returns>
         public static decimal[] ToDecimalArray(this string[] values)
         {
-            Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
             return values.Select(v => v.ToDecimal()).ToArray();
         }
 
@@ -395,7 +395,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Collection of numbers.</returns>
         public static IEnumerable<decimal> ToDecimalArray(this IEnumerable<string> values)
         {
-            Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
             return values.Select(v => v.ToDecimal()); ;
         }
         #endregion
@@ -409,7 +409,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Value as an number.</returns>
         public static double ToDouble(this string value)
         {
-            Validation.Assert.IsNotNullOrEmpty(value, "value");
+            Validation.Argument.Assert.IsNotNullOrEmpty(value, "value");
             double result = 0;
             if (!double.TryParse(value, out result))
                 throw new ArgumentOutOfRangeException("value");
@@ -424,7 +424,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Array of numbers.</returns>
         public static double[] ToDoubleArray(this string[] values)
         {
-            Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
             return values.Select(v => v.ToDouble()).ToArray();
         }
 
@@ -436,7 +436,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Collection of numbers.</returns>
         public static IEnumerable<double> ToDoubleArray(this IEnumerable<string> values)
         {
-            Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
             return values.Select(v => v.ToDouble()); ;
         }
         #endregion
@@ -450,7 +450,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Value as an number.</returns>
         public static float ToFloat(this string value)
         {
-            Validation.Assert.IsNotNullOrEmpty(value, "value");
+            Validation.Argument.Assert.IsNotNullOrEmpty(value, "value");
             float result = 0;
             if (!float.TryParse(value, out result))
                 throw new ArgumentOutOfRangeException("value");
@@ -465,7 +465,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Array of numbers.</returns>
         public static float[] ToFloatArray(this string[] values)
         {
-            Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
             return values.Select(v => v.ToFloat()).ToArray();
         }
 
@@ -477,7 +477,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Collection of numbers.</returns>
         public static IEnumerable<float> ToFloatArray(this IEnumerable<string> values)
         {
-            Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
             return values.Select(v => v.ToFloat()); ;
         }
         #endregion
@@ -491,7 +491,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Value as an number.</returns>
         public static int ToInt(this string value)
         {
-            Validation.Assert.IsNotNullOrEmpty(value, "value");
+            Validation.Argument.Assert.IsNotNullOrEmpty(value, "value");
             int result = 0;
             if (!int.TryParse(value, out result))
                 throw new ArgumentOutOfRangeException("value");
@@ -506,7 +506,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Array of numbers.</returns>
         public static int[] ToIntArray(this string[] values)
         {
-            Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
             return values.Select(v => v.ToInt()).ToArray();
         }
 
@@ -518,7 +518,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Collection of numbers.</returns>
         public static IEnumerable<int> ToIntArray(this IEnumerable<string> values)
         {
-            Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
             return values.Select(v => v.ToInt()); ;
         }
         #endregion
@@ -532,7 +532,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Value as an number.</returns>
         public static long ToLong(this string value)
         {
-            Validation.Assert.IsNotNullOrEmpty(value, "value");
+            Validation.Argument.Assert.IsNotNullOrEmpty(value, "value");
             long result = 0;
             if (!long.TryParse(value, out result))
                 throw new ArgumentOutOfRangeException("value");
@@ -547,7 +547,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Array of numbers.</returns>
         public static long[] ToLongArray(this string[] values)
         {
-            Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
             return values.Select(v => v.ToLong()).ToArray();
         }
 
@@ -559,7 +559,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Collection of numbers.</returns>
         public static IEnumerable<long> ToLongArray(this IEnumerable<string> values)
         {
-            Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
             return values.Select(v => v.ToLong()); ;
         }
         #endregion
@@ -573,7 +573,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Value as an number.</returns>
         public static short ToShort(this string value)
         {
-            Validation.Assert.IsNotNullOrEmpty(value, "value");
+            Validation.Argument.Assert.IsNotNullOrEmpty(value, "value");
             short result = 0;
             if (!short.TryParse(value, out result))
                 throw new ArgumentOutOfRangeException("value");
@@ -588,7 +588,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Array of numbers.</returns>
         public static short[] ToShortArray(this string[] values)
         {
-            Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
             return values.Select(v => v.ToShort()).ToArray();
         }
 
@@ -600,7 +600,7 @@ namespace Fosol.Common.Extensions.Strings
         /// <returns>Collection of numbers.</returns>
         public static IEnumerable<short> ToShortArray(this IEnumerable<string> values)
         {
-            Validation.Assert.IsNotNullOrEmpty(values, "values");
+            Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
             return values.Select(v => v.ToShort()); ;
         }
         #endregion

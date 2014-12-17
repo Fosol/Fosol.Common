@@ -58,9 +58,9 @@ namespace Fosol.Common.Serialization
         /// <returns>Serialized object as a string.</returns>
         public static string Serialize(object data)
         {
-            Validation.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNull(data, "data");
 #if !WINDOWS_APP && !WINDOWS_PHONE_APP
-            Validation.Assert.HasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
+            Validation.Argument.Assert.HasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
 #endif
 
             using (var stream = new MemoryStream())
@@ -80,11 +80,11 @@ namespace Fosol.Common.Serialization
         /// <param name="stream">Stream to write object to.</param>
         public static void ToStream(object data, Stream stream)
         {
-            Validation.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNull(data, "data");
 #if !WINDOWS_APP && !WINDOWS_PHONE_APP
-            Validation.Assert.HasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
+            Validation.Argument.Assert.HasAttribute(data, typeof(System.Runtime.Serialization.DataContractAttribute), "data");
 #endif
-            Validation.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
 
             var serializer = GetSerializer(data.GetType());
             serializer.WriteObject(stream, data);
@@ -101,7 +101,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T Deserialize<T>(Stream stream)
         {
-            Validation.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
 
             var serializer = GetSerializer(typeof(T));
             return (T)serializer.ReadObject(stream);
@@ -118,7 +118,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T Deserialize<T>(string data)
         {
-            Validation.Assert.IsNotNullOrEmpty(data, "data");
+            Validation.Argument.Assert.IsNotNullOrEmpty(data, "data");
 
             var deserializer = GetSerializer(typeof(T));
 
@@ -141,8 +141,8 @@ namespace Fosol.Common.Serialization
         /// <param name="collisionOption">What to do if the file already exists.</param>
         public static void SerializeToFile(object data, string path, CreationCollisionOption collisionOption = CreationCollisionOption.FailIfExists)
         {
-            Validation.Assert.IsNotNull(data, "data");
-            Validation.Assert.IsNotNullOrEmpty(path, "path");
+            Validation.Argument.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNullOrEmpty(path, "path");
 
             using (MemoryStream data_in_stream = new MemoryStream())
             {
@@ -168,8 +168,8 @@ namespace Fosol.Common.Serialization
         /// <param name="collisionOption">What to do if the file already exists.</param>
         public async static Task SerializeToFileAsync(object data, string path, CreationCollisionOption collisionOption = CreationCollisionOption.FailIfExists)
         {
-            Validation.Assert.IsNotNull(data, "data");
-            Validation.Assert.IsNotNullOrEmpty(path, "path");
+            Validation.Argument.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNullOrEmpty(path, "path");
 
             using (MemoryStream data_in_stream = new MemoryStream())
             {
@@ -194,7 +194,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T DeserializeFromFile<T>(string path)
         {
-            Validation.Assert.IsNotNullOrEmpty(path, "path");
+            Validation.Argument.Assert.IsNotNullOrEmpty(path, "path");
 
             StorageFile file = ApplicationData.Current.LocalFolder.GetFileAsync(path).GetResults();
 
@@ -214,7 +214,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public async static Task<T> DeserializeFromFileAsync<T>(string path)
         {
-            Validation.Assert.IsNotNullOrEmpty(path, "path");
+            Validation.Argument.Assert.IsNotNullOrEmpty(path, "path");
 
             StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(path);
 
@@ -232,7 +232,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T Deserialize<T>(IInputStream stream)
         {
-            Validation.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
 
             var deserializer = GetSerializer(typeof(T));
             return (T)deserializer.ReadObject(stream.AsStreamForRead());
@@ -252,8 +252,8 @@ namespace Fosol.Common.Serialization
         /// <param name="fileShare">File share control.</param>
         public static void SerializeToFile(object data, string path, FileMode fileMode = FileMode.CreateNew, FileAccess fileAccess = FileAccess.Write, FileShare fileShare = FileShare.None)
         {
-            Validation.Assert.IsNotNull(data, "data");
-            Validation.Assert.IsNotNullOrEmpty(path, "path");
+            Validation.Argument.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNullOrEmpty(path, "path");
 
             using (Stream stream = File.Open(path, fileMode, fileAccess, fileShare))
             {
@@ -275,8 +275,8 @@ namespace Fosol.Common.Serialization
         /// <param name="fileShare">File share control.</param>
         public async static Task SerializeToFileAsync(object data, string path, FileMode fileMode = FileMode.CreateNew, FileAccess fileAccess = FileAccess.Write, FileShare fileShare = FileShare.None)
         {
-            Validation.Assert.IsNotNull(data, "data");
-            Validation.Assert.IsNotNullOrEmpty(path, "path");
+            Validation.Argument.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNullOrEmpty(path, "path");
 
             await Task.Run(() =>
             {
@@ -298,7 +298,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T DeserializeFromFile<T>(string path)
         {
-            Validation.Assert.IsNotNullOrEmpty(path, "path");
+            Validation.Argument.Assert.IsNotNullOrEmpty(path, "path");
 
             using (var stream = File.OpenRead(path))
             {
@@ -318,7 +318,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public async static Task<T> DeserializeFromFileAsync<T>(string path)
         {
-            Validation.Assert.IsNotNullOrEmpty(path, "path");
+            Validation.Argument.Assert.IsNotNullOrEmpty(path, "path");
 
             return await Task.Run(() =>
             {
@@ -340,7 +340,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T Deserialize<T>(System.IO.IsolatedStorage.IsolatedStorageFileStream stream)
         {
-            Validation.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
 
             var deserializer = GetSerializer(typeof(T));
             return (T)deserializer.ReadObject(stream);

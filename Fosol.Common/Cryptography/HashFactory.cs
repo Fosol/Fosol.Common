@@ -87,8 +87,8 @@ namespace Fosol.Common.Cryptography
         /// <param name="derivedBytes">Type of DerivedBytes object to use to generate a key.</param>
         public HashFactory(HashAlgorithm algorithm, Type derivedBytes)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(algorithm, "algorithm");
-            Fosol.Common.Validation.Assert.IsAssignable(derivedBytes, typeof(DeriveBytes), "derivedBytes");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(algorithm, "algorithm");
+            Fosol.Common.Validation.Argument.Assert.IsAssignable(derivedBytes, typeof(DeriveBytes), "derivedBytes");
             _Algorithm = algorithm;
             _GeneratorType = derivedBytes;
             _Iterations = 1000;
@@ -105,9 +105,9 @@ namespace Fosol.Common.Cryptography
         /// <returns>Hashed byte array.</returns>
         public byte[] ComputeHash(byte[] data, byte[] salt)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(data, "data");
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(salt, "salt");
-            Fosol.Common.Validation.Assert.MinRange(salt.Length, 16, "salt.Length");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(data, "data");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(salt, "salt");
+            Fosol.Common.Validation.Argument.Assert.MinRange(salt.Length, 16, "salt.Length");
 
             var generator = (DeriveBytes)Fosol.Common.Helpers.ReflectionHelper.ConstructObject(_GeneratorType, new object[] { data, salt, this.Iterations });
             var key = generator.GetBytes(data.Length + salt.Length);

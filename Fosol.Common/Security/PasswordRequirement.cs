@@ -66,11 +66,11 @@ namespace Fosol.Common.Security
         /// <param name="minNonalphaCharacters">Minimum number of nonalphabet characters (digits and symbols).</param>
         public PasswordRequirement(int minLength, int maxLength, int minAlphaCharacters, int minNonalphaCharacters)
         {
-            Fosol.Common.Validation.Assert.Range(minLength, 0, maxLength, "minLength");
-            Fosol.Common.Validation.Assert.MinRange(maxLength, minLength, "maxLength");
-            Fosol.Common.Validation.Assert.MinRange(minAlphaCharacters, 0, "minAlphaCharacters");
-            Fosol.Common.Validation.Assert.MinRange(minNonalphaCharacters, 0, "minNonalphaCharacters");
-            Fosol.Common.Validation.Assert.MaxRange(minAlphaCharacters + minNonalphaCharacters, maxLength, "maxLength");
+            Fosol.Common.Validation.Argument.Assert.Range(minLength, 0, maxLength, "minLength");
+            Fosol.Common.Validation.Argument.Assert.MinRange(maxLength, minLength, "maxLength");
+            Fosol.Common.Validation.Argument.Assert.MinRange(minAlphaCharacters, 0, "minAlphaCharacters");
+            Fosol.Common.Validation.Argument.Assert.MinRange(minNonalphaCharacters, 0, "minNonalphaCharacters");
+            Fosol.Common.Validation.Argument.Assert.MaxRange(minAlphaCharacters + minNonalphaCharacters, maxLength, "maxLength");
 
             this.MinLength = minLength;
             this.MaxLength = maxLength;
@@ -88,12 +88,12 @@ namespace Fosol.Common.Security
         /// <pparam name="minLowercaseCharacters">Minimum number of lowercase characters.</pparam>
         public PasswordRequirement(int minLength, int maxLength, int minNonalphaCharacters, int minUppercaseCharacters, int minLowercaseCharacters)
         {
-            Fosol.Common.Validation.Assert.Range(minLength, 0, maxLength, "minLength");
-            Fosol.Common.Validation.Assert.MinRange(maxLength, minLength, "maxLength");
-            Fosol.Common.Validation.Assert.MinRange(minNonalphaCharacters, 0, "minNonalphaCharacters");
-            Fosol.Common.Validation.Assert.MinRange(minUppercaseCharacters, 0, "minUppercaseCharacters");
-            Fosol.Common.Validation.Assert.MinRange(minLowercaseCharacters, 0, "minLowercaseCharacters");
-            Fosol.Common.Validation.Assert.MaxRange(minNonalphaCharacters + minUppercaseCharacters + minLowercaseCharacters, maxLength, "maxLength");
+            Fosol.Common.Validation.Argument.Assert.Range(minLength, 0, maxLength, "minLength");
+            Fosol.Common.Validation.Argument.Assert.MinRange(maxLength, minLength, "maxLength");
+            Fosol.Common.Validation.Argument.Assert.MinRange(minNonalphaCharacters, 0, "minNonalphaCharacters");
+            Fosol.Common.Validation.Argument.Assert.MinRange(minUppercaseCharacters, 0, "minUppercaseCharacters");
+            Fosol.Common.Validation.Argument.Assert.MinRange(minLowercaseCharacters, 0, "minLowercaseCharacters");
+            Fosol.Common.Validation.Argument.Assert.MaxRange(minNonalphaCharacters + minUppercaseCharacters + minLowercaseCharacters, maxLength, "maxLength");
 
             this.MinLength = minLength;
             this.MaxLength = maxLength;
@@ -113,13 +113,13 @@ namespace Fosol.Common.Security
         /// <param name="minDigitCharacters">Minimum number of digit characters (0-9).</param>
         public PasswordRequirement(int minLength, int maxLength, int minUppercaseCharacters, int minLowercaseCharacters, int minNonalphaDigitCharacters, int minDigitCharacters)
         {
-            Fosol.Common.Validation.Assert.Range(minLength, 0, maxLength, "minLength");
-            Fosol.Common.Validation.Assert.MinRange(maxLength, minLength, "maxLength");
-            Fosol.Common.Validation.Assert.MinRange(minUppercaseCharacters, 0, "minUppercaseCharacters");
-            Fosol.Common.Validation.Assert.MinRange(minLowercaseCharacters, 0, "minLowercaseCharacters");
-            Fosol.Common.Validation.Assert.MinRange(minNonalphaDigitCharacters, 0, "minNonalphaDigitCharacters");
-            Fosol.Common.Validation.Assert.MinRange(minDigitCharacters, 0, "minDigitCharacters");
-            Fosol.Common.Validation.Assert.MaxRange(minUppercaseCharacters + minLowercaseCharacters + minNonalphaDigitCharacters + minDigitCharacters, maxLength, "maxLength");
+            Fosol.Common.Validation.Argument.Assert.Range(minLength, 0, maxLength, "minLength");
+            Fosol.Common.Validation.Argument.Assert.MinRange(maxLength, minLength, "maxLength");
+            Fosol.Common.Validation.Argument.Assert.MinRange(minUppercaseCharacters, 0, "minUppercaseCharacters");
+            Fosol.Common.Validation.Argument.Assert.MinRange(minLowercaseCharacters, 0, "minLowercaseCharacters");
+            Fosol.Common.Validation.Argument.Assert.MinRange(minNonalphaDigitCharacters, 0, "minNonalphaDigitCharacters");
+            Fosol.Common.Validation.Argument.Assert.MinRange(minDigitCharacters, 0, "minDigitCharacters");
+            Fosol.Common.Validation.Argument.Assert.MaxRange(minUppercaseCharacters + minLowercaseCharacters + minNonalphaDigitCharacters + minDigitCharacters, maxLength, "maxLength");
 
             this.MinLength = minLength;
             this.MaxLength = maxLength;

@@ -37,7 +37,7 @@ namespace Fosol.Common.Parsers
         /// </summary>
         internal Format(List<FormatElement> elements)
         {
-            Validation.Assert.IsNotNull(elements, "elements");
+            Validation.Argument.Assert.IsNotNull(elements, "elements");
             _Elements = elements;
         }
         #endregion

@@ -22,7 +22,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static string GetAppSetting(string key, string defaultValue = null)
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
 
             if (value == null)
@@ -40,7 +40,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static bool GetAppSetting(string key, bool defaultValue = default(bool))
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
             return Initialization.Assert.TryParse(value, defaultValue);
         }
@@ -54,7 +54,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static byte GetAppSetting(string key, byte defaultValue = default(byte))
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
             return Initialization.Assert.TryParse(value, defaultValue);
         }
@@ -68,7 +68,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static sbyte GetAppSetting(string key, sbyte defaultValue = default(sbyte))
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
             return Initialization.Assert.TryParse(value, defaultValue);
         }
@@ -82,7 +82,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static char GetAppSetting(string key, char defaultValue = default(char))
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
             return Initialization.Assert.TryParse(value, defaultValue);
         }
@@ -96,7 +96,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static decimal GetAppSetting(string key, decimal defaultValue = default(decimal))
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
             return Initialization.Assert.TryParse(value, defaultValue);
         }
@@ -110,7 +110,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static double GetAppSetting(string key, double defaultValue = default(double))
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
             return Initialization.Assert.TryParse(value, defaultValue);
         }
@@ -124,7 +124,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static float GetAppSetting(string key, float defaultValue = default(float))
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
             return Initialization.Assert.TryParse(value, defaultValue);
         }
@@ -138,7 +138,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static int GetAppSetting(string key, int defaultValue = default(int))
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
             return Initialization.Assert.TryParse(value, defaultValue);
         }
@@ -152,7 +152,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static uint GetAppSetting(string key, uint defaultValue = default(uint))
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
             return Initialization.Assert.TryParse(value, defaultValue);
         }
@@ -166,7 +166,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static long GetAppSetting(string key, long defaultValue = default(long))
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
             return Initialization.Assert.TryParse(value, defaultValue);
         }
@@ -180,7 +180,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static ulong GetAppSetting(string key, ulong defaultValue = default(ulong))
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
             return Initialization.Assert.TryParse(value, defaultValue);
         }
@@ -194,7 +194,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static short GetAppSetting(string key, short defaultValue = default(short))
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
             return Initialization.Assert.TryParse(value, defaultValue);
         }
@@ -208,7 +208,7 @@ namespace Fosol.Common.Initialization
         /// <returns>Value of the key, or default value.</returns>
         public static ushort GetAppSetting(string key, ushort defaultValue = default(ushort))
         {
-            Validation.Assert.IsNotNullOrEmpty(key, "key");
+            Validation.Argument.Assert.IsNotNullOrEmpty(key, "key");
             var value = System.Configuration.ConfigurationManager.AppSettings[key];
             return Initialization.Assert.TryParse(value, defaultValue);
         }

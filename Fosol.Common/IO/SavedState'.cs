@@ -62,7 +62,7 @@ namespace Fosol.Common.IO
         /// <param name="filePath">Path and filename for the saved state.</param>
         public SavedState(string filePath)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(filePath, "filePath");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(filePath, "filePath");
 
             _FilePath = filePath;
 
@@ -87,8 +87,8 @@ namespace Fosol.Common.IO
         /// <param name="value">Value to save.</param>
         public void Add(string key, T value)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(key, "key");
-            Fosol.Common.Validation.Assert.IsNotNull(value, "value");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(key, "key");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(value, "value");
             _Items.Add(key, value);
         }
 
@@ -99,7 +99,7 @@ namespace Fosol.Common.IO
         /// <returns>True if the key was removed.</returns>
         public bool Remove(string key)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(key, "key");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(key, "key");
             return _Items.Remove(key);
         }
 

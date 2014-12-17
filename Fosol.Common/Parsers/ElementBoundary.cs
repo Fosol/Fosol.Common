@@ -36,7 +36,7 @@ namespace Fosol.Common.Parsers
         /// <param name="stringComparison"></param>
         public ElementBoundary(string value, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
         {
-            Validation.Assert.IsNotNullOrEmpty(value, "value");
+            Validation.Argument.Assert.IsNotNullOrEmpty(value, "value");
             _Value = value;
             _StringComparison = stringComparison;
         }

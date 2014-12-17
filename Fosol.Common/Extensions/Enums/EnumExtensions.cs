@@ -38,8 +38,8 @@ namespace Fosol.Common.Extensions.Enums
         /// <returns>Dictionary with each enum value and description.</returns>
         public static IDictionary<object, string> ToDictionary(this Type enumType, bool includeDescription = true)
         {
-            Validation.Assert.IsNotNull(enumType, "enumType");
-            Validation.Assert.IsValue(enumType.IsEnum, true, "enumType");
+            Validation.Argument.Assert.IsNotNull(enumType, "enumType");
+            Validation.Argument.Assert.IsValue(enumType.IsEnum, true, "enumType");
 
             var type_list = new Dictionary<object, string>();
 
@@ -71,8 +71,8 @@ namespace Fosol.Common.Extensions.Enums
         /// <returns>Collection of string values.</returns>
         public static IEnumerable<string> GetNames(this Type enumType)
         {
-            Validation.Assert.IsNotNull(enumType, "enumType");
-            Validation.Assert.IsValue(enumType.IsEnum, true, "enumType");
+            Validation.Argument.Assert.IsNotNull(enumType, "enumType");
+            Validation.Argument.Assert.IsValue(enumType.IsEnum, true, "enumType");
             
             return (
                 from f in enumType.GetFields(BindingFlags.Public | BindingFlags.Static)
@@ -89,8 +89,8 @@ namespace Fosol.Common.Extensions.Enums
         /// <returns>Collection of enum values.</returns>
         public static IEnumerable<object> GetEnums(this Type enumType)
         {
-            Validation.Assert.IsNotNull(enumType, "enumType");
-            Validation.Assert.IsValue(enumType.IsEnum, true, "enumType");
+            Validation.Argument.Assert.IsNotNull(enumType, "enumType");
+            Validation.Argument.Assert.IsValue(enumType.IsEnum, true, "enumType");
 
             return (
                 from f in enumType.GetFields(BindingFlags.Public | BindingFlags.Static)

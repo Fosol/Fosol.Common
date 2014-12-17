@@ -139,7 +139,7 @@ namespace Fosol.Common.Net
         /// <param name="item">UriQueryParam object to add to the collection.</param>
         public void Add(UriQueryParam item)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(item, "item");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(item, "item");
 
             if (this.ContainsKey(item.Name))
                 this[item.Name] = item;
@@ -154,7 +154,7 @@ namespace Fosol.Common.Net
         /// <param name="item">KeyValuePair item to add to the collection.</param>
         public void Add(KeyValuePair<string, string> item)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(item, "item");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(item, "item");
 
             if (this.ContainsKey(item.Key))
                 this[item.Key].Add(item.Value);
@@ -170,8 +170,8 @@ namespace Fosol.Common.Net
         /// <param name="value">Value of the query parameter.</param>
         public void Add(string key, string value)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(key, "key");
-            Fosol.Common.Validation.Assert.IsNotNull(value, "value");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(key, "key");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(value, "value");
 
             if (this.ContainsKey(key))
                 this[key].Add(value);
@@ -215,7 +215,7 @@ namespace Fosol.Common.Net
         /// <returns>True if the collection contains a query parameter with the specified key name.</returns>
         public bool Contains(string key)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(key, "key");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(key, "key");
             return _Parameters.ContainsKey(key);
         }
 
@@ -226,7 +226,7 @@ namespace Fosol.Common.Net
         /// <returns>True if the collection contains a query parameter with the specified key name.</returns>
         public bool ContainsKey(string key)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(key, "key");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(key, "key");
             return _Parameters.ContainsKey(key);
         }
 
@@ -237,9 +237,9 @@ namespace Fosol.Common.Net
         /// <param name="arrayIndex">Index position to start copying within the destination array.</param>
         public void CopyTo(UriQueryParam[] array, int arrayIndex)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(array, "array");
-            Fosol.Common.Validation.Enumerables.Assert.IsValidIndexPosition(arrayIndex, array, "arrayIndex");
-            Fosol.Common.Validation.Assert.MaxRange(array.Length - arrayIndex, _Parameters.Count, "Parameter 'array' must have a length greater than equal to the number of items in this collection.");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(array, "array");
+            Fosol.Common.Validation.Argument.Assert.IsValidIndexPosition(arrayIndex, array, "arrayIndex");
+            Fosol.Common.Validation.Argument.Assert.MaxRange(array.Length - arrayIndex, _Parameters.Count, "Parameter 'array' must have a length greater than equal to the number of items in this collection.");
 
             var index = 0;
             foreach (var value in _Parameters)

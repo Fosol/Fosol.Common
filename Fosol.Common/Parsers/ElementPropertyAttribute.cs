@@ -90,7 +90,7 @@ namespace Fosol.Common.Parsers
         /// <param name="converterArgs">Arguments to supply to the TypeConverter.</param>
         public ElementPropertyAttribute(string name, string[] abbrev, Type converterType, params object[] converterArgs)
         {
-            Common.Validation.Assert.IsNotNullOrEmpty(name, "name");
+            Common.Validation.Argument.Assert.IsNotNullOrEmpty(name, "name");
             _Name = name;
             _Abbr = abbrev;
 

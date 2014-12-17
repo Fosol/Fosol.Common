@@ -47,7 +47,7 @@ namespace Fosol.Common.Cryptography
         /// <param name="data">Byte array to populate with random values.</param>
         public static void Generate(RandomNumberGenerator generator, byte[] data)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(generator, "generator");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(generator, "generator");
             generator.GetBytes(data);
         }
         #endregion

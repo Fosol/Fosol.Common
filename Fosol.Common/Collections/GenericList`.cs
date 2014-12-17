@@ -42,7 +42,7 @@ namespace Fosol.Common.Collections
             {
                 if (value != _Items.Length)
                 {
-                    Validation.Assert.MinRange(value, _Size, "Capacity");
+                    Validation.Argument.Assert.MinRange(value, _Size, "Capacity");
 
                     if (value > 0)
                     {
@@ -125,12 +125,12 @@ namespace Fosol.Common.Collections
         {
             get
             {
-                Validation.Assert.MaxRange((uint)index, (uint)_Size - 1, "index");
+                Validation.Argument.Assert.MaxRange((uint)index, (uint)_Size - 1, "index");
                 return _Items[index];
             }
             set
             {
-                Validation.Assert.MaxRange((uint)index, (uint)_Size - 1, "index");
+                Validation.Argument.Assert.MaxRange((uint)index, (uint)_Size - 1, "index");
                 _Items[index] = value;
                 _Version++;
             }
@@ -174,7 +174,7 @@ namespace Fosol.Common.Collections
         /// <param name="capacity"></param>
         public GenericList(int capacity)
         {
-            Validation.Assert.MinRange(capacity, 0, "capacity");
+            Validation.Argument.Assert.MinRange(capacity, 0, "capacity");
             _Items = new T[capacity];
         }
 
@@ -185,7 +185,7 @@ namespace Fosol.Common.Collections
         /// <param name="collection">Collection of objects.</param>
         public GenericList(IEnumerable<T> collection)
         {
-            Validation.Assert.IsNotNull(collection, "collection");
+            Validation.Argument.Assert.IsNotNull(collection, "collection");
             var c = collection as ICollection<T>;
 
             if (c != null)
@@ -227,7 +227,7 @@ namespace Fosol.Common.Collections
         /// <param name="value">Object to test.</param>
         private static void VerifyValueType(object value)
         {
-            Validation.Assert.IsTrue(IsCompatibleObject(value), "value");
+            Validation.Argument.Assert.IsTrue(IsCompatibleObject(value), "value");
         }
         /// <summary>
         /// Adds the given object to the end of this list. The size of the list is 
@@ -302,9 +302,9 @@ namespace Fosol.Common.Collections
         /// <returns>Index position of the item if found, or -1 if not found.</returns>
         public int BinarySearch(int index, int count, T item, IComparer<T> comparer)
         {
-            Validation.Assert.MinRange(index, 0, "index");
-            Validation.Assert.MinRange(count, 0, "count");
-            Validation.Assert.MinRange(_Size - index, count, "index");
+            Validation.Argument.Assert.MinRange(index, 0, "index");
+            Validation.Argument.Assert.MinRange(count, 0, "count");
+            Validation.Argument.Assert.MinRange(_Size - index, count, "index");
             return Array.BinarySearch<T>(_Items, index, count, item, comparer);
         }
 
@@ -389,7 +389,7 @@ namespace Fosol.Common.Collections
         /// <returns>Collection of type toutput.</returns>
         public GenericList<toutput> ConvertAll<toutput>(Converter<T, toutput> converter)
         {
-            Validation.Assert.IsNotNull(converter, "converter");
+            Validation.Argument.Assert.IsNotNull(converter, "converter");
 
             var list = new GenericList<toutput>(_Size);
             for (int i = 0; i < _Size; i++)
@@ -418,7 +418,7 @@ namespace Fosol.Common.Collections
         void System.Collections.ICollection.CopyTo(Array array, int arrayIndex)
         {
             // Don't do multi-dimensional arrays.
-            Validation.Assert.IsTrue((array != null) && (array.Rank == 1), "array");
+            Validation.Argument.Assert.IsTrue((array != null) && (array.Rank == 1), "array");
 
             try
             {
@@ -441,7 +441,7 @@ namespace Fosol.Common.Collections
         /// <param name="count">Number of items to copy into array.</param>
         public void CopyTo(int index, T[] array, int arrayIndex, int count)
         {
-            Validation.Assert.MinRange(_Size - index, count, "index");
+            Validation.Argument.Assert.MinRange(_Size - index, count, "index");
             // Delegate rest of error checking to Array.Copy.
             Array.Copy(_Items, index, array, arrayIndex, count);
         }
@@ -493,7 +493,7 @@ namespace Fosol.Common.Collections
         /// <returns>Object if found, or a default object of type T.</returns>
         public T Find(Predicate<T> match)
         {
-            Validation.Assert.IsNotNull(match, "match");
+            Validation.Argument.Assert.IsNotNull(match, "match");
             for (int i = 0; i < _Size; i++)
             {
                 if (match(_Items[i]))
@@ -509,7 +509,7 @@ namespace Fosol.Common.Collections
         /// <returns>Collection of objects found, or an empty collection.</returns>
         public GenericList<T> FindAll(Predicate<T> match)
         {
-            Validation.Assert.IsNotNull(match, "match");
+            Validation.Argument.Assert.IsNotNull(match, "match");
             var list = new GenericList<T>();
             for (int i = 0; i < _Size; i++)
             {
@@ -549,10 +549,10 @@ namespace Fosol.Common.Collections
         /// <returns>Index position if found, or -1 if not found.</returns>
         public int FindIndex(int startIndex, int count, Predicate<T> match)
         {
-            Validation.Assert.MaxRange((uint)startIndex, (uint)_Size, "startIndex");
-            Validation.Assert.MinRange(count, 0, "count");
-            Validation.Assert.MinRange(_Size - count, startIndex, "startIndex");
-            Validation.Assert.IsNotNull(match, "match");
+            Validation.Argument.Assert.MaxRange((uint)startIndex, (uint)_Size, "startIndex");
+            Validation.Argument.Assert.MinRange(count, 0, "count");
+            Validation.Argument.Assert.MinRange(_Size - count, startIndex, "startIndex");
+            Validation.Argument.Assert.IsNotNull(match, "match");
             int endIndex = startIndex + count;
             for (int i = startIndex; i < endIndex; i++)
                 if (match(_Items[i])) return i;
@@ -566,7 +566,7 @@ namespace Fosol.Common.Collections
         /// <returns>Object if found, or default object if not found.</returns>
         public T FindLast(Predicate<T> match)
         {
-            Validation.Assert.IsNotNull(match, "match");
+            Validation.Argument.Assert.IsNotNull(match, "match");
             for (int i = _Size - 1; i >= 0; i--)
             {
                 if (match(_Items[i]))
@@ -587,16 +587,16 @@ namespace Fosol.Common.Collections
 
         public int FindLastIndex(int startIndex, int count, Predicate<T> match)
         {
-            Validation.Assert.IsNotNull(match, "match");
+            Validation.Argument.Assert.IsNotNull(match, "match");
             if (_Size == 0)
                 // Special case for 0 length List 
-                Validation.Assert.Range(startIndex, -1, -1, "startIndex");
+                Validation.Argument.Assert.Range(startIndex, -1, -1, "startIndex");
             else
                 // Make sure we're not out of range 
-                Validation.Assert.MaxRange((uint)startIndex, (uint)_Size, "startIndex");
-            Validation.Assert.MinRange(count, 0, "count");
+                Validation.Argument.Assert.MaxRange((uint)startIndex, (uint)_Size, "startIndex");
+            Validation.Argument.Assert.MinRange(count, 0, "count");
             // 2nd have of this also catches when startIndex == MAXINT, so MAXINT - 0 + 1 == -1, which is < 0.
-            Validation.Assert.MinRange(startIndex - count + 1, 0, "startIndex");
+            Validation.Argument.Assert.MinRange(startIndex - count + 1, 0, "startIndex");
 
             int endIndex = startIndex - count;
             for (int i = startIndex; i > endIndex; i--)
@@ -609,7 +609,7 @@ namespace Fosol.Common.Collections
 
         public void ForEach(Action<T> action)
         {
-            Validation.Assert.IsNotNull(action, "action");
+            Validation.Argument.Assert.IsNotNull(action, "action");
             for (int i = 0; i < _Size; i++)
                 action(_Items[i]);
         }
@@ -636,9 +636,9 @@ namespace Fosol.Common.Collections
 
         public GenericList<T> GetRange(int index, int count)
         {
-            Validation.Assert.MinRange(index, 0, "index");
-            Validation.Assert.MinRange(count, 0, "count");
-            Validation.Assert.MinRange(_Size - index, count, "index");
+            Validation.Argument.Assert.MinRange(index, 0, "index");
+            Validation.Argument.Assert.MinRange(count, 0, "count");
+            Validation.Argument.Assert.MinRange(_Size - index, count, "index");
 
             var list = new GenericList<T>(count);
             Array.Copy(_Items, index, list._Items, 0, count);
@@ -677,7 +677,7 @@ namespace Fosol.Common.Collections
         // 
         public int IndexOf(T item, int index)
         {
-            Validation.Assert.MaxRange(index, _Size, "index");
+            Validation.Argument.Assert.MaxRange(index, _Size, "index");
             return Array.IndexOf(_Items, item, index, _Size - index);
         }
 
@@ -691,9 +691,9 @@ namespace Fosol.Common.Collections
         // search.
         public int IndexOf(T item, int index, int count)
         {
-            Validation.Assert.MaxRange(index, _Size, "index");
-            Validation.Assert.MinRange(count, 0, "count");
-            Validation.Assert.MaxRange(index, _Size - count, "count");
+            Validation.Argument.Assert.MaxRange(index, _Size, "index");
+            Validation.Argument.Assert.MinRange(count, 0, "count");
+            Validation.Argument.Assert.MaxRange(index, _Size - count, "count");
             return Array.IndexOf(_Items, item, index, count);
         }
 
@@ -703,7 +703,7 @@ namespace Fosol.Common.Collections
         public void Insert(int index, T item)
         {
             // Note that insertions at the end are legal.
-            Validation.Assert.MaxRange((uint)index, (uint)_Size, "index");
+            Validation.Argument.Assert.MaxRange((uint)index, (uint)_Size, "index");
             if (_Size == _Items.Length) EnsureCapacity(_Size + 1);
             if (index < _Size)
             {
@@ -726,8 +726,8 @@ namespace Fosol.Common.Collections
         // to the end of the list by setting index to the List's size.
         public void InsertRange(int index, IEnumerable<T> collection)
         {
-            Validation.Assert.IsNotNull(collection, "collection");
-            Validation.Assert.MaxRange((uint)index, (uint)_Size, "index");
+            Validation.Argument.Assert.IsNotNull(collection, "collection");
+            Validation.Argument.Assert.MaxRange((uint)index, (uint)_Size, "index");
             var c = collection as ICollection<T>;
             if (c != null)
             {    // if collection is ICollection<t>
@@ -789,7 +789,7 @@ namespace Fosol.Common.Collections
         // search. 
         public int LastIndexOf(T item, int index)
         {
-            Validation.Assert.MaxRange(index, _Size - 1, "index");
+            Validation.Argument.Assert.MaxRange(index, _Size - 1, "index");
             return LastIndexOf(item, index, index + 1);
         }
 
@@ -805,10 +805,10 @@ namespace Fosol.Common.Collections
         {
             if (_Size == 0)
                 return -1;
-            Validation.Assert.MinRange(index, 0, "index");
-            Validation.Assert.MinRange(count, 0, "count");
-            Validation.Assert.MaxRange(index, _Size - 1, "index");
-            Validation.Assert.MaxRange(count, index + 1, "count");
+            Validation.Argument.Assert.MinRange(index, 0, "index");
+            Validation.Argument.Assert.MinRange(count, 0, "count");
+            Validation.Argument.Assert.MaxRange(index, _Size - 1, "index");
+            Validation.Argument.Assert.MaxRange(count, index + 1, "count");
             return Array.LastIndexOf(_Items, item, index, count);
         }
 
@@ -835,7 +835,7 @@ namespace Fosol.Common.Collections
         // The complexity is O(n).
         public int RemoveAll(Predicate<T> match)
         {
-            Validation.Assert.IsNotNull(match, "match");
+            Validation.Argument.Assert.IsNotNull(match, "match");
             int freeIndex = 0;   // the first free slot in items array
             // Find the first item which needs to be removed. 
             while (freeIndex < _Size && !match(_Items[freeIndex])) freeIndex++;
@@ -860,7 +860,7 @@ namespace Fosol.Common.Collections
         // decreased by one.
         public void RemoveAt(int index)
         {
-            Validation.Assert.MaxRange((uint)index, (uint)_Size - 1, "index");
+            Validation.Argument.Assert.MaxRange((uint)index, (uint)_Size - 1, "index");
             _Size--;
             if (index < _Size)
                 Array.Copy(_Items, index + 1, _Items, index, _Size - index);
@@ -871,9 +871,9 @@ namespace Fosol.Common.Collections
         // Removes a range of elements from this list.
         public void RemoveRange(int index, int count)
         {
-            Validation.Assert.MinRange(index, 0, "index");
-            Validation.Assert.MinRange(count, 0, "count");
-            Validation.Assert.MaxRange(count, _Size - index, "count");
+            Validation.Argument.Assert.MinRange(index, 0, "index");
+            Validation.Argument.Assert.MinRange(count, 0, "count");
+            Validation.Argument.Assert.MaxRange(count, _Size - index, "count");
             if (count > 0)
             {
                 int i = _Size;
@@ -900,9 +900,9 @@ namespace Fosol.Common.Collections
         // elements. 
         public void Reverse(int index, int count)
         {
-            Validation.Assert.MinRange(index, 0, "index");
-            Validation.Assert.MinRange(count, 0, "count");
-            Validation.Assert.MaxRange(count, _Size - index, "count");
+            Validation.Argument.Assert.MinRange(index, 0, "index");
+            Validation.Argument.Assert.MinRange(count, 0, "count");
+            Validation.Argument.Assert.MaxRange(count, _Size - index, "count");
             Array.Reverse(_Items, index, count);
             _Version++;
         }
@@ -930,9 +930,9 @@ namespace Fosol.Common.Collections
         // This method uses the Array.Sort method to sort the elements.
         public void Sort(int index, int count, IComparer<T> comparer)
         {
-            Validation.Assert.MinRange(index, 0, "index");
-            Validation.Assert.MinRange(count, 0, "count");
-            Validation.Assert.MaxRange(count, _Size - index, "count");
+            Validation.Argument.Assert.MinRange(index, 0, "index");
+            Validation.Argument.Assert.MinRange(count, 0, "count");
+            Validation.Argument.Assert.MaxRange(count, _Size - index, "count");
             Array.Sort<T>(_Items, index, count, comparer);
             _Version++;
         }
@@ -943,7 +943,7 @@ namespace Fosol.Common.Collections
         /// <param name="comparison">Comparison object of type T.</param>
         public void Sort(Comparison<T> comparison)
         {
-            Validation.Assert.IsNotNull(comparison, "comparison");
+            Validation.Argument.Assert.IsNotNull(comparison, "comparison");
             if (_Size > 0)
             {
                 IComparer<T> comparer = new FunctorComparer<T>(comparison);
@@ -977,7 +977,7 @@ namespace Fosol.Common.Collections
 
         public bool TrueForAll(Predicate<T> match)
         {
-            Validation.Assert.IsNotNull(match, "match");
+            Validation.Argument.Assert.IsNotNull(match, "match");
             for (int i = 0; i < _Size; i++)
             {
                 if (!match(_Items[i]))

@@ -48,7 +48,7 @@ namespace Fosol.Common.Collections
         /// <param name="destination">StateDictionary destination.</param>
         public void CopyTo(StateDictionary<T> destination)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(destination, "destination");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(destination, "destination");
             foreach (string key in this.Keys)
             {
                 destination[key] = this[key];

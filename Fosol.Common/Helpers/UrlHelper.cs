@@ -21,7 +21,7 @@ namespace Fosol.Common.Helpers
         /// <returns>True if the URL is relative.</returns>
         public static bool IsRelative(string url)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(url, "url");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(url, "url");
 
             return !UrlHelper.HasSchema(url) && !UrlHelper.IsRooted(url);
         }
@@ -33,7 +33,7 @@ namespace Fosol.Common.Helpers
         /// <returns>True if the URL has a schema.</returns>
         public static bool HasSchema(string url)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(url, "url");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(url, "url");
 
             var colon = url.IndexOf(':');
             if (colon == -1)
@@ -73,8 +73,8 @@ namespace Fosol.Common.Helpers
         /// <returns>Absolute URL.</returns>
         public static string ToAbsolute(HttpContext context, string relative)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(relative, "relative");
-            Fosol.Common.Validation.Assert.IsNotNull(context, "context");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(relative, "relative");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(context, "context");
 
             Uri uri;
             if (Uri.TryCreate(relative, UriKind.RelativeOrAbsolute, out uri))
@@ -102,7 +102,7 @@ namespace Fosol.Common.Helpers
         /// <returns>Absolute URL.</returns>
         public static string ToAbsoluteForAppDomain(string relative)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(relative, "relative");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(relative, "relative");
 
 
             var virtual_domain_path = HttpRuntime.AppDomainAppVirtualPath;

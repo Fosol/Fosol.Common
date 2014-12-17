@@ -50,7 +50,7 @@ namespace Fosol.Common.Extensions.Streams
         /// <returns>MemoryStream object containing string value.</returns>
         public static Stream ToMemoryStream(this string value)
         {
-            Validation.Assert.IsNotNullOrEmpty(value, "value");
+            Validation.Argument.Assert.IsNotNullOrEmpty(value, "value");
 
             var stream = new MemoryStream();
             ToStream(value, stream);
@@ -68,9 +68,9 @@ namespace Fosol.Common.Extensions.Streams
         /// <param name="stream">Stream object to receive string value.</param>
         public static void ToStream(this string value, System.IO.Stream stream)
         {
-            Validation.Assert.IsNotNullOrEmpty(value, "value");
-            Validation.Assert.IsNotNull(stream, "stream");
-            Validation.Assert.IsNotValue(stream.CanWrite, false, "stream.CanWrite");
+            Validation.Argument.Assert.IsNotNullOrEmpty(value, "value");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.IsNotValue(stream.CanWrite, false, "stream.CanWrite");
 
             var writer = new StreamWriter(stream);
             writer.Write(value);
@@ -88,11 +88,11 @@ namespace Fosol.Common.Extensions.Streams
         /// <param name="args">Data to pass to the statusCallback event.</param>
         public static void ToStream(this string value, System.IO.Stream stream, Encoding encoding, int bufferSize = DefaultBufferSize, StreamWriteProgressCallback statusCallback = null, params Object[] args)
         {
-            Validation.Assert.IsNotNull(value, "value");
-            Validation.Assert.IsNotNull(stream, "stream");
-            Validation.Assert.Range(bufferSize, -1, value.Length, "bufferSize");
-            Validation.Assert.IsNotValue(bufferSize, 0, "bufferSize");
-            Validation.Assert.IsNotValue(stream.CanWrite, false, "stream.CanWrite");
+            Validation.Argument.Assert.IsNotNull(value, "value");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.Range(bufferSize, -1, value.Length, "bufferSize");
+            Validation.Argument.Assert.IsNotValue(bufferSize, 0, "bufferSize");
+            Validation.Argument.Assert.IsNotValue(stream.CanWrite, false, "stream.CanWrite");
 
             if (bufferSize > value.Length)
                 bufferSize = value.Length;
@@ -115,10 +115,10 @@ namespace Fosol.Common.Extensions.Streams
         /// <param name="args">Data to pass to the statusCallback event.</param>
         public static void ToStream(this byte[] value, System.IO.Stream stream, int bufferSize = DefaultBufferSize, StreamWriteProgressCallback statusCallback = null, params Object[] args)
         {
-            Validation.Assert.IsNotNull(value, "value");
-            Validation.Assert.IsNotNull(stream, "stream");
-            Validation.Assert.MinRange(bufferSize, 1, "bufferSize");
-            Validation.Assert.IsNotValue(stream.CanWrite, false, "stream.CanWrite");
+            Validation.Argument.Assert.IsNotNull(value, "value");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.MinRange(bufferSize, 1, "bufferSize");
+            Validation.Argument.Assert.IsNotValue(stream.CanWrite, false, "stream.CanWrite");
 
             if (bufferSize > value.Length)
                 bufferSize = value.Length;
@@ -168,10 +168,10 @@ namespace Fosol.Common.Extensions.Streams
         /// <param name="args">Data to pass to the statusCallback event.</param>
         public static void CopyTo(this Stream source, Stream destination, int bufferSize = DefaultBufferSize, StreamWriteProgressCallback statusCallback = null, params Object[] args)
         {
-            Validation.Assert.IsValue(source.CanWrite, true, "source.CanRead");
-            Validation.Assert.IsNotNull(destination, "destination");
-            Validation.Assert.IsValue(destination.CanWrite, true, "destination.CanWrite");
-            Validation.Assert.MinRange(bufferSize, 1, "bufferSize");
+            Validation.Argument.Assert.IsValue(source.CanWrite, true, "source.CanRead");
+            Validation.Argument.Assert.IsNotNull(destination, "destination");
+            Validation.Argument.Assert.IsValue(destination.CanWrite, true, "destination.CanWrite");
+            Validation.Argument.Assert.MinRange(bufferSize, 1, "bufferSize");
 
             var buffer = new byte[bufferSize];
             int read = 0;
@@ -210,8 +210,8 @@ namespace Fosol.Common.Extensions.Streams
         /// <returns>The contents of the string as a string value.</returns>
         public static string WriteToString(this Stream stream)
         {
-            Validation.Assert.IsNotNull(stream, "stream");
-            Validation.Assert.IsValue<bool>(stream.CanRead, true, "stream.CanRead");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.IsValue<bool>(stream.CanRead, true, "stream.CanRead");
 
             using (var reader = new StreamReader(stream))
             {
@@ -230,8 +230,8 @@ namespace Fosol.Common.Extensions.Streams
         /// <returns>String value.</returns>
         public static string WriteToString(this Stream stream, Encoding encoding, bool detectEncodingFromByteOrderMarks = false)
         {
-            Validation.Assert.IsNotNull(stream, "stream");
-            Validation.Assert.IsNotNull(encoding, "encoding");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.IsNotNull(encoding, "encoding");
 
             using (var reader = new StreamReader(stream, encoding, detectEncodingFromByteOrderMarks))
             {
@@ -254,10 +254,10 @@ namespace Fosol.Common.Extensions.Streams
         /// <returns>String value.</returns>
         public static string WriteToString(this Stream stream, Encoding encoding, bool detectEncodingFromByteOrderMarks = false, int bufferSize = DefaultBufferSize, StreamReadProgressCallback statusCallback = null, params Object[] args)
         {
-            Validation.Assert.IsNotNull(stream, "stream");
-            Validation.Assert.IsValue(stream.CanRead, true, "stream");
-            Validation.Assert.IsNotNull(encoding, "encoding");
-            Validation.Assert.MinRange(bufferSize, 1, "bufferSize");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.IsValue(stream.CanRead, true, "stream");
+            Validation.Argument.Assert.IsNotNull(encoding, "encoding");
+            Validation.Argument.Assert.MinRange(bufferSize, 1, "bufferSize");
 
             using (var reader = new StreamReader(stream, encoding, detectEncodingFromByteOrderMarks, bufferSize))
             {
@@ -300,8 +300,8 @@ namespace Fosol.Common.Extensions.Streams
         /// <returns>Array of byte.</returns>
         public static byte[] WriteToByteArray(this Stream stream, int bufferSize = DefaultBufferSize, StreamReadProgressCallback statusCallback = null, params Object[] args)
         {
-            Validation.Assert.IsNotNull(stream, "stream");
-            Validation.Assert.MinRange(bufferSize, 1, "bufferSize");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.MinRange(bufferSize, 1, "bufferSize");
 
             var buffer = new byte[bufferSize];
             using (var ms = new MemoryStream())

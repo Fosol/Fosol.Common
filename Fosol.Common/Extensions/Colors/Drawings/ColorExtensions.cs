@@ -27,7 +27,7 @@ namespace Fosol.Common.Extensions.Colors.Drawings
         /// <returns>Color object.</returns>
         public static System.Drawing.Color HexToColor(this String value)
         {
-            Validation.Assert.IsNotNullOrEmpty(value, "value");
+            Validation.Argument.Assert.IsNotNullOrEmpty(value, "value");
 
             byte a = 255, r = 0, g = 0, b = 0;
             // #123
@@ -132,7 +132,7 @@ namespace Fosol.Common.Extensions.Colors.Drawings
         /// <returns>Hex value</returns>
         public static String ColorToHex(this System.Drawing.Color color)
         {
-            Validation.Assert.IsNotNull(color, "color");
+            Validation.Argument.Assert.IsNotNull(color, "color");
             return "#" + color.A.ToHex() + color.R.ToHex() + color.G.ToHex() + color.B.ToHex();
         }
         #endregion

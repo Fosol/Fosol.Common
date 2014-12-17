@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HttpContextWrapper.cs" />
     <Compile Include="Mvc\Extensions\Controllers\ControllerExtensions.cs" />
     <Compile Include="Mvc\Helpers\RouteValuesHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -50,6 +51,9 @@
       <Project>{61d8cac1-6f1b-48fc-b94c-0601f1ce78d5}</Project>
       <Name>Fosol.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

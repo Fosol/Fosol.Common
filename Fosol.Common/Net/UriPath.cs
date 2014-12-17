@@ -137,7 +137,7 @@ namespace Fosol.Common.Net
         /// <param name="segment">UriPathSegment object.</param>
         public void Add(UriPathSegment segment)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(segment, "segment");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(segment, "segment");
 
             _Segments.Add(segment);
         }

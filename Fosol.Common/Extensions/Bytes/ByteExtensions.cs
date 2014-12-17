@@ -42,8 +42,8 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>String value.</returns>
         public static string ToStringValue(this byte[] value, Encoding sourceEncoding, Encoding destEncoding)
         {
-            Validation.Assert.IsNotNull(sourceEncoding, "sourceEncoding");
-            Validation.Assert.IsNotNull(destEncoding, "destEncoding");
+            Validation.Argument.Assert.IsNotNull(sourceEncoding, "sourceEncoding");
+            Validation.Argument.Assert.IsNotNull(destEncoding, "destEncoding");
             var buffer = Encoding.Convert(sourceEncoding, destEncoding, value);
 #if WINDOWS_APP || WINDOWS_PHONE_APP
             return destEncoding.GetString(buffer, 0, value.Length);
@@ -82,14 +82,14 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>Position within the destination array after the data has been copied.</returns>
         public static int Insert(this byte[] destination, byte[] data, int destIndex, int dataIndex, int length)
         {
-            Validation.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNull(data, "data");
 
             // Default to the value.Length.
             if (length <= 0)
                 length = data.Length - dataIndex;
 
-            Validation.Assert.Range(destIndex, 0, destination.Length - length, "destIndex");
-            Validation.Assert.Range(length, 0, data.Length, "length");
+            Validation.Argument.Assert.Range(destIndex, 0, destination.Length - length, "destIndex");
+            Validation.Argument.Assert.Range(length, 0, data.Length, "length");
 
             if (destination.Length < length + destIndex)
                 throw new ArgumentOutOfRangeException("data", String.Format(Resources.Multilingual.Exception_Destination_Too_Small, "data"));
@@ -119,7 +119,7 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>Hex value represents the byte array.</returns>
         public static string ToHex(this byte[] value)
         {
-            Validation.Assert.IsNotNull(value, "value");
+            Validation.Argument.Assert.IsNotNull(value, "value");
 
             return BitConverter.ToString(value).Replace("-", "");
         }
@@ -135,9 +135,9 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>Index position of value within data, or -1 if not found.</returns>
         public static int IndexOf(this byte[] data, byte[] value, int startIndex = 0)
         {
-            Validation.Assert.IsNotNull(data, "data");
-            Validation.Assert.IsNotNull(value, "value");
-            Validation.Assert.Range(startIndex, 0, data.Length, "startIndex");
+            Validation.Argument.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNull(value, "value");
+            Validation.Argument.Assert.Range(startIndex, 0, data.Length, "startIndex");
 
             if (data.Length == 0 || value.Length == 0)
                 return -1;
@@ -160,9 +160,9 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>True if the value is at the index position within the data.</returns>
         public static bool IsMatch(this byte[] data, byte[] value, int startIndex = 0)
         {
-            Validation.Assert.IsNotNull(data, "data");
-            Validation.Assert.IsNotNull(value, "value");
-            Validation.Assert.Range(startIndex, 0, data.Length, "startIndex");
+            Validation.Argument.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNull(value, "value");
+            Validation.Argument.Assert.Range(startIndex, 0, data.Length, "startIndex");
 
             if (value.Length > (data.Length - startIndex))
                 return false;
@@ -187,9 +187,9 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>True if the value is at the index position within the data.</returns>
         public static bool IsMatch(this byte[] data, byte[] value, ref int index)
         {
-            Validation.Assert.IsNotNull(data, "data");
-            Validation.Assert.IsNotNull(value, "value");
-            Validation.Assert.Range(index, 0, data.Length, "index");
+            Validation.Argument.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNull(value, "value");
+            Validation.Argument.Assert.Range(index, 0, data.Length, "index");
 
             if (value.Length > (data.Length - index))
                 return false;
@@ -212,8 +212,8 @@ namespace Fosol.Common.Extensions.Bytes
         /// <returns>An array of index positions that the value was found.</returns>
         public static int[] IndexOfAll(this byte[] data, byte[] value)
         {
-            Validation.Assert.IsNotNull(data, "data");
-            Validation.Assert.IsNotNull(value, "value");
+            Validation.Argument.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNull(value, "value");
 
             if (data.Length == 0 || value.Length == 0)
                 return new int[0];

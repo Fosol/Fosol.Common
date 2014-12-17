@@ -29,7 +29,7 @@ namespace Fosol.Common.Helpers
         /// <returns>New instance of the type specified.</returns>
         public static object CreateInstance(this Type type, params object[] args)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(type, "type");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(type, "type");
             return Activator.CreateInstance(type, args);
         }
 
@@ -41,7 +41,7 @@ namespace Fosol.Common.Helpers
         /// <returns>New instance of the type specified.</returns>
         public static T CreateInstance<T>(this Type type)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(type, "type");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(type, "type");
             return Activator.CreateInstance<T>();
         }
 #else
@@ -147,7 +147,7 @@ namespace Fosol.Common.Helpers
         /// <returns>New instance of the specified type.</returns>
         public static object ConstructObject(Type type, params object[] args)
         {
-            Validation.Assert.IsNotNull(type, "type");
+            Validation.Argument.Assert.IsNotNull(type, "type");
 
             object result = null;
             Exception exception = null;
@@ -257,8 +257,8 @@ namespace Fosol.Common.Helpers
         public static T ConstructObject<T>(Type type, params object[] args)
             where T : class
         {
-            Validation.Assert.IsNotNull(type, "type");
-            Validation.Assert.IsAssignable(type, typeof(T), "baseType");
+            Validation.Argument.Assert.IsNotNull(type, "type");
+            Validation.Argument.Assert.IsAssignable(type, typeof(T), "baseType");
 
             T result = null;
             Exception exception = null;
@@ -368,9 +368,9 @@ namespace Fosol.Common.Helpers
         public static T ConstructObject<T>(string typeName, params object[] args)
             where T : class
         {
-            Validation.Assert.IsNotNullOrEmpty(typeName, "typeName");
+            Validation.Argument.Assert.IsNotNullOrEmpty(typeName, "typeName");
             var type = Type.GetType(typeName);
-            Validation.Assert.IsNotNull(type, "typeName", "This is not a valid type.");
+            Validation.Argument.Assert.IsNotNull(type, "typeName", "This is not a valid type.");
             return ConstructObject<T>(type, args);
         }
 #endif

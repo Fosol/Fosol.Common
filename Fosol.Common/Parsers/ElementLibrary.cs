@@ -69,9 +69,9 @@ namespace Fosol.Common.Parsers
         /// <returns>Number of items in library.</returns>
         public static int Add(Type type)
         {
-            Common.Validation.Assert.IsNotNull(type, "type");
-            Common.Validation.Assert.IsAssignable(type, typeof(FormatElement), "type");
-            Common.Validation.Assert.HasAttribute(type, typeof(ElementAttribute), "type");
+            Common.Validation.Argument.Assert.IsNotNull(type, "type");
+            Common.Validation.Argument.Assert.IsAssignable(type, typeof(FormatElement), "type");
+            Common.Validation.Argument.Assert.HasAttribute(type, typeof(ElementAttribute), "type");
 
             var attr = type.GetCustomAttribute(typeof(ElementAttribute)) as ElementAttribute;
             if (_Cache.ContainsKey(attr.Name))
@@ -94,8 +94,8 @@ namespace Fosol.Common.Parsers
         /// <returns>Number of items in library.</returns>
         public static int Add(string assemblyString, string nameOrNamespace)
         {
-            Common.Validation.Assert.IsNotNullOrEmpty(assemblyString, "assemblyString");
-            Common.Validation.Assert.IsNotNullOrEmpty(nameOrNamespace, "nameOrNamespace");
+            Common.Validation.Argument.Assert.IsNotNullOrEmpty(assemblyString, "assemblyString");
+            Common.Validation.Argument.Assert.IsNotNullOrEmpty(nameOrNamespace, "nameOrNamespace");
 
             var assembly = Assembly.Load(assemblyString);
             if (assembly == null)
@@ -179,7 +179,7 @@ namespace Fosol.Common.Parsers
         /// <returns>Type of Target.</returns>
         public static Type Get(string name)
         {
-            Common.Validation.Assert.IsNotNullOrEmpty(name, "name");
+            Common.Validation.Argument.Assert.IsNotNullOrEmpty(name, "name");
 
             Type type = null;
             // The cache contains the FormatElement so return it.

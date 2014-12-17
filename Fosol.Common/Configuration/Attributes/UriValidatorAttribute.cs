@@ -47,7 +47,7 @@ namespace Fosol.Common.Configuration.Attributes
         {
             get
             {
-                return new Validation.UriValidator(_UriKind);
+                return new Validators.UriValidator(_UriKind);
             }
         }
         #endregion

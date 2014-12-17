@@ -486,7 +486,7 @@ namespace Fosol.Common.Net
         /// <param name="uri">Initial URI value.</param>
         public UriBuilder(string uri)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(uri, "uri");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(uri, "uri");
             var temp_uri = new Uri(uri, UriKind.RelativeOrAbsolute);
             if (temp_uri.IsAbsoluteUri)
             {

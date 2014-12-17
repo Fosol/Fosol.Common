@@ -76,7 +76,7 @@ namespace Fosol.Common.Net
         /// <param name="value">Initial value of the query parameter.</param>
         public UriQueryParam(string name, string value)
         {
-            Fosol.Common.Validation.Assert.IsFalse(String.IsNullOrEmpty(name + value), "name and value", "Parameters 'name' and 'value' both cannot be null or empty.");
+            Fosol.Common.Validation.Argument.Assert.IsFalse(String.IsNullOrEmpty(name + value), "name and value", "Parameters 'name' and 'value' both cannot be null or empty.");
             _Name = name;
             _Values = new UriQueryParamValue(value);
         }
@@ -90,8 +90,8 @@ namespace Fosol.Common.Net
         /// <param name="values">Initial array of values for this query parameter.</param>
         public UriQueryParam(string name, string[] values)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(values, "values");
-            Fosol.Common.Validation.Assert.IsFalse(String.IsNullOrEmpty(name + values.Aggregate((a, b) => a + b)), "name and values", "Parameters 'name' and 'values' both cannot be null or empty.");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(values, "values");
+            Fosol.Common.Validation.Argument.Assert.IsFalse(String.IsNullOrEmpty(name + values.Aggregate((a, b) => a + b)), "name and values", "Parameters 'name' and 'values' both cannot be null or empty.");
 
             _Name = name;
             _Values = new UriQueryParamValue(values);
@@ -104,8 +104,8 @@ namespace Fosol.Common.Net
         /// <param name="parameter">KeyValuePair object.</param>
         public UriQueryParam(KeyValuePair<string, string> parameter)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(parameter, "parameter");
-            Fosol.Common.Validation.Assert.IsFalse(String.IsNullOrEmpty(parameter.Key + parameter.Value), "parameter", "Parameter 'parameter' property values 'Key' and 'Value' cannot both be null or empty.");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(parameter, "parameter");
+            Fosol.Common.Validation.Argument.Assert.IsFalse(String.IsNullOrEmpty(parameter.Key + parameter.Value), "parameter", "Parameter 'parameter' property values 'Key' and 'Value' cannot both be null or empty.");
 
             _Name = parameter.Key;
             _Values = new UriQueryParamValue(parameter.Value);

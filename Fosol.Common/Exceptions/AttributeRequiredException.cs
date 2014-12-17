@@ -39,7 +39,7 @@ namespace Fosol.Common.Exceptions
         /// </summary>
         /// <param name="attributeType">Attribute Type required.</param>
         public AttributeRequiredException(Type attributeType)
-            : base(String.Format(Resources.Multilingual.Exception_Validation_Attribute_Required, attributeType.GetType().Name))
+            : base(String.Format(Resources.Multilingual.Exception_Validation_Argument_HasAttribute, attributeType.GetType().Name))
         {
             this.AttributeType = attributeType;
         }
@@ -59,7 +59,7 @@ namespace Fosol.Common.Exceptions
         /// <param name="attributeType">Attribute Type required.</param>
         /// <param name="innerException">Exception that caused this exception.</param>
         public AttributeRequiredException(Type attributeType, Exception innerException)
-            : base(String.Format(Resources.Multilingual.Exception_Validation_Attribute_Required, attributeType.GetType().Name), innerException)
+            : base(String.Format(Resources.Multilingual.Exception_Validation_Argument_HasAttribute, attributeType.GetType().Name), innerException)
         {
             this.AttributeType = attributeType;
         }

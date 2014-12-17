@@ -47,8 +47,8 @@ namespace Fosol.Common.Serialization
         /// <param name="name">The name of the datatype in the correct case.</param>
         public XmlSchemaDataTypeAttribute(Uri uri, string name)
         {
-            Fosol.Common.Validation.Assert.IsNotNull(uri, "uri");
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(name, "name");
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(uri, "uri");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(name, "name");
             this.Uri = uri;
             this.Name = name;
         }

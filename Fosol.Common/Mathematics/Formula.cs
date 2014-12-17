@@ -300,7 +300,7 @@ namespace Fosol.Common.Mathematics
         /// <returns>The offset from center.</returns>
         public static float OffsetCenter(float value, float offset)
         {
-            Validation.Assert.Range(offset, -1, 1, "offset");
+            Validation.Argument.Assert.Range(offset, -1, 1, "offset");
 
             if (value == 0)
                 return value;
@@ -335,7 +335,7 @@ namespace Fosol.Common.Mathematics
         /// <returns>The offset from center.</returns>
         public static double OffsetCenter(double value, float offset)
         {
-            Validation.Assert.Range(offset, -1, 1, "offset");
+            Validation.Argument.Assert.Range(offset, -1, 1, "offset");
 
             if (value == 0)
                 return value;
@@ -396,10 +396,10 @@ namespace Fosol.Common.Mathematics
         public static Rectangle Scale(Size size, Size resize, float xOffset = 0f, float yOffset = 0f, bool allowWhitespace = true)
 #endif
         {
-            Validation.Assert.IsNotNull(size, "size");
-            Validation.Assert.IsNotNull(resize, "resize");
-            Validation.Assert.Range(xOffset, -1, 1, "hOffset");
-            Validation.Assert.Range(yOffset, -1, 1, "yOffset");
+            Validation.Argument.Assert.IsNotNull(size, "size");
+            Validation.Argument.Assert.IsNotNull(resize, "resize");
+            Validation.Argument.Assert.Range(xOffset, -1, 1, "hOffset");
+            Validation.Argument.Assert.Range(yOffset, -1, 1, "yOffset");
 
 #if WINDOWS_APP || WINDOWS_PHONE_APP
             var dest = new Rect(0, 0, resize.Width, resize.Height);

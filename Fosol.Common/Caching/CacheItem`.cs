@@ -129,7 +129,7 @@ namespace Fosol.Common.Caching
         /// <param name="timeToLive"></param>
         public void Renew(TimeSpan timeToLive)
         {
-            Validation.Assert.IsNotNull(timeToLive, "timeToLive");
+            Validation.Argument.Assert.IsNotNull(timeToLive, "timeToLive");
             _TimeToLive = timeToLive;
             _ExpiresOn = Optimization.FastDateTime.UtcNow.Add(_TimeToLive.Value);
         }
@@ -140,7 +140,7 @@ namespace Fosol.Common.Caching
         /// <param name="expiresOn"></param>
         public void Renew(DateTime expiresOn)
         {
-            Validation.Assert.IsNotNull(expiresOn, "expiresOn");
+            Validation.Argument.Assert.IsNotNull(expiresOn, "expiresOn");
             _ExpiresOn = expiresOn;
         }
 

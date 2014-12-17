@@ -64,7 +64,7 @@ namespace Fosol.Common.Extensions.Reflection
         /// <param name="converter">TypeConverter object.</param>
         public static void SetValue2(this PropertyInfo info, object obj, object value, TypeConverter converter)
         {
-            Validation.Assert.IsNotNull(converter, "converter");
+            Validation.Argument.Assert.IsNotNull(converter, "converter");
             // Same type is easy.
             if (info.PropertyType == value.GetType())
                 info.SetValue(obj, value);

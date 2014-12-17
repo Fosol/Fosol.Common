@@ -23,14 +23,14 @@ namespace Fosol.Common.Configuration
         #region Constructors
         public SpecialConfigurationElementType(params Type[] configurationElementType)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(configurationElementType, "configurationElementType");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(configurationElementType, "configurationElementType");
 
             _Elements = new Dictionary<string,Type>();
 
             foreach (var cet in configurationElementType)
             {
                 // Make sure that each type is a ConfigurationElement.
-                Fosol.Common.Validation.Assert.IsAssignable(cet, typeof(ConfigurationElement), "configurationElementType");
+                Fosol.Common.Validation.Argument.Assert.IsAssignable(cet, typeof(ConfigurationElement), "configurationElementType");
 
                 // Check if they have a ConfigurationElementAttribute.
                 var attr = cet.GetCustomAttributes(typeof(ConfigurationElementAttribute), false).FirstOrDefault() as ConfigurationElementAttribute;

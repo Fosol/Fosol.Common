@@ -25,8 +25,8 @@ namespace Fosol.Common.Serialization
         /// <returns>Serialized object as a string.</returns>
         public static string Serialize(object data)
         {
-            Validation.Assert.IsNotNull(data, "data");
-            Validation.Assert.HasAttribute(data, typeof(SerializableAttribute), "data");
+            Validation.Argument.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.HasAttribute(data, typeof(SerializableAttribute), "data");
 
             using (MemoryStream stream = new MemoryStream())
             {
@@ -45,9 +45,9 @@ namespace Fosol.Common.Serialization
         /// <param name="stream">Stream to write object to.</param>
         public static void ToStream(object data, Stream stream)
         {
-            Validation.Assert.IsNotNull(data, "data");
-            Validation.Assert.HasAttribute(data, typeof(SerializableAttribute), "data");
-            Validation.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.HasAttribute(data, typeof(SerializableAttribute), "data");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
 
             var serializer = new System.Xml.Serialization.XmlSerializer(data.GetType());
             serializer.Serialize(stream, data);
@@ -63,7 +63,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T Deserialize<T>(Stream stream)
         {
-            Validation.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
 
             var serializer = new XmlSerializer(typeof(T));
             return (T)serializer.Deserialize(stream);
@@ -80,7 +80,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T Deserialize<T>(string data)
         {
-            Validation.Assert.IsNotNullOrEmpty(data, "data");
+            Validation.Argument.Assert.IsNotNullOrEmpty(data, "data");
 
             var deserializer = new XmlSerializer(typeof(T));
 
@@ -104,8 +104,8 @@ namespace Fosol.Common.Serialization
         /// <param name="fileShare">File share control.</param>
         public static void SerializeToFile(object data, string path, FileMode fileMode = FileMode.CreateNew, FileAccess fileAccess = FileAccess.Write, FileShare fileShare = FileShare.None)
         {
-            Validation.Assert.IsNotNull(data, "data");
-            Validation.Assert.IsNotNullOrEmpty(path, "path");
+            Validation.Argument.Assert.IsNotNull(data, "data");
+            Validation.Argument.Assert.IsNotNullOrEmpty(path, "path");
 
             using (Stream stream = File.Open(path, fileMode, fileAccess, fileShare))
             {
@@ -123,7 +123,7 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T DeserializeFromFile<T>(string path)
         {
-            Validation.Assert.IsNotNullOrEmpty(path, "path");
+            Validation.Argument.Assert.IsNotNullOrEmpty(path, "path");
 
             using (var stream = File.OpenRead(path))
             {
@@ -140,8 +140,8 @@ namespace Fosol.Common.Serialization
         /// <returns>Object of type T.</returns>
         public static T Deserialize<T>(System.IO.IsolatedStorage.IsolatedStorageFileStream stream)
         {
-            Validation.Assert.IsNotNull(stream, "stream");
-            Validation.Assert.IsValue(stream.CanRead, "true", "stream.CanRead");
+            Validation.Argument.Assert.IsNotNull(stream, "stream");
+            Validation.Argument.Assert.IsValue(stream.CanRead, "true", "stream.CanRead");
 
             using (var reader = new StreamReader(stream))
             {

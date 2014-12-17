@@ -46,9 +46,9 @@ namespace Fosol.Common.Parsers
         /// <param name="attributeBoundary"></param>
         public Parser(ElementBoundary startBoundary, ElementBoundary endBoundary, ElementBoundary attributeBoundary)
         {
-            Validation.Assert.IsNotNull(startBoundary, "startBoundary");
-            Validation.Assert.IsNotNull(endBoundary, "endBoundary");
-            Validation.Assert.IsNotNull(attributeBoundary, "attributeBoundary");
+            Validation.Argument.Assert.IsNotNull(startBoundary, "startBoundary");
+            Validation.Argument.Assert.IsNotNull(endBoundary, "endBoundary");
+            Validation.Argument.Assert.IsNotNull(attributeBoundary, "attributeBoundary");
             _StartBoundary = startBoundary;
             _EndBoundary = endBoundary;
             _AttributeBoundary = attributeBoundary;

@@ -64,7 +64,7 @@ namespace Fosol.Common.Security
         /// <param name="password">Password to evaluate the strength of.  The password is not stored.</param>
         public PasswordComposition(string password)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(password, "password");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(password, "password");
 
             // Check each character and increment the various strength indicators.
             foreach (var c in password.ToArray())

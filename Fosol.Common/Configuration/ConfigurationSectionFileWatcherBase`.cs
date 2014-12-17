@@ -224,7 +224,7 @@ namespace Fosol.Common.Configuration
         /// <param name="filename">Full path to the section configuration file.</param>
         public ConfigurationSectionFileWatcherBase(string filename)
         {
-            Validation.Assert.IsNotNullOrEmpty(filename, "filename");
+            Validation.Argument.Assert.IsNotNullOrEmpty(filename, "filename");
 
             this.Filename = filename;
         }
@@ -254,7 +254,7 @@ namespace Fosol.Common.Configuration
         /// <returns>ConfigurationSection object of type T.</returns>
         protected static T DeserializeSection(string filename)
         {
-            Validation.Assert.IsNotNull(filename, "filename");
+            Validation.Argument.Assert.IsNotNull(filename, "filename");
 
             if (!File.Exists(filename))
                 throw new System.IO.FileNotFoundException(String.Format(Resources.Multilingual.Exception_File_Not_Found, Path.GetFileName(filename)), filename);
