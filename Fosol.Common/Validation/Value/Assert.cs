@@ -70,7 +70,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the function returns a value equal to the validValue specified.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter 'function' does not return a valid value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter 'function' does not return a valid value.</exception>
         /// <param name="function">Function to validate.</param>
         /// <param name="validValue">Valid value.</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -85,7 +85,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the function returns a value equal to the validValue specified.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter 'function' does not return a valid value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter 'function' does not return a valid value.</exception>
         /// <param name="function">Function to validate.</param>
         /// <param name="validValue">Valid value.</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -100,7 +100,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the value is equal to the validValue specified.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter 'value' does not return a valid value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter 'value' does not return a valid value.</exception>
         /// <param name="value">Value to validate.</param>
         /// <param name="validValue">Valid value.</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -114,7 +114,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the value is equal to the validValue specified.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter 'value' does not return a valid value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter 'value' does not return a valid value.</exception>
         /// <param name="value">Value to validate.</param>
         /// <param name="validValue">Valid value.</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -129,23 +129,23 @@ namespace Fosol.Common.Validation.Value
         #region IsNotNull
         /// <summary>
         /// Asserts that the result of the function is not null.
-        /// If it is null it will throw System.ArgumentNullException.
+        /// If it is null it will throw Fosol.Common.Exceptions.ValueNullException.
         /// </summary>
-        /// <exception cref="System.ArgumentNullException">Parameter "function" return value is null.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueNullException">Parameter "function" return value is null.</exception>
         /// <param name="function">The function to execute.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNull(Func<object> function, string message = null, Exception innerException = null)
         {
             if (function == null || function() == null)
-                throw new ArgumentNullException(message ?? Resources.Multilingual.Exception_Validation_Value_IsNotNull, innerException);
+                throw new Exceptions.ValueNullException(message ?? Resources.Multilingual.Exception_Validation_Value_IsNotNull, innerException);
         }
 
         /// <summary>
         /// Asserts that the result of the function is not null.
-        /// If it is null it will throw System.ArgumentNullException.
+        /// If it is null it will throw Fosol.Common.Exceptions.ValueNullException.
         /// </summary>
-        /// <exception cref="System.ArgumentNullException">Parameter "function" return value is null.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueNullException">Parameter "function" return value is null.</exception>
         /// <typeparam name="T">Type of the value the function returns.</typeparam>
         /// <param name="function">The function to execute.</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -153,28 +153,28 @@ namespace Fosol.Common.Validation.Value
         public static void IsNotNull<T>(Func<T> function, string message = null, Exception innerException = null)
         {
             if (function == null || function() == null)
-                throw new ArgumentNullException(message ?? Resources.Multilingual.Exception_Validation_Value_IsNotNull, innerException);
+                throw new Exceptions.ValueNullException(message ?? Resources.Multilingual.Exception_Validation_Value_IsNotNull, innerException);
         }
 
         /// <summary>
         /// Asserts that the parameter value is not null.
-        /// If it is null it will throw System.ArgumentNullException.
+        /// If it is null it will throw Fosol.Common.Exceptions.ValueNullException.
         /// </summary>
-        /// <exception cref="System.ArgumentNullException">If the parameter is null.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueNullException">If the parameter is null.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNull(object value, string message = null, Exception innerException = null)
         {
             if (value == null)
-                throw new ArgumentNullException(message ?? Resources.Multilingual.Exception_Validation_Value_IsNotNull, innerException);
+                throw new Exceptions.ValueNullException(message ?? Resources.Multilingual.Exception_Validation_Value_IsNotNull, innerException);
         }
 
         /// <summary>
         /// Asserts that the parameter value is not null.
-        /// If it is null it will throw System.ArgumentNullException.
+        /// If it is null it will throw Fosol.Common.Exceptions.ValueNullException.
         /// </summary>
-        /// <exception cref="System.ArgumentNullException">If the parameter is null.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueNullException">If the parameter is null.</exception>
         /// <typeparam name="T">Type of the value.</typeparam>
         /// <param name="value">The value to check.</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -182,7 +182,7 @@ namespace Fosol.Common.Validation.Value
         public static void IsNotNull<T>(T value, string message = null, Exception innerException = null)
         {
             if (value == null)
-                throw new ArgumentNullException(message ?? Resources.Multilingual.Exception_Validation_Value_IsNotNull, innerException);
+                throw new Exceptions.ValueNullException(message ?? Resources.Multilingual.Exception_Validation_Value_IsNotNull, innerException);
         }
         #endregion
 
@@ -190,8 +190,8 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not null or empty.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueNullException">Parameter "value" cannot be null.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
@@ -206,8 +206,8 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter collection is not null and not empty.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueNullException">Parameter "value" cannot be null.</exception>
         /// <param name="collection">Parameter of type enumerable.</param>
         /// <param name="message">Message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception</param>
@@ -222,8 +222,8 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter collection is not null and not empty.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueNullException">Parameter "value" cannot be null.</exception>
         /// <param name="collection">Parameter of type enumerable.</param>
         /// <param name="message">Message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception</param>
@@ -238,8 +238,8 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter array is not null and not empty.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueNullException">Parameter "value" cannot be null.</exception>
         /// <param name="collection">Parameter of type array.</param>
         /// <param name="message">Message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception</param>
@@ -254,8 +254,8 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter array is not null and not empty.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueNullException">Parameter "value" cannot be null.</exception>
         /// <param name="collection">Parameter of type array.</param>
         /// <param name="message">Message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception</param>
@@ -270,8 +270,8 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter array is not null and not empty.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueNullException">Parameter "value" cannot be null.</exception>
         /// <param name="collection">Parameter of type array.</param>
         
         /// <param name="message">Message to describe the error.</param>
@@ -289,8 +289,8 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not null or empty after being trimmed.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueNullException">Parameter "value" cannot be null.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
@@ -308,7 +308,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -322,7 +322,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -338,7 +338,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -352,7 +352,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -368,7 +368,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -382,7 +382,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -398,7 +398,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -412,7 +412,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -428,7 +428,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -442,7 +442,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -458,7 +458,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -472,7 +472,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is greater than or equal to the minimum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is less than the minimum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -490,7 +490,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -504,7 +504,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -520,7 +520,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -534,7 +534,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -550,7 +550,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -564,7 +564,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -580,7 +580,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -594,7 +594,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -610,7 +610,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -624,7 +624,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -640,7 +640,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -654,7 +654,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is less than or equal to the maximum value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">If the value is greater than the maximum.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -672,7 +672,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="maximum">Maximum value allowed.</param>
@@ -687,7 +687,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="maximum">Maximum value allowed.</param>
@@ -704,7 +704,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="maximum">Maximum value allowed.</param>
@@ -719,7 +719,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="maximum">Maximum value allowed.</param>
@@ -736,7 +736,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="maximum">Maximum value allowed.</param>
@@ -751,7 +751,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
         /// <param name="maximum">Maximum value allowed.</param>
@@ -768,7 +768,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -782,7 +782,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -798,7 +798,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -812,7 +812,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -828,7 +828,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -842,7 +842,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Value must be within the specified range.</exception>
         /// <param name="value">Parameter value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
@@ -857,9 +857,9 @@ namespace Fosol.Common.Validation.Value
 
         #region StartsWith
         /// <summary>
-        /// If the value does not start with the appropriatevalu it will throw System.Exceptions.ValueException.
+        /// If the value does not start with the appropriatevalu it will throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">If the parameter does not start with the value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">If the parameter does not start with the value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="startsWithValue">The required start with value.</param>
         /// <param name="comparisonType">StringComparison type.</param>
@@ -874,9 +874,9 @@ namespace Fosol.Common.Validation.Value
 
         #region EndsWith
         /// <summary>
-        /// If the value does not end with the appropriate value it will throw System.Exceptions.ValueException.
+        /// If the value does not end with the appropriate value it will throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">If the parameter does not end with the value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">If the parameter does not end with the value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="endsWithValue">The required end with value.</param>
         /// <param name="comparisonType">StringComparison type.</param>
@@ -891,9 +891,9 @@ namespace Fosol.Common.Validation.Value
 
         #region IsValue
         /// <summary>
-        /// If the value does not exist in the valid values array it will throw System.Exceptions.ValueOutOfRangeException.
+        /// If the value does not exist in the valid values array it will throw Fosol.Common.Exceptions.ValueOutOfRangeException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Parameter "value" is must be a valid value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="validValues">An array of valid values to compare against.</param>
         /// <param name="comparisonType">StringComparison type rule.</param>
@@ -906,9 +906,9 @@ namespace Fosol.Common.Validation.Value
         }
 
         /// <summary>
-        /// If the value does not exist in the valid values array it will throw System.Exceptions.ValueOutOfRangeException.
+        /// If the value does not exist in the valid values array it will throw Fosol.Common.Exceptions.ValueOutOfRangeException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Parameter "value" is must be a valid value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="validValues">An array of valid values to compare against.</param>
         /// <param name="message">Error message describing the exception.</param>
@@ -920,10 +920,10 @@ namespace Fosol.Common.Validation.Value
         }
 
         /// <summary>
-        /// If the value does not equal the valid value it will throw System.Exceptions.ValueOutOfRangeException.
+        /// If the value does not equal the valid value it will throw Fosol.Common.Exceptions.ValueOutOfRangeException.
         /// This method is most effective when ensuring a parameter property is appropriate.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Parameter "value" is must be a valid value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="validValue">The only valid value.</param>
         /// <param name="message">Error message describing the exception.</param>
@@ -935,9 +935,9 @@ namespace Fosol.Common.Validation.Value
         }
 
         /// <summary>
-        /// If the value does not exist in the valid values array it will throw System.Exceptions.ValueOutOfRangeException.
+        /// If the value does not exist in the valid values array it will throw Fosol.Common.Exceptions.ValueOutOfRangeException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Parameter "value" is must be a valid value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="validValues">An array of valid values to compare against.</param>
         /// <param name="comparer">Method to determine if the value is valid.</param>
@@ -950,9 +950,9 @@ namespace Fosol.Common.Validation.Value
         }
 
         /// <summary>
-        /// If the value does not exist in the valid values array it will throw System.Exceptions.ValueOutOfRangeException.
+        /// If the value does not exist in the valid values array it will throw Fosol.Common.Exceptions.ValueOutOfRangeException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Parameter "value" is must be a valid value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="validValues">An array of valid values to compare against.</param>
         /// <param name="comparer">Method to determine if the value is valid. Func<validValue, value, result>.</param>
@@ -965,10 +965,10 @@ namespace Fosol.Common.Validation.Value
         }
 
         /// <summary>
-        /// If the value does not equal the valid value it will throw System.Exceptions.ValueException.
+        /// If the value does not equal the valid value it will throw Fosol.Common.Exceptions.ValueException.
         /// This method is most effective when ensuring a parameter property is appropriate.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" is must be a valid value.</exception>
         /// <typeparam name="T">Type of object to compare.</typeparam>
         /// <param name="value">The value to check.</param>
         /// <param name="validValue">The only valid value.</param>
@@ -981,10 +981,10 @@ namespace Fosol.Common.Validation.Value
         }
 
         /// <summary>
-        /// If the value does not equal the valid value it will throw System.Exceptions.ValueException.
+        /// If the value does not equal the valid value it will throw Fosol.Common.Exceptions.ValueException.
         /// This method is most effective when ensuring a parameter property is appropriate.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" is must be a valid value.</exception>
         /// <typeparam name="T">Type of object to compare.</typeparam>
         /// <param name="value">The value to check.</param>
         /// <param name="validValues">An array of valid values to compare against.</param>
@@ -997,9 +997,9 @@ namespace Fosol.Common.Validation.Value
         }
 
         /// <summary>
-        /// If the value does not exist in the valid values array it will throw System.Exceptions.ValueOutOfRangeException.
+        /// If the value does not exist in the valid values array it will throw Fosol.Common.Exceptions.ValueOutOfRangeException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueOutOfRangeException">Parameter "value" is must be a valid value.</exception>
         /// <typeparam name="T">Type of object to compare.</typeparam>
         /// <param name="value">The value to check.</param>
         /// <param name="validValues">An array of valid values to compare against.</param>
@@ -1017,7 +1017,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is equal to the invalid value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="invalidValue">Invalid value that the value cannot be equal to.</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -1031,7 +1031,7 @@ namespace Fosol.Common.Validation.Value
         /// <summary>
         /// Asserts that the parameter value is equal to the invalid value.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" cannot be empty.</exception>
         /// <typeparam name="T">Type of parameter being compared.</typeparam>
         /// <param name="value">The value to check.</param>
         /// <param name="invalidValue">Invalid value that the value cannot be equal to.</param>
@@ -1047,9 +1047,9 @@ namespace Fosol.Common.Validation.Value
         #region IsTrue
         /// <summary>
         /// Assert that the parameter is true.
-        /// If not throw System.Exceptions.ValueException.
+        /// If not throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" returned false.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" returned false.</exception>
         /// <param name="value">Parameter value.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">Exception that occured that caused this exception.</param>
@@ -1061,9 +1061,9 @@ namespace Fosol.Common.Validation.Value
 
         /// <summary>
         /// Assert that the function returns true.
-        /// If not throw System.Exceptions.ValueException.
+        /// If not throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "function" returned false.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "function" returned false.</exception>
         /// <param name="function">Function to call to determine the value of the parameter.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">Exception that occured that caused this exception.</param>
@@ -1077,9 +1077,9 @@ namespace Fosol.Common.Validation.Value
         #region IsFalse
         /// <summary>
         /// Assert that the parameter is false.
-        /// If not throw System.Exceptions.ValueException.
+        /// If not throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" returned true.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" returned true.</exception>
         /// <param name="value">Parameter value.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">Exception that occured that caused this exception.</param>
@@ -1091,9 +1091,9 @@ namespace Fosol.Common.Validation.Value
 
         /// <summary>
         /// Assert that the function returns false.
-        /// If not throw System.Exceptions.ValueException.
+        /// If not throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "function" returned true.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "function" returned true.</exception>
         /// <param name="function">Function to call to determine the value of the parameter.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">Exception that occured that caused this exception.</param>
@@ -1107,9 +1107,9 @@ namespace Fosol.Common.Validation.Value
         #region IsType
         /// <summary>
         /// Assert that the parameter is of the specified type.
-        /// If not throw System.Exceptions.ValueException.
+        /// If not throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" returned true.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" returned true.</exception>
         /// <param name="value">Parameter value.</param>
         /// <param name="validType">Valid type.</param>
         /// <param name="message">Error message describing the exception</param>
@@ -1122,9 +1122,9 @@ namespace Fosol.Common.Validation.Value
 
         /// <summary>
         /// Assert that the parameter is of the specified type.
-        /// If not throw System.Exceptions.ValueException.
+        /// If not throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" returned true.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" returned true.</exception>
         /// <param name="type">Parameter value.</param>
         /// <param name="validType">Valid type.</param>
         /// <param name="message">Error message describing the exception</param>
@@ -1140,9 +1140,9 @@ namespace Fosol.Common.Validation.Value
         #region HasAttribute
         /// <summary>
         /// Assert that the parameter has an attribute of the specified type defined.
-        /// If not throw System.Exceptions.ValueException.
+        /// If not throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "element" must have a attribute of the specified type defined.</exception>
         /// <param name="type">Type to check for the specified attribute.</param>
         /// <param name="attributeType">Type of attribute to look for.</param>
         /// <param name="message">Error message to describe the exception.</param>
@@ -1155,9 +1155,9 @@ namespace Fosol.Common.Validation.Value
 
         /// <summary>
         /// Assert that the parameter has an attribute of the specified type defined.
-        /// If not throw System.Exceptions.ValueException.
+        /// If not throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "element" must have a attribute of the specified type defined.</exception>
         /// <param name="type">Type to check for the specified attribute.</param>
         /// <param name="attributeType">Type of attribute to look for.</param>
         /// <param name="inherit">If true it will also look in the ancestor objects for the attribute type.</param>
@@ -1171,9 +1171,9 @@ namespace Fosol.Common.Validation.Value
 
         /// <summary>
         /// Assert that the parameter has an attribute of the specified type defined.
-        /// If not throw System.Exceptions.ValueException.
+        /// If not throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "element" must have a attribute of the specified type defined.</exception>
         /// <param name="element">Element to check for the specified attribute.</param>
         /// <param name="attributeType">Type of attribute to look for.</param>
         /// <param name="message">Error message to describe the exception.</param>
@@ -1186,9 +1186,9 @@ namespace Fosol.Common.Validation.Value
 
         /// <summary>
         /// Assert that the parameter has an attribute of the specified type defined.
-        /// If not throw System.Exceptions.ValueException.
+        /// If not throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "element" must have a attribute of the specified type defined.</exception>
         /// <param name="element">Element to check for the specified attribute.</param>
         /// <param name="attributeType">Type of attribute to look for.</param>
         /// <param name="inherit">If true it will also look in the ancestor objects for the attribute type.</param>
@@ -1204,9 +1204,9 @@ namespace Fosol.Common.Validation.Value
         #region IsAssignable
         /// <summary>
         /// Assert that the parameter is of the specified type.
-        /// If not throw System.Exceptions.ValueException.
+        /// If not throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" returned true.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" returned true.</exception>
         /// <param name="value">Parameter value.</param>
         /// <param name="validType">Valid type.</param>
         /// <param name="message">Error message describing the exception</param>
@@ -1219,9 +1219,9 @@ namespace Fosol.Common.Validation.Value
 
         /// <summary>
         /// Assert that the parameter is of the specified type.
-        /// If not throw System.Exceptions.ValueException.
+        /// If not throw Fosol.Common.Exceptions.ValueException.
         /// </summary>
-        /// <exception cref="System.Exceptions.ValueException">Parameter "value" returned true.</exception>
+        /// <exception cref="Fosol.Common.Exceptions.ValueException">Parameter "value" returned true.</exception>
         /// <param name="type">Parameter value.</param>
         /// <param name="validType">Valid type.</param>
         /// <param name="message">Error message describing the exception</param>

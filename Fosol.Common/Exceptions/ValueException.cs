@@ -10,7 +10,7 @@ namespace Fosol.Common.Exceptions
     /// ValueException class provides a way to identify an exception that occurs due to an invalid value.
     /// </summary>
     public class ValueException
-        : SystemException
+        : InvalidOperationException
     {
         #region Variables
         #endregion

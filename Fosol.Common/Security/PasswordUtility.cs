@@ -17,7 +17,6 @@ namespace Fosol.Common.Security
     {
         #region Variables
         private static readonly string _NonalphaDigitCharacters = ".*[^A-Za-z0-9]";
-        private static readonly string _NonalphaCharacters = ".*[^A-Za-z]";
         private string _PasswordStrengthRegularExpression;
         private PasswordRequirement _Requirements;
         private Regex _Validator;
