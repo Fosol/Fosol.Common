@@ -26,7 +26,7 @@ namespace Fosol.Common.Web.Mvc.Helpers
                 
                 if (newRouteValues != null)
                 {
-                    foreach (var current in routes)
+                    foreach (var current in newRouteValues)
                     {
                         routes[current.Key] = current.Value;
                     }
