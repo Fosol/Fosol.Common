@@ -19,11 +19,11 @@ namespace Fosol.Common.Cryptography
         /// Uses RNGCryptoServiceProvider formula to create the salt.
         /// Use Convert.ToBase64String() method to convert the byte array to a string.
         /// </summary>
-        /// <param name="size">Size of the salt.</param>
+        /// <param name="saltLength">Length of the byte array.</param>
         /// <returns>A new salt value.</returns>
-        public static byte[] GenerateSalt(int size = 16)
+        public static byte[] GenerateSalt(int saltLength = 16)
         {
-            var array = new byte[size];
+            var array = new byte[saltLength];
             RandomFactory.Generate(array);
             return array;
         }

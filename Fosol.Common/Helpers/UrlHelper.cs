@@ -97,6 +97,7 @@ namespace Fosol.Common.Helpers
 
         /// <summary>
         /// Converts the relative URL value into an absolute URL using the current application domain virtual path.
+        /// If the URL passed to this method is not relative it will return the URL passed to it.
         /// </summary>
         /// <param name="relative">Relative URL to convert to an absolute URL.</param>
         /// <returns>Absolute URL.</returns>
@@ -104,6 +105,8 @@ namespace Fosol.Common.Helpers
         {
             Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(relative, "relative");
 
+            if (!UrlHelper.IsRelative(relative))
+                return relative;
 
             var virtual_domain_path = HttpRuntime.AppDomainAppVirtualPath;
 

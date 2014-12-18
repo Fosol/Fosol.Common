@@ -12,7 +12,7 @@ namespace Fosol.Common.Cryptography
     /// <summary>
     /// CyrptographyFactory provides a simple inteface to encrypt data with any SymmetricAlgorithm objects.
     /// </summary>
-    public abstract class CryptographyFactory
+    public abstract class CryptographyFactoryOld
         : IDisposable, ICryptography
     {
         #region Variables
@@ -34,7 +34,7 @@ namespace Fosol.Common.Cryptography
         /// Creates a new instance of a CryptographyFactory.
         /// </summary>
         /// <param name="isSingleUse">Whether the encrypt and decrypt methods are single use.</param>
-        public CryptographyFactory(bool isSingleUse = true)
+        public CryptographyFactoryOld(bool isSingleUse = true)
         {
             _IsSingleUse = isSingleUse;
         }

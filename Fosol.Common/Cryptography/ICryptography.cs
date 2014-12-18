@@ -11,6 +11,7 @@ namespace Fosol.Common.Cryptography
     /// This will allow any form of algorithm to be calle with the based methods.
     /// </summary>
     public interface ICryptography
+        : IDisposable
     {
         #region Variables
         #endregion

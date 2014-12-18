@@ -84,10 +84,12 @@
     <Compile Include="Converters\EncodingConverter.cs" />
     <Compile Include="Converters\SqlDbTypeConverter.cs" />
     <Compile Include="Converters\AssemblyTypeConverter.cs" />
-    <Compile Include="Cryptography\CryptographyFactory.cs" />
+    <Compile Include="Cryptography\CryptographyFactoryOld.cs" />
+    <Compile Include="Cryptography\Extensions\SymmetricAlgorithmExtensions.cs" />
     <Compile Include="Cryptography\HashFactory.cs" />
     <Compile Include="Cryptography\ICryptography.cs" />
     <Compile Include="Cryptography\SymmetricFactory.cs" />
+    <Compile Include="Cryptography\SymmetricFactoryOld.cs" />
     <Compile Include="Exceptions\PropertyOutOfRangeException.cs" />
     <Compile Include="Exceptions\PropertyNullException.cs" />
     <Compile Include="Exceptions\PropertyException.cs" />

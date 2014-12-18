@@ -556,6 +556,15 @@ namespace Fosol.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Argument  &quot;{0}&quot; is not within a valid range..
+        /// </summary>
+        internal static string Exception_Validation_Argument_WithinRange {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Argument_WithinRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value must end with &quot;{0}&quot;..
         /// </summary>
         internal static string Exception_Validation_Value_EndsWith {

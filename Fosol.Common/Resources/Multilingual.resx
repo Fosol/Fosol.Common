@@ -369,4 +369,7 @@
   <data name="Exception_Validation_Value_IsValidPassword" xml:space="preserve">
     <value>Value does meet the password strength requirements.</value>
   </data>
+  <data name="Exception_Validation_Argument_WithinRange" xml:space="preserve">
+    <value>Argument  "{0}" is not within a valid range.</value>
+  </data>
 </root>

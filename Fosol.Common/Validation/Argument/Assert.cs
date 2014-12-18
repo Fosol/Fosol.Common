@@ -13,7 +13,7 @@ using System.Collections;
 namespace Fosol.Common.Validation.Argument
 {
     /// <summary>
-    /// Assert static class provides a simple way to validate argument parameters and their values.
+    /// Assert static class provides a simple way to validate argument Arguments and their values.
     /// </summary>
     public static class Assert
     {
@@ -23,10 +23,10 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// Asserts that index value is a valid position within the specified range.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter 'index' value must be a valid position within the specified collection.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Argument 'index' value must be a valid position within the specified collection.</exception>
         /// <param name="indexPosition">Index position within the specified collection.</param>
         /// <param name="count">Number of items within the enumerable collection.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
         public static void IsValidIndexPosition(int indexPosition, int count, string paramName, string message = null, Exception innerException = null)
@@ -38,10 +38,10 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// Asserts that index value is a valid position within the specified array.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter 'index' value must be a valid position within the specified array.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Argument 'index' value must be a valid position within the specified array.</exception>
         /// <param name="indexPosition">Index position within the specified array.</param>
         /// <param name="array">Array to test the index position in.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
         public static void IsValidIndexPosition(int indexPosition, Array array, string paramName, string message = null, Exception innerException = null)
@@ -53,10 +53,10 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// Asserts that index value is a valid position within the specified collection.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter 'index' value must be a valid position within the specified collection.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Argument 'index' value must be a valid position within the specified collection.</exception>
         /// <param name="indexPosition">Index position within the specified collection.</param>
         /// <param name="collection">Collection to test the index position in.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="innerException">The exception that is the cause of this exception.</param>
         public static void IsValidIndexPosition(int indexPosition, ICollection collection, string paramName, string message = null, Exception innerException = null)
@@ -70,10 +70,10 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// Asserts that the function returns a value equal to the validValue specified.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter 'function' does not return a valid value.</exception>
+        /// <exception cref="System.ArgumentException">Argument 'function' does not return a valid value.</exception>
         /// <param name="function">Function to validate.</param>
         /// <param name="validValue">Valid value.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsEqual(Func<object> function, object validValue, string paramName, string message = null, Exception innerException = null)
@@ -86,10 +86,10 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// Asserts that the function returns a value equal to the validValue specified.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter 'function' does not return a valid value.</exception>
+        /// <exception cref="System.ArgumentException">Argument 'function' does not return a valid value.</exception>
         /// <param name="function">Function to validate.</param>
         /// <param name="validValue">Valid value.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsEqual<T>(Func<T> function, T validValue, string paramName, string message = null, Exception innerException = null)
@@ -102,7 +102,7 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// Asserts that the value is equal to the validValue specified.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter 'value' does not return a valid value.</exception>
+        /// <exception cref="System.ArgumentException">Argument 'value' does not return a valid value.</exception>
         /// <param name="value">Value to validate.</param>
         /// <param name="validValue">Valid value.</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -116,10 +116,10 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// Asserts that the value is equal to the validValue specified.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter 'value' does not return a valid value.</exception>
+        /// <exception cref="System.ArgumentException">Argument 'value' does not return a valid value.</exception>
         /// <param name="value">Value to validate.</param>
         /// <param name="validValue">Valid value.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsEqual<T>(T value, T validValue, string paramName, string message = null, Exception innerException = null)
@@ -134,9 +134,9 @@ namespace Fosol.Common.Validation.Argument
         /// Asserts that the result of the function is not null.
         /// If it is null it will throw System.ArgumentNullException.
         /// </summary>
-        /// <exception cref="System.ArgumentNullException">Parameter "function" return value is null.</exception>
+        /// <exception cref="System.ArgumentNullException">Argument "function" return value is null.</exception>
         /// <param name="function">The function to execute.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNull(Func<object> function, string paramName, string message = null, Exception innerException = null)
@@ -149,10 +149,10 @@ namespace Fosol.Common.Validation.Argument
         /// Asserts that the result of the function is not null.
         /// If it is null it will throw System.ArgumentNullException.
         /// </summary>
-        /// <exception cref="System.ArgumentNullException">Parameter "function" return value is null.</exception>
+        /// <exception cref="System.ArgumentNullException">Argument "function" return value is null.</exception>
         /// <typeparam name="T">Type of the value the function returns.</typeparam>
         /// <param name="function">The function to execute.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNull<T>(Func<T> function, string paramName, string message = null, Exception innerException = null)
@@ -162,12 +162,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is not null.
+        /// Asserts that the Argument value is not null.
         /// If it is null it will throw System.ArgumentNullException.
         /// </summary>
-        /// <exception cref="System.ArgumentNullException">If the parameter is null.</exception>
+        /// <exception cref="System.ArgumentNullException">If the Argument is null.</exception>
         /// <param name="value">The value to check.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNull(object value, string paramName, string message = null, Exception innerException = null)
@@ -177,13 +177,13 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is not null.
+        /// Asserts that the Argument value is not null.
         /// If it is null it will throw System.ArgumentNullException.
         /// </summary>
-        /// <exception cref="System.ArgumentNullException">If the parameter is null.</exception>
+        /// <exception cref="System.ArgumentNullException">If the Argument is null.</exception>
         /// <typeparam name="T">Type of the value.</typeparam>
         /// <param name="value">The value to check.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNull<T>(T value, string paramName, string message = null, Exception innerException = null)
@@ -195,12 +195,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region IsNotNullOrEmpty
         /// <summary>
-        /// Asserts that the parameter value is not null or empty.
+        /// Asserts that the Argument value is not null or empty.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <exception cref="System.ArgumentException">Argument "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Argument "value" cannot be null.</exception>
         /// <param name="value">The value to check.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNullOrEmpty(string value, string paramName, string message = null, Exception innerException = null)
@@ -211,12 +211,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter collection is not null and not empty.
+        /// Asserts that the Argument collection is not null and not empty.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
-        /// <param name="collection">Parameter of type enumerable.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <exception cref="System.ArgumentException">Argument "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Argument "value" cannot be null.</exception>
+        /// <param name="collection">Argument of type enumerable.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNullOrEmpty(IEnumerable<object> collection, string paramName, string message = null, Exception innerException = null)
@@ -227,12 +227,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter collection is not null and not empty.
+        /// Asserts that the Argument collection is not null and not empty.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
-        /// <param name="collection">Parameter of type enumerable.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <exception cref="System.ArgumentException">Argument "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Argument "value" cannot be null.</exception>
+        /// <param name="collection">Argument of type enumerable.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNullOrEmpty<T>(IEnumerable<T> collection, string paramName, string message = null, Exception innerException = null)
@@ -243,12 +243,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter array is not null and not empty.
+        /// Asserts that the Argument array is not null and not empty.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
-        /// <param name="collection">Parameter of type array.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <exception cref="System.ArgumentException">Argument "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Argument "value" cannot be null.</exception>
+        /// <param name="collection">Argument of type array.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNullOrEmpty(object[] array, string paramName, string message = null, Exception innerException = null)
@@ -259,12 +259,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter array is not null and not empty.
+        /// Asserts that the Argument array is not null and not empty.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
-        /// <param name="collection">Parameter of type array.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <exception cref="System.ArgumentException">Argument "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Argument "value" cannot be null.</exception>
+        /// <param name="collection">Argument of type array.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNullOrEmpty(byte[] array, string paramName, string message = null, Exception innerException = null)
@@ -275,12 +275,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter array is not null and not empty.
+        /// Asserts that the Argument array is not null and not empty.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
-        /// <param name="collection">Parameter of type array.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <exception cref="System.ArgumentException">Argument "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Argument "value" cannot be null.</exception>
+        /// <param name="collection">Argument of type array.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Message to describe the error.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNullOrEmpty<T>(T[] array, string paramName, string message = null, Exception innerException = null)
@@ -293,12 +293,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region IsNotNullOrWhiteSpace
         /// <summary>
-        /// Asserts that the parameter value is not null or empty after being trimmed.
+        /// Asserts that the Argument value is not null or empty after being trimmed.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
-        /// <exception cref="System.ArgumentNullException">Parameter "value" cannot be null.</exception>
+        /// <exception cref="System.ArgumentException">Argument "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentNullException">Argument "value" cannot be null.</exception>
         /// <param name="value">The value to check.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotNullOrWhiteSpace(string value, string paramName, string message = null, Exception innerException = null)
@@ -312,12 +312,12 @@ namespace Fosol.Common.Validation.Argument
         #region MinRange
         #region decimal
         /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MinRange(decimal value, decimal minimum, string paramName, string message = null, Exception innerException = null)
@@ -327,12 +327,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MinRange(decimal? value, decimal minimum, string paramName, string message = null, Exception innerException = null)
@@ -344,12 +344,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region double
         /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MinRange(double value, double minimum, string paramName, string message = null, Exception innerException = null)
@@ -359,12 +359,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MinRange(double? value, double minimum, string paramName, string message = null, Exception innerException = null)
@@ -376,12 +376,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region float
         /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MinRange(float value, float minimum, string paramName, string message = null, Exception innerException = null)
@@ -391,12 +391,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MinRange(float? value, float minimum, string paramName, string message = null, Exception innerException = null)
@@ -408,12 +408,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region int
         /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MinRange(int value, int minimum, string paramName, string message = null, Exception innerException = null)
@@ -423,12 +423,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MinRange(int? value, int minimum, string paramName, string message = null, Exception innerException = null)
@@ -440,12 +440,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region long
         /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MinRange(long value, long minimum, string paramName, string message = null, Exception innerException = null)
@@ -455,12 +455,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MinRange(long? value, long minimum, string paramName, string message = null, Exception innerException = null)
@@ -472,12 +472,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region DateTime
         /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MinRange(DateTime value, DateTime minimum, string paramName, string message = null, Exception innerException = null)
@@ -487,12 +487,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is greater than or equal to the minimum value.
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="minimum">Minimum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MinRange(DateTime? value, DateTime minimum, string paramName, string message = null, Exception innerException = null)
@@ -506,12 +506,12 @@ namespace Fosol.Common.Validation.Argument
         #region MaxRange
         #region decimal
         /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// Asserts that the Argument value is less than or equal to the maximum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MaxRange(decimal value, decimal maximum, string paramName, string message = null, Exception innerException = null)
@@ -521,12 +521,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// Asserts that the Argument value is less than or equal to the maximum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MaxRange(decimal? value, decimal maximum, string paramName, string message = null, Exception innerException = null)
@@ -538,12 +538,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region double
         /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// Asserts that the Argument value is less than or equal to the maximum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MaxRange(double value, double maximum, string paramName, string message = null, Exception innerException = null)
@@ -553,12 +553,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// Asserts that the Argument value is less than or equal to the maximum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MaxRange(double? value, double maximum, string paramName, string message = null, Exception innerException = null)
@@ -570,12 +570,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region float
         /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// Asserts that the Argument value is less than or equal to the maximum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MaxRange(float value, float maximum, string paramName, string message = null, Exception innerException = null)
@@ -585,12 +585,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// Asserts that the Argument value is less than or equal to the maximum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MaxRange(float? value, float maximum, string paramName, string message = null, Exception innerException = null)
@@ -602,12 +602,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region int
         /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// Asserts that the Argument value is less than or equal to the maximum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MaxRange(int value, int maximum, string paramName, string message = null, Exception innerException = null)
@@ -617,12 +617,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// Asserts that the Argument value is less than or equal to the maximum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void MaxRange(int? value, int maximum, string paramName, string message = null, Exception innerException = null)
@@ -634,10 +634,10 @@ namespace Fosol.Common.Validation.Argument
 
         #region long
         /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// Asserts that the Argument value is less than or equal to the maximum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -649,10 +649,10 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// Asserts that the Argument value is less than or equal to the maximum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -666,10 +666,10 @@ namespace Fosol.Common.Validation.Argument
 
         #region DateTime
         /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// Asserts that the Argument value is less than or equal to the maximum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -681,10 +681,10 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is less than or equal to the maximum value.
+        /// Asserts that the Argument value is less than or equal to the maximum value.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is greater than the maximum.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="message">A message to describe the exception.</param>
@@ -697,15 +697,45 @@ namespace Fosol.Common.Validation.Argument
         #endregion
         #endregion
 
+        #region WithinRange
+        /// <summary>
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="withinRange">Argument value to check.</param>
+        /// <param name="paramName">Name of the Argument.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        /// <param name="innerException">The exception that caused this exception.</param>
+        public static void WithinRange(bool withinRange, string paramName, string message = null, Exception innerException = null)
+        {
+            if (!withinRange)
+                throw new ArgumentOutOfRangeException(String.Format(message ?? Resources.Multilingual.Exception_Validation_Argument_WithinRange, paramName), innerException);
+        }
+
+        /// <summary>
+        /// Asserts that the Argument value is greater than or equal to the minimum value.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">If the value is less than the minimum.</exception>
+        /// <param name="withinRange">Function to check.</param>
+        /// <param name="paramName">Name of the Argument.</param>
+        /// <param name="message">A message to describe the exception.</param>
+        /// <param name="innerException">The exception that caused this exception.</param>
+        public static void WithinRange(Func<bool> withinRange, string paramName, string message = null, Exception innerException = null)
+        {
+            if (!withinRange())
+                throw new ArgumentOutOfRangeException(String.Format(message ?? Resources.Multilingual.Exception_Validation_Argument_WithinRange, paramName), innerException);
+        }
+        #endregion
+
         #region Range
         #region decimal
         /// <summary>
-        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// Asserts that the Argument value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void Range(decimal value, decimal minimum, decimal maximum, string paramName, string message = null, Exception innerException = null)
@@ -715,12 +745,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// Asserts that the Argument value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void Range(decimal? value, decimal minimum, decimal maximum, string paramName, string message = null, Exception innerException = null)
@@ -732,12 +762,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region double
         /// <summary>
-        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// Asserts that the Argument value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
@@ -748,12 +778,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// Asserts that the Argument value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
@@ -766,12 +796,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region float
         /// <summary>
-        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// Asserts that the Argument value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void Range(float value, float minimum, float maximum, string paramName, string message = null, Exception innerException = null)
@@ -782,12 +812,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// Asserts that the Argument value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void Range(float? value, float minimum, float maximum, string paramName, string message = null, Exception innerException = null)
@@ -799,12 +829,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region int
         /// <summary>
-        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// Asserts that the Argument value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void Range(int value, int minimum, int maximum, string paramName, string message = null, Exception innerException = null)
@@ -814,12 +844,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// Asserts that the Argument value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void Range(int? value, int minimum, int maximum, string paramName, string message = null, Exception innerException = null)
@@ -831,12 +861,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region long
         /// <summary>
-        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// Asserts that the Argument value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void Range(long value, long minimum, long maximum, string paramName, string message = null, Exception innerException = null)
@@ -846,12 +876,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// Asserts that the Argument value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void Range(long? value, long minimum, long maximum, string paramName, string message = null, Exception innerException = null)
@@ -863,12 +893,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region DateTime
         /// <summary>
-        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// Asserts that the Argument value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void Range(DateTime value, DateTime minimum, DateTime maximum, string paramName, string message = null, Exception innerException = null)
@@ -878,12 +908,12 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is not less than the minimum value and is not greater than the maximum value..
+        /// Asserts that the Argument value is not less than the minimum value and is not greater than the maximum value..
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">Value must be within the specified range.</exception>
-        /// <param name="value">Parameter value to check.</param>
+        /// <param name="value">Argument value to check.</param>
         /// <param name="maximum">Maximum value allowed.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void Range(DateTime? value, DateTime minimum, DateTime maximum, string paramName, string message = null, Exception innerException = null)
@@ -898,11 +928,11 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// If the value does not start with the appropriatevalu it will throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">If the parameter does not start with the value.</exception>
+        /// <exception cref="System.ArgumentException">If the Argument does not start with the value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="startsWithValue">The required start with value.</param>
         /// <param name="comparisonType">StringComparison type.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void StartsWith(string value, string startsWithValue, StringComparison comparisonType, string paramName, string message = null, Exception innerException = null)
@@ -916,11 +946,11 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// If the value does not end with the appropriate value it will throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">If the parameter does not end with the value.</exception>
+        /// <exception cref="System.ArgumentException">If the Argument does not end with the value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="endsWithValue">The required end with value.</param>
         /// <param name="comparisonType">StringComparison type.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Error message describing the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void EndsWith(string value, string endsWithValue, StringComparison comparisonType, string paramName, string message = null, Exception innerException = null)
@@ -934,11 +964,11 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// If the value does not exist in the valid values array it will throw System.ArgumentOutOfRangeException.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Argument "value" is must be a valid value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="validValues">An array of valid values to compare against.</param>
         /// <param name="comparisonType">StringComparison type rule.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Error message describing the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsValue(string value, string[] validValues, StringComparison comparisonType, string paramName, string message = null, Exception innerException = null)
@@ -950,10 +980,10 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// If the value does not exist in the valid values array it will throw System.ArgumentOutOfRangeException.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Argument "value" is must be a valid value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="validValues">An array of valid values to compare against.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Error message describing the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsValue(object value, object[] validValues, string paramName, string message = null, Exception innerException = null)
@@ -964,12 +994,12 @@ namespace Fosol.Common.Validation.Argument
 
         /// <summary>
         /// If the value does not equal the valid value it will throw System.ArgumentOutOfRangeException.
-        /// This method is most effective when ensuring a parameter property is appropriate.
+        /// This method is most effective when ensuring a Argument property is appropriate.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Argument "value" is must be a valid value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="validValue">The only valid value.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Error message describing the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsValue(object value, object validValue, string paramName, string message = null, Exception innerException = null)
@@ -981,11 +1011,11 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// If the value does not exist in the valid values array it will throw System.ArgumentOutOfRangeException.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Argument "value" is must be a valid value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="validValues">An array of valid values to compare against.</param>
         /// <param name="comparer">Method to determine if the value is valid.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Error message describing the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsValue(object value, object[] validValues, IEqualityComparer<object> comparer, string paramName, string message = null, Exception innerException = null)
@@ -997,11 +1027,11 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// If the value does not exist in the valid values array it will throw System.ArgumentOutOfRangeException.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Argument "value" is must be a valid value.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="validValues">An array of valid values to compare against.</param>
         /// <param name="comparer">Method to determine if the value is valid. Func<validValue, value, result>.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Error message describing the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsValue(object value, object[] validValues, Func<object, object, bool> comparer, string paramName, string message = null, Exception innerException = null)
@@ -1012,13 +1042,13 @@ namespace Fosol.Common.Validation.Argument
 
         /// <summary>
         /// If the value does not equal the valid value it will throw System.ArgumentException.
-        /// This method is most effective when ensuring a parameter property is appropriate.
+        /// This method is most effective when ensuring a Argument property is appropriate.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="System.ArgumentException">Argument "value" is must be a valid value.</exception>
         /// <typeparam name="T">Type of object to compare.</typeparam>
         /// <param name="value">The value to check.</param>
         /// <param name="validValue">The only valid value.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Error message describing the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsValue<T>(T value, T validValue, string paramName, string message = null, Exception innerException = null)
@@ -1029,13 +1059,13 @@ namespace Fosol.Common.Validation.Argument
 
         /// <summary>
         /// If the value does not equal the valid value it will throw System.ArgumentException.
-        /// This method is most effective when ensuring a parameter property is appropriate.
+        /// This method is most effective when ensuring a Argument property is appropriate.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="System.ArgumentException">Argument "value" is must be a valid value.</exception>
         /// <typeparam name="T">Type of object to compare.</typeparam>
         /// <param name="value">The value to check.</param>
         /// <param name="validValues">An array of valid values to compare against.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Error message describing the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsValue<T>(T value, T[] validValues, string paramName, string message = null, Exception innerException = null)
@@ -1047,12 +1077,12 @@ namespace Fosol.Common.Validation.Argument
         /// <summary>
         /// If the value does not exist in the valid values array it will throw System.ArgumentOutOfRangeException.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">Parameter "value" is must be a valid value.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Argument "value" is must be a valid value.</exception>
         /// <typeparam name="T">Type of object to compare.</typeparam>
         /// <param name="value">The value to check.</param>
         /// <param name="validValues">An array of valid values to compare against.</param>
         /// <param name="comparer">Method to determine if the value is valid. Func<validValue, value, result>.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Error message describing the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsValue<T>(T value, T[] validValues, Func<T, T, bool> comparer, string paramName, string message = null, Exception innerException = null)
@@ -1064,12 +1094,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region IsNotValue
         /// <summary>
-        /// Asserts that the parameter value is equal to the invalid value.
+        /// Asserts that the Argument value is equal to the invalid value.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
+        /// <exception cref="System.ArgumentException">Argument "value" cannot be empty.</exception>
         /// <param name="value">The value to check.</param>
         /// <param name="invalidValue">Invalid value that the value cannot be equal to.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotValue(object value, object invalidValue, string paramName, string message = null, Exception innerException = null)
@@ -1079,13 +1109,13 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Asserts that the parameter value is equal to the invalid value.
+        /// Asserts that the Argument value is equal to the invalid value.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" cannot be empty.</exception>
-        /// <typeparam name="T">Type of parameter being compared.</typeparam>
+        /// <exception cref="System.ArgumentException">Argument "value" cannot be empty.</exception>
+        /// <typeparam name="T">Type of Argument being compared.</typeparam>
         /// <param name="value">The value to check.</param>
         /// <param name="invalidValue">Invalid value that the value cannot be equal to.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">A message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsNotValue<T>(T value, T invalidValue, string paramName, string message = null, Exception innerException = null)
@@ -1097,12 +1127,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region IsTrue
         /// <summary>
-        /// Assert that the parameter is true.
+        /// Assert that the Argument is true.
         /// If not throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" returned false.</exception>
-        /// <param name="value">Parameter value.</param>
-        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <exception cref="System.ArgumentException">Argument "value" returned false.</exception>
+        /// <param name="value">Argument value.</param>
+        /// <param name="paramName">Name of the Argument being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsTrue(bool value, string paramName, string message = null, Exception innerException = null)
@@ -1115,9 +1145,9 @@ namespace Fosol.Common.Validation.Argument
         /// Assert that the function returns true.
         /// If not throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "function" returned false.</exception>
-        /// <param name="function">Function to call to determine the value of the parameter.</param>
-        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <exception cref="System.ArgumentException">Argument "function" returned false.</exception>
+        /// <param name="function">Function to call to determine the value of the Argument.</param>
+        /// <param name="paramName">Name of the Argument being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsTrue(Func<bool> function, string paramName, string message = null, Exception innerException = null)
@@ -1129,12 +1159,12 @@ namespace Fosol.Common.Validation.Argument
 
         #region IsFalse
         /// <summary>
-        /// Assert that the parameter is false.
+        /// Assert that the Argument is false.
         /// If not throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
-        /// <param name="value">Parameter value.</param>
-        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <exception cref="System.ArgumentException">Argument "value" returned true.</exception>
+        /// <param name="value">Argument value.</param>
+        /// <param name="paramName">Name of the Argument being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsFalse(bool value, string paramName, string message = null, Exception innerException = null)
@@ -1147,9 +1177,9 @@ namespace Fosol.Common.Validation.Argument
         /// Assert that the function returns false.
         /// If not throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "function" returned true.</exception>
-        /// <param name="function">Function to call to determine the value of the parameter.</param>
-        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <exception cref="System.ArgumentException">Argument "function" returned true.</exception>
+        /// <param name="function">Function to call to determine the value of the Argument.</param>
+        /// <param name="paramName">Name of the Argument being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsFalse(Func<bool> function, string paramName, string message = null, Exception innerException = null)
@@ -1161,34 +1191,36 @@ namespace Fosol.Common.Validation.Argument
 
         #region IsType
         /// <summary>
-        /// Assert that the parameter is of the specified type.
+        /// Assert that the Argument is of the specified type.
         /// If not throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
-        /// <param name="value">Parameter value.</param>
+        /// <exception cref="System.ArgumentException">Argument "value" returned true.</exception>
+        /// <param name="value">Argument value.</param>
         /// <param name="validType">Valid type.</param>
-        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="paramName">Name of the Argument being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsType(object value, Type validType, string paramName, string message = null, Exception innerException = null)
         {
-            if (!(value.GetType() == validType))
+            if (value == null 
+                || !(value.GetType() == validType))
                 throw new ArgumentException(String.Format(message ?? Resources.Multilingual.Exception_Validation_Argument_IsType, paramName, validType.FullName), paramName, innerException);
         }
 
         /// <summary>
-        /// Assert that the parameter is of the specified type.
+        /// Assert that the Argument is of the specified type.
         /// If not throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
-        /// <param name="type">Parameter type.</param>
+        /// <exception cref="System.ArgumentException">Argument "value" returned true.</exception>
+        /// <param name="type">Argument type.</param>
         /// <param name="validType">Valid type.</param>
-        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="paramName">Name of the Argument being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsType(Type type, Type validType, string paramName, string message = null, Exception innerException = null)
         {
-            if (!(type == validType))
+            if (type == null
+                || !(type == validType))
                 throw new ArgumentException(String.Format(message ?? Resources.Multilingual.Exception_Validation_Argument_IsType, paramName, validType.FullName), paramName, innerException);
         }
         #endregion
@@ -1196,13 +1228,13 @@ namespace Fosol.Common.Validation.Argument
 #if !WINDOWS_APP && !WINDOWS_PHONE_APP
         #region HasAttribute
         /// <summary>
-        /// Assert that the parameter has an attribute of the specified type defined.
+        /// Assert that the Argument has an attribute of the specified type defined.
         /// If not throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <exception cref="System.ArgumentException">Argument "element" must have a attribute of the specified type defined.</exception>
         /// <param name="type">Type to check for the specified attribute.</param>
         /// <param name="attributeType">Type of attribute to look for.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Error message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void HasAttribute(Type type, Type attributeType, string paramName, string message = null, Exception innerException = null)
@@ -1212,14 +1244,14 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Assert that the parameter has an attribute of the specified type defined.
+        /// Assert that the Argument has an attribute of the specified type defined.
         /// If not throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <exception cref="System.ArgumentException">Argument "element" must have a attribute of the specified type defined.</exception>
         /// <param name="type">Type to check for the specified attribute.</param>
         /// <param name="attributeType">Type of attribute to look for.</param>
         /// <param name="inherit">If true it will also look in the ancestor objects for the attribute type.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Error message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void HasAttribute(Type type, Type attributeType, bool inherit, string paramName, string message = null, Exception innerException = null)
@@ -1229,13 +1261,13 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Assert that the parameter has an attribute of the specified type defined.
+        /// Assert that the Argument has an attribute of the specified type defined.
         /// If not throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <exception cref="System.ArgumentException">Argument "element" must have a attribute of the specified type defined.</exception>
         /// <param name="element">Element to check for the specified attribute.</param>
         /// <param name="attributeType">Type of attribute to look for.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Error message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void HasAttribute(object element, Type attributeType, string paramName, string message = null, Exception innerException = null)
@@ -1245,14 +1277,14 @@ namespace Fosol.Common.Validation.Argument
         }
 
         /// <summary>
-        /// Assert that the parameter has an attribute of the specified type defined.
+        /// Assert that the Argument has an attribute of the specified type defined.
         /// If not throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "element" must have a attribute of the specified type defined.</exception>
+        /// <exception cref="System.ArgumentException">Argument "element" must have a attribute of the specified type defined.</exception>
         /// <param name="element">Element to check for the specified attribute.</param>
         /// <param name="attributeType">Type of attribute to look for.</param>
         /// <param name="inherit">If true it will also look in the ancestor objects for the attribute type.</param>
-        /// <param name="paramName">Name of the parameter.</param>
+        /// <param name="paramName">Name of the Argument.</param>
         /// <param name="message">Error message to describe the exception.</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void HasAttribute(object element, Type attributeType, bool inherit, string paramName, string message = null, Exception innerException = null)
@@ -1264,35 +1296,37 @@ namespace Fosol.Common.Validation.Argument
 
         #region IsAssignable
         /// <summary>
-        /// Assert that the parameter is of the specified type.
+        /// Assert that the Argument is of the specified type.
         /// If not throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
-        /// <param name="value">Parameter value.</param>
+        /// <exception cref="System.ArgumentException">Argument "value" returned true.</exception>
+        /// <param name="value">Argument value.</param>
         /// <param name="validType">Valid type.</param>
-        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="paramName">Name of the Argument being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsAssignable(object value, Type validType, string paramName, string message = null, Exception innerException = null)
         {
-            if (!validType.IsAssignableFrom(value.GetType()))
+            if (value == null
+                || !validType.IsAssignableFrom(value.GetType()))
                 throw new ArgumentException(String.Format(message ?? Resources.Multilingual.Exception_Validation_Argument_IsAssignable, paramName, validType.FullName), paramName, innerException);
         }
 
         /// <summary>
-        /// Assert that the parameter is of the specified type.
+        /// Assert that the Argument is of the specified type.
         /// If not throw System.ArgumentException.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Parameter "value" returned true.</exception>
-        /// <param name="type">Parameter type.</param>
+        /// <exception cref="System.ArgumentException">Argument "value" returned true.</exception>
+        /// <param name="type">Argument type.</param>
         /// <param name="validType">Valid type.</param>
-        /// <param name="paramName">Name of the parameter being tested.</param>
+        /// <param name="paramName">Name of the Argument being tested.</param>
         /// <param name="message">Error message describing the exception</param>
         /// <param name="innerException">The exception that caused this exception.</param>
         public static void IsAssignable(Type type, Type validType, string paramName, string message = null, Exception innerException = null)
         {
-            if (!type.IsSubclassOf(validType)
-                && type == validType)
+            if (type == null
+                || (!type.IsSubclassOf(validType)
+                && type == validType))
                 throw new ArgumentException(String.Format(message ?? Resources.Multilingual.Exception_Validation_Argument_IsAssignable, paramName, validType.FullName), paramName, innerException);
         }
         #endregion
