@@ -95,7 +95,7 @@ namespace Fosol.Common.UI.Xaml
             get { return _DefaultPageType; }
             set 
             {
-                Fosol.Common.Validation.Assert.IsNotNull(value, "DefaultPageType");
+                Fosol.Common.Validation.Property.Assert.IsNotNull(value, "DefaultPageType");
                 _DefaultPageType = value; 
             }
         }
@@ -129,8 +129,8 @@ namespace Fosol.Common.UI.Xaml
         /// <param name="appName">The name of the application.</param>
         public StateApplication(string appName)
         {
-            Fosol.Common.Validation.Assert.IsValidOperation(String.IsNullOrEmpty(StateApplication.AppName), "The StateApplication object has already been initialized, you can only have one instance.");
-            Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(appName, "appName");
+            Fosol.Common.Validation.Value.Assert.IsNotNullOrWhiteSpace(StateApplication.AppName, "The StateApplication object has already been initialized, you can only have one instance.");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(appName, "appName");
             _AppName = appName;
             _State = new IO.ApplicationState(String.Format(StateApplication.SavedStateFileNameFormat, appName), false);
             _Current = this;

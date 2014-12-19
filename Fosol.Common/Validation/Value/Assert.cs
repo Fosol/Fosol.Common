@@ -13,7 +13,7 @@ using System.Collections;
 namespace Fosol.Common.Validation.Value
 {
     /// <summary>
-    /// Parameter validation utilities.
+    /// Assert static class contains value validation methods.
     /// </summary>
     public static class Assert
     {

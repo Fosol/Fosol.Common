@@ -1,6 +1,7 @@
 ﻿using Fosol.Common.Cryptography.Extensions;
 using System;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace Fosol.Common.Cryptography
 {
@@ -240,11 +241,53 @@ namespace Fosol.Common.Cryptography
         /// </summary>
         /// <param name="data">Data to encrypt</param>
         /// <returns>Encrypted data.</returns>
+        public byte[] Encrypt(string data)
+        {
+            return this.Encrypt(Encoding.UTF8.GetBytes(data));
+        }
+
+        /// <summary>
+        /// Encrypt the data.
+        /// </summary>
+        /// <param name="data">Data to encrypt</param>
+        /// <param name="encoding">The encoding to use on the data.</param>
+        /// <returns>Encrypted data.</returns>
+        public byte[] Encrypt(string data, Encoding encoding)
+        {
+            return this.Encrypt(encoding.GetBytes(data));
+        }
+
+        /// <summary>
+        /// Encrypt the data.
+        /// </summary>
+        /// <param name="data">Data to encrypt</param>
+        /// <returns>Encrypted data.</returns>
         public byte[] Encrypt(byte[] data)
         {
             Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(data, "data");
 
             return _Algorithm.Encrypt(data);
+        }
+
+        /// <summary>
+        /// Decrypt the data.
+        /// </summary>
+        /// <param name="data">Data to decrypt.</param>
+        /// <returns>Decrypted data.</returns>
+        public byte[] Decrypt(string data)
+        {
+            return this.Decrypt(Encoding.UTF8.GetBytes(data));
+        }
+
+        /// <summary>
+        /// Decrypt the data.
+        /// </summary>
+        /// <param name="data">Data to decrypt.</param>
+        /// <param name="encoding">The encoding to use on the data.</param>
+        /// <returns>Decrypted data.</returns>
+        public byte[] Decrypt(string data, Encoding encoding)
+        {
+            return this.Decrypt(encoding.GetBytes(data));
         }
 
         /// <summary>

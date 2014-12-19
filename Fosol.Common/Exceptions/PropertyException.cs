@@ -10,7 +10,7 @@ namespace Fosol.Common.Exceptions
     /// PropertyException class provides a way to identify an exception that occurs due to an invalid property value.
     /// </summary>
     public class PropertyException
-        : SystemException
+        : ArgumentException
     {
         #region Variables
         #endregion
@@ -30,8 +30,18 @@ namespace Fosol.Common.Exceptions
         {
         }
 
+        public PropertyException(string message, string propertyName)
+            : base(message, propertyName)
+        {
+        }
+
         public PropertyException(string message, Exception innerException)
             : base(message, innerException)
+        {
+        }
+
+        public PropertyException(string message, string propertyName, Exception innerException)
+            : base(message, propertyName, innerException)
         {
         }
         #endregion

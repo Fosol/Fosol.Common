@@ -10,6 +10,7 @@
 
 namespace Fosol.Common.Resources {
     using System;
+    using System.Reflection;
     
     
     /// <summary>
@@ -39,7 +40,7 @@ namespace Fosol.Common.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fosol.Common.Resources.Multilingual", typeof(Multilingual).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fosol.Common.Resources.Multilingual", typeof(Multilingual).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -561,6 +562,240 @@ namespace Fosol.Common.Resources {
         internal static string Exception_Validation_Argument_WithinRange {
             get {
                 return ResourceManager.GetString("Exception_Validation_Argument_WithinRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; value must end with &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Property_EndsWith {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_EndsWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; must have an attribute of type &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Property_HasAttribute {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_HasAttribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; must be assignable to type &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsAssignable {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsAssignable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; is not a valid email..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsEmail {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &apos;{0}&apos; must be equal to the specified validValue..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsEqual {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; must be false..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsFalse {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsFalse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; is not a valid FSA..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsFSA {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsFSA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; is not a valid LDU..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsLDU {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsLDU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; cannot be empty..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsNotEmpty {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; cannot be null, empty or whitespace..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsNotEmptyOrWhitespace {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsNotEmptyOrWhitespace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; cannot be null..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsNotNull {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsNotNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; cannot be null or empty..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsNotNullOrEmpty {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsNotNullOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; is not a valid value..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsNotValue {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsNotValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; is not a valid number..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsNumber {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; is not a valid postal code..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsPostalCode {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsPostalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; must be true..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsTrue {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsTrue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; must be of type &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsType {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; is not a valid URI..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsUri {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &apos;{0}&apos; must be a valid index position..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsValidIndexPosition {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsValidIndexPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; is not a valid password..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsValidPassword {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsValidPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; has an invalid value..
+        /// </summary>
+        internal static string Exception_Validation_Property_IsValue {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_IsValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; must be less than or equal to &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Property_MaxRange {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_MaxRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; must be greater than or equal to &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Property_MinRange {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_MinRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; must be greater than or equal to &quot;{1}&quot; and less than or equal to &quot;{2}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Property_Range {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_Range", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; value must start with &quot;{1}&quot;..
+        /// </summary>
+        internal static string Exception_Validation_Property_StartsWith {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_StartsWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &quot;{0}&quot; is not within a valid range..
+        /// </summary>
+        internal static string Exception_Validation_Property_WithinRange {
+            get {
+                return ResourceManager.GetString("Exception_Validation_Property_WithinRange", resourceCulture);
             }
         }
         

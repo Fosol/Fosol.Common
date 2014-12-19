@@ -49,7 +49,7 @@ namespace Fosol.Common.UI.Xaml.Controls
             }
             protected set
             {
-                Fosol.Common.Validation.Assert.IsNotNullOrWhiteSpace(value, "StateKey");
+                Fosol.Common.Validation.Property.Assert.IsNotNullOrWhiteSpace(value, "StateKey");
                 this.SetValue(StatePage.StateKeyProperty, value);
             }
         }
@@ -73,7 +73,7 @@ namespace Fosol.Common.UI.Xaml.Controls
             if (!DesignMode.DesignModeEnabled)
             {
                 var app = StateApplication.Current;
-                Fosol.Common.Validation.Assert.IsValidOperation(app != null, "Before creating an instance of a StatePage you must intialize the StateApplication.");
+                Fosol.Common.Validation.Value.Assert.IsTrue(app != null, "Before creating an instance of a StatePage you must intialize the StateApplication.");
             }
 
             // For some reason the State DependencyProperty is being shared with all child classes so this needs to initialize the property so that it isn't shared.

@@ -61,7 +61,7 @@ namespace Fosol.Common.ServiceModel
         /// <param name="statusCode">The HTTP status code of the response.</param>
         public WebFaultContract(string message, HttpStatusCode statusCode)
         {
-            Fosol.Common.Validation.Assert.IsNotNullOrEmpty(message, "message");
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(message, "message");
 
             _Message = message;
             _StatusCode = statusCode;

@@ -27,7 +27,7 @@ namespace Fosol.Common.IO
             get { return _CacheSize; }
             set 
             {
-                Fosol.Common.Validation.Assert.MinRange(value, 1, "CacheSize");
+                Fosol.Common.Validation.Property.Assert.MinRange(value, 1, "CacheSize");
 
                 if (value != _CacheSize)
                 {
