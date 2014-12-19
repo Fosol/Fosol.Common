@@ -30,8 +30,18 @@ namespace Fosol.Common.Exceptions
         {
         }
 
+        public PropertyOutOfRangeException(string message, string propertyName)
+            : base(message, propertyName)
+        {
+        }
+
         public PropertyOutOfRangeException(string message, Exception innerException)
             : base(message, innerException)
+        {
+        }
+
+        public PropertyOutOfRangeException(string message, string propertyName, Exception innerException)
+            : base(message, propertyName, innerException)
         {
         }
         #endregion

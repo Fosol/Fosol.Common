@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+#if WINDOWS_APP || WINDOWS_PHONE_APP
+using Windows.Security.Cryptography;
+#else
 using System.Security.Cryptography;
+#endif
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -234,7 +238,12 @@ namespace Fosol.Common.Security
             {
                 var random_bytes = new byte[length];
                 var random_characters = new char[length];
+#if WINDOWS_APP || WINDOWS_PHONE_APP
+                var buffer = CryptographicBuffer.GenerateRandom((uint)length);
+                CryptographicBuffer.CopyToByteArray(buffer, out random_bytes);
+#else
                 new RNGCryptoServiceProvider().GetBytes(random_bytes);
+#endif
 
                 var special_character_count = 0;
                 for (var i = 0; i < length; i++)

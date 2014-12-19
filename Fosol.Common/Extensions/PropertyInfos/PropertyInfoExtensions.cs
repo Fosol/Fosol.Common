@@ -1,20 +1,59 @@
 ﻿using Fosol.Common.Extensions.Types;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Fosol.Common.Extensions.Reflection
+namespace Fosol.Common.Extensions.PropertyInfos
 {
     /// <summary>
-    /// PropertyInfo extensin methods.
+    /// PropertyInfoExtensions static class provides extension methods for PropertyInfo class objects.
     /// </summary>
     public static class PropertyInfoExtensions
     {
         #region Methods
+        /// <summary>
+        /// Get the MethodInfo object for the property get method.
+        /// </summary>
+        /// <param name="property">PropertyInfo object.</param>
+        /// <returns>MethodInfo object.</returns>
+        public static MethodInfo Getter(this PropertyInfo property)
+        {
+            return property.GetMethod;
+        }
+
+        /// <summary>
+        /// Get the MethodInfo object for the property set method.
+        /// </summary>
+        /// <param name="property">PropertyInfo object.</param>
+        /// <returns>MethodInfo object.</returns>
+        public static MethodInfo Setter(this PropertyInfo property)
+        {
+            return property.SetMethod;
+        }
+
+        /// <summary>
+        /// Determine whether the PropertyInfo object is a static property.
+        /// </summary>
+        /// <param name="property">PropertyInfo object.</param>
+        /// <returns>True if the property is static.</returns>
+        public static bool IsStatic(this PropertyInfo property)
+        {
+            return (property.Getter() ?? property.Setter()).IsStatic;
+        }
+
+        /// <summary>
+        /// Determines whether the PropertyInfo object is a public property.
+        /// </summary>
+        /// <param name="property">PropertyInfo object.</param>
+        /// <returns>True if the property is public.</returns>
+        public static bool IsPublic(this PropertyInfo property)
+        {
+            var get = property.Getter();
+            var ga = (get == null) ? MethodAttributes.Private : (get.Attributes & MethodAttributes.MemberAccessMask);
+            var set = property.Setter();
+            var sa = (set == null) ? MethodAttributes.Private : (set.Attributes & MethodAttributes.MemberAccessMask);
+            return ((ga > sa) ? ga : sa) == MethodAttributes.Public;
+        }
 
         /// <summary>
         /// If the property has a DefaultValueAttribute, apply the value to the property.

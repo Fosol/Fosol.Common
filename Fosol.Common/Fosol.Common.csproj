@@ -84,12 +84,10 @@
     <Compile Include="Converters\EncodingConverter.cs" />
     <Compile Include="Converters\SqlDbTypeConverter.cs" />
     <Compile Include="Converters\AssemblyTypeConverter.cs" />
-    <Compile Include="Cryptography\CryptographyFactoryOld.cs" />
     <Compile Include="Cryptography\Extensions\SymmetricAlgorithmExtensions.cs" />
     <Compile Include="Cryptography\HashFactory.cs" />
     <Compile Include="Cryptography\ICryptography.cs" />
     <Compile Include="Cryptography\SymmetricFactory.cs" />
-    <Compile Include="Cryptography\SymmetricFactoryOld.cs" />
     <Compile Include="Exceptions\PropertyOutOfRangeException.cs" />
     <Compile Include="Exceptions\PropertyNullException.cs" />
     <Compile Include="Exceptions\PropertyException.cs" />
@@ -98,6 +96,8 @@
     <Compile Include="Exceptions\ValueException.cs" />
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="Extensions\Expressions\ExpressionExtensions.cs" />
+    <Compile Include="Extensions\MemberInfos\MemberInfoExtensions.cs" />
+    <Compile Include="Extensions\PropertyInfos\PropertyInfoExtensions.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Helpers\AssemblyResourceHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
@@ -146,8 +146,7 @@
     <Compile Include="Extensions\Numbers\NumberExtensions.cs" />
     <Compile Include="Extensions\Objects\ObjectExtensions.cs" />
     <Compile Include="Extensions\Queryables\QueryableExtensions.cs" />
-    <Compile Include="Extensions\Reflection\FieldInfoExtensions.cs" />
-    <Compile Include="Extensions\Reflection\PropertyInfoExtensions.cs" />
+    <Compile Include="Extensions\FieldInfos\FieldInfoExtensions.cs" />
     <Compile Include="Extensions\Streams\StreamExtensions.cs" />
     <Compile Include="Extensions\Strings\StringExtensions.cs" />
     <Compile Include="Extensions\Types\TypeExtensions.cs" />
@@ -224,6 +223,9 @@
     <Compile Include="Net\UriPathSegment.cs" />
     <Compile Include="Net\UriPath.cs" />
     <Compile Include="Net\UriBuilder.cs" />
+    <Compile Include="Validation\Property\Assert.cs" />
+    <Compile Include="Validation\Property\AssertFormat.cs" />
+    <Compile Include="Validation\Property\AssertPassword.cs" />
     <Compile Include="Validation\Value\Assert.cs" />
     <Compile Include="Validation\Value\AssertFormat.cs" />
     <Compile Include="Validation\Value\AssertPassword.cs" />

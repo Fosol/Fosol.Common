@@ -25,7 +25,37 @@ namespace Fosol.Common.Cryptography
         /// </summary>
         /// <param name="data">Data to be encrypted.</param>
         /// <returns>Encrypted data.</returns>
+        byte[] Encrypt(string data);
+
+        /// <summary>
+        /// Encrypt the data.
+        /// </summary>
+        /// <param name="data">Data to be encrypted.</param>
+        /// <param name="encoding">The encoding to use with the data.</param>
+        /// <returns>Encrypted data.</returns>
+        byte[] Encrypt(string data, Encoding encoding);
+
+        /// <summary>
+        /// Encrypt the data.
+        /// </summary>
+        /// <param name="data">Data to be encrypted.</param>
+        /// <returns>Encrypted data.</returns>
         byte[] Encrypt(byte[] data);
+
+        /// <summary>
+        /// Decrypt the data.
+        /// </summary>
+        /// <param name="data">Data to be decrypted.</param>
+        /// <returns>Decrypted data.</returns>
+        byte[] Decrypt(string data);
+
+        /// <summary>
+        /// Decrypt the data.
+        /// </summary>
+        /// <param name="data">Data to be decrypted.</param>
+        /// <param name="encoding">The encoding to use with the data.</param>
+        /// <returns>Encrypted data.</returns>
+        byte[] Decrypt(string data, Encoding encoding);
 
         /// <summary>
         /// Decrypt the data.

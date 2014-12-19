@@ -40,6 +40,12 @@
     <Compile Include="Collections\StateDictionary%27.cs" />
     <Compile Include="Collections\StateDictionary.cs" />
     <Compile Include="Exceptions\ConfigurationException.cs" />
+    <Compile Include="Exceptions\PropertyException.cs" />
+    <Compile Include="Exceptions\PropertyNullException.cs" />
+    <Compile Include="Exceptions\PropertyOutOfRangeException.cs" />
+    <Compile Include="Exceptions\ValueException.cs" />
+    <Compile Include="Exceptions\ValueNullException.cs" />
+    <Compile Include="Exceptions\ValueOutofRangeException.cs" />
     <Compile Include="Extensions\Bytes\ByteExtensions.cs" />
     <Compile Include="Extensions\Enumerables\EnumerableExtensions.cs" />
     <Compile Include="Extensions\Events\EventExtensions.cs" />
@@ -80,6 +86,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Multilingual.fr.resx</DependentUpon>
     </Compile>
+    <Compile Include="Security\PasswordComposition.cs" />
+    <Compile Include="Security\PasswordRequirement.cs" />
+    <Compile Include="Security\PasswordUtility.cs" />
+    <Compile Include="Validation\Property\Assert.cs" />
+    <Compile Include="Validation\Property\AssertFormat.cs" />
+    <Compile Include="Validation\Property\AssertPassword.cs" />
+    <Compile Include="Validation\Value\Assert.cs" />
+    <Compile Include="Validation\Value\AssertFormat.cs" />
+    <Compile Include="Validation\Value\AssertPassword.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Multilingual.fr.resx">
@@ -114,9 +129,10 @@
     <Compile Include="UnitTests\TestDataCollection%27.cs" />
     <Compile Include="UnitTests\TestDataCollection.cs" />
     <Compile Include="Utilities\DiagnosticsUtility.cs" />
-    <Compile Include="Validation\Assert.cs" />
+    <Compile Include="Validation\Argument\Assert.cs" />
+    <Compile Include="Validation\Argument\AssertFormat.cs" />
+    <Compile Include="Validation\Argument\AssertPassword.cs" />
     <Compile Include="Validation\AssertFormat.cs" />
-    <Compile Include="Validation\Enumerables\Assert.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Managers\" />

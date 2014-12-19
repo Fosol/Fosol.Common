@@ -30,8 +30,18 @@ namespace Fosol.Common.Exceptions
         {
         }
 
+        public PropertyNullException(string message, string propertyName)
+            : base(message, propertyName)
+        {
+        }
+
         public PropertyNullException(string message, Exception innerException)
             : base(message, innerException)
+        {
+        }
+
+        public PropertyNullException(string message, string propertyName, Exception innerException)
+            : base(message, propertyName, innerException)
         {
         }
         #endregion

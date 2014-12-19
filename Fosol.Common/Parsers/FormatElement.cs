@@ -1,6 +1,6 @@
 ﻿using Fosol.Common.Extensions.Dictionaries;
 using Fosol.Common.Extensions.NameValueCollections;
-using Fosol.Common.Extensions.Reflection;
+using Fosol.Common.Extensions.PropertyInfos;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
