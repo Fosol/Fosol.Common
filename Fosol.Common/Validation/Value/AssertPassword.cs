@@ -27,7 +27,7 @@ namespace Fosol.Common.Validation.Value
             Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(password, "password");
             Fosol.Common.Validation.Argument.Assert.IsNotNullOrWhiteSpace(passwordStrengthRegularExpression, "passwordStrengthRegularExpression");
 
-            if (!Security.PasswordUtility.IsValid(password, passwordStrengthRegularExpression))
+            if (!Security.PasswordValidator.IsValid(password, passwordStrengthRegularExpression))
                 throw new Exceptions.ValueException(message ?? Resources.Multilingual.Exception_Validation_Value_IsValidPassword);
         }
 
@@ -44,7 +44,7 @@ namespace Fosol.Common.Validation.Value
             Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(password, "password");
             Fosol.Common.Validation.Argument.Assert.IsNotNull(requirements, "requirements");
 
-            var util = new Security.PasswordUtility(requirements);
+            var util = new Security.PasswordValidator(requirements);
             if (!util.Validate(password))
                 throw new Exceptions.ValueException(message ?? Resources.Multilingual.Exception_Validation_Value_IsValidPassword);
         }

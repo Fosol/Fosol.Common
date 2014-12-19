@@ -113,7 +113,7 @@
     <Compile Include="SafeNativeMethods.cs" />
     <Compile Include="Security\PasswordComposition.cs" />
     <Compile Include="Security\PasswordRequirement.cs" />
-    <Compile Include="Security\PasswordUtility.cs" />
+    <Compile Include="Security\PasswordValidator.cs" />
     <Compile Include="Serialization\DataContractJsonUtility.cs" />
     <Compile Include="Serialization\DataContractUtility.cs" />
     <Compile Include="Serialization\XmlSchemaDataType.cs" />
