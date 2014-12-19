@@ -96,6 +96,8 @@
     <Compile Include="Exceptions\ValueException.cs" />
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="Extensions\Expressions\ExpressionExtensions.cs" />
+    <Compile Include="Extensions\MemberInfos\MemberInfoExtensions.cs" />
+    <Compile Include="Extensions\PropertyInfos\PropertyInfoExtensions.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="Helpers\AssemblyResourceHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
@@ -144,8 +146,7 @@
     <Compile Include="Extensions\Numbers\NumberExtensions.cs" />
     <Compile Include="Extensions\Objects\ObjectExtensions.cs" />
     <Compile Include="Extensions\Queryables\QueryableExtensions.cs" />
-    <Compile Include="Extensions\Reflection\FieldInfoExtensions.cs" />
-    <Compile Include="Extensions\Reflection\PropertyInfoExtensions.cs" />
+    <Compile Include="Extensions\FieldInfos\FieldInfoExtensions.cs" />
     <Compile Include="Extensions\Streams\StreamExtensions.cs" />
     <Compile Include="Extensions\Strings\StringExtensions.cs" />
     <Compile Include="Extensions\Types\TypeExtensions.cs" />

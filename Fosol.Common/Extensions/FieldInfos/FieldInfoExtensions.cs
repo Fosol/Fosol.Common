@@ -1,13 +1,10 @@
 ﻿using Fosol.Common.Extensions.Types;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Fosol.Common.Extensions.Reflection
+namespace Fosol.Common.Extensions.FieldInfos
 {
     /// <summary>
     /// FieldInfo extension methods.

@@ -94,7 +94,7 @@ namespace Fosol.Common.Extensions.Types
         }
 
         /// <summary>
-        /// Checks if to see if the Type is of type Nullable<>.
+        /// Checks if to see if the Type is of type Nullable.
         /// </summary>
         /// <param name="type">Type of object to test.</param>
         /// <returns>True if the Type is of type Nullable.</returns>
