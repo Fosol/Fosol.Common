@@ -244,6 +244,110 @@ namespace Fosol.Common.Helpers
 
         /// <summary>
         /// Attempts to create a new instance of the specified Type.
+        /// If the args contain string values that can be converted to enums it will try to convert them.
+        /// </summary>
+        /// <typeparam name="T">Type of object to create.</typeparam>
+        /// <param name="args">Arguments to pass to the constructor.</param>
+        /// <returns>New instance of the specified type.</returns>
+        public static T ConstructObject<T>(params object[] args)
+            where T : class
+        {
+            var type = typeof(T);
+            T result = null;
+            Exception exception = null;
+            try
+            {
+                if (args != null || args.Length > 0)
+                {
+                    // Attempt to construct the object with the supplied arguments.
+                    var constructor = type.GetConstructor(args.Select(a => a.GetType()).ToArray());
+                    if (constructor != null)
+                        result = (T)constructor.Invoke(args);
+                    else
+                    {
+                        // Check for constructors that have enumerators.
+                        // Looking for a constructor that matches the args.
+                        var constructors = (
+                            from c in type.GetConstructors()
+                            from p in c.GetParameters()
+                            where p.ParameterType.IsEnum
+                                && c.GetParameters().Count() == args.Count()
+                            select c);
+
+                        // Try each constructor to find a match.
+                        foreach (var ctor in constructors)
+                        {
+                            var pars = ctor.GetParameters();
+                            var c_args = new object[args.Length];
+                            var use_ctor = true;
+
+                            // Use the constructor that works with the supplied args.
+                            // Attempt to convert the specific arg when the parameter is an enum.
+                            for (var i = 0; i < pars.Count(); i++)
+                            {
+                                if (pars[i].ParameterType == args[i].GetType())
+                                    c_args[i] = args[i];
+                                else if (pars[i].ParameterType.IsEnum && args[i] is string)
+                                {
+                                    try
+                                    {
+                                        // Convert to enum.
+                                        c_args[i] = Enum.Parse(pars[i].ParameterType, (string)args[i], false);
+                                    }
+                                    catch (TargetInvocationException ex)
+                                    {
+                                        use_ctor = false;
+                                        exception = ex.InnerException;
+                                        break;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        use_ctor = false;
+                                        exception = ex;
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    use_ctor = false;
+                                    break;
+                                }
+                            }
+
+                            // Try to use this constructor.
+                            if (use_ctor)
+                            {
+                                result = (T)ctor.Invoke(c_args);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (result == null)
+                {
+                    // Attempt to construct the object without arguments.
+                    var constructor = type.GetConstructor(new Type[0]);
+                    if (constructor == null)
+                        throw new InvalidOperationException();
+                    result = (T)constructor.Invoke(new object[0]);
+                }
+            }
+            catch (TargetInvocationException ex)
+            {
+                exception = ex.InnerException;
+            }
+
+            if (result != null)
+                return result;
+
+            if (exception != null)
+                throw new InvalidOperationException("", exception);
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Attempts to create a new instance of the specified Type.
         /// This method ensures that the specified Type (type) is assignable from type T.
         /// If the args contain string values that can be converted to enums it will try to convert them.
         /// </summary>

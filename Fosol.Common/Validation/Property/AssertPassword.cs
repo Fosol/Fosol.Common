@@ -19,7 +19,7 @@ namespace Fosol.Common.Validation.Property
         /// <param name="message">A message to describe the exception.</param>
         public static void IsValid(string password, string passwordStrengthRegularExpression, string paramName, string message = null)
         {
-            if (!Security.PasswordUtility.IsValid(password, passwordStrengthRegularExpression))
+            if (!Security.PasswordValidator.IsValid(password, passwordStrengthRegularExpression))
                 throw new Exceptions.PropertyException(paramName, string.Format(message ?? Resources.Multilingual.Exception_Validation_Property_IsValidPassword, paramName));
         }
 
@@ -37,7 +37,7 @@ namespace Fosol.Common.Validation.Property
             Fosol.Common.Validation.Property.Assert.IsNotNullOrEmpty(password, "password");
             Fosol.Common.Validation.Property.Assert.IsNotNull(requirements, "requirements");
 
-            var util = new Security.PasswordUtility(requirements);
+            var util = new Security.PasswordValidator(requirements);
             if (!util.Validate(password))
                 throw new Exceptions.PropertyException(paramName, String.Format(message ?? Resources.Multilingual.Exception_Validation_Property_IsValidPassword, paramName));
         }
