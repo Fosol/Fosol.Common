@@ -388,7 +388,7 @@ namespace Fosol.Common.Extensions.Expressions
         /// <typeparam name="TReplaceWith">The type that will be inserted into the predicate expression and replace the original TFind type.</typeparam>
         /// <param name="predicate">Predicate expression.</param>
         /// <returns>Updated predicate expression.</returns>
-        public static Expression<Func<TReplaceWith, bool>> ReplaceTypeInExpression<TFind, TReplaceWith>(Expression<Func<TFind, bool>> predicate)
+        public static Expression<Func<TReplaceWith, bool>> ReplaceTypeInExpression<TFind, TReplaceWith>(this Expression<Func<TFind, bool>> predicate)
         {
             var p1 = predicate.Parameters.First(p => p.Type == typeof(TFind));
             var p2 = ParameterExpression.Parameter(typeof(TReplaceWith), p1.Name);
