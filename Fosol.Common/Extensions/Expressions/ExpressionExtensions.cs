@@ -379,20 +379,368 @@ namespace Fosol.Common.Extensions.Expressions
         }
         #endregion
 
-        #region Methods
-        /// <summary>
-        /// Updates the predicate expression provided by replacing a business model type with the specified DB entity type.
-        /// This currently expects that the property names of the TFind type will be the same as the property names of the TReplaceWith type.
-        /// </summary>
-        /// <typeparam name="TFind">The type to find and replace within the predicate expression.</typeparam>
-        /// <typeparam name="TReplaceWith">The type that will be inserted into the predicate expression and replace the original TFind type.</typeparam>
-        /// <param name="predicate">Predicate expression.</param>
-        /// <returns>Updated predicate expression.</returns>
-        public static Expression<Func<TReplaceWith, bool>> ReplaceTypeInExpression<TFind, TReplaceWith>(this Expression<Func<TFind, bool>> predicate)
+
+        #region ReplaceAllTypes
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within an expression tree with another ParameterExpression, and return a cloned tree	
+        /// </summary>	
+        /// <param name="expression">Tree to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A cloned expression tree with all occurences of oldParameter replaced with newParameter</returns>	
+        public static Expression ReplaceAllTypes(this Expression expression, Dictionary<Type, Type> typeMap)
         {
-            var p1 = predicate.Parameters.First(p => p.Type == typeof(TFind));
-            var p2 = ParameterExpression.Parameter(typeof(TReplaceWith), p1.Name);
-            return predicate.ReplaceParameter(p1, p2) as Expression<Func<TReplaceWith, bool>>;
+            Expression exp = null;
+            Type expressionType = expression.GetType();
+            if (expressionType == typeof(ParameterExpression) || expressionType.IsSubclassOf(typeof(ParameterExpression)))
+            {
+                exp = ((ParameterExpression)expression).ReplaceAllTypes(typeMap);
+            }
+            else if (expressionType == typeof(MemberExpression) || expressionType.IsSubclassOf(typeof(MemberExpression)))
+            {
+                exp = ((MemberExpression)expression).ReplaceAllTypes(typeMap);
+            }
+            else if (expressionType == typeof(MethodCallExpression) || expressionType.IsSubclassOf(typeof(MethodCallExpression)))
+            {
+                exp = ((MethodCallExpression)expression).ReplaceAllTypes(typeMap);
+            }
+            else if (expressionType == typeof(NewExpression) || expressionType.IsSubclassOf(typeof(NewExpression)))
+            {
+                exp = ((NewExpression)expression).ReplaceAllTypes(typeMap);
+            }
+            else if (expressionType == typeof(UnaryExpression) || expressionType.IsSubclassOf(typeof(UnaryExpression)))
+            {
+                exp = ((UnaryExpression)expression).ReplaceAllTypes(typeMap);
+            }
+            else if (expressionType == typeof(ConstantExpression) || expressionType.IsSubclassOf(typeof(ConstantExpression)))
+            {
+                exp = ((ConstantExpression)expression).ReplaceAllTypes(typeMap);
+            }
+            else if (expressionType == typeof(ConditionalExpression) || expressionType.IsSubclassOf(typeof(ConditionalExpression)))
+            {
+                exp = ((ConditionalExpression)expression).ReplaceAllTypes(typeMap);
+            }
+            else if (expressionType == typeof(LambdaExpression) || expressionType.IsSubclassOf(typeof(LambdaExpression)))
+            {
+                exp = ((LambdaExpression)expression).ReplaceAllTypes(typeMap);
+            }
+            else if (expressionType == typeof(MemberInitExpression) || expressionType.IsSubclassOf(typeof(MemberInitExpression)))
+            {
+                exp = ((MemberInitExpression)expression).ReplaceAllTypes(typeMap);
+            }
+            else if (expressionType == typeof(BinaryExpression) || expressionType.IsSubclassOf(typeof(BinaryExpression)))
+            {
+                exp = ((BinaryExpression)expression).ReplaceAllTypes(typeMap);
+            }
+            else
+            {
+                //did I forget some expression type? probably. this will take care of that... :)	
+                throw new NotImplementedException("Expression type " + expression.GetType().FullName + " not supported by this expression tree parser.");
+            }
+            return exp;
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within an expression tree with another ParameterExpression, and return a cloned tree	
+        /// </summary>	
+        /// <param name="expression">LambdaExpression to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A cloned expression tree with all occurences of oldParameter replaced with newParameter</returns>	
+        public static LambdaExpression ReplaceAllTypes(this LambdaExpression expression, Dictionary<Type, Type> typeMap)
+        {
+            LambdaExpression lambdaExpression = null;
+
+            // Only change the Lambda expression type if the parameters are changed.
+            var body = expression.Body.ReplaceAllTypes(typeMap);
+            var parameters = (expression.Parameters != null) ? expression.Parameters.ReplaceAllTypes(typeMap) : null;
+            var type = typeMap.ContainsKey(expression.Parameters[0].Type) ? typeof(Func<,>).MakeGenericType(typeMap[expression.Parameters[0].Type], typeof(bool)) : expression.Type;
+
+            lambdaExpression = Expression.Lambda(
+                type,
+                expression.Body.ReplaceAllTypes(typeMap),
+                (expression.Parameters != null) ? expression.Parameters.ReplaceAllTypes(typeMap) : null
+            );
+            return lambdaExpression;
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within an expression tree with another ParameterExpression, and return a cloned tree	
+        /// </summary>	
+        /// <param name="expression">BinaryExpression to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A cloned expression tree with all occurences of oldParameter replaced with newParameter</returns>	
+        public static BinaryExpression ReplaceAllTypes(this BinaryExpression expression, Dictionary<Type, Type> typeMap)
+        {
+            BinaryExpression binaryExp = null;
+            binaryExp = Expression.MakeBinary(
+                expression.NodeType,
+                (expression.Left != null) ? expression.Left.ReplaceAllTypes(typeMap) : null,
+                (expression.Right != null) ? expression.Right.ReplaceAllTypes(typeMap) : null,
+                expression.IsLiftedToNull,
+                expression.Method,
+                (expression.Conversion != null) ? expression.Conversion.ReplaceAllTypes(typeMap) : null
+            );
+            return binaryExp;
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within an expression tree with another ParameterExpression, and return a cloned tree	
+        /// </summary>	
+        /// <param name="expression">ParameterExpression to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A cloned expression tree with all occurences of oldParameter replaced with newParameter</returns>	
+        public static ParameterExpression ReplaceAllTypes(this ParameterExpression expression, Dictionary<Type, Type> typeMap)
+        {
+            ParameterExpression paramExpression = null;
+            if (typeMap.ContainsKey(expression.Type))
+            {
+                paramExpression = ParameterExpression.Parameter(typeMap[expression.Type], expression.Name); ;
+            }
+            else
+            {
+                paramExpression = expression;
+            }
+            return paramExpression;
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within an expression tree with another ParameterExpression, and return a cloned tree	
+        /// </summary>	
+        /// <param name="expression">MemberExpression to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A cloned expression tree with all occurences of oldParameter replaced with newParameter</returns>	
+        public static MemberExpression ReplaceAllTypes(this MemberExpression expression, Dictionary<Type, Type> typeMap)
+        {
+            var member_expression = (expression.Expression != null) ? expression.Expression.ReplaceAllTypes(typeMap) : null;
+
+            if (typeMap.ContainsKey(member_expression.Type))
+            {
+                // If the new expression is of the new parameter type we need to use the method information for the new expression.
+                var mi = typeMap[member_expression.Type].GetMember(expression.Member.Name).First();
+                return Expression.MakeMemberAccess(member_expression, mi);
+            }
+            else if (member_expression.Type != expression.Member.DeclaringType)
+            {
+                // If the new expression has a different type than the old expression we need to update the method info with the new expression type.
+                var mi = member_expression.Type.GetMember(expression.Member.Name).First();
+                return Expression.MakeMemberAccess(member_expression, mi);
+            }
+
+            return Expression.MakeMemberAccess(member_expression, expression.Member);
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within an expression tree with another ParameterExpression, and return a cloned tree	
+        /// </summary>	
+        /// <param name="expression">MemberInitExpression to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A cloned expression tree with all occurences of oldParameter replaced with newParameter</returns>	
+        public static MemberInitExpression ReplaceAllTypes(this MemberInitExpression expression, Dictionary<Type, Type> typeMap)
+        {
+            return Expression.MemberInit(
+                (expression.NewExpression != null) ? expression.NewExpression.ReplaceAllTypes(typeMap) : null,
+                (expression.Bindings != null) ? expression.Bindings.ReplaceAllTypes(typeMap) : null
+            );
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within an expression tree with another ParameterExpression, and return a cloned tree	
+        /// </summary>	
+        /// <param name="expression">MethodCallExpression to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A cloned expression tree with all occurences of oldParameter replaced with newParameter</returns>	
+        public static MethodCallExpression ReplaceAllTypes(this MethodCallExpression expression, Dictionary<Type, Type> typeMap)
+        {
+            MethodCallExpression callExpression = null;
+            callExpression = Expression.Call(
+                (expression.Object != null) ? expression.Object.ReplaceAllTypes(typeMap) : null,
+                expression.Method,
+                (expression.Arguments != null) ? expression.Arguments.ReplaceAllTypes(typeMap) : null
+            );
+            return callExpression;
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within an expression tree with another ParameterExpression, and return a cloned tree	
+        /// </summary>	
+        /// <param name="expression">NewExpression to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A cloned expression tree with all occurences of oldParameter replaced with newParameter</returns>	
+        public static NewExpression ReplaceAllTypes(this NewExpression expression, Dictionary<Type, Type> typeMap)
+        {
+            return Expression.New(
+                expression.Constructor,
+                (expression.Arguments != null) ? expression.Arguments.ReplaceAllTypes(typeMap) : null,
+                expression.Members);
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within a ReadonlyCollection of ParameterExpressions with another ParameterExpression, and return as an IEnumerable	
+        /// </summary>	
+        /// <param name="expression">ReadOnlyCollection&lt;ParameterExpression&gt; to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A IEnumerable returning the passed in set of ParameterExpressions, with occurences of oldParameter replaced with newParameter</returns>	
+        public static IEnumerable<ParameterExpression> ReplaceAllTypes(this System.Collections.ObjectModel.ReadOnlyCollection<ParameterExpression> expressionArguments, Dictionary<Type, Type> typeMap)
+        {
+            if (expressionArguments != null)
+            {
+                foreach (ParameterExpression argument in expressionArguments)
+                {
+                    if (argument != null)
+                    {
+                        yield return argument.ReplaceAllTypes(typeMap);
+                    }
+                    else
+                    {
+                        yield return null;
+
+                    }
+
+                }
+            }
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within a ReadonlyCollection of Expressions with another ParameterExpression, and return as an IEnumerable	
+        /// </summary>	
+        /// <param name="expression">ReadOnlyCollection&lt;Expression&gt; to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A IEnumerable returning the passed in set of Expressions, with occurences of oldParameter replaced with newParameter</returns>	
+        public static IEnumerable<Expression> ReplaceAllTypes(this System.Collections.ObjectModel.ReadOnlyCollection<Expression> expressionArguments, Dictionary<Type, Type> typeMap)
+        {
+            if (expressionArguments != null)
+            {
+                foreach (Expression argument in expressionArguments)
+                {
+                    if (argument != null)
+                    {
+                        yield return argument.ReplaceAllTypes(typeMap);
+                    }
+                    else
+                    {
+                        yield return null;
+                    }
+                }
+            }
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within a ReadonlyCollection of ElementInits with another ParameterExpression, and return as an IEnumerable	
+        /// </summary>	
+        /// <param name="expression">ReadOnlyCollection&lt;ElementInit&gt; to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A IEnumerable returning the passed in set of ParameterExpressions, with occurences of oldParameter replaced with newParameter</returns>	
+        public static IEnumerable<ElementInit> ReplaceAllTypes(this System.Collections.ObjectModel.ReadOnlyCollection<ElementInit> elementInits, Dictionary<Type, Type> typeMap)
+        {
+            if (elementInits != null)
+            {
+                foreach (ElementInit elementInit in elementInits)
+                {
+                    if (elementInit != null)
+                    {
+                        yield return Expression.ElementInit(elementInit.AddMethod, elementInit.Arguments.ReplaceAllTypes(typeMap));
+                    }
+                    else
+                    {
+                        yield return null;
+                    }
+
+                }
+            }
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within a ReadonlyCollection of MemberBindings with another ParameterExpression, and return as an IEnumerable	
+        /// </summary>	
+        /// <param name="expression">ReadOnlyCollection&lt;MemberBinding&gt; to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A IEnumerable returning the passed in set of ParameterExpressions, with occurences of oldParameter replaced with newParameter</returns>	
+        public static IEnumerable<MemberBinding> ReplaceAllTypes(this System.Collections.ObjectModel.ReadOnlyCollection<MemberBinding> memberBindings, Dictionary<Type, Type> typeMap)
+        {
+            if (memberBindings != null)
+            {
+                foreach (MemberBinding binding in memberBindings)
+                {
+                    if (binding != null)
+                    {
+                        switch (binding.BindingType)
+                        {
+                            case MemberBindingType.Assignment:
+                                MemberAssignment memberAssignment = (MemberAssignment)binding;
+                                yield return Expression.Bind(binding.Member, memberAssignment.Expression.ReplaceAllTypes(typeMap));
+                                break;
+                            case MemberBindingType.ListBinding:
+                                MemberListBinding listBinding = (MemberListBinding)binding;
+                                yield return Expression.ListBind(binding.Member, listBinding.Initializers.ReplaceAllTypes(typeMap));
+                                break;
+                            case MemberBindingType.MemberBinding:
+                                MemberMemberBinding memberMemberBinding = (MemberMemberBinding)binding;
+                                yield return Expression.MemberBind(binding.Member, memberMemberBinding.Bindings.ReplaceAllTypes(typeMap));
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        yield return null;
+                    }
+
+                }
+            }
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within an expression tree with another ParameterExpression, and return a cloned tree	
+        /// </summary>	
+        /// <param name="expression">UnaryExpression to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A cloned expression tree with all occurences of oldParameter replaced with newParameter</returns>	
+        public static UnaryExpression ReplaceAllTypes(this UnaryExpression expression, Dictionary<Type, Type> typeMap)
+        {
+            return Expression.MakeUnary(
+                expression.NodeType,
+                (expression.Operand != null) ? expression.Operand.ReplaceAllTypes(typeMap) : null,
+                expression.Type,
+                expression.Method);
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within an expression tree with another ParameterExpression, and return a cloned tree. Note: this version of ReplaceAllTypes exists just for conformity - there can't be a parameter expression hiding under a constant expression so this could really be skipped.	
+        /// </summary>	
+        /// <param name="expression">ConstantExpression to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A cloned expression tree with all occurences of oldParameter replaced with newParameter</returns>	
+        public static ConstantExpression ReplaceAllTypes(this ConstantExpression expression, Dictionary<Type, Type> typeMap)
+        {
+            //return Expression.Constant(expression.Value, expression.Type);	
+            return expression;
+        }
+
+        /// <summary>	
+        /// Replace all occurences of a ParameterExpression within an expression tree with another ParameterExpression, and return a cloned tree	
+        /// </summary>	
+        /// <param name="expression">ConditionalExpression to replace parameters in</param>	
+        /// <param name="oldParameter">Parameter to replace</param>	
+        /// <param name="newParameter">Parameter to use as replacement</param>	
+        /// <returns>A cloned expression tree with all occurences of oldParameter replaced with newParameter</returns>	
+        public static ConditionalExpression ReplaceAllTypes(this ConditionalExpression expression, Dictionary<Type, Type> typeMap)
+        {
+            return Expression.Condition(
+                (expression.Test != null) ? expression.Test.ReplaceAllTypes(typeMap) : null,
+                (expression.IfTrue != null) ? expression.IfTrue.ReplaceAllTypes(typeMap) : null,
+                (expression.IfFalse != null) ? expression.IfFalse.ReplaceAllTypes(typeMap) : null);
         }
         #endregion
     }

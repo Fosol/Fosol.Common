@@ -44,9 +44,24 @@ namespace Fosol.Common
         /// <returns>A new instance of a HashCode object.</returns>
         public static HashCode Create<T>(T obj)
         {
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(obj, "obj");
             unchecked
             {
                 return new HashCode(DefaultHash & HashModifier + obj.GetHashCode());
+            }
+        }
+
+        public static HashCode Create(params object[] objects)
+        {
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(objects, "objects");
+            unchecked
+            {
+                var h = HashCode.Create(objects[0]);
+                foreach (var o in objects.Skip(1))
+                {
+                    h = h.Merge(o);
+                }
+                return h;
             }
         }
 
@@ -59,7 +74,18 @@ namespace Fosol.Common
         /// <returns>A reference to itself (after it has been updated).</returns>
         public HashCode Merge<T>(T obj)
         {
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(obj, "obj");
             this.Value = this.Value & HashModifier + obj.GetHashCode();
+            return this;
+        }
+
+        public HashCode Merge(params object[] objects)
+        {
+            Fosol.Common.Validation.Argument.Assert.IsNotNullOrEmpty(objects, "objects");
+            foreach (var o in objects)
+            {
+                this.Merge(o);
+            }
             return this;
         }
         #endregion
