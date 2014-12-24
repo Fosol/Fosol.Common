@@ -18,6 +18,16 @@ namespace Fosol.Common.UnitTests
         #endregion
 
         #region Properties
+        /// <summary>
+        /// get/set - The value at the specified index position.
+        /// </summary>
+        /// <param name="index">Index position.</param>
+        /// <returns>ITestData object at the specified index position.</returns>
+        public T this[int index]
+        {
+            get { return _Items[index]; }
+            set { _Items[index] = value; }
+        }
         #endregion
 
         #region Constructors
