@@ -200,6 +200,58 @@ namespace Fosol.Common.Extensions.Types
         {
             return type.IsAbstract && type.IsSealed;
         }
+
+        /// <summary>
+        /// Get the generic element type of the specified Type.
+        /// </summary>
+        /// <param name="type">Type object to get the element type of.</param>
+        /// <returns>The element type of the specified Type.</returns>
+        public static Type GetElementType(this Type type)
+        {
+            var is_enum = type.FindIEnumerable();
+            if (is_enum == null)
+                return type;
+
+            return is_enum.GetGenericArguments()[0];
+        }
+
+        /// <summary>
+        /// When a Type is an IEnumerable we want to get the generic element type.
+        /// </summary>
+        /// <param name="type">Type to search for the generic type.</param>
+        /// <returns>The IEnumerable generic element type.</returns>
+        private static Type FindIEnumerable(this Type type)
+        {
+            if (type == null || type == typeof(string))
+                return null;
+            if (type.IsArray)
+                return typeof(IEnumerable<>).MakeGenericType(type.GetElementType());
+            if (type.IsGenericType)
+            {
+                foreach (var arg in type.GetGenericArguments())
+                {
+                    var is_enum = typeof(IEnumerable<>).MakeGenericType(arg);
+                    if (is_enum.IsAssignableFrom(type))
+                        return is_enum;
+                }
+            }
+
+            var ifaces = type.GetInterfaces();
+            if (ifaces != null && ifaces.Length > 0)
+            {
+                foreach (var iface in ifaces)
+                {
+                    var is_enum = iface.FindIEnumerable();
+                    if (is_enum != null)
+                        return is_enum;
+                }
+            }
+
+            if (type.BaseType != null && type.BaseType != typeof(object))
+                return type.BaseType.FindIEnumerable();
+
+            return null;
+        }
         #endregion
 #endif
     }
