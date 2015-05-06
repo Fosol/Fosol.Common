@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Routing;
 
 namespace Fosol.Common.Helpers
 {
@@ -118,6 +119,22 @@ namespace Fosol.Common.Helpers
                 relative = relative.Substring(0, relative.Length - 1);
 
             return virtual_domain_path + (relative[0] != '/' ? "/" : string.Empty) + relative;
+        }
+
+        /// <summary>
+        /// Get the current requests route URL value.
+        /// </summary>
+        /// <param name="context">HttpContextBase of the current request.</param>
+        /// <returns>Route URL.</returns>
+        public static string RequestRouteUrl(HttpContextBase context)
+        {
+            Fosol.Common.Validation.Argument.Assert.IsNotNull(context, "context");
+
+            var route_data = RouteTable.Routes.GetRouteData(context);
+            var url_helper = new System.Web.Mvc.UrlHelper(context.Request.RequestContext);
+            var route_url = url_helper.RouteUrl(route_data.Values);
+
+            return route_url;
         }
 
         /// <summary>

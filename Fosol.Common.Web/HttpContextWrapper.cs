@@ -24,7 +24,8 @@ namespace Fosol.Common.Web
                 if (_Current != null)
                     return _Current;
 
-                return new HttpContextWrapper(HttpContext.Current);
+                _Current = new HttpContextWrapper(HttpContext.Current);
+                return _Current;
             }
             set
             {

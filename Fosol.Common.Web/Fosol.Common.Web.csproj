@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\UriBuilders\UriBuilderExtensions.cs" />
+    <Compile Include="Helpers\UrlHelper.cs" />
+    <Compile Include="Helpers\WebApplicationHelper.cs" />
     <Compile Include="HttpContextWrapper.cs" />
     <Compile Include="Mvc\Extensions\Controllers\ControllerExtensions.cs" />
     <Compile Include="Mvc\Helpers\RouteValuesHelper.cs" />
@@ -52,9 +55,7 @@
       <Name>Fosol.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

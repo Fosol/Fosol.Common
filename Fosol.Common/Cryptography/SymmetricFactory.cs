@@ -80,7 +80,7 @@ namespace Fosol.Common.Cryptography
             _Algorithm = Fosol.Common.Helpers.ReflectionHelper.ConstructObject(symmetricAlgorithmType) as SymmetricAlgorithm;
 
             var derive = new Rfc2898DeriveBytes(password, salt, iterations);
-            _Algorithm.Key = derive.GetBytes(_Algorithm.KeySize);
+            _Algorithm.Key = derive.GetBytes(_Algorithm.KeySize / 8);
             _Algorithm.IV = derive.GetBytes(_Algorithm.BlockSize / 8);
         }
 
@@ -121,7 +121,7 @@ namespace Fosol.Common.Cryptography
             _Algorithm.BlockSize = ivBitLength * 8;
 
             var derive = new Rfc2898DeriveBytes(password, salt, iterations);
-            _Algorithm.Key = derive.GetBytes(_Algorithm.KeySize);
+            _Algorithm.Key = derive.GetBytes(_Algorithm.KeySize / 8);
             _Algorithm.IV = derive.GetBytes(_Algorithm.BlockSize / 8);
         }
 
@@ -188,7 +188,7 @@ namespace Fosol.Common.Cryptography
             Fosol.Common.Validation.Argument.Assert.IsAssignable(_Algorithm, typeof(SymmetricAlgorithm), "symmetricAlgorithmType");
 
             var derive = new Rfc2898DeriveBytes(password, salt, iterations);
-            _Algorithm.Key = derive.GetBytes(_Algorithm.KeySize);
+            _Algorithm.Key = derive.GetBytes(_Algorithm.KeySize / 8);
             _Algorithm.IV = derive.GetBytes(_Algorithm.BlockSize / 8);
         }
 

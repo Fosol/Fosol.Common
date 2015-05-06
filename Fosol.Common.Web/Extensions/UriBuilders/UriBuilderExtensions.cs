@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fosol.Common.Extensions.UriBuilders
+namespace Fosol.Common.Web.Extensions.UriBuilders
 {
     /// <summary>
     /// Extension methods for UriBuilder objects.

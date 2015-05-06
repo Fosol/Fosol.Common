@@ -182,7 +182,14 @@ namespace Fosol.Common.Parsers
             // If there are attributes, extract them and the name.
             else
             {
-                query = System.Web.HttpUtility.ParseQueryString(format.Substring(attribute_pos + 1));
+                //query = System.Web.HttpUtility.ParseQueryString(format.Substring(attribute_pos + 1));
+                var attributes = Fosol.Common.Extensions.Strings.StringExtensions.SplitToKeyValuePair(format.Substring(attribute_pos + 1), "&", "=");
+                query = new NameValueCollection();
+
+                foreach (var attr in attributes)
+                {
+                    query.Add(attr.Key, attr.Value);
+                }
 
                 // It's using the parameter shortcut syntax.
                 if (is_param)
